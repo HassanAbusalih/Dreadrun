@@ -1,0 +1,12 @@
+[merge]	
+    tool = unityyamlmerge
+
+[mergetool "unityyamlmerge"]
+    cmd = './UnityYAMLMerge.exe' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
+    trustExitCode = false
+    
+[diff]
+    tool = unityyamlmerge
+    
+[difftool "unityyamlmerge"]
+    cmd = './mergeTool/UnityYAMLMerge.exe' diff "$LOCAL" "$REMOTE"
