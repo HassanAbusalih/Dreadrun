@@ -14,6 +14,7 @@ public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
     private void Start()
     {
         currentHealth = maxHealth;
+        gameObject.layer = 7;
     }
 
     void Update()

@@ -28,7 +28,7 @@ public class EnemyWeapon : WeaponBase
             Quaternion projectileRotation = Quaternion.Euler(0, rotation, 0) * transform.rotation;
             Vector3 projectileLocation = Quaternion.Euler(0, rotation, 0) * transform.forward;
             GameObject projectile = Instantiate(projectilePrefab, transform.position + projectileLocation, projectileRotation);
-            projectile.GetComponent<Projectile>().Initialize(damagePerShot, projectileSpeed, projectileRange);
+            projectile.GetComponent<Projectile>().Initialize(damagePerShot, projectileSpeed, projectileRange, 9);
         }
         if (audioSource != null) audioSource.Play();
     }
