@@ -12,15 +12,12 @@ public class EnemyWeapon : WeaponBase
     private void Update()
     {
         timeSinceLastShot += Time.deltaTime;
-        if (timeSinceLastShot > fireRate)
-        {
-            timeSinceLastShot = 0;
-            Shoot();
-        }
     }
 
     public override void Shoot()
     {
+        if (timeSinceLastShot < fireRate) { return; }
+        timeSinceLastShot = 0;
         float rotationAmount = 360 / projectileCount;
         for (int i = 0; i < projectileCount; i++)
         {

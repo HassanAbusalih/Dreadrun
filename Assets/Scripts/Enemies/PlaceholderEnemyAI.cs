@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
@@ -20,6 +21,15 @@ public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
     void Update()
     {
         Move();
+        ShootIfWithinRange();
+    }
+
+    private void ShootIfWithinRange()
+    {
+        if (Vector3.Distance(transform.position, payload.position) * 1.2 < distanceFromPayload)
+        {
+            weapon.Shoot();
+        }
     }
 
     void Move()
