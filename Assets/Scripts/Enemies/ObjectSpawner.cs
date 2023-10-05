@@ -10,6 +10,8 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
+    [SerializeField] GameObject payload;
+    [SerializeField] GameObject player;
     public GameObject prefabToSpawn;
     public float spawnRadius;
     public static float timeBetweenSpawns = 3f;
@@ -67,11 +69,11 @@ public class ObjectSpawner : MonoBehaviour
     {
         if(giveReference)
         {
-            /*if (gameObject.TryGetComponent(out SteeringBehaviour gameObj))
-            { 
-                var reference = FindObjectOfType<PlayerTag>().GetComponent<Transform>();
-                gameObj.target = reference;
-            }*/
+            if (gameObject.TryGetComponent(out PlaceholderEnemyAI enemy))
+            {
+                enemy.player = player.transform;
+                enemy.payload = payload.transform;
+            }
         }
     }
 

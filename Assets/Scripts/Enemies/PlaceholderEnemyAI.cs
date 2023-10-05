@@ -5,8 +5,8 @@ public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
 {
     [SerializeField] int maxHealth = 5;
     int currentHealth;
-    [SerializeField] Transform payload;
-    [SerializeField] Transform player;
+    [SerializeField] public Transform payload;
+    [SerializeField] public Transform player;
     [SerializeField] float distanceFromPayload = 5.0f;
     [SerializeField] float movementSpeed = 3.0f;
     [SerializeField] float maxRotationAngle = 10f;
