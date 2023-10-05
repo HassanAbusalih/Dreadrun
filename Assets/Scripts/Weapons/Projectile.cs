@@ -9,12 +9,13 @@ public class Projectile : MonoBehaviour
     Rigidbody rb;
     Vector3 initialPos;
 
-    public void Initialize(int damage, float speed, float range)
+    public void Initialize(int damage, float speed, float range, int layer)
     {
         rb = GetComponent<Rigidbody>();
         this.damage = damage;
         this.speed = speed;
         this.range = range;
+        gameObject.layer = layer;
         initialPos = transform.position;
     }
 

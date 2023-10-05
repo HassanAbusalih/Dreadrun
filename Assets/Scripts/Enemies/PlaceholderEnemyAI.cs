@@ -1,11 +1,12 @@
+using System;
 using UnityEngine;
 
 public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
 {
     [SerializeField] int maxHealth = 5;
     int currentHealth;
-    [SerializeField] Transform payload;
-    [SerializeField] Transform player;
+    [SerializeField] public Transform payload;
+    [SerializeField] public Transform player;
     [SerializeField] float distanceFromPayload = 5.0f;
     [SerializeField] float movementSpeed = 3.0f;
     [SerializeField] float maxRotationAngle = 10f;
@@ -14,11 +15,22 @@ public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
     private void Start()
     {
         currentHealth = maxHealth;
+        gameObject.layer = 7;
+        weapon = GetComponent<EnemyWeapon>();
     }
 
     void Update()
     {
         Move();
+        ShootIfWithinRange();
+    }
+
+    private void ShootIfWithinRange()
+    {
+        if (Vector3.Distance(transform.position, payload.position) <= distanceFromPayload)
+        {
+            weapon.Shoot();
+        }
     }
 
     void Move()
