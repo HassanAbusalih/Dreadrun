@@ -10,9 +10,10 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    [SerializeField] GameObject payload;
-    [SerializeField] GameObject player;
+    public GameObject payload;
+    public GameObject player;
     public GameObject prefabToSpawn;
+    public float activationRadius;
     public float spawnRadius;
     public static float timeBetweenSpawns = 3f;
     public bool spawnInside;
@@ -33,19 +34,21 @@ public class ObjectSpawner : MonoBehaviour
     {
         while (true)
         {
-          
-
-            if (limitSpawnAmount)
+            if (Vector3.Distance(transform.position, payload.transform.position) <= activationRadius)
             {
-                SpawnObjectWithMax();
-                yield return new WaitForSeconds(timeBetweenSpawns);
-            }
-            else
-            {
-                SpawnObject();
-                yield return new WaitForSeconds(timeBetweenSpawns);
-            }
+                if (limitSpawnAmount)
+                {
+                    SpawnObjectWithMax();
+                    yield return new WaitForSeconds(timeBetweenSpawns);
+                }
+                else
+                {
+                    SpawnObject();
+                    yield return new WaitForSeconds(timeBetweenSpawns);
+                }
 
+            }
+            yield return null;
         }
     }
 
@@ -109,7 +112,8 @@ public class ObjectSpawner : MonoBehaviour
     {
         Gizmos.color = new Color(0, 0, 1, 0.2f);
         Gizmos.DrawSphere(transform.position,spawnRadius);
-
+        Gizmos.color = new Color(0, 1, 0, 0.2f);
+        Gizmos.DrawSphere(transform.position, activationRadius);
         SetTextAndStyle(gameObject.name, Vector3.up, FontStyle.BoldAndItalic, Color.blue);
     }
     void SetTextAndStyle(string textContext,Vector3 offsetPosition,FontStyle style, Color textColor)
@@ -130,7 +134,10 @@ public class ObjectSpawnerEditor : Editor
         ObjectSpawner spawner = (ObjectSpawner)target;
 
         spawner.prefabToSpawn = (GameObject)EditorGUILayout.ObjectField("Prefab to Spawn", spawner.prefabToSpawn, typeof(GameObject), true);
+        spawner.player = (GameObject)EditorGUILayout.ObjectField("Player", spawner.player, typeof(GameObject), true);
+        spawner.payload = (GameObject)EditorGUILayout.ObjectField("Payload", spawner.payload, typeof(GameObject), true);
         spawner.spawnRadius = EditorGUILayout.FloatField("Spawn Radius", spawner.spawnRadius);
+        spawner.activationRadius = EditorGUILayout.FloatField("Activation Radius", spawner.activationRadius);
         ObjectSpawner.timeBetweenSpawns = EditorGUILayout.FloatField("TimeBetweenSpawns", ObjectSpawner.timeBetweenSpawns);
         spawner.spawnInside = EditorGUILayout.Toggle("Spawn Inside Circle", spawner.spawnInside);
         spawner.limitSpawnAmount = EditorGUILayout.Toggle("Limit Spawning", spawner.limitSpawnAmount);

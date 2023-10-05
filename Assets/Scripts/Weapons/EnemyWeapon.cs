@@ -4,11 +4,6 @@ public class EnemyWeapon : WeaponBase
 {
     [SerializeField] int projectileCount = 1;
 
-    private void Start()
-    {
-        timeSinceLastShot = fireRate;
-    }
-
     private void Update()
     {
         timeSinceLastShot += Time.deltaTime;

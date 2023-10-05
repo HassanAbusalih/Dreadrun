@@ -16,6 +16,7 @@ public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
     {
         currentHealth = maxHealth;
         gameObject.layer = 7;
+        weapon = GetComponent<EnemyWeapon>();
     }
 
     void Update()
@@ -26,7 +27,7 @@ public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
 
     private void ShootIfWithinRange()
     {
-        if (Vector3.Distance(transform.position, payload.position) * 1.2 < distanceFromPayload)
+        if (Vector3.Distance(transform.position, payload.position) <= distanceFromPayload)
         {
             weapon.Shoot();
         }
