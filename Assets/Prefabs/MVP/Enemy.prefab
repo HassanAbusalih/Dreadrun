@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5791127613756451101}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.41, y: 0.31, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -113,13 +113,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7ee6acdfd4d83e4e86b4a9a160feed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.7
+  fireRate: 2
   damagePerShot: 1
-  projectileRange: 10
-  projectileSpeed: 0.1
+  projectileRange: 8
+  projectileSpeed: 0.2
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
   audioSource: {fileID: 0}
-  projectileCount: 8
+  projectileCount: 5
 --- !u!114 &5791127613756451098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
   payload: {fileID: 0}
   player: {fileID: 0}
   distanceFromPayload: 7
-  movementSpeed: 6
+  movementSpeed: 4
   maxRotationAngle: 30
   weapon: {fileID: 5791127613756451099}
 --- !u!54 &5791127613756451092
