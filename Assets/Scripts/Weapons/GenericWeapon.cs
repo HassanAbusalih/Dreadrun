@@ -13,11 +13,11 @@ public class GenericWeapon : WeaponBase
         timeSinceLastShot += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Shoot();
+            Attack();
         }
     }
 
-    public override void Shoot()
+    public override void Attack()
     {
         if (timeSinceLastShot < fireRate) return;
         timeSinceLastShot = 0;

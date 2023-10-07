@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 5791127613756451094}
   - component: {fileID: 5791127613756451097}
   - component: {fileID: 5791127613756451096}
-  - component: {fileID: 5791127613756451099}
-  - component: {fileID: 4596950459272303218}
   - component: {fileID: 5791127613756451092}
+  - component: {fileID: -398430987079203796}
+  - component: {fileID: 5602968350978209367}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,44 +101,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5791127613756451099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5791127613756451101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7ee6acdfd4d83e4e86b4a9a160feed3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireRate: 2
-  damagePerShot: 1
-  projectileRange: 8
-  projectileSpeed: 0.2
-  projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
-  audioSource: {fileID: 0}
-  projectileCount: 5
---- !u!114 &4596950459272303218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5791127613756451101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17b1cb007168beb4e83efdfd6dddbd84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 5
-  payload: {fileID: 0}
-  player: {fileID: 0}
-  weapon: {fileID: 0}
-  distanceFromPayload: 5
-  movementSpeed: 3
-  maxRotationAngle: 10
 --- !u!54 &5791127613756451092
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -153,5 +115,38 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 94
   m_CollisionDetection: 0
+--- !u!114 &-398430987079203796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5791127613756451101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aacf6928210b9945a73b211af6c8c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+--- !u!114 &5602968350978209367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5791127613756451101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22ec2f269f8bc5646ada23c8525e4ee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 0.1
+  damagePerShot: 0
+  projectileRange: 10
+  projectileSpeed: 0.5
+  projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
+  audioSource: {fileID: 0}
+  projectileCount: 20
+  cooldown: 3

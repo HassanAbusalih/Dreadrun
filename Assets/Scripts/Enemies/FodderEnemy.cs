@@ -1,24 +1,11 @@
-using System;
 using UnityEngine;
 
-public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
+public class FodderEnemy : EnemyAIBase
 {
-    [SerializeField] int maxHealth = 5;
-    int currentHealth;
-    [SerializeField] public Transform payload;
-    [SerializeField] public Transform player;
     [SerializeField] float distanceFromPayload = 5.0f;
-    [SerializeField] float movementSpeed = 3.0f;
+    [SerializeField] float movementSpeed = 3f;
     [SerializeField] float maxRotationAngle = 10f;
-    [SerializeField] EnemyWeapon weapon;
-
-    private void Start()
-    {
-        currentHealth = maxHealth;
-        gameObject.layer = 7;
-        weapon = GetComponent<EnemyWeapon>();
-    }
-
+    
     void Update()
     {
         Move();
@@ -27,16 +14,16 @@ public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
 
     private void ShootIfWithinRange()
     {
-        if (Vector3.Distance(transform.position, payload.position) <= distanceFromPayload)
+        if (Vector3.Distance(transform.position, payload.transform.position) <= distanceFromPayload)
         {
-            weapon.Shoot();
+            weapon.Attack();
         }
     }
 
     void Move()
     {
         Vector3 toEnemy = transform.position - payload.position;
-        Vector3 toPlayer = player.position - transform.position;
+        Vector3 toPlayer = GetClosestPlayer().position - transform.position;
         float playerProximity = 1f - Mathf.Clamp01(toPlayer.magnitude / distanceFromPayload);
         float rotationAmount = maxRotationAngle * playerProximity;
         Vector3 rotatedDirection;
@@ -50,11 +37,5 @@ public class PlaceholderEnemyAI : MonoBehaviour, IDamagable
         }
         Vector3 desiredPosition = payload.position + rotatedDirection.normalized * distanceFromPayload;
         transform.position = Vector3.MoveTowards(transform.position, desiredPosition, movementSpeed * Time.deltaTime);
-    }
-
-    public void TakeDamage(int Amount)
-    {
-        currentHealth -= Amount;
-        if (currentHealth == 0) { Destroy(gameObject); }
     }
 }

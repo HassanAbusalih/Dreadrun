@@ -10,5 +10,8 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField] protected GameObject projectilePrefab;
     [SerializeField] protected AudioSource audioSource;
 
-    public abstract void Shoot();
+    public float FireRate { get => fireRate;}
+    public float ProjectileRange { get => projectileRange;}
+
+    public abstract void Attack();
 }

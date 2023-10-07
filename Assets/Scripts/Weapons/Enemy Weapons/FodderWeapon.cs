@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyWeapon : WeaponBase
+public class FodderWeapon : WeaponBase
 {
     [SerializeField] int projectileCount = 1;
 
@@ -9,7 +9,7 @@ public class EnemyWeapon : WeaponBase
         timeSinceLastShot += Time.deltaTime;
     }
 
-    public override void Shoot()
+    public override void Attack()
     {
         if (timeSinceLastShot < fireRate) { return; }
         timeSinceLastShot = 0;

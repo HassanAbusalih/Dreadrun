@@ -1,17 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
 
-
-
 public class ObjectSpawner : MonoBehaviour
 {
-    public GameObject payload;
-    public GameObject player;
+    Transform payload;
+    Transform[] players;
     public GameObject prefabToSpawn;
     public float activationRadius;
     public float spawnRadius;
@@ -21,20 +17,32 @@ public class ObjectSpawner : MonoBehaviour
     private int spawnCount = 0;
     public int maxSpawnCount = 10;
 
-
-   
-   
     private void Start()
     {
+        GetReferences();
         StartCoroutine(StartSpawning());
     }
- 
+
+    private void GetReferences()
+    {
+        PayloadFollowPath payloadFollow = FindObjectOfType<PayloadFollowPath>();
+        if (payloadFollow != null)
+        {
+            payload = payloadFollow.transform;
+        }
+        PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
+        players = new Transform[playerControllers.Length];
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i] = playerControllers[i].transform;
+        }
+    }
 
     private IEnumerator StartSpawning()
     {
         while (true)
         {
-            if (Vector3.Distance(transform.position, payload.transform.position) <= activationRadius)
+            if (payload != null && Vector3.Distance(transform.position, payload.position) <= activationRadius)
             {
                 if (limitSpawnAmount)
                 {
@@ -46,7 +54,6 @@ public class ObjectSpawner : MonoBehaviour
                     SpawnObject();
                     yield return new WaitForSeconds(timeBetweenSpawns);
                 }
-
             }
             yield return null;
         }
@@ -72,10 +79,9 @@ public class ObjectSpawner : MonoBehaviour
     {
         if(giveReference)
         {
-            if (gameObject.TryGetComponent(out PlaceholderEnemyAI enemy))
+            if (gameObject.TryGetComponent(out EnemyAIBase enemy))
             {
-                enemy.player = player.transform;
-                enemy.payload = payload.transform;
+                enemy.Initialize(payload, players);
             }
         }
     }
@@ -92,6 +98,7 @@ public class ObjectSpawner : MonoBehaviour
             CancelInvoke("SpawnObjectWithMax");
         }
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -108,6 +115,7 @@ public class ObjectSpawner : MonoBehaviour
 
         SetTextAndStyle(gameObject.name, Vector3.up, FontStyle.Normal, Color.black);
     }
+
     private void  OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(0, 0, 1, 0.2f);
@@ -116,6 +124,7 @@ public class ObjectSpawner : MonoBehaviour
         Gizmos.DrawSphere(transform.position, activationRadius);
         SetTextAndStyle(gameObject.name, Vector3.up, FontStyle.BoldAndItalic, Color.blue);
     }
+
     void SetTextAndStyle(string textContext,Vector3 offsetPosition,FontStyle style, Color textColor)
     {
         GUIStyle labelStyle = new GUIStyle();
@@ -132,10 +141,7 @@ public class ObjectSpawnerEditor : Editor
     public override void OnInspectorGUI()
     {
         ObjectSpawner spawner = (ObjectSpawner)target;
-
         spawner.prefabToSpawn = (GameObject)EditorGUILayout.ObjectField("Prefab to Spawn", spawner.prefabToSpawn, typeof(GameObject), true);
-        spawner.player = (GameObject)EditorGUILayout.ObjectField("Player", spawner.player, typeof(GameObject), true);
-        spawner.payload = (GameObject)EditorGUILayout.ObjectField("Payload", spawner.payload, typeof(GameObject), true);
         spawner.spawnRadius = EditorGUILayout.FloatField("Spawn Radius", spawner.spawnRadius);
         spawner.activationRadius = EditorGUILayout.FloatField("Activation Radius", spawner.activationRadius);
         ObjectSpawner.timeBetweenSpawns = EditorGUILayout.FloatField("TimeBetweenSpawns", ObjectSpawner.timeBetweenSpawns);
