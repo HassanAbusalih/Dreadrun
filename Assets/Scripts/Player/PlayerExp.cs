@@ -17,6 +17,7 @@ public class PlayerExp : MonoBehaviour
         if(currentExp >= maxExpToLevelUp)
         {
             LevelUp();
+            // enable perk prompt
         }
     }
 
