@@ -8,16 +8,9 @@ public class PayloadMovement : MonoBehaviour
 {
     [Header("Path Follow Settings")]
     public PayloadPath currentPath;
-    public int currentNodeID = 0;
     public float wayPointSize;
-
-    [Header("Speed Settings")]
-    public float onePlayerSpeed;
-    public float twoPlayerSpeed;
-    public float threePlayerSpeed;
-    public float reverseSpeed;
     public float rotationSpeed;
-    private float speed;
+    private int currentNodeID = 0;
 
     [Header("Reverse Settings")]
     public float reverseCountDownTime;
@@ -28,9 +21,14 @@ public class PayloadMovement : MonoBehaviour
     public LayerMask playerLayer;
     private int playersOnPayloadCount;
 
+    #region PayloadStats
+    private PayloadStats payloadStats;
+    private float speed;
+    #endregion
 
     private void Start()
     {
+        payloadStats = gameObject.GetComponent<PayloadStats>();
         reverseTimer = reverseCountDownTime;
         currentPath = GameObject.FindGameObjectWithTag("PayloadPath").GetComponent<PayloadPath>();
     }
@@ -45,15 +43,15 @@ public class PayloadMovement : MonoBehaviour
 
             if (playersOnPayloadCount == 1)
             {
-                speed = onePlayerSpeed;
+                speed = payloadStats.onePlayerSpeed;
             }
             else if (playersOnPayloadCount == 2)
             {
-                speed = twoPlayerSpeed;
+                speed = payloadStats.twoPlayerSpeed;
             }
             else if (playersOnPayloadCount == 3)
             {
-                speed = threePlayerSpeed;
+                speed = payloadStats.threePlayerSpeed;
             }
 
             float node_Distance = Vector3.Distance(currentPath.pathNodes[currentNodeID].position, transform.position);
@@ -73,7 +71,7 @@ public class PayloadMovement : MonoBehaviour
 
             if (reverseTimer <= 0 && currentNodeID > 0)
             {
-                speed = reverseSpeed;
+                speed = payloadStats.reverseSpeed;
 
                 float node_Distance = Vector3.Distance(currentPath.pathNodes[currentNodeID - 1].position, transform.position);
                 transform.position = Vector3.MoveTowards(transform.position, currentPath.pathNodes[currentNodeID - 1].position, Time.deltaTime * speed);

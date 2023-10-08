@@ -5,8 +5,14 @@ using UnityEngine;
 
 public class PayloadStats : MonoBehaviour
 {
-    public Image healthBar;
+    [Header("Speed Settings")]
+    public float onePlayerSpeed;
+    public float twoPlayerSpeed;
+    public float threePlayerSpeed;
+    public float reverseSpeed;
 
+    [Header("Health Settings")]
+    public Image healthBar;
     public float maxPayloadHealth;
     private float payloadHealth;
     
