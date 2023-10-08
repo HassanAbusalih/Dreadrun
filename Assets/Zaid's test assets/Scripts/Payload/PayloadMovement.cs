@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class PayloadFollowPath : MonoBehaviour
+public class PayloadMovement : MonoBehaviour
 {
     [Header("Path Follow Settings")]
     public PayloadPath currentPath;
