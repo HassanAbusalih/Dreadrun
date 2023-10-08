@@ -8,15 +8,7 @@ public class Playerstats : MonoBehaviour
     [SerializeField] float currentHealth;
     [SerializeField] float maxStamina = 100f;
     [SerializeField] float currentStamina;
-    public float CurrentStamina
-    {
 
-        get
-        {
-           return currentStamina;
-        }
-
-    }
 
     void Start()
     {
