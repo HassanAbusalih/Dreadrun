@@ -6,5 +6,4 @@ public class AttackUp : Perk
 {
     public int ATKincrease;
 
-
 }
