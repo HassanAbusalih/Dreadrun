@@ -2,51 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Playerstats : MonoBehaviour
+public class Playerstats 
 {
-    [SerializeField] float maxHealth = 100f;
-    [SerializeField] float currentHealth;
-    [SerializeField] float maxStamina = 100f;
-    [SerializeField] float currentStamina;
+    public int health;
+    public int maxHealth;
+    public int damage;
+    public float stamina;
+    public float maxStamina;
 
-
-    void Start()
+    public Playerstats(int maxHealth, int damage, float maxStamina)
     {
-        currentHealth = maxHealth;
-        currentStamina = maxStamina;
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
+        this.damage = damage;
+        this.maxStamina = maxStamina;
+        this.stamina = maxStamina;
     }
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(int damageAmount)
     {
-        currentHealth -= damageAmount;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth); 
-
-        if (currentHealth <= 0f)
+        health -= damageAmount;
+        if (health <= 0)
         {
-            Die(); 
+            Debug.Log("player die");
         }
     }
 
-    public void GainHealth(float healAmount)
+    public void ConsumeStamina(int drainAmount)
     {
-        currentHealth += healAmount;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
-    }
+        stamina -= drainAmount;
+        if(stamina <= 0)
+        {
 
-    public void ConsumeStamina(float staminaCost)
-    {
-        currentStamina -= staminaCost;
-        currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+        }
     }
-
-    public void RegainStamina(float staminaAmount)
+    public void GainStamina(int GainAmount)
     {
-        currentStamina += staminaAmount;
-        currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+        stamina -= GainAmount;
+        if (stamina > maxStamina)
+        {
+            stamina = maxStamina;
+        }
     }
-
-    void Die()
+    public void Heal(int healAmount)
     {
-        Debug.Log("Player die");
+        health += healAmount;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
     }
 }
