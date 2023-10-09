@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
         RandomDungeonCreator.dungeonSpawnPoints.Add(transform);
-        Debug.Log(RandomDungeonCreator.dungeonSpawnPoints.Count);
+
+        Debug.Log(gameObject.name + transform.position);
     }
 
 
