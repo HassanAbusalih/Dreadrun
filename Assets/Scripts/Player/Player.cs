@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     public int health;
     public int maxHealth;
-    public int damage;
+    public int attack;
     public float stamina;
     public float maxStamina;
 
