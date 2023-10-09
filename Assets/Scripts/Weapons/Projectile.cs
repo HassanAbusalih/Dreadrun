@@ -3,13 +3,13 @@ using UnityEngine;
 [RequireComponent (typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
-    int damage;
+    float damage;
     float speed;
     float range;
     Rigidbody rb;
     Vector3 initialPos;
 
-    public void Initialize(int damage, float speed, float range, int layer)
+    public void Initialize(float damage, float speed, float range, int layer)
     {
         rb = GetComponent<Rigidbody>();
         this.damage = damage;

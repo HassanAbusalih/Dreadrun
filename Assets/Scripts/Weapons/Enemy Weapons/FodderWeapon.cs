@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FodderWeapon : WeaponBase
+public class FodderWeapon : EnemyWeapon
 {
     [SerializeField] int projectileCount = 1;
 
@@ -20,7 +20,7 @@ public class FodderWeapon : WeaponBase
             Quaternion projectileRotation = Quaternion.Euler(0, rotation, 0) * transform.rotation;
             Vector3 projectileLocation = Quaternion.Euler(0, rotation, 0) * transform.forward;
             GameObject projectile = Instantiate(projectilePrefab, transform.position + projectileLocation, projectileRotation);
-            projectile.GetComponent<Projectile>().Initialize(damagePerShot, projectileSpeed, projectileRange, 9);
+            projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 9);
         }
         if (audioSource != null) audioSource.Play();
     }

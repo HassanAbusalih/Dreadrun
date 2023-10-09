@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class TurretWeapon : WeaponBase
+public class TurretWeapon : EnemyWeapon
 {
     [SerializeField] int projectileCount = 1;
     [SerializeField] float cooldown;
@@ -24,7 +24,7 @@ public class TurretWeapon : WeaponBase
         {
             counter++;
             GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
-            projectile.GetComponent<Projectile>().Initialize(damagePerShot, projectileSpeed, projectileRange, 9);
+            projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 9);
             if (audioSource != null) audioSource.Play();
             timeSinceLastShot = 0;
             yield return new WaitForSeconds(fireRate);

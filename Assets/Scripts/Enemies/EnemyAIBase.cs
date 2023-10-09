@@ -2,11 +2,11 @@ using UnityEngine;
 
 public abstract class EnemyAIBase : MonoBehaviour, IDamagable
 {
-    [SerializeField] int maxHealth = 5;
+    [SerializeField] float maxHealth = 5;
     protected WeaponBase weapon;
     protected Transform payload;
     protected Transform[] players;
-    int currentHealth;
+    float currentHealth;
 
     private void Start()
     {
@@ -15,7 +15,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
         weapon = GetComponent<WeaponBase>();
     }
 
-    public void TakeDamage(int Amount)
+    public void TakeDamage(float Amount)
     {
         currentHealth -= Amount;
         if (currentHealth == 0) { Destroy(gameObject); }

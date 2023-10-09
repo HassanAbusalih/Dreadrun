@@ -8,7 +8,7 @@ public class OnHitDamagable : MonoBehaviour, IDamagable
     [SerializeField] protected private UnityEvent onTakeDamage;
     
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         onTakeDamage?.Invoke();
         DoSomethingWhenObjectIsHit();
