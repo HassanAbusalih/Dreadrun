@@ -5,7 +5,8 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
     [SerializeField] float maxHealth = 5;
     protected WeaponBase weapon;
     protected Transform payload;
-    protected Transform[] players;
+    protected Transform[] players = new Transform[0];
+    protected Rigidbody rb;
     float currentHealth;
 
     private void Start()
@@ -13,6 +14,21 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
         currentHealth = maxHealth;
         gameObject.layer = 7;
         weapon = GetComponent<WeaponBase>();
+        rb = GetComponent<Rigidbody>();
+        if (players.Length == 0)
+        {
+            GetPlayers();
+        }
+    }
+
+    protected void GetPlayers()
+    {
+        PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
+        players = new Transform[playerControllers.Length];
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i] = playerControllers[i].transform;
+        }
     }
 
     public void TakeDamage(float Amount)
@@ -29,6 +45,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
 
     protected virtual Transform GetClosestPlayer()
     {
+        if (players.Length == 0) {  return null; }
         Transform closestPlayer = null;
         float closestDistance = float.MaxValue;
         foreach (Transform player in players)

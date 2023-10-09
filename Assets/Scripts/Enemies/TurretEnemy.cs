@@ -2,15 +2,6 @@ using UnityEngine;
 
 public class TurretEnemy : EnemyAIBase
 {
-    private void Awake()
-    {
-        PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
-        players = new Transform[playerControllers.Length];
-        for (int i = 0; i < players.Length; i++)
-        {
-            players[i] = playerControllers[i].transform;
-        }
-    }
     private void Update()
     {
         Transform target = GetClosestPlayer();
