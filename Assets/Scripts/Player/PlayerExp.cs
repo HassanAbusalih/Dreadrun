@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerExp : MonoBehaviour
 {
     [SerializeField] int currentExp, maxExpToLevelUp, currentLevel, expAmountToLevelUp;
+    public PerkSelector perkSelector;
 
     private void OnEnable()
     {
@@ -17,7 +18,7 @@ public class PlayerExp : MonoBehaviour
         if(currentExp >= maxExpToLevelUp)
         {
             LevelUp();
-            // enable perk prompt
+            perkSelector.RandomPerkSelector();
         }
     }
 
