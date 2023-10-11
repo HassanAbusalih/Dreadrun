@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class RandomDungeonCreator : MonoBehaviour
 {
-
     public static List<Transform> dungeonSpawnPoints = new List<Transform>();
 
     [SerializeField] int numberOfRoomsToSpawn;
@@ -13,9 +12,6 @@ public class RandomDungeonCreator : MonoBehaviour
     [SerializeField] bool destroySpawnPointParentOnSpawn;
     [SerializeField] GameObject[] roomPrefabs;
    
-
-
-
     private void Start()
     {
         StartTheRandomRoomSpawningProcess();
@@ -47,7 +43,6 @@ public class RandomDungeonCreator : MonoBehaviour
             roomToSpawnIndex++;
         }
     }
-
     int ResetRoomPrefabsToSpawnIndex(ref int _currentRoomToSpawnIndex)
     {
         if (_currentRoomToSpawnIndex == roomPrefabs.Length)
