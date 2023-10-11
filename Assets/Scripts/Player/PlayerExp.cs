@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerExp : MonoBehaviour
 {
     [SerializeField] int currentExp, maxExpToLevelUp, currentLevel, expAmountToLevelUp;
-    public PerkSelector perkSelector;
 
+    public PerkSelector perkSelector;
+    public ExperienceManager expmanager;
     private void OnEnable()
     {
-        ExperienceManager.Instance.OnExperienceChange += HandleExperience;
+        expmanager.OnExperienceChange += HandleExperience;
     }
 
     private void HandleExperience(int newExperience)
@@ -32,6 +33,6 @@ public class PlayerExp : MonoBehaviour
 
     private void OnDisable()
     {
-        ExperienceManager.Instance.OnExperienceChange -= HandleExperience;
+        expmanager.OnExperienceChange -= HandleExperience;
     }
 }

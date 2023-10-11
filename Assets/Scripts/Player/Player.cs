@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     public int attack;
     public float stamina;
     public float maxStamina;
+    public int attackSpeed;
 
     private void Start()
     {

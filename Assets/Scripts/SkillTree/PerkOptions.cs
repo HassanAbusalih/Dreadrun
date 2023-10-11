@@ -10,6 +10,8 @@ using UnityEngine.UI;
     public Button perkButton;
     public TextMeshProUGUI perkName;
 
+    public Image perkSprite;
+
     [HideInInspector]
     public Perk perk;
 }

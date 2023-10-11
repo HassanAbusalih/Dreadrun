@@ -14,7 +14,7 @@ public class PerkSelector : MonoBehaviour
 
     [SerializeField]
     private PerkOptions[] perkChoices;
-  
+
     void Start()
     {
         perkUIcanvas.SetActive(false);
@@ -24,7 +24,7 @@ public class PerkSelector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 
     public void RandomPerkSelector()
@@ -43,6 +43,8 @@ public class PerkSelector : MonoBehaviour
 
             selectedIndexes.Add(randomIndexNum);
             perkChoices[perkIndex].perk = perkPool[randomIndexNum];
+            
+
         }
 
         DisplayPerkDetails();
@@ -53,6 +55,8 @@ public class PerkSelector : MonoBehaviour
         foreach (var choice in perkChoices)
         {
             choice.perkName.text = choice.perk.perkName;
+            choice.perkSprite.sprite = choice.perk.perkIcon;
+            Debug.Log("Selected Perk: " + choice.perk.perkName);
         }
     }
 
