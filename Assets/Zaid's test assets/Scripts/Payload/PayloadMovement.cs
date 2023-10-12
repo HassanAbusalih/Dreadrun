@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEngine;
 
 public class PayloadMovement : MonoBehaviour
@@ -21,9 +19,13 @@ public class PayloadMovement : MonoBehaviour
     public LayerMask playerLayer;
     private int playersOnPayloadCount;
 
+    [Header("Checkpoint Settings")]
+    private PayloadCheckpointSystem checkpoint;
+    private int lastCheckpointNodeID = 0;
+
     #region PayloadStats
     private PayloadStats payloadStats;
-    private float speed;
+    public float movementSpeed;
     #endregion
 
     private void Start()
@@ -32,27 +34,46 @@ public class PayloadMovement : MonoBehaviour
         reverseTimer = reverseCountDownTime;
         currentPath = GameObject.FindGameObjectWithTag("PayloadPath").GetComponent<PayloadPath>();
     }
+
     private void Update()
     {
         Collider[] playersOnPayload = Physics.OverlapSphere(transform.position, payloadRange, playerLayer);
         playersOnPayloadCount = playersOnPayload.Length;
 
-        if (playersOnPayloadCount > 0 && currentNodeID < currentPath.pathNodes.Count)
+        if (playersOnPayloadCount > 0 && currentNodeID < currentPath.pathNodes.Count && checkpoint.onCheckpoint == false)
         {
             reverseTimer = reverseCountDownTime;
 
-            if (playersOnPayloadCount == 1)
-            {
-                speed = payloadStats.onePlayerSpeed;
-            }
-            else if (playersOnPayloadCount == 2)
-            {
-                speed = payloadStats.twoPlayerSpeed;
-            }
-            else if (playersOnPayloadCount == 3)
-            {
-                speed = payloadStats.threePlayerSpeed;
-            }
+            PlayerCheck();
+
+            FollowPath(movementSpeed * -1);
+        }
+        else if (checkpoint.onCheckpoint == false)
+        {
+            FollowPath(movementSpeed * -1);
+        }
+    }
+
+    private void PlayerCheck()
+    {
+        if (playersOnPayloadCount == 1)
+        {
+            movementSpeed = payloadStats.onePlayerSpeed;
+        }
+        else if (playersOnPayloadCount == 2)
+        {
+            movementSpeed = payloadStats.twoPlayerSpeed;
+        }
+        else if (playersOnPayloadCount == 3)
+        {
+            movementSpeed = payloadStats.threePlayerSpeed;
+        }
+    }
+
+    private void FollowPath(float speed)
+    {
+        if (speed > 0)
+        {
 
             float node_Distance = Vector3.Distance(currentPath.pathNodes[currentNodeID].position, transform.position);
             transform.position = Vector3.MoveTowards(transform.position, currentPath.pathNodes[currentNodeID].position, Time.deltaTime * speed);
@@ -63,15 +84,20 @@ public class PayloadMovement : MonoBehaviour
             if (node_Distance <= wayPointSize)
             {
                 currentNodeID++;
+                if (currentPath.pathNodes[currentNodeID].gameObject.CompareTag("Checkpoint") && currentNodeID > lastCheckpointNodeID)
+                {
+                    lastCheckpointNodeID = currentNodeID;
+                    checkpoint.ActivateCheckpoint();
+                }
             }
         }
-        else
+        else if (speed < 0) 
         {
             reverseTimer -= Time.deltaTime;
 
             if (reverseTimer <= 0 && currentNodeID > 0)
             {
-                speed = payloadStats.reverseSpeed;
+                movementSpeed = speed * -1;
 
                 float node_Distance = Vector3.Distance(currentPath.pathNodes[currentNodeID - 1].position, transform.position);
                 transform.position = Vector3.MoveTowards(transform.position, currentPath.pathNodes[currentNodeID - 1].position, Time.deltaTime * speed);
