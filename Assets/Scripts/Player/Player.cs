@@ -2,14 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class Player : MonoBehaviour
 {
+    //player controls 
     [SerializeField] float speed = 10f;
     [SerializeField] Rigidbody rb;
     [SerializeField] KeyCode dodge;
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
+
+    // player stats 
+    [SerializeField]
+    public int health;
+    public int maxHealth;
+    public int attack;
+    public float stamina;
+    public float maxStamina;
+    public int attackSpeed;
 
     private void Start()
     {
