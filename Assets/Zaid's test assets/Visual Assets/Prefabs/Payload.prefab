@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 4853320331616067755}
   - component: {fileID: 4853320331616067767}
   - component: {fileID: 425784827}
+  - component: {fileID: 4330576952068625914}
   - component: {fileID: 425784821}
   m_Layer: 0
   m_Name: Payload
@@ -465,6 +466,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  movementSpeed: 0
 --- !u!114 &425784827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,6 +485,20 @@ MonoBehaviour:
   reverseSpeed: 1
   healthBar: {fileID: 1773124046}
   maxPayloadHealth: 100
+  storedEXP: 0
+--- !u!114 &4330576952068625914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4853320331616067752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d0a8a045aa6b1418a7f0da37a46bac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkpointDuration: 0
 --- !u!330 &425784821
 ParticleSystemForceField:
   m_ObjectHideFlags: 0

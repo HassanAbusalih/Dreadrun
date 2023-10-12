@@ -15,6 +15,9 @@ public class PayloadStats : MonoBehaviour
     public Image healthBar;
     public float maxPayloadHealth;
     private float payloadHealth;
+
+    [Header("EXP Settings")]
+    public float storedEXP;
     
     void Start()
     {
