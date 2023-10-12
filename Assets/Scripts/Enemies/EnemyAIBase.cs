@@ -23,11 +23,11 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
 
     protected void GetPlayers()
     {
-        PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
-        players = new Transform[playerControllers.Length];
-        for (int i = 0; i < players.Length; i++)
+        Player[] players = FindObjectsOfType<Player>();
+        this.players = new Transform[players.Length];
+        for (int i = 0; i < this.players.Length; i++)
         {
-            players[i] = playerControllers[i].transform;
+            this.players[i] = players[i].transform;
         }
     }
 

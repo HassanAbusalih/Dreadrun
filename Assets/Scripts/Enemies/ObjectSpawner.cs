@@ -25,16 +25,16 @@ public class ObjectSpawner : MonoBehaviour
 
     private void GetReferences()
     {
-        PayloadFollowPath payloadFollow = FindObjectOfType<PayloadFollowPath>();
-        if (payloadFollow != null)
+        PayloadMovement payload = FindObjectOfType<PayloadMovement>();
+        if (payload != null)
         {
-            payload = payloadFollow.transform;
+            this.payload = payload.transform;
         }
-        PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
-        players = new Transform[playerControllers.Length];
-        for (int i = 0; i < players.Length; i++)
+        Player[] players = FindObjectsOfType<Player>();
+        this.players = new Transform[players.Length];
+        for (int i = 0; i < this.players.Length; i++)
         {
-            players[i] = playerControllers[i].transform;
+            this.players[i] = players[i].transform;
         }
     }
 
