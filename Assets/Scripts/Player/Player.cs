@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
 
+
     // player stats 
     [SerializeField]
     public int health;
@@ -20,10 +22,24 @@ public class Player : MonoBehaviour
     public float stamina;
     public float maxStamina;
     public int attackSpeed;
+    public Slider healthBar;
+    public Slider staminaBar;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        health = maxHealth;
+        stamina = maxStamina;
+        if (healthBar != null)
+        {
+            healthBar.maxValue = maxHealth;
+            healthBar.value = health;
+        }
+        if(staminaBar != null)
+        {
+            staminaBar.maxValue = maxStamina;
+            staminaBar.value = stamina;
+        }
     }
 
     private void Update()
@@ -45,15 +61,44 @@ public class Player : MonoBehaviour
         rb.freezeRotation = true;
         Vector3 endPosition = transform.position + dashDirection * dashDistance;
         float elapsedTime = 0f;
-        while (elapsedTime < dashDuration)
+        while (elapsedTime < dashDuration && isDashing)
         {
             float t = elapsedTime / dashDuration;
             rb.MovePosition(Vector3.Lerp(transform.position, endPosition, t));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        StopDash();
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isDashing)
+        {
+            if (collision.gameObject.CompareTag("Wall"))
+            {
+                StopDash();
+            }
+        }
+    }
+    private void StopDash()
+    {
+        isDashing = false;
         rb.useGravity = true;
         rb.freezeRotation = false;
-        isDashing = false;
+    }
+    public void UpdateHealthBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.value = health;
+        }
+    }
+
+    public void UpdateStaminaBar()
+    {
+        if (staminaBar != null)
+        {
+            staminaBar.value = stamina;
+        }
     }
 }
