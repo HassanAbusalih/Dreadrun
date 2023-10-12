@@ -6,28 +6,63 @@ using UnityEngine;
 
 public class PerkSelector : MonoBehaviour
 {
+    public Player player;
     [SerializeField]
-    private Perk[] perkPool;
-  
+    private Perk[] perkPool; //assigned in inspector
+
+    public GameObject perkUIcanvas;
+
+    [SerializeField]
+    private PerkOptions[] perkChoices;
+
     void Start()
     {
-       
+        perkUIcanvas.SetActive(false);
+        player = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 
-    private void RandomPerkSelector(int perkSelection) //gets three of em and puts them into the perkselection array
+    public void RandomPerkSelector()
     {
-        Perk[] selectedPerks = new Perk[perkSelection];
+        //Perk[] selectedPerks = new Perk[perkSelection];
+        perkUIcanvas.SetActive(true);
+        List<int> selectedIndexes = new List<int>();
 
-        for (int perkIndex = 0; perkIndex < perkSelection; perkIndex++)
+        for (int perkIndex = 0; perkIndex < perkChoices.Length; perkIndex++)
         {
-            int randomindexNum = UnityEngine.Random.Range(0, perkPool.Length);
-            selectedPerks[perkIndex] = perkPool[randomindexNum];
+            int randomIndexNum;
+            do
+            {
+                randomIndexNum = UnityEngine.Random.Range(0, perkPool.Length);
+            } while (selectedIndexes.Contains(randomIndexNum));
+
+            selectedIndexes.Add(randomIndexNum);
+            perkChoices[perkIndex].perk = perkPool[randomIndexNum];
+            
+
         }
+
+        DisplayPerkDetails();
+    }
+
+    public void DisplayPerkDetails()
+    {
+        foreach (var choice in perkChoices)
+        {
+            choice.perkName.text = choice.perk.perkName;
+            choice.perkSprite.sprite = choice.perk.perkIcon;
+            Debug.Log("Selected Perk: " + choice.perk.perkName);
+        }
+    }
+
+    public void OnClick(int perkIndexSelected)
+    {
+        perkChoices[perkIndexSelected].perk.ApplyPlayerBuffs(player);
+        perkUIcanvas.SetActive(false);
     }
 }
