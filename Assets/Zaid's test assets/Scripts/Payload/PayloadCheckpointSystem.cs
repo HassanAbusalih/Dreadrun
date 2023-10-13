@@ -10,7 +10,7 @@ public class PayloadCheckpointSystem : MonoBehaviour
     private PayloadStats payloadStats;
 
     [NonSerialized]
-    public bool onCheckpoint;
+    public bool onCheckpoint = false;
 
     [SerializeField]
     private float checkpointDuration;

@@ -20,42 +20,43 @@ public class PayloadMovement : MonoBehaviour
     private int playersOnPayloadCount;
 
     [Header("Checkpoint Settings")]
-    //private PayloadCheckpointSystem checkpoint;
+    private PayloadCheckpointSystem checkpointSystem;
     private int lastCheckpointNodeID = 0;
 
-    #region PayloadStats
+    [Header("Payload Stats")]
     private PayloadStats payloadStats;
     private float movementSpeed;
-    #endregion
 
     private void Start()
     {
         payloadStats = gameObject.GetComponent<PayloadStats>();
+        checkpointSystem = gameObject.GetComponent<PayloadCheckpointSystem>();
         reverseTimer = reverseCountDownTime;
         currentPath = GameObject.FindGameObjectWithTag("PayloadPath").GetComponent<PayloadPath>();
     }
 
     private void Update()
     {
-        Collider[] playersOnPayload = Physics.OverlapSphere(transform.position, payloadRange, playerLayer);
-        playersOnPayloadCount = playersOnPayload.Length;
+        StartCoroutine(PlayerCheck());
 
-        if (playersOnPayloadCount > 0 && currentNodeID < currentPath.pathNodes.Count)
+        if (playersOnPayloadCount > 0 && currentNodeID < currentPath.pathNodes.Count && checkpointSystem.onCheckpoint == false)
         {
             reverseTimer = reverseCountDownTime;
 
-            PlayerCheck();
-
-            FollowPath(movementSpeed * -1);
+            FollowPath(movementSpeed * 1);
         }
-        else
+        else if (checkpointSystem.onCheckpoint == false)
         {
             FollowPath(movementSpeed * -1);
         }
     }
 
-    private void PlayerCheck()
+    IEnumerator PlayerCheck()
     {
+        Collider[] playersOnPayload = Physics.OverlapSphere(transform.position, payloadRange, playerLayer);
+
+        playersOnPayloadCount = playersOnPayload.Length;
+
         if (playersOnPayloadCount == 1)
         {
             movementSpeed = payloadStats.onePlayerSpeed;
@@ -68,6 +69,8 @@ public class PayloadMovement : MonoBehaviour
         {
             movementSpeed = payloadStats.threePlayerSpeed;
         }
+
+        yield return new WaitForSeconds(.1f);
     }
 
     private void FollowPath(float speed)
