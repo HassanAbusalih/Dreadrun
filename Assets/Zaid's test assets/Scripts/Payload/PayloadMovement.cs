@@ -17,7 +17,8 @@ public class PayloadMovement : MonoBehaviour
     [Header("Player Detection Settings")]
     public float payloadRange;
     public LayerMask playerLayer;
-    private int playersOnPayloadCount;
+    private GameObject[] playersInGame;
+    private int playersOnPayload;
 
     [Header("Checkpoint Settings")]
     private PayloadCheckpointSystem checkpointSystem;
@@ -33,13 +34,14 @@ public class PayloadMovement : MonoBehaviour
         checkpointSystem = gameObject.GetComponent<PayloadCheckpointSystem>();
         reverseTimer = reverseCountDownTime;
         currentPath = GameObject.FindGameObjectWithTag("PayloadPath").GetComponent<PayloadPath>();
+        playersInGame = GameObject.FindGameObjectsWithTag("Player");
     }
 
     private void Update()
     {
         StartCoroutine(PlayerCheck());
 
-        if (playersOnPayloadCount > 0 && currentNodeID < currentPath.pathNodes.Count && checkpointSystem.onCheckpoint == false)
+        if (playersOnPayload > 0 && currentNodeID < currentPath.pathNodes.Count && checkpointSystem.onCheckpoint == false)
         {
             reverseTimer = reverseCountDownTime;
 
@@ -53,19 +55,25 @@ public class PayloadMovement : MonoBehaviour
 
     IEnumerator PlayerCheck()
     {
-        Collider[] playersOnPayload = Physics.OverlapSphere(transform.position, payloadRange, playerLayer);
+        playersOnPayload = 0;
 
-        playersOnPayloadCount = playersOnPayload.Length;
+        foreach(GameObject player in playersInGame)
+        {
+            if(Vector3.Distance(transform.position, player.transform.position) < payloadRange)
+            {
+                playersOnPayload++;
+            }
+        }
 
-        if (playersOnPayloadCount == 1)
+        if (playersOnPayload == 1)
         {
             movementSpeed = payloadStats.onePlayerSpeed;
         }
-        else if (playersOnPayloadCount == 2)
+        else if (playersOnPayload == 2)
         {
             movementSpeed = payloadStats.twoPlayerSpeed;
         }
-        else if (playersOnPayloadCount == 3)
+        else if (playersOnPayload == 3)
         {
             movementSpeed = payloadStats.threePlayerSpeed;
         }
