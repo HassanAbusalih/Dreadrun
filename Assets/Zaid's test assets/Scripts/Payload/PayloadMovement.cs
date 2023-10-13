@@ -20,12 +20,12 @@ public class PayloadMovement : MonoBehaviour
     private int playersOnPayloadCount;
 
     [Header("Checkpoint Settings")]
-    private PayloadCheckpointSystem checkpoint;
+    //private PayloadCheckpointSystem checkpoint;
     private int lastCheckpointNodeID = 0;
 
     #region PayloadStats
     private PayloadStats payloadStats;
-    public float movementSpeed;
+    private float movementSpeed;
     #endregion
 
     private void Start()
@@ -40,7 +40,7 @@ public class PayloadMovement : MonoBehaviour
         Collider[] playersOnPayload = Physics.OverlapSphere(transform.position, payloadRange, playerLayer);
         playersOnPayloadCount = playersOnPayload.Length;
 
-        if (playersOnPayloadCount > 0 && currentNodeID < currentPath.pathNodes.Count && checkpoint.onCheckpoint == false)
+        if (playersOnPayloadCount > 0 && currentNodeID < currentPath.pathNodes.Count)
         {
             reverseTimer = reverseCountDownTime;
 
@@ -48,7 +48,7 @@ public class PayloadMovement : MonoBehaviour
 
             FollowPath(movementSpeed * -1);
         }
-        else if (checkpoint.onCheckpoint == false)
+        else
         {
             FollowPath(movementSpeed * -1);
         }
@@ -87,7 +87,7 @@ public class PayloadMovement : MonoBehaviour
                 if (currentPath.pathNodes[currentNodeID].gameObject.CompareTag("Checkpoint") && currentNodeID > lastCheckpointNodeID)
                 {
                     lastCheckpointNodeID = currentNodeID;
-                    checkpoint.ActivateCheckpoint();
+                    //checkpoint.ActivateCheckpoint();
                 }
             }
         }
