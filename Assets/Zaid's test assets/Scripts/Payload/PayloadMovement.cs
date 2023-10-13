@@ -95,10 +95,10 @@ public class PayloadMovement : MonoBehaviour
             if (node_Distance <= wayPointSize)
             {
                 currentNodeID++;
-                if (currentPath.pathNodes[currentNodeID].gameObject.CompareTag("Checkpoint") && currentNodeID > lastCheckpointNodeID)
+                if (currentPath.pathNodes[currentNodeID - 1].gameObject.CompareTag("Checkpoint") && currentNodeID > lastCheckpointNodeID)
                 {
                     lastCheckpointNodeID = currentNodeID;
-                    //checkpoint.ActivateCheckpoint();
+                    StartCoroutine(checkpointSystem.ActivateCheckpoint());
                 }
             }
         }
