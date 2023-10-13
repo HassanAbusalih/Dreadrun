@@ -14,7 +14,7 @@ public class PickableSpawnPoint : MonoBehaviour
     void AddThisSpawnPointToPickablesSpawnPointsList()
     {
         if (doNotSpawnHere) return;
-        RandomDungeonCreator.dungeonSpawnPoints.Add(transform);
+        PickablesSpawnManager.AllPickableSpawnPoints.Add(transform);
         if (!debugMode) return;
         Debug.Log(gameObject.name + transform.position);
     }

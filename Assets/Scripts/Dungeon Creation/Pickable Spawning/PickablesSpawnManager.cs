@@ -34,8 +34,6 @@ public class PickablesSpawnManager : MonoBehaviour
 
     public static List<Transform> AllPickableSpawnPoints = new List<Transform>();
 
-
-
     private void Start()
     {
         InitializeAllExpOrbValueTypesDictionary();
@@ -46,7 +44,6 @@ public class PickablesSpawnManager : MonoBehaviour
     {
         SpawnAllExpOrbs();
     }
-
 
     void SpawnAllExpOrbs()
     {
@@ -63,11 +60,12 @@ public class PickablesSpawnManager : MonoBehaviour
         }
     }
 
-
-
-
     void SpawnAPickableAtRandomSpawnPoint(GameObject _pickableToSpawn)
     {
+        // if there are no spawn points left, then return (this is to avoid index out of range error)
+        if (AllPickableSpawnPoints.Count == 0)
+        { Debug.LogWarning("There is no more pickable spawn points,so cannot spawn more, try changing spawn settings "); return; } 
+
         int _randomPickableSpawnPointIndex = Random.Range(0, AllPickableSpawnPoints.Count);
         Vector3 _randomSpawnPosition = AllPickableSpawnPoints[_randomPickableSpawnPointIndex].position;
 
@@ -85,11 +83,8 @@ public class PickablesSpawnManager : MonoBehaviour
     {
         if (expOrbPrefabs.Length == 0) { return; }
 
-        for (int i = 0; i < expOrbPrefabs.Length; i++)
-        {
-            allExpOrbValueTypesDictionary.Add(expOrbPrefabs[i], lowExpOrbValue);
-        }
+        allExpOrbValueTypesDictionary.Add(expOrbPrefabs[0], lowExpOrbValue);
+        allExpOrbValueTypesDictionary.Add(expOrbPrefabs[1], mediumExpOrbValue);
+        allExpOrbValueTypesDictionary.Add(expOrbPrefabs[2], highExpOrbValue);    
     }
-
-
 }
