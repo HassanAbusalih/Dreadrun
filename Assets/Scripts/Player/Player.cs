@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
     //player controls 
     [SerializeField] float speed = 10f;
@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
-
+    [SerializeField] LayerMask ground;
 
     // player stats 
     [SerializeField]
@@ -61,20 +61,23 @@ public class Player : MonoBehaviour
         rb.freezeRotation = true;
         Vector3 endPosition = transform.position + dashDirection * dashDistance;
         float elapsedTime = 0f;
+
         while (elapsedTime < dashDuration && isDashing)
         {
-            float t = elapsedTime / dashDuration;
-            rb.MovePosition(Vector3.Lerp(transform.position, endPosition, t));
+            Vector3 newPosition = Vector3.MoveTowards(transform.position, endPosition, Time.deltaTime * (dashDistance / dashDuration));
+            rb.MovePosition(newPosition);
             elapsedTime += Time.deltaTime;
+
             yield return null;
         }
+
         StopDash();
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (isDashing)
         {
-            if (collision.gameObject.CompareTag("Wall"))
+            if (collision.gameObject.layer != ground)
             {
                 StopDash();
             }
@@ -86,6 +89,13 @@ public class Player : MonoBehaviour
         rb.useGravity = true;
         rb.freezeRotation = false;
     }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        UpdateHealthBar();
+    }
+
     public void UpdateHealthBar()
     {
         if (healthBar != null)
