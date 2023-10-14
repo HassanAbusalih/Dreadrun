@@ -913,6 +913,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1101431753}
+  - {fileID: 1621284410}
   m_Father: {fileID: 1128435362}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -972,7 +973,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2004,6 +2005,17 @@ MonoBehaviour:
   expAmountToLevelUp: 30
   perkSelector: {fileID: 1408745617}
   expmanager: {fileID: 1162939262}
+--- !u!114 &808540268 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1416142338507263347, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
+  m_PrefabInstance: {fileID: 1370247522}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808540266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df69244d340cce74294bd80c2fa7e37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &898203635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,7 +2376,7 @@ RectTransform:
   - {fileID: 1632830460}
   - {fileID: 493573757}
   m_Father: {fileID: 1128435362}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2422,7 +2434,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2558,7 +2570,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 382190365}
-  - {fileID: 1621284410}
   - {fileID: 1110939580}
   - {fileID: 1895462838}
   m_Father: {fileID: 0}
@@ -3023,6 +3034,30 @@ PrefabInstance:
       propertyPath: attack
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1416142338507263347, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
+      propertyPath: playerStats.attack
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1416142338507263347, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
+      propertyPath: playerStats.health
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1416142338507263347, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
+      propertyPath: playerStats.stamina
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1416142338507263347, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
+      propertyPath: playerStats.maxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1416142338507263347, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
+      propertyPath: playerStats.maxStamina
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1416142338507263347, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
+      propertyPath: playerStats.attackSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1416142338507263359, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3213,7 +3248,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534cef76f63a69f41836843815679e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  playerStats:
+    health: 0
+    maxHealth: 0
+    attack: 0
+    stamina: 0
+    maxStamina: 0
+    attackSpeed: 0
+    Range: 0
+    Spread: 0
+  player: {fileID: 808540268}
   perkPool:
   - {fileID: 11400000, guid: f88b0809bb9f0c3468f2e6b21536d747, type: 2}
   - {fileID: 11400000, guid: 9fec4a786b26b5a4bb721cb18742b1ca, type: 2}
@@ -3580,16 +3624,16 @@ RectTransform:
   m_GameObject: {fileID: 1621284409}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.7180948, y: 2.1278808, z: 2.5039363}
+  m_LocalScale: {x: 0.7142417, y: 0.2917714, z: 0.73032343}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1566749155}
-  m_Father: {fileID: 1128435362}
+  m_Father: {fileID: 382190365}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 172, y: 595.35406}
+  m_AnchoredPosition: {x: 7.6743774, y: 15.185669}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1621284411
@@ -4223,7 +4267,7 @@ RectTransform:
   - {fileID: 694931743}
   - {fileID: 1304971931}
   m_Father: {fileID: 1128435362}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

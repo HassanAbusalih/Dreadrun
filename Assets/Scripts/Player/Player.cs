@@ -20,8 +20,13 @@ public class Player : MonoBehaviour, IDamagable
     public Slider staminaBar;
     public PlayerStats playerStats;
 
+    // player weapon, etc
+    [SerializeField]
+    public PlayerWeapon playerWeapon;
+
     private void Start()
     {
+        playerWeapon = GetComponent<PlayerWeapon>();
         //playerStats = new PlayerStats();
         //eventually make it so it sets the player stats to a serialized list of per-player stats.
         
@@ -108,5 +113,17 @@ public class Player : MonoBehaviour, IDamagable
         {
             staminaBar.value = playerStats.stamina;
         }
+    }
+
+    public void ScaleWeapon()
+    {
+        if (playerWeapon == null)
+        {
+            return;
+        }
+
+        playerWeapon.FireRate *= playerStats.attackSpeed;
+        playerWeapon.DamageModifier *= playerStats.attack;
+        playerWeapon.ProjectileRange *= playerStats.Range;
     }
 }

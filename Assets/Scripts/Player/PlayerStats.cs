@@ -7,9 +7,11 @@ using UnityEngine;
 public class PlayerStats
 {
     public float health;
-    public int maxHealth;
-    public int attack;
+    public float maxHealth;
+    public float attack;
     public float stamina;
     public float maxStamina;
-    public int attackSpeed;
+    public float attackSpeed;
+    public float Range;
+    public float Spread;
 }

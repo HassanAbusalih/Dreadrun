@@ -20,7 +20,8 @@ public class PerkSelector : MonoBehaviour
     void Start()
     {
         perkUIcanvas.SetActive(false);
-        playerStats = player.playerStats;
+        //playerStats = player.playerStats;
+        player = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame
@@ -45,8 +46,7 @@ public class PerkSelector : MonoBehaviour
 
             selectedIndexes.Add(randomIndexNum);
             perkChoices[perkIndex].perk = perkPool[randomIndexNum];
-            
-
+           
         }
 
         DisplayPerkDetails();
@@ -64,7 +64,7 @@ public class PerkSelector : MonoBehaviour
 
     public void OnClick(int perkIndexSelected)
     {
-        perkChoices[perkIndexSelected].perk.ApplyPlayerBuffs(playerStats);
+        perkChoices[perkIndexSelected].perk.ApplyPlayerBuffs(player);
         perkUIcanvas.SetActive(false);
     }
 }
