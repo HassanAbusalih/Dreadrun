@@ -10,7 +10,7 @@ public class AttackUp : Perk
     [SerializeField]
     private int ATKIncrease;
 
-    public override void ApplyPlayerBuffs(Player player)
+    public override void ApplyPlayerBuffs(PlayerStats player)
     {
         float increaseAmount = player.attack * (attackScaling / 100f); //increase by %
         int roundedATK = Mathf.RoundToInt(increaseAmount); //round it to an int to be able 2 use

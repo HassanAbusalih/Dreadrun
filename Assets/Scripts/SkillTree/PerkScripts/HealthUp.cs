@@ -10,7 +10,7 @@ public class HealthUp : Perk
     [SerializeField]
     private int AddHP;
 
-    public override void ApplyPlayerBuffs(Player player)
+    public override void ApplyPlayerBuffs(PlayerStats player)
     {
         float increaseAmount = player.health * (HPScaling / 100f); //increase by %
         int roundedHP = Mathf.RoundToInt(increaseAmount); //round it to an int to be able 2 use

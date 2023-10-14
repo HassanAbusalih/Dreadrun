@@ -8,7 +8,7 @@ public class AttackSpeed : Perk
     [SerializeField]
     private int AddAttackSpeed;
 
-    public override void ApplyPlayerBuffs(Player player)
+    public override void ApplyPlayerBuffs(PlayerStats player)
     {
      
     }
