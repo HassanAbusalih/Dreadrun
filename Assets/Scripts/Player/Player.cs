@@ -16,7 +16,7 @@ public class Player : MonoBehaviour, IDamagable
 
     // player stats 
     [SerializeField]
-    public int health;
+    public float health;
     public int maxHealth;
     public int attack;
     public float stamina;
@@ -90,7 +90,7 @@ public class Player : MonoBehaviour, IDamagable
         rb.freezeRotation = false;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         health -= amount;
         UpdateHealthBar();
