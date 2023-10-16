@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamagable
 {
-    //player controls 
+    // player controls 
     [SerializeField] float speed = 10f;
     [SerializeField] Rigidbody rb;
     [SerializeField] KeyCode dodge;
@@ -121,9 +121,9 @@ public class Player : MonoBehaviour, IDamagable
         {
             return;
         }
-
         playerWeapon.FireRate *= playerStats.attackSpeed;
         playerWeapon.DamageModifier *= playerStats.attack;
         playerWeapon.ProjectileRange *= playerStats.Range;
     }
+
 }
