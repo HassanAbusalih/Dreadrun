@@ -12,7 +12,7 @@ public class WeaponIDs : ScriptableObject
     public void InitializeWeaponIDsDictionary()
     {
         WeaponIDsDictionary.Clear();
-        for (int i = 1; i < weaponPrefabs.Count; i++)
+        for (int i = 1; i <= weaponPrefabs.Count; i++)
         {
             WeaponIDsDictionary.Add(i, weaponPrefabs[i-1]);
         }
