@@ -22,8 +22,8 @@ public class GenericWeapon : PlayerWeapon
     {
         if (timeSinceLastShot < fireRate) return;
         timeSinceLastShot = 0;
-        float rotationAmount = projectileSpreadAngle / (projectileCount - 1);
-        float startAngle = -projectileSpreadAngle / 2;
+        float rotationAmount = spreadAngle / (projectileCount - 1);
+        float startAngle = -spreadAngle / 2;
         for (int i = 0; i < projectileCount; i++)
         {
             float rotation = startAngle + i * rotationAmount;

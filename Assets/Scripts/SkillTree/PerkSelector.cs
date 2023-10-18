@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class PerkSelector : MonoBehaviour
 {
+    public PlayerStats playerStats;
     public Player player;
+
     [SerializeField]
     private Perk[] perkPool; //assigned in inspector
 
@@ -18,13 +20,8 @@ public class PerkSelector : MonoBehaviour
     void Start()
     {
         perkUIcanvas.SetActive(false);
+        //playerStats = player.playerStats;
         player = FindObjectOfType<Player>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void RandomPerkSelector()
@@ -43,8 +40,7 @@ public class PerkSelector : MonoBehaviour
 
             selectedIndexes.Add(randomIndexNum);
             perkChoices[perkIndex].perk = perkPool[randomIndexNum];
-            
-
+           
         }
 
         DisplayPerkDetails();

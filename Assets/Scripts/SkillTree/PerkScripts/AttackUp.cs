@@ -12,9 +12,9 @@ public class AttackUp : Perk
 
     public override void ApplyPlayerBuffs(Player player)
     {
-        float increaseAmount = player.attack * (attackScaling / 100f); //increase by %
-        int roundedATK = Mathf.RoundToInt(increaseAmount); //round it to an int to be able 2 use
-        player.attack += roundedATK;
-        Debug.Log(player.attack);
+        float increaseAmount = player.playerStats.attack * (attackScaling / 100f);
+        player.playerStats.attack += increaseAmount;
+        player.ScaleWeapon();
+        Debug.Log(player.playerStats.attack);
     }
 }

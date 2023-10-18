@@ -3,42 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
-    //player controls 
+    // player controls 
     [SerializeField] float speed = 10f;
     [SerializeField] Rigidbody rb;
     [SerializeField] KeyCode dodge;
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
-
+    [SerializeField] LayerMask ground;
 
     // player stats 
     [SerializeField]
-    public int health;
-    public int maxHealth;
-    public int attack;
-    public float stamina;
-    public float maxStamina;
-    public int attackSpeed;
     public Slider healthBar;
     public Slider staminaBar;
+    public PlayerStats playerStats;
+
+    // player weapon, etc
+    [SerializeField]
+    public PlayerWeapon playerWeapon;
+    [SerializeField] bool isWeaponPickedUp;
+    [SerializeField] Transform weaponEquipPosition;
+    [SerializeField] WeaponIDs weaponIDsSO;
+    [SerializeField] int currentWeaponID;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        health = maxHealth;
-        stamina = maxStamina;
+        weaponIDsSO.InitializeWeaponIDsDictionary();
+        playerStats.health = playerStats.maxHealth;
+        playerStats.stamina = playerStats.maxStamina;
+
         if (healthBar != null)
         {
-            healthBar.maxValue = maxHealth;
-            healthBar.value = health;
+            healthBar.maxValue = playerStats.maxHealth;
+            healthBar.value = playerStats.health;
         }
-        if(staminaBar != null)
+        if (staminaBar != null)
         {
-            staminaBar.maxValue = maxStamina;
-            staminaBar.value = stamina;
+            staminaBar.maxValue = playerStats.maxStamina;
+            staminaBar.value = playerStats.stamina;
         }
     }
 
@@ -61,23 +66,45 @@ public class Player : MonoBehaviour
         rb.freezeRotation = true;
         Vector3 endPosition = transform.position + dashDirection * dashDistance;
         float elapsedTime = 0f;
+
         while (elapsedTime < dashDuration && isDashing)
         {
-            float t = elapsedTime / dashDuration;
-            rb.MovePosition(Vector3.Lerp(transform.position, endPosition, t));
+            Vector3 newPosition = Vector3.MoveTowards(transform.position, endPosition, Time.deltaTime * (dashDistance / dashDuration));
+            rb.MovePosition(newPosition);
             elapsedTime += Time.deltaTime;
+
             yield return null;
         }
+
         StopDash();
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (isDashing)
         {
-            if (collision.gameObject.CompareTag("Wall"))
+            if (collision.gameObject.layer != ground)
             {
                 StopDash();
             }
+        }
+
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        PickUpWeaponOnTrigger(other.gameObject);
+    }
+
+    void PickUpWeaponOnTrigger(GameObject _weaponCollided)
+    {
+        if (isWeaponPickedUp) return;
+
+        if (_weaponCollided.TryGetComponent(out PickableWeapon _pickableWeaponToEquip))
+        {
+            _pickableWeaponToEquip.PickUpWeapon(weaponEquipPosition,ref currentWeaponID);
+            playerWeapon = _weaponCollided.GetComponent<PlayerWeapon>();
+            isWeaponPickedUp = true;
         }
     }
     private void StopDash()
@@ -86,11 +113,18 @@ public class Player : MonoBehaviour
         rb.useGravity = true;
         rb.freezeRotation = false;
     }
+
+    public void TakeDamage(float amount)
+    {
+        playerStats.health -= amount;
+        UpdateHealthBar();
+    }
+
     public void UpdateHealthBar()
     {
         if (healthBar != null)
         {
-            healthBar.value = health;
+            healthBar.value = playerStats.health;
         }
     }
 
@@ -98,7 +132,19 @@ public class Player : MonoBehaviour
     {
         if (staminaBar != null)
         {
-            staminaBar.value = stamina;
+            staminaBar.value = playerStats.stamina;
         }
     }
+
+    public void ScaleWeapon()
+    {
+        if (playerWeapon == null)
+        {
+            return;
+        }
+        playerWeapon.FireRate *= playerStats.attackSpeed;
+        playerWeapon.DamageModifier *= playerStats.attack;
+        playerWeapon.ProjectileRange *= playerStats.Range;
+    }
+
 }
