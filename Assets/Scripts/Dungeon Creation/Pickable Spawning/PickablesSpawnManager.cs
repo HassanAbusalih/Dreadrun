@@ -27,9 +27,9 @@ public class PickablesSpawnManager : MonoBehaviour
 
 
     [Header("Spawning Debug Stats")]
-    [SerializeField] private int numberOfWeaponsSpawned;
-    [SerializeField] private int numberOfConsumablesSpawned;
-    [SerializeField] private int numberOfExpOrbsSpawned;
+    [SerializeField] private int weaponsSpawned;
+    [SerializeField] private int consumablesSpawned;
+    [SerializeField] private int expOrbsSpawned;
     [SerializeField] private int totalExpSpawnedInSoFar;
 
     public static List<Transform> AllPickableSpawnPoints = new List<Transform>();
@@ -43,13 +43,13 @@ public class PickablesSpawnManager : MonoBehaviour
     private void SpawnAllPickables()
     {
         SpawnAllWeapons();
+        SpawnAllConsumables();
         SpawnAllExpOrbs();
     }
 
     void SpawnAllWeapons()
     {
-        if (weaponPrefabs.Count == 0) { return; }
-        for (numberOfWeaponsSpawned = 0; numberOfWeaponsSpawned < amountOfWeaponsToSpawn; numberOfWeaponsSpawned++)
+        for (weaponsSpawned = 0; weaponsSpawned < amountOfWeaponsToSpawn; weaponsSpawned++)
         {
             if (weaponPrefabs.Count == 0) { return; } // if there are no more weapons to spawn, then return
             int _randomWeaponIndex = Random.Range(0, weaponPrefabs.Count);
@@ -64,31 +64,36 @@ public class PickablesSpawnManager : MonoBehaviour
 
     void SpawnAllConsumables()
     {
+        if (consumablePrefabs.Count == 0) { return; }
+        for (consumablesSpawned = 0; consumablesSpawned < amountOfConsumablesToSpawn; consumablesSpawned++)
+        {
+            int _probabilityToSpawnConsumable = Random.Range(0, 10);
+            if (_probabilityToSpawnConsumable <= 4) { continue; } // 40% chance, that it may not spawn a consumable at a spawn point
 
+            int _randomConsumablePrefabIndex = Random.Range(0, consumablePrefabs.Count);
+            GameObject _consumableToSpawn = consumablePrefabs[_randomConsumablePrefabIndex];
+
+            bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_consumableToSpawn);
+            if (!_isAbleToSpawn) return;
+
+        }
     }
 
     void SpawnAllExpOrbs()
     {
         if (expOrbPrefabs.Length == 0) { return; }
-        for (numberOfExpOrbsSpawned = 0; totalExpSpawnedInSoFar < amountOfExpToSpawn;)
+        for (expOrbsSpawned = 0; totalExpSpawnedInSoFar < amountOfExpToSpawn; expOrbsSpawned++)
         {
             int _probabilityToSpawnExpOrb = Random.Range(0, 10);
             if (_probabilityToSpawnExpOrb <= 4) { continue; } // 40% chance, that it may not spawn an exp orb
 
             GameObject expOrbTypeToSpawn = expOrbPrefabs[Random.Range(0, expOrbPrefabs.Length)];
-            int _expOrbValueToSpawn = allExpOrbValueTypesDictionary[expOrbTypeToSpawn];
+            int _expValue = allExpOrbValueTypesDictionary[expOrbTypeToSpawn];
 
             bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(expOrbTypeToSpawn);
             if (!_isAbleToSpawn) return;
-
-            UpdateExpOrbSpawningStats(_expOrbValueToSpawn);
+            totalExpSpawnedInSoFar += _expValue;
         }
-    }
-
-    void UpdateExpOrbSpawningStats(int _expValue)
-    {
-        totalExpSpawnedInSoFar += _expValue;
-        numberOfExpOrbsSpawned++;
     }
 
     bool SpawnAPickableAtRandomSpawnPoint(GameObject _pickableToSpawn)
