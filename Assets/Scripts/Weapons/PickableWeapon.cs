@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickableWeapon : MonoBehaviour, IWeaponPickable
+public class PickableWeapon : MonoBehaviour
 {
     [SerializeField] int weaponID;
     [SerializeField] Vector3 weaponOffset;

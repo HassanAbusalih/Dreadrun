@@ -100,7 +100,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (isWeaponPickedUp) return;
 
-        if (_weaponCollided.TryGetComponent(out IWeaponPickable _pickableWeaponToEquip))
+        if (_weaponCollided.TryGetComponent(out PickableWeapon _pickableWeaponToEquip))
         {
             _pickableWeaponToEquip.PickUpWeapon(weaponEquipPosition,ref currentWeaponID);
             playerWeapon = _weaponCollided.GetComponent<PlayerWeapon>();
