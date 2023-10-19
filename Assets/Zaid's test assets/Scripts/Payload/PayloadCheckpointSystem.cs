@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class PayloadCheckpointSystem : MonoBehaviour
 {
-    //private PlayerStats[] playerStatsArray;
-    //private ObjectSpawner[] enemySpawners;
+   
+
+   
     private PayloadStats payloadStats;
+    private ObjectSpawner[] enemySpawners;
 
     [NonSerialized]
     public bool onCheckpoint = false;
@@ -23,8 +25,7 @@ public class PayloadCheckpointSystem : MonoBehaviour
 
     private void Start()
     {
-        //playerStatsArray = FindObjectsOfType<PlayerStats>();
-        //enemySpawners = FindObjectsOfType<ObjectSpawner>();
+        enemySpawners = FindObjectsOfType<ObjectSpawner>();
         payloadStats = FindObjectOfType<PayloadStats>();
         checkpointTimer = checkpointDuration;
         checkpointUI.enabled = false;
@@ -51,10 +52,10 @@ public class PayloadCheckpointSystem : MonoBehaviour
             player.gameObject.GetComponent<PlayerExp>().LevelUp();
         }
 
-        //foreach(ObjectSpawner spawner in enemySpawners)
-        //{
-        //    spawner.enabled = false;
-        //}
+        foreach(ObjectSpawner spawner in enemySpawners)
+        {
+            spawner.enabled = false;
+        }
 
         payloadStats.storedEXP = 0;
 
@@ -68,9 +69,9 @@ public class PayloadCheckpointSystem : MonoBehaviour
         checkpointUI.enabled = false;
         onCheckpoint = false;
 
-        //foreach(ObjectSpawner spawner in enemySpawners)
-        //{
-        //    spawner.enabled = true;
-        //}
+        foreach(ObjectSpawner spawner in enemySpawners)
+        {
+            spawner.enabled = true;
+        }
     }
 }
