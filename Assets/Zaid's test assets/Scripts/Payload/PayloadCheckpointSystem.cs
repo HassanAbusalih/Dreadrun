@@ -12,6 +12,7 @@ public class PayloadCheckpointSystem : MonoBehaviour
     [NonSerialized]
     public bool onCheckpoint = false;
     private float checkpointTimer;
+    private Player[] playersInGame;
 
     [SerializeField]
     private float checkpointDuration;
@@ -27,6 +28,7 @@ public class PayloadCheckpointSystem : MonoBehaviour
         payloadStats = FindObjectOfType<PayloadStats>();
         checkpointTimer = checkpointDuration;
         checkpointUI.enabled = false;
+        playersInGame = FindObjectsOfType<Player>();
     }
 
     private void Update()
@@ -44,10 +46,10 @@ public class PayloadCheckpointSystem : MonoBehaviour
         checkpointUI.enabled = true;
         onCheckpoint = true;
 
-        //foreach(PlayerStats playerstats in playerStatsArray)
-        //{
-        //    playerstats.EXP += payloadStats.storedEXP / playerStatsArray.Count();
-        //}
+        foreach(Player player in playersInGame)
+        {
+            player.gameObject.GetComponent<PlayerExp>().LevelUp();
+        }
 
         //foreach(ObjectSpawner spawner in enemySpawners)
         //{
