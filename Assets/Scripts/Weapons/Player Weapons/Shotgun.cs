@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class GenericWeapon : PlayerWeapon
+public class Shotgun : PlayerWeapon
 {
-    [SerializeField] int projectileCount = 3;
+    [Header("Shotgun Properties")]
+    [SerializeField] int degreesPerProjectile = 5;
     
     private void Start()
     {
@@ -22,8 +23,9 @@ public class GenericWeapon : PlayerWeapon
     {
         if (timeSinceLastShot < fireRate) return;
         timeSinceLastShot = 0;
-        float rotationAmount = projectileSpreadAngle / (projectileCount - 1);
-        float startAngle = -projectileSpreadAngle / 2;
+        int projectileCount = Mathf.Max(1, Mathf.FloorToInt(spreadAngle / degreesPerProjectile));
+        float rotationAmount = spreadAngle / (projectileCount - 1);
+        float startAngle = -spreadAngle / 2;
         for (int i = 0; i < projectileCount; i++)
         {
             float rotation = startAngle + i * rotationAmount;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamagable
 {
-    //player controls 
+    // player controls 
     [SerializeField] float speed = 10f;
     [SerializeField] Rigidbody rb;
     [SerializeField] KeyCode dodge;
@@ -16,29 +16,32 @@ public class Player : MonoBehaviour, IDamagable
 
     // player stats 
     [SerializeField]
-    public float health;
-    public int maxHealth;
-    public int attack;
-    public float stamina;
-    public float maxStamina;
-    public int attackSpeed;
     public Slider healthBar;
     public Slider staminaBar;
+    public PlayerStats playerStats;
+
+    // player weapon, etc
+    [SerializeField]
+    public PlayerWeapon playerWeapon;
 
     private void Start()
     {
+        playerWeapon = GetComponent<PlayerWeapon>();
+        //playerStats = new PlayerStats();
+        //eventually make it so it sets the player stats to a serialized list of per-player stats.
+        
         rb = GetComponent<Rigidbody>();
-        health = maxHealth;
-        stamina = maxStamina;
+        playerStats.health = playerStats.maxHealth;
+        playerStats.stamina = playerStats.maxStamina;
         if (healthBar != null)
         {
-            healthBar.maxValue = maxHealth;
-            healthBar.value = health;
+            healthBar.maxValue = playerStats.maxHealth;
+            healthBar.value = playerStats.health;
         }
         if(staminaBar != null)
         {
-            staminaBar.maxValue = maxStamina;
-            staminaBar.value = stamina;
+            staminaBar.maxValue = playerStats.maxStamina;
+            staminaBar.value = playerStats.stamina;
         }
     }
 
@@ -92,7 +95,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void TakeDamage(float amount)
     {
-        health -= amount;
+        playerStats.health -= amount;
         UpdateHealthBar();
     }
 
@@ -100,7 +103,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (healthBar != null)
         {
-            healthBar.value = health;
+            healthBar.value = playerStats.health;
         }
     }
 
@@ -108,7 +111,19 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (staminaBar != null)
         {
-            staminaBar.value = stamina;
+            staminaBar.value = playerStats.stamina;
         }
     }
+
+    public void ScaleWeapon()
+    {
+        if (playerWeapon == null)
+        {
+            return;
+        }
+        playerWeapon.FireRate *= playerStats.attackSpeed;
+        playerWeapon.DamageModifier *= playerStats.attack;
+        playerWeapon.ProjectileRange *= playerStats.Range;
+    }
+
 }
