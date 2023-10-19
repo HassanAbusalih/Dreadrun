@@ -23,7 +23,7 @@ public class PlayerExp : MonoBehaviour
         }
     }
 
-    void LevelUp()
+    public void LevelUp()
     {
         currentLevel++;
         currentExp = 0;
