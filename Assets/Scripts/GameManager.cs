@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseUI;
     public GameObject winUI;
     public GameObject loseUI;
-
+    public string sceneName;
 
 
     private void Start()
@@ -73,9 +73,9 @@ public class GameManager : MonoBehaviour
             SetState(GameState.Play);
         }
     }
-
+    //change this to build index later
     public void Restart()
     {
-
+        SceneManager.LoadScene(sceneName);
     }
 }
