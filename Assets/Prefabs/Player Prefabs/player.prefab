@@ -217,6 +217,21 @@ MonoBehaviour:
   dashDistance: 5
   dashDuration: 2
   isDashing: 0
+  ground:
+    serializedVersion: 2
+    m_Bits: 0
+  healthBar: {fileID: 0}
+  staminaBar: {fileID: 0}
+  playerStats:
+    health: 0
+    maxHealth: 0
+    attack: 0
+    stamina: 0
+    maxStamina: 0
+    attackSpeed: 0
+    Range: 0
+    Spread: 0
+  playerWeapon: {fileID: 0}
 --- !u!114 &1416142338507263346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,10 +273,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 1
-  damagePerShot: 1
+  damageModifier: 1
   projectileRange: 10
   projectileSpeed: 1
+  spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
   audioSource: {fileID: 0}
-  projectileCount: 3
-  projectileAngle: 60
+  degreesPerProjectile: 5

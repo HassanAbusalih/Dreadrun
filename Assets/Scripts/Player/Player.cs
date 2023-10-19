@@ -6,14 +6,13 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour, IDamagable
 {
     // player controls 
-    [SerializeField] float speed = 10f;
     [SerializeField] Rigidbody rb;
     [SerializeField] KeyCode dodge;
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
     [SerializeField] LayerMask ground;
-
+    [SerializeField] GameManager manager;
     // player stats 
     [SerializeField]
     public Slider healthBar;
@@ -23,22 +22,24 @@ public class Player : MonoBehaviour, IDamagable
     // player weapon, etc
     [SerializeField]
     public PlayerWeapon playerWeapon;
+    [SerializeField] bool isWeaponPickedUp;
+    [SerializeField] Transform weaponEquipPosition;
+    [SerializeField] WeaponIDs weaponIDsSO;
+    [SerializeField] int currentWeaponID;
 
     private void Start()
     {
-        playerWeapon = GetComponent<PlayerWeapon>();
-        //playerStats = new PlayerStats();
-        //eventually make it so it sets the player stats to a serialized list of per-player stats.
-        
         rb = GetComponent<Rigidbody>();
+        weaponIDsSO.InitializeWeaponIDsDictionary();
         playerStats.health = playerStats.maxHealth;
         playerStats.stamina = playerStats.maxStamina;
+
         if (healthBar != null)
         {
             healthBar.maxValue = playerStats.maxHealth;
             healthBar.value = playerStats.health;
         }
-        if(staminaBar != null)
+        if (staminaBar != null)
         {
             staminaBar.maxValue = playerStats.maxStamina;
             staminaBar.value = playerStats.stamina;
@@ -49,7 +50,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        rb.velocity = new Vector3(horizontal * speed, 0, vertical * speed);
+        rb.velocity = new Vector3(horizontal * playerStats.speed, 0, vertical * playerStats.speed);
         if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
         {
             Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
@@ -85,6 +86,25 @@ public class Player : MonoBehaviour, IDamagable
                 StopDash();
             }
         }
+
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        PickUpWeaponOnTrigger(other.gameObject);
+    }
+
+    void PickUpWeaponOnTrigger(GameObject _weaponCollided)
+    {
+        if (isWeaponPickedUp) return;
+
+        if (_weaponCollided.TryGetComponent(out PickableWeapon _pickableWeaponToEquip))
+        {
+            _pickableWeaponToEquip.PickUpWeapon(weaponEquipPosition,ref currentWeaponID);
+            playerWeapon = _weaponCollided.GetComponent<PlayerWeapon>();
+            isWeaponPickedUp = true;
+        }
     }
     private void StopDash()
     {
@@ -97,6 +117,10 @@ public class Player : MonoBehaviour, IDamagable
     {
         playerStats.health -= amount;
         UpdateHealthBar();
+        if (playerStats.health <= 0)
+        {
+            manager.LoseState();
+        }
     }
 
     public void UpdateHealthBar()
