@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour
 
     public GameState gameState;
 
-    public GameObject pauseUI;
-    public GameObject winUI;
-    public GameObject loseUI;
+    [SerializeField] GameObject pauseUI;
+    [SerializeField] GameObject winUI;
+    [SerializeField] GameObject loseUI;
     public string sceneName;
 
 
@@ -73,6 +73,17 @@ public class GameManager : MonoBehaviour
             SetState(GameState.Play);
         }
     }
+
+    public void LoseState()
+    {
+        SetState(GameState.Lose);
+    }
+
+    public void WinState()
+    {
+        SetState(GameState.Win);
+    }
+
     //change this to build index later
     public void Restart()
     {
