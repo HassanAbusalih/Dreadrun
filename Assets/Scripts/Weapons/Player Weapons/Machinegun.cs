@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class Machinegun : PlayerWeapon
 {
+    [Header("Machinegun Properties")]
     [SerializeField] float rampTime = 5;
     [SerializeField] float rampDelay = 0.5f;
     float firingDuration;
 
-    private void Update()
+    void Update()
     {
         timeSinceLastShot += Time.deltaTime;
         firingDuration += Time.deltaTime;
@@ -32,8 +33,7 @@ public class Machinegun : PlayerWeapon
         }
         float randomAngle = Random.Range(-currentSpread, currentSpread);
         Quaternion projectileRotation = Quaternion.Euler(0, transform.eulerAngles.y + randomAngle, 0);
-        Vector3 projectileLocation = transform.forward;
-        GameObject projectile = Instantiate(projectilePrefab, transform.position + projectileLocation, projectileRotation);
+        GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, projectileRotation);
         projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8);
         if (audioSource != null) audioSource.Play();
     }
