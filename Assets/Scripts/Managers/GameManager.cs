@@ -87,6 +87,6 @@ public class GameManager : MonoBehaviour
     //change this to build index later
     public void Restart()
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
