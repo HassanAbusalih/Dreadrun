@@ -309,14 +309,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 1
-  damageModifier: 1
+  damageModifier: 2
   projectileRange: 10
-  projectileSpeed: 1
+  projectileSpeed: 10
   spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
   audioSource: {fileID: 0}
-  bulletSpawnPosition: {fileID: 0}
-  projectileCount: 3
+  degreesPerProjectile: 5
 --- !u!114 &7863280280212397244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a40aed978ba112448e2dbd8382ba372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponID: 0
   weaponOffset: {x: 0, y: 0, z: 0}
   weaponRotationOffset: {x: 0, y: 90, z: 0}
   pickUpSoundAudioSource: {fileID: 0}

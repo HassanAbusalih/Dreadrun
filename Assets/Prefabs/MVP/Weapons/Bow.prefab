@@ -128,7 +128,7 @@ RectTransform:
   m_GameObject: {fileID: 3049601438336887422}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.017339943, y: 0.00082241604, z: 0.046091594}
+  m_LocalScale: {x: 0.013645842, y: 0.00082241604, z: 0.046091594}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2073545706793592298}
@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 4284073130835332846}
   - component: {fileID: 4284073130835332845}
   - component: {fileID: 4284073130835332841}
+  - component: {fileID: 275269483965949793}
   m_Layer: 6
   m_Name: Bow
   m_TagString: Untagged
@@ -206,7 +207,7 @@ Transform:
   m_GameObject: {fileID: 4284073130835332844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.5424783, y: 5.020799, z: -19.105383}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.070383, z: 0.065215}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2073545706793592298}
@@ -241,7 +242,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 21e46b7258b67ae479e8fa2e4745d58c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -271,7 +272,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4284073130835332844}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -289,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 1
-  damageModifier: 7
+  damageModifier: 10
   projectileRange: 15
   projectileSpeed: 10
   spreadAngle: 30
@@ -301,3 +302,19 @@ MonoBehaviour:
   chargeIndicator: {fileID: 5750728681389879302}
   minColor: {r: 1, g: 0.93979645, b: 0, a: 1}
   maxColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &275269483965949793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4284073130835332844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a40aed978ba112448e2dbd8382ba372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponID: 2
+  weaponOffset: {x: 0, y: 0, z: 0}
+  weaponRotationOffset: {x: 0, y: 0, z: 0}
+  pickUpSoundAudioSource: {fileID: 0}

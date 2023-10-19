@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent (typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
     float damage;
