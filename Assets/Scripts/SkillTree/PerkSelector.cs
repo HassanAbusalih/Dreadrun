@@ -24,12 +24,6 @@ public class PerkSelector : MonoBehaviour
         player = FindObjectOfType<Player>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void RandomPerkSelector()
     {
         //Perk[] selectedPerks = new Perk[perkSelection];
