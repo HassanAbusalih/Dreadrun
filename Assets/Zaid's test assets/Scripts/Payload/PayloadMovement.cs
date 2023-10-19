@@ -17,57 +17,68 @@ public class PayloadMovement : MonoBehaviour
     [Header("Player Detection Settings")]
     public float payloadRange;
     public LayerMask playerLayer;
-    private int playersOnPayloadCount;
+    private Player[] playersInGame;
+    private int playersOnPayload;
 
     [Header("Checkpoint Settings")]
-    //private PayloadCheckpointSystem checkpoint;
+    private PayloadCheckpointSystem checkpointSystem;
     private int lastCheckpointNodeID = 0;
 
-    #region PayloadStats
+    [Header("Payload Stats")]
     private PayloadStats payloadStats;
     private float movementSpeed;
-    #endregion
 
     private void Start()
     {
         payloadStats = gameObject.GetComponent<PayloadStats>();
+        checkpointSystem = gameObject.GetComponent<PayloadCheckpointSystem>();
         reverseTimer = reverseCountDownTime;
         currentPath = GameObject.FindGameObjectWithTag("PayloadPath").GetComponent<PayloadPath>();
+        playersInGame = FindObjectsOfType<Player>();
     }
 
     private void Update()
     {
-        Collider[] playersOnPayload = Physics.OverlapSphere(transform.position, payloadRange, playerLayer);
-        playersOnPayloadCount = playersOnPayload.Length;
+        StartCoroutine(PlayerCheck());
 
-        if (playersOnPayloadCount > 0 && currentNodeID < currentPath.pathNodes.Count)
+        if (playersOnPayload > 0 && currentNodeID < currentPath.pathNodes.Count && checkpointSystem.onCheckpoint == false)
         {
             reverseTimer = reverseCountDownTime;
 
-            PlayerCheck();
-
-            FollowPath(movementSpeed * -1);
+            FollowPath(movementSpeed);
         }
-        else
+        else if (checkpointSystem.onCheckpoint == false)
         {
-            FollowPath(movementSpeed * -1);
+            FollowPath(-payloadStats.reverseSpeed);
         }
     }
 
-    private void PlayerCheck()
+    IEnumerator PlayerCheck()
     {
-        if (playersOnPayloadCount == 1)
+        playersOnPayload = 0;
+
+        foreach(Player player in playersInGame)
+        {
+            if(Vector3.Distance(transform.position, player.gameObject.transform.position) < payloadRange)
+            {
+                playersOnPayload++;
+            }
+        }
+
+        if (playersOnPayload == 1)
         {
             movementSpeed = payloadStats.onePlayerSpeed;
         }
-        else if (playersOnPayloadCount == 2)
+        else if (playersOnPayload == 2)
         {
             movementSpeed = payloadStats.twoPlayerSpeed;
         }
-        else if (playersOnPayloadCount == 3)
+        else if (playersOnPayload == 3)
         {
             movementSpeed = payloadStats.threePlayerSpeed;
         }
+
+        yield return new WaitForSeconds(.1f);
     }
 
     private void FollowPath(float speed)
@@ -84,10 +95,10 @@ public class PayloadMovement : MonoBehaviour
             if (node_Distance <= wayPointSize)
             {
                 currentNodeID++;
-                if (currentPath.pathNodes[currentNodeID].gameObject.CompareTag("Checkpoint") && currentNodeID > lastCheckpointNodeID)
+                if (currentPath.pathNodes[currentNodeID - 1].gameObject.CompareTag("Checkpoint") && currentNodeID > lastCheckpointNodeID)
                 {
                     lastCheckpointNodeID = currentNodeID;
-                    //checkpoint.ActivateCheckpoint();
+                    StartCoroutine(checkpointSystem.ActivateCheckpoint());
                 }
             }
         }
@@ -97,10 +108,10 @@ public class PayloadMovement : MonoBehaviour
 
             if (reverseTimer <= 0 && currentNodeID > 0)
             {
-                movementSpeed = speed * -1;
+                movementSpeed = speed;
 
                 float node_Distance = Vector3.Distance(currentPath.pathNodes[currentNodeID - 1].position, transform.position);
-                transform.position = Vector3.MoveTowards(transform.position, currentPath.pathNodes[currentNodeID - 1].position, Time.deltaTime * speed);
+                transform.position = Vector3.MoveTowards(transform.position, currentPath.pathNodes[currentNodeID - 1].position, Time.deltaTime * -speed);
 
                 Quaternion target_Rotation = Quaternion.LookRotation(currentPath.pathNodes[currentNodeID].position - transform.position);
                 transform.rotation = Quaternion.Slerp(transform.rotation, target_Rotation, Time.deltaTime * rotationSpeed);
