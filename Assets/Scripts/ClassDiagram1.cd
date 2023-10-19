@@ -1,23 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="RandomDungeonCreator">
-    <Position X="2.75" Y="1" Width="3.25" />
+    <Position X="1.25" Y="2.75" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAJBCAAAABAABAAAAAAEAAAAQAQAACAAAAAACA=</HashCode>
       <FileName>Assets\Scripts\Dungeon Creation\RandomDungeonCreator.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="dungeonSpawnPoints" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="RoomSpawnPoint">
-    <Position X="6.75" Y="1.75" Width="2.25" />
+    <Position X="6" Y="2.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAABAAABAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\Dungeon Creation\RoomSpawnPoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ObjectSpawner">
-    <Position X="10" Y="3" Width="2.75" />
+    <Position X="9.5" Y="1.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>QAAEAAAQACKEABIAAAAAQUAEAgAAAAABAEAQAAEAAAA=</HashCode>
+      <HashCode>QAAEAAAQAAKEABIAAAgAYUAEAgAAAAAIIEAQAAEAGAA=</HashCode>
       <FileName>Assets\Scripts\Enemies\ObjectSpawner.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -28,12 +31,13 @@
       <FileName>Assets\Scripts\Enemies\ObjectSpawner.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PlaceholderEnemyAI">
-    <Position X="14.75" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAKAKAAABAAAAAAAAAgSAAEAAAJAAAAgAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Enemies\PlaceholderEnemyAI.cs</FileName>
-    </TypeIdentifier>
+  <Class Name="UnityEngine.MonoBehaviour" Collapsed="true">
+    <Position X="1" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="UnityEngine.Transform" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
   <Font Name="Segoe UI" Size="9.6" />

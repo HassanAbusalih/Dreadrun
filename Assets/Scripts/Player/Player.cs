@@ -23,22 +23,24 @@ public class Player : MonoBehaviour, IDamagable
     // player weapon, etc
     [SerializeField]
     public PlayerWeapon playerWeapon;
+    [SerializeField] bool isWeaponPickedUp;
+    [SerializeField] Transform weaponEquipPosition;
+    [SerializeField] WeaponIDs weaponIDsSO;
+    [SerializeField] int currentWeaponID;
 
     private void Start()
     {
-        playerWeapon = GetComponent<PlayerWeapon>();
-        //playerStats = new PlayerStats();
-        //eventually make it so it sets the player stats to a serialized list of per-player stats.
-        
         rb = GetComponent<Rigidbody>();
+        weaponIDsSO.InitializeWeaponIDsDictionary();
         playerStats.health = playerStats.maxHealth;
         playerStats.stamina = playerStats.maxStamina;
+
         if (healthBar != null)
         {
             healthBar.maxValue = playerStats.maxHealth;
             healthBar.value = playerStats.health;
         }
-        if(staminaBar != null)
+        if (staminaBar != null)
         {
             staminaBar.maxValue = playerStats.maxStamina;
             staminaBar.value = playerStats.stamina;
@@ -84,6 +86,25 @@ public class Player : MonoBehaviour, IDamagable
             {
                 StopDash();
             }
+        }
+
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        PickUpWeaponOnTrigger(other.gameObject);
+    }
+
+    void PickUpWeaponOnTrigger(GameObject _weaponCollided)
+    {
+        if (isWeaponPickedUp) return;
+
+        if (_weaponCollided.TryGetComponent(out PickableWeapon _pickableWeaponToEquip))
+        {
+            _pickableWeaponToEquip.PickUpWeapon(weaponEquipPosition,ref currentWeaponID);
+            playerWeapon = _weaponCollided.GetComponent<PlayerWeapon>();
+            isWeaponPickedUp = true;
         }
     }
     private void StopDash()
