@@ -11,6 +11,10 @@ public class HealingPotion : ItemBase
     
     public override void UseOnSelf(Player player)
     {
-        
+        if(player.playerStats.maxHealth >= player.playerStats.health)
+        {
+            player.playerStats.health += healingAmount;
+        }
+        Debug.Log("Player health now at " +  player.playerStats.health);
     }
 }

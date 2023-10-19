@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour, IDamagable
 {
     // player controls 
-    [SerializeField] float speed = 10f;
     [SerializeField] Rigidbody rb;
     [SerializeField] KeyCode dodge;
     [SerializeField] float dashDistance;
@@ -51,7 +50,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        rb.velocity = new Vector3(horizontal * speed, 0, vertical * speed);
+        rb.velocity = new Vector3(horizontal * playerStats.speed, 0, vertical * playerStats.speed);
         if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
         {
             Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
