@@ -9,6 +9,7 @@ public class Machinegun : PlayerWeapon
 
     void Update()
     {
+        if (!equipped) { return; }
         timeSinceLastShot += Time.deltaTime;
         firingDuration += Time.deltaTime;
         if (Input.GetKey(KeyCode.Mouse0))

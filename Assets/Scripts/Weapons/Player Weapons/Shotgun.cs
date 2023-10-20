@@ -12,6 +12,7 @@ public class Shotgun : PlayerWeapon
     
     private void Update()
     {
+        if (!equipped) { return; }
         timeSinceLastShot += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {

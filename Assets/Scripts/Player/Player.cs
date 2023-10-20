@@ -89,7 +89,6 @@ public class Player : MonoBehaviour, IDamagable
 
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         PickUpWeaponOnTrigger(other.gameObject);
@@ -99,13 +98,14 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (isWeaponPickedUp) return;
 
-        if (_weaponCollided.TryGetComponent(out PickableWeapon _pickableWeaponToEquip))
+        if (_weaponCollided.TryGetComponent(out PlayerWeapon weaponToEquip))
         {
-            _pickableWeaponToEquip.PickUpWeapon(weaponEquipPosition,ref currentWeaponID);
-            playerWeapon = _weaponCollided.GetComponent<PlayerWeapon>();
+            weaponToEquip.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
+            playerWeapon = weaponToEquip;
             isWeaponPickedUp = true;
         }
     }
+
     private void StopDash()
     {
         isDashing = false;

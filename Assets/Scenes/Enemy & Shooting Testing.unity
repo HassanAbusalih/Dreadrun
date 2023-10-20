@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 509506623}
   - component: {fileID: 509506622}
   - component: {fileID: 509506621}
+  - component: {fileID: 509506625}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -222,6 +223,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &509506625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509506620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df69244d340cce74294bd80c2fa7e37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  dodge: 0
+  dashDistance: 0
+  dashDuration: 0
+  isDashing: 0
+  ground:
+    serializedVersion: 2
+    m_Bits: 0
+  manager: {fileID: 0}
+  healthBar: {fileID: 0}
+  staminaBar: {fileID: 0}
+  playerStats:
+    health: 0
+    maxHealth: 0
+    attack: 0
+    stamina: 0
+    maxStamina: 0
+    attackSpeed: 0
+    Range: 0
+    Spread: 0
+    speed: 0
+  playerWeapon: {fileID: 0}
+  isWeaponPickedUp: 0
+  weaponEquipPosition: {fileID: 0}
+  weaponIDsSO: {fileID: 0}
+  currentWeaponID: 0
 --- !u!1 &1294055277
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,11 +663,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab9d2b2e68e3584791eb6f06b81de1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  payload: {fileID: 1334442732}
-  player: {fileID: 509506620}
   prefabToSpawn: {fileID: 5791127613756451101, guid: b0ba983eed78ddc4b824be9bbee03c98, type: 3}
   activationRadius: 17.95
   spawnRadius: 5
+  timeBetweenSpawns: 3
   spawnInside: 1
   limitSpawnAmount: 1
   maxSpawnCount: 10
@@ -677,13 +715,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 0.5
-  damagePerShot: 0
+  damageModifier: 1
   projectileRange: 30
   projectileSpeed: 1
+  spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
   audioSource: {fileID: 0}
-  projectileCount: 3
-  projectileAngle: 60
+  degreesPerProjectile: 5
 --- !u!4 &2140153481
 Transform:
   m_ObjectHideFlags: 0

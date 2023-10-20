@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class Bow : PlayerWeapon
 {
     [Header("Bow Properties")]
-    [SerializeField] float minDamageModifier = 10f;
-    [SerializeField] float minRange = 10f;
-    [SerializeField] float minSpeed = 5f;
+    [SerializeField] float minDamageModifier = 10;
+    [SerializeField] float minRange = 10;
+    [SerializeField] float minSpeed = 5;
     [SerializeField] Image chargeIndicator;
     [SerializeField] Color minColor;
     [SerializeField] Color maxColor;
@@ -14,6 +14,7 @@ public class Bow : PlayerWeapon
 
     void Update()
     {
+        if (!equipped) { return; }
         if (Input.GetKey(KeyCode.Mouse0))
         {
             chargeTime = Mathf.Min(chargeTime + Time.deltaTime, fireRate);
@@ -21,7 +22,7 @@ public class Bow : PlayerWeapon
         else if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             Attack();
-            chargeTime = 0f;
+            chargeTime = 0;
         }
         VisualFeedback();
     }
@@ -31,8 +32,7 @@ public class Bow : PlayerWeapon
         float currentDamage = Mathf.Lerp(minDamageModifier, damageModifier, chargeTime / fireRate);
         float currentRange = Mathf.Lerp(minRange, projectileRange, chargeTime / fireRate);
         float currentSpeed = Mathf.Lerp(minSpeed, projectileRange, chargeTime / fireRate);
-        Quaternion targetRotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3 (0, 90, 0)); // change this later 
-        GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, targetRotation);
+        GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
         projectile.GetComponent<Projectile>().Initialize(currentDamage, currentSpeed, currentRange, 8);
         if (audioSource != null) audioSource.Play();
     }
