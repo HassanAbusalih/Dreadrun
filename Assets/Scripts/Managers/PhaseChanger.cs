@@ -37,6 +37,7 @@ public class PhaseChanger : MonoBehaviour
             {
                 wall.SetActive(false);
                 payload.enabled = true;
+                Debug.LogError("Payload enabled");
             }
         }
     }

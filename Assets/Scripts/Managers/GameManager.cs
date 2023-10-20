@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.Windows;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject pauseUI;
     [SerializeField] GameObject winUI;
     [SerializeField] GameObject loseUI;
-    public string sceneName;
+    public KeyCode pauseKey;
 
 
     private void Start()
@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+
+        if (UnityEngine.Input.GetKeyDown(pauseKey))
+        {
+            SetState(GameState.Pause);
+        }
+
         switch (gameState)
         {
             case GameState.Play:
