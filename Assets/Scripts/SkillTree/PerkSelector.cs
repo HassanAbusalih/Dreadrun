@@ -26,7 +26,6 @@ public class PerkSelector : MonoBehaviour
 
     public void RandomPerkSelector()
     {
-        //Perk[] selectedPerks = new Perk[perkSelection];
         perkUIcanvas.SetActive(true);
         List<int> selectedIndexes = new List<int>();
 
@@ -40,7 +39,6 @@ public class PerkSelector : MonoBehaviour
 
             selectedIndexes.Add(randomIndexNum);
             perkChoices[perkIndex].perk = perkPool[randomIndexNum];
-           
         }
 
         DisplayPerkDetails();
