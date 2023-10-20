@@ -78,7 +78,7 @@ public class PayloadMovement : MonoBehaviour
             movementSpeed = payloadStats.threePlayerSpeed;
         }
 
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.001f);
     }
 
     private void FollowPath(float speed)
