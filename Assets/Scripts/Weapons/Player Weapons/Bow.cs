@@ -31,7 +31,8 @@ public class Bow : PlayerWeapon
         float currentDamage = Mathf.Lerp(minDamageModifier, damageModifier, chargeTime / fireRate);
         float currentRange = Mathf.Lerp(minRange, projectileRange, chargeTime / fireRate);
         float currentSpeed = Mathf.Lerp(minSpeed, projectileRange, chargeTime / fireRate);
-        GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
+        Quaternion targetRotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3 (0, 90, 0)); // change this later 
+        GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, targetRotation);
         projectile.GetComponent<Projectile>().Initialize(currentDamage, currentSpeed, currentRange, 8);
         if (audioSource != null) audioSource.Play();
     }
