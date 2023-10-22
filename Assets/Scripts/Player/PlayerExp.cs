@@ -19,12 +19,12 @@ public class PlayerExp : MonoBehaviour
         if(currentExp >= maxExpToLevelUp)
         {
             LevelUp();
-            perkSelector.RandomPerkSelector();
         }
     }
 
     public void LevelUp()
     {
+        perkSelector.RandomPerkSelector();
         currentLevel++;
         currentExp = 0;
         maxExpToLevelUp += expAmountToLevelUp;

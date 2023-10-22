@@ -12,8 +12,8 @@ public class HealthUp : Perk
 
     public override void ApplyPlayerBuffs(Player player)
     {
-        float increaseAmount = player.playerStats.health * (HPScaling / 100f);
-        player.playerStats.health += increaseAmount;
+        float increaseAmount = player.playerStats.maxHealth * (HPScaling / 100f);
+        player.playerStats.maxHealth += increaseAmount;
         player.ScaleWeapon();
         Debug.Log("hp increased");
     }
