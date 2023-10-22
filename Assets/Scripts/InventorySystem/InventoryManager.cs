@@ -19,9 +19,9 @@ public class InventoryManager : MonoBehaviour
         player = GetComponent<Player>();
         inventory = new Inventory();
         inventory.inventoryList = new List<ItemBase>(new ItemBase[inventory.inventorySlots]);
-
     }
 
+    #region Inputs
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -45,6 +45,7 @@ public class InventoryManager : MonoBehaviour
             UseItem(4);
         }
     }
+    #endregion
 
     private void OnTriggerEnter(Collider other)
     {
