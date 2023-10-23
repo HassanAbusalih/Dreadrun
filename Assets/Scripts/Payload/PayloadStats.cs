@@ -6,15 +6,11 @@ using UnityEngine;
 public class PayloadStats : MonoBehaviour,IDamagable
 {
     [Header("Speed Settings")]
-    public float onePlayerSpeed;
-    public float twoPlayerSpeed;
-    public float threePlayerSpeed;
-    public float reverseSpeed;
+    public float onePlayerSpeed, twoPlayerSpeed, threePlayerSpeed, reverseSpeed;
 
     [Header("Health Settings")]
     [SerializeField] Image healthBar;
-    [SerializeField] float maxPayloadHealth;
-    [SerializeField] float payloadHealth;
+    [SerializeField] float maxPayloadHealth, payloadHealth;
 
     [Header("EXP Settings")]
     public float storedEXP;

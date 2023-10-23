@@ -5,23 +5,15 @@ using UnityEngine.UI;
 
 public class PayloadCheckpointSystem : MonoBehaviour
 {
-   
+    [NonSerialized] public bool onCheckpoint = false;
 
-   
-    private PayloadStats payloadStats;
-    private ObjectSpawner[] enemySpawners;
+    [SerializeField] float checkpointDuration, checkpointTimer;
+    [SerializeField] Canvas checkpointUI;
+    [SerializeField] Image checkpointTimeBar;
 
-    [NonSerialized]
-    public bool onCheckpoint = false;
-    private float checkpointTimer;
-    private Player[] playersInGame;
-
-    [SerializeField]
-    private float checkpointDuration;
-    [SerializeField]
-    private Canvas checkpointUI;
-    [SerializeField]
-    private Image checkpointTimeBar;
+    Player[] playersInGame;
+    PayloadStats payloadStats;
+    ObjectSpawner[] enemySpawners;
 
     private void Start()
     {
