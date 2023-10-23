@@ -5,29 +5,32 @@ using UnityEngine;
 public class PayloadMovement : MonoBehaviour
 {
     [Header("Path Follow Settings")]
-    public PayloadPath currentPath;
-    public float wayPointSize;
-    public float rotationSpeed;
-    private int currentNodeID = 0;
+    [SerializeField] PayloadPath currentPath;
+    [SerializeField] float wayPointSize;
+    [SerializeField] float rotationSpeed;
+    int currentNodeID = 0;
 
     [Header("Reverse Settings")]
-    public float reverseCountDownTime;
-    private float reverseTimer;
+    [SerializeField] float reverseCountDownTime;
+    float reverseTimer;
 
-    [Header("Player Detection Settings")]
-    public float payloadRange;
-    public LayerMask playerLayer;
-    private Player[] playersInGame;
-    private int playersOnPayload;
+    [Header("Object Detection Settings")]
+    [SerializeField] float payloadRange;
+    [SerializeField] LayerMask enemyLayer;
+    [SerializeField] GameObject rangeIndicator;
+    Player[] playersInGame;
+    int playersOnPayload;
+    bool enemyInRange;
 
     [Header("Checkpoint Settings")]
-    private PayloadCheckpointSystem checkpointSystem;
-    private int lastCheckpointNodeID = 0;
+    PayloadCheckpointSystem checkpointSystem;
+    int lastCheckpointNodeID = 0;
 
     [Header("Payload Stats")]
-    private PayloadStats payloadStats;
-    private float movementSpeed;
-    private void OnEnable()
+    PayloadStats payloadStats;
+    float movementSpeed;
+
+    private void Start()
     {
         payloadStats = gameObject.GetComponent<PayloadStats>();
         checkpointSystem = gameObject.GetComponent<PayloadCheckpointSystem>();
@@ -36,29 +39,40 @@ public class PayloadMovement : MonoBehaviour
         playersInGame = FindObjectsOfType<Player>();
     }
 
-    private void Start()
-    {
-  
-    }
-
     private void Update()
     {
-        StartCoroutine(PlayerCheck());
+        rangeIndicator.transform.localScale = new Vector3(payloadRange, .1f, payloadRange);
 
-        if (playersOnPayload > 0 && currentNodeID < currentPath.pathNodes.Count && checkpointSystem.onCheckpoint == false)
+        StartCoroutine(ObjectsInRangeCheck());
+
+        if (playersOnPayload > 0 && currentNodeID < currentPath.pathNodes.Count && !checkpointSystem.onCheckpoint)
         {
             reverseTimer = reverseCountDownTime;
 
-            FollowPath(movementSpeed);
+            if (!enemyInRange)
+            {
+                FollowPath(movementSpeed);
+            }
         }
-        else if (checkpointSystem.onCheckpoint == false)
+        else if (!checkpointSystem.onCheckpoint)
         {
             FollowPath(-payloadStats.reverseSpeed);
         }
     }
 
-    IEnumerator PlayerCheck()
+    IEnumerator ObjectsInRangeCheck()
     {
+        Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, payloadRange, enemyLayer);
+
+        if (enemiesInRange.Length > 0)
+        {
+            enemyInRange = true;
+        }
+        else
+        {
+            enemyInRange = false;
+        }
+
         playersOnPayload = 0;
 
         foreach (Player player in playersInGame)
