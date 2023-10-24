@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PayloadMovement : MonoBehaviour
 {
+    [Header("Phase Change Settings")]
     public bool movementEnabled = false;
+    Animator payloadAnimator;
 
     [Header("Path Follow Settings")]
     [SerializeField] PayloadPath currentPath;
@@ -38,6 +40,7 @@ public class PayloadMovement : MonoBehaviour
         reverseTimer = reverseCountDownTime;
         currentPath = GameObject.FindGameObjectWithTag("PayloadPath").GetComponent<PayloadPath>();
         playersInGame = FindObjectsOfType<Player>();
+        payloadAnimator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -145,5 +148,11 @@ public class PayloadMovement : MonoBehaviour
                 currentNodeID--;
             }
         }
+    }
+
+    public void EnableMovement()
+    {
+        payloadAnimator.SetTrigger("Artifact Enable");
+        movementEnabled = true;
     }
 }
