@@ -9,7 +9,6 @@ public class ItemBase : ScriptableObject
     public bool throwable;
     public string description;
     public bool hasBuffedItem = false;
-    public float timer;
     public int itemID;
 
 
