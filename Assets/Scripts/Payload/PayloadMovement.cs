@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PayloadMovement : MonoBehaviour
 {
+    public bool movementEnabled = false;
+
     [Header("Path Follow Settings")]
     [SerializeField] PayloadPath currentPath;
     [SerializeField] float wayPointSize, movementSpeed;
@@ -40,26 +42,30 @@ public class PayloadMovement : MonoBehaviour
 
     private void Update()
     {
-        rangeIndicator.transform.localScale = new Vector3(payloadRange / transform.localScale.x, .1f / transform.localScale.y, payloadRange / transform.localScale.z);
-
-        StartCoroutine(ObjectsInRangeCheck());
-
-        if (playersOnPayload > 0 && currentNodeID < currentPath.pathNodes.Count && !checkpointSystem.onCheckpoint)
+        if (movementEnabled)
         {
-            reverseTimer = reverseCountDownTime;
+            rangeIndicator.SetActive(true);
+            rangeIndicator.transform.localScale = new Vector3(payloadRange / transform.localScale.x, .1f / transform.localScale.y, payloadRange / transform.localScale.z);
 
-            if (!enemyInRange)
+            StartCoroutine(ObjectsInRangeCheck());
+
+            if (playersOnPayload > 0 && currentNodeID < currentPath.pathNodes.Count && !checkpointSystem.onCheckpoint)
             {
-                FollowPathForward(movementSpeed);
+                reverseTimer = reverseCountDownTime;
+
+                if (!enemyInRange)
+                {
+                    FollowPathForward(movementSpeed);
+                }
             }
-        }
-        else if (!checkpointSystem.onCheckpoint)
-        {
-            reverseTimer -= Time.deltaTime;
-
-            if (reverseTimer <= 0)
+            else if (!checkpointSystem.onCheckpoint)
             {
-                FollowPathReverse(payloadStats.reverseSpeed);
+                reverseTimer -= Time.deltaTime;
+
+                if (reverseTimer <= 0)
+                {
+                    FollowPathReverse(payloadStats.reverseSpeed);
+                }
             }
         }
     }
