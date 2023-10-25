@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Grenade : MonoBehaviour
@@ -13,6 +14,21 @@ public class Grenade : MonoBehaviour
     float currentTime;
     float duration;
     Rigidbody rb;
+    List<IProjectileEffect> effects;
+
+    public void Initialize(Vector3 target, float speed, float damage, int layer, List<IProjectileEffect> effects)
+    {
+        this.damage = damage;
+        this.target = target;
+        gameObject.layer = layer;
+        start = transform.position;
+        offset = new(0, height, 0);
+        controlPoint = start + (target - start) / 2 + offset;
+        duration = Vector3.Distance(transform.position, target) / speed;
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+        this.effects = effects;
+    }
 
     public void Initialize(Vector3 target, float speed, float damage, int layer)
     {
@@ -57,6 +73,10 @@ public class Grenade : MonoBehaviour
             if (nearbyObject.TryGetComponent(out IDamagable damagable))
             {
                 damagable.TakeDamage(damage);
+                foreach (IProjectileEffect effect in effects)
+                {
+                    effect.ApplyEffect(damagable, damage, effects);
+                }
             }
         }
         Destroy(gameObject);

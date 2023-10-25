@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -8,6 +9,18 @@ public class Projectile : MonoBehaviour
     float range;
     Rigidbody rb;
     Vector3 initialPos;
+    List<IProjectileEffect> effects;
+
+    public void Initialize(float damage, float speed, float range, int layer, List<IProjectileEffect> effects)
+    {
+        rb = GetComponent<Rigidbody>();
+        this.damage = damage;
+        this.speed = speed;
+        this.range = range;
+        gameObject.layer = layer;
+        this.effects = effects;
+        initialPos = transform.position;
+    }
 
     public void Initialize(float damage, float speed, float range, int layer)
     {
@@ -27,7 +40,14 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.TryGetComponent(out IDamagable damagable)) { damagable.TakeDamage(damage); }
+        if (collision.transform.TryGetComponent(out IDamagable damagable)) 
+        { 
+            damagable.TakeDamage(damage); 
+            foreach(IProjectileEffect effect in effects)
+            {
+                effect.ApplyEffect(damagable, damage, effects);
+            }
+        }
         Destroy(gameObject);
     }
 }

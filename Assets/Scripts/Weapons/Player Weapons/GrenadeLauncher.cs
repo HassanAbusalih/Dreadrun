@@ -13,7 +13,7 @@ public class GrenadeLauncher : PlayerWeapon
 
     private void Update()
     {
-        //if (!equipped) { return; }
+        if (!equipped) { return; }
         if (Input.GetKey(KeyCode.Mouse0))
         {
             chargeTime = Mathf.Min(chargeTime + Time.deltaTime, fireRate);
@@ -50,7 +50,7 @@ public class GrenadeLauncher : PlayerWeapon
             // This is so bad aaaaaaa kill me
         }
         GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
-        projectile.GetComponent<Grenade>().Initialize(target, currentSpeed, damageModifier, 8);
+        projectile.GetComponent<Grenade>().Initialize(target, currentSpeed, damageModifier, 8, effects);
         if (audioSource != null) audioSource.Play();
     }
 
@@ -66,5 +66,11 @@ public class GrenadeLauncher : PlayerWeapon
             chargeIndicator.fillAmount = 0;
             chargeIndicator.color = minColor;
         }
+    }
+
+    public override void UpdateWeaponEffects()
+    {
+        base.UpdateWeaponEffects();
+        effects.RemoveAll((effect) => effect is ExplosiveEffect);
     }
 }

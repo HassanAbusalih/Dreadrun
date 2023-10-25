@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class PlayerWeapon : WeaponBase
 {
     protected bool equipped;
+    protected List<IProjectileEffect> effects;
     [Header("Weapon Equip Settings")]
     [SerializeField] int weaponID;
     [SerializeField] Vector3 weaponOffset;
@@ -32,5 +34,11 @@ public abstract class PlayerWeapon : WeaponBase
         {
             equipped = false;
         }
+    }
+
+    public virtual void UpdateWeaponEffects()
+    {
+        effects.Clear();
+        effects.AddRange(GetComponentsInParent<IProjectileEffect>());
     }
 }
