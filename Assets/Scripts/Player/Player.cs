@@ -51,10 +51,51 @@ public class Player : MonoBehaviour, IDamagable
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         rb.velocity = new Vector3(horizontal * playerStats.speed, rb.velocity.y, vertical * playerStats.speed);
+        if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
+        {
+            Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
+            StartCoroutine(Dash(dashDirection));
+        }
     }
 
+    IEnumerator Dash(Vector3 dashDirection)
+    {
+        isDashing = true;
+        rb.useGravity = false;
+        rb.freezeRotation = true;
+        Vector3 endPosition = transform.position + dashDirection * dashDistance;
+        float elapsedTime = 0f;
 
+        while (elapsedTime < dashDuration && isDashing)
+        {
+            Vector3 newPosition = Vector3.MoveTowards(transform.position, endPosition, Time.deltaTime * (dashDistance / dashDuration));
+            rb.MovePosition(newPosition);
+            elapsedTime += Time.deltaTime;
 
+            yield return null;
+        }
+
+        StopDash();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isDashing)
+        {
+            if (collision.gameObject.layer != ground)
+            {
+                StopDash();
+            }
+        }
+
+    }
+
+    private void StopDash()
+    {
+        isDashing = false;
+        rb.useGravity = true;
+        rb.freezeRotation = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -72,8 +113,6 @@ public class Player : MonoBehaviour, IDamagable
             isWeaponPickedUp = true;
         }
     }
-
- 
 
     public void TakeDamage(float amount)
     {
