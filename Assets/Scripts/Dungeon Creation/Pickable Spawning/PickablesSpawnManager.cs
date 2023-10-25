@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PickablesSpawnManager : MonoBehaviour
+public class PickablesSpawnManager : PickableBaseSpawning
 {
     [Header("Weapon Spawn Settings")]
     [SerializeField] int amountOfWeaponsToSpawn;
@@ -37,16 +37,10 @@ public class PickablesSpawnManager : MonoBehaviour
     private void Start()
     {
         InitializeExpOrbTypesDictionary();
-        SpawnAllPickables();
-    }
-
-    private void SpawnAllPickables()
-    {
         SpawnAllWeapons();
         SpawnAllConsumables();
         SpawnAllExpOrbs();
     }
-
     void SpawnAllWeapons()
     {
         for (weaponsSpawned = 0; weaponsSpawned < amountOfWeaponsToSpawn; weaponsSpawned++)
@@ -55,13 +49,12 @@ public class PickablesSpawnManager : MonoBehaviour
             int _randomWeaponIndex = Random.Range(0, weaponPrefabs.Count);
             GameObject weaponToSpawn = weaponPrefabs[_randomWeaponIndex];
 
-            bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(weaponToSpawn);
+            bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(weaponToSpawn,AllPickableSpawnPoints);
             if (!_isAbleToSpawn) return;
 
             weaponPrefabs.RemoveAt(_randomWeaponIndex);
         }
     }
-
     void SpawnAllConsumables()
     {
         if (consumablePrefabs.Count == 0) { return; }
@@ -73,9 +66,8 @@ public class PickablesSpawnManager : MonoBehaviour
             int _randomConsumablePrefabIndex = Random.Range(0, consumablePrefabs.Count);
             GameObject _consumableToSpawn = consumablePrefabs[_randomConsumablePrefabIndex];
 
-            bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_consumableToSpawn);
+            bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_consumableToSpawn, AllPickableSpawnPoints);
             if (!_isAbleToSpawn) return;
-
         }
     }
 
@@ -90,25 +82,10 @@ public class PickablesSpawnManager : MonoBehaviour
             GameObject expOrbTypeToSpawn = expOrbPrefabs[Random.Range(0, expOrbPrefabs.Length)];
             int _expValue = allExpOrbValueTypesDictionary[expOrbTypeToSpawn];
 
-            bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(expOrbTypeToSpawn);
+            bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(expOrbTypeToSpawn, AllPickableSpawnPoints);
             if (!_isAbleToSpawn) return;
             totalExpSpawnedInSoFar += _expValue;
         }
-    }
-
-    bool SpawnAPickableAtRandomSpawnPoint(GameObject _pickableToSpawn)
-    {
-        // if there are no spawn points left, then return (this is to avoid index out of range error)
-        if (AllPickableSpawnPoints.Count == 0)
-        { Debug.LogWarning("There is no more pickable spawn points,so cannot spawn more, try changing spawn settings "); return false; }
-
-        int _randomPickableSpawnPointIndex = Random.Range(0, AllPickableSpawnPoints.Count);
-        Vector3 _randomSpawnPosition = AllPickableSpawnPoints[_randomPickableSpawnPointIndex].position;
-
-        GameObject _pickableSpawned = Instantiate(_pickableToSpawn, _randomSpawnPosition, Quaternion.identity);
-        _pickableSpawned.transform.parent = this.transform;
-        AllPickableSpawnPoints.RemoveAt(_randomPickableSpawnPointIndex);
-        return true;
     }
 
     private void InitializeExpOrbTypesDictionary()

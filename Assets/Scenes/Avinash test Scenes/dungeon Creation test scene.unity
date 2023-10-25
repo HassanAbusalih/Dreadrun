@@ -287,6 +287,30 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &103799001 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 102869222442474738, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+  m_PrefabInstance: {fileID: 102869222646562818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &103799004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103799001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d28df866a64da2341aafe0c9d2a5c248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpawnProbabilities:
+  - enemyPrefab: {fileID: 5791127613756451101, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+    probabilityToNotSpawn: 60
+  - enemyPrefab: {fileID: 5791127613756451101, guid: 1f07f3599065bf545b2dd9619c0aa2e8, type: 3}
+    probabilityToNotSpawn: 30
+  enemiesToSpawn: 12
+  enemiesSpawned: 0
 --- !u!43 &147871345
 Mesh:
   m_ObjectHideFlags: 0
@@ -9772,6 +9796,202 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1124494896}
+    - target: {fileID: 420238905659513482, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685521850370239, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685521850370239, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.009780884
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685521850370239, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522058104372, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522058104372, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.009780884
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522058104372, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522514598974, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522514598974, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.009780884
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522514598974, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522548587973, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522548587973, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.009780884
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522548587973, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522586647067, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522586647067, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.009780884
+      objectReference: {fileID: 0}
+    - target: {fileID: 853685522586647067, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076299186294441619, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1076299186294441619, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.09667036
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305827735082145683, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305827735115544168, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305827735153111478, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305827735490642706, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305827735698277785, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668607258207161662, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2022995924748243239, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2022995924748243239, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.09667036
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466042981189703130, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466042981189703130, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.009780884
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466042981189703130, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2954942311036176835, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185521021274928459, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185521021305025173, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185521021741060974, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185521021887234404, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185521022149527535, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514441023622840942, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514441023622840942, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.009780884
+      objectReference: {fileID: 0}
+    - target: {fileID: 3514441023622840942, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887419431007816393, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887419431007816393, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.09667036
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887419431270206530, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887419431270206530, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.09667036
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887419431469285094, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887419431469285094, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.09667036
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887419431497775416, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887419431497775416, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.09667036
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887419431934400707, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887419431934400707, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.09667036
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323165488086818423, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4997645884441237800, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -10420,5 +10640,33 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1066007878}
+    - target: {fileID: 5420576748002388517, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420576748002388517, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.009780884
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420576748002388517, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5980249003036533128, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841921289284920693, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: isEnemySpawnPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436302859740016344, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436302859740016344, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}
+      propertyPath: gizmoMeshColor.g
+      value: 0.09667036
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b08efc2dba1eac4aabb3daf67199742, type: 3}

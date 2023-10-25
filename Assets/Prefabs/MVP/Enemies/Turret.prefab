@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5293f7b7291734e429b40f96d5dad0c0, type: 2}
+  - {fileID: 2100000, guid: 620ab43e486679d44b030d42894b2572, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -143,9 +143,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 0.1
-  damagePerShot: 0
+  damageModifier: 1
   projectileRange: 10
   projectileSpeed: 0.5
+  spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
   audioSource: {fileID: 0}
   projectileCount: 20
