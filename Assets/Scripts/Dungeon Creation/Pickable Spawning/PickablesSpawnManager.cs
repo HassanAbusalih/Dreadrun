@@ -34,8 +34,13 @@ public class PickablesSpawnManager : PickableBaseSpawning
 
     public static List<Transform> AllPickableSpawnPoints = new List<Transform>();
 
+    private void Awake()
+    {
+        AllPickableSpawnPoints.RemoveAll(item => item == null);
+    }
     private void Start()
     {
+        
         InitializeExpOrbTypesDictionary();
         SpawnAllWeapons();
         SpawnAllConsumables();

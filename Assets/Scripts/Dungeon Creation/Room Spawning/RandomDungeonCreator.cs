@@ -11,9 +11,14 @@ public class RandomDungeonCreator : MonoBehaviour
     [SerializeField] int roomPrefabToSkipAfterFirstSpawnIteration;
     [SerializeField] bool destroySpawnPointParentOnSpawn;
     [SerializeField] GameObject[] roomPrefabs;
-   
+
+
+
+  
     private void Start()
-    {
+    {    
+        dungeonSpawnPoints.RemoveAll(item => item == null);
+
         StartTheRandomRoomSpawningProcess();
     }
   
