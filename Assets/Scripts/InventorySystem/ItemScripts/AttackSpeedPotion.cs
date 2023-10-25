@@ -6,10 +6,36 @@ using UnityEngine;
 
 public class AttackSpeedPotion : ItemBase
 {
-    [SerializeField] float speedIncrease;
+    [SerializeField] float increaseProjectileSpeed;
+    float defaultProjectileSpeed;
+
+    [SerializeField] float duration;
+    float timer = 0f;
+    
+    [SerializeField] GameObject timerPrefab;
+    [SerializeField] Player playerRef;
+    
     public override void UseOnSelf(Player player)
     {
-        player.playerWeapon.ProjectileSpeed = speedIncrease;
+        hasBuffedItem = true;
+        defaultProjectileSpeed = player.playerWeapon.ProjectileSpeed;
+        player.playerWeapon.ProjectileSpeed += increaseProjectileSpeed;
+        Debug.Log("Increased Projectile speed");
+        GetTimer();
+        playerRef = player;
+    }
+
+    void GetTimer()
+    {
+        Timer timerScript = Instantiate(timerPrefab).GetComponent<Timer>();
+        timerScript.SetTimerAndDuration(timer, duration);
+        timerScript.onTimerMet += ResetProjectileSpeed;
+    }
+
+    void ResetProjectileSpeed()
+    {
+        playerRef.playerWeapon.ProjectileSpeed = defaultProjectileSpeed;
+        hasBuffedItem = false;
     }
 }
 

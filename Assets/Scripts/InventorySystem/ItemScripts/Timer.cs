@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
 {
     float timer=0;
     float duration=0;
-    bool timerSettingSet;
+    bool timerStarts;
 
     public Action onTimerMet;
 
@@ -15,20 +15,20 @@ public class Timer : MonoBehaviour
     {
         this.timer = timer; 
         this.duration = duration;
-        timerSettingSet = true;
+        timerStarts = true;
     }
     private void Update()
     {
-        TimerMet();
+        TimerSet();
     }
 
-    void TimerMet()
+    void TimerSet()
     {
         timer += Time.deltaTime;
-        if(timer > duration && timerSettingSet)
+        if(timer > duration && timerStarts)
         {
             onTimerMet?.Invoke();
-            timerSettingSet = false;
+            timerStarts = false;
             Destroy(gameObject);
         }
     }

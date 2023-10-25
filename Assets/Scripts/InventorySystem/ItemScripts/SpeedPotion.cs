@@ -10,9 +10,11 @@ public class SpeedPotion : ItemBase
 {
     [SerializeField] int speedIncrease;
     float defaultSpeed;
+
     float timer = 0;
     [SerializeField] float duration;
-    [SerializeField] GameObject outsideTimerPrefab;
+
+    [SerializeField] GameObject timerPrefab;
     [SerializeField] Player playerRef;
 
     public override void UseOnSelf(Player player)
@@ -29,12 +31,12 @@ public class SpeedPotion : ItemBase
 
     private void GetTimer()
     {
-        Timer _outsideTimer = Instantiate(outsideTimerPrefab).GetComponent<Timer>();
-        _outsideTimer.SetTimerAndDuration(timer, duration);
-        _outsideTimer.onTimerMet += ResetStats;
+        Timer timerScript = Instantiate(timerPrefab).GetComponent<Timer>();
+        timerScript.SetTimerAndDuration(timer, duration);
+        timerScript.onTimerMet += ResetSpeed;
     }
 
-    private void ResetStats()
+    private void ResetSpeed()
     {
         playerRef.playerStats.speed = defaultSpeed;
         hasBuffedItem = false;
