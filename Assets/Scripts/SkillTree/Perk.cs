@@ -9,11 +9,4 @@ public class Perk : ScriptableObject
     {
     }
 
-    public virtual void ApplyPlayerAbilities(Player player)
-    {
-    }
-
-    public virtual void ApplyPlayerAoe(Player player)
-    {
-    }
 }
