@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CounterBlast : MonoBehaviour
@@ -9,11 +7,9 @@ public class CounterBlast : MonoBehaviour
 
     private float explosionCooldown = 5f;
     private float explosionTimer;
-    private Rigidbody rb;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
         explosionTimer = explosionCooldown;
     }
 

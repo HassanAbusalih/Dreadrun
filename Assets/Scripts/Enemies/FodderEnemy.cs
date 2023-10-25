@@ -36,6 +36,7 @@ public class FodderEnemy : EnemyAIBase
             rotatedDirection = Quaternion.Euler(0, rotationAmount, 0) * toEnemy;
         }
         Vector3 desiredPosition = payload.position + rotatedDirection.normalized * distanceFromPayload;
-        transform.position = Vector3.MoveTowards(transform.position, desiredPosition, movementSpeed * Time.deltaTime);
+        desiredPosition = desiredPosition.normalized * movementSpeed * Time.deltaTime;
+        rb.velocity = new Vector3(desiredPosition.x, rb.velocity.y, desiredPosition.z);
     }
 }
