@@ -34,7 +34,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
     public void TakeDamage(float Amount)
     {
         currentHealth -= Amount;
-        if (currentHealth == 0) { Destroy(gameObject); }
+        if (currentHealth <= 0) { Destroy(gameObject); }
     }
 
     public void Initialize(Transform payload, Transform[] players)

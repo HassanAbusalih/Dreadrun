@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 
 public interface IDamagable 
 {
-    public abstract void TakeDamage(float Amount);
+    public  void TakeDamage(float Amount);
     
 }

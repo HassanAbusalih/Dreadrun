@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class PayloadStats : MonoBehaviour
+public class PayloadStats : MonoBehaviour,IDamagable
 {
     [Header("Speed Settings")]
     public float onePlayerSpeed;
@@ -12,9 +12,9 @@ public class PayloadStats : MonoBehaviour
     public float reverseSpeed;
 
     [Header("Health Settings")]
-    public Image healthBar;
-    public float maxPayloadHealth;
-    private float payloadHealth;
+    [SerializeField] Image healthBar;
+    [SerializeField] float maxPayloadHealth;
+    [SerializeField] float payloadHealth;
 
     [Header("EXP Settings")]
     public float storedEXP;
@@ -24,20 +24,15 @@ public class PayloadStats : MonoBehaviour
         payloadHealth = maxPayloadHealth;
     }
 
-    
-    void Update()
-    {
-        // for testing, delete later
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            takeDamage(10);
-        }
-    }
-
-    public void takeDamage(float Damage)
+    public void TakeDamage(float Damage)
     {
         payloadHealth -= Damage;
         healthBar.fillAmount = payloadHealth / maxPayloadHealth;
+    }
+
+    public void AddEXP(float EXP)
+    {
+        storedEXP += EXP;
     }
 }
     

@@ -8,19 +8,30 @@ public class ObjectSpawner : MonoBehaviour
 {
     Transform payload;
     Transform[] players;
+
     public GameObject prefabToSpawn;
     public float activationRadius;
     public float spawnRadius;
-    public static float timeBetweenSpawns = 3f;
+    public float timeBetweenSpawns = 3f;
+
     public bool spawnInside;
     public bool limitSpawnAmount = false;
+    bool isSpawning;
+
     private int spawnCount = 0;
     public int maxSpawnCount = 10;
 
-    private void Start()
+
+
+    private void OnEnable()
     {
-        GetReferences();
-        StartCoroutine(StartSpawning());
+       EnableObjectSpawning(true);
+    }
+
+    private void OnDisable()
+    {
+        EnableObjectSpawning(false);
+
     }
 
     private void GetReferences()
@@ -40,7 +51,7 @@ public class ObjectSpawner : MonoBehaviour
 
     private IEnumerator StartSpawning()
     {
-        while (true)
+        while (isSpawning)
         {
             if (payload != null && Vector3.Distance(transform.position, payload.position) <= activationRadius)
             {
@@ -61,6 +72,7 @@ public class ObjectSpawner : MonoBehaviour
 
     public  void SpawnObject()
     {
+        if (this.enabled == false) return;
         Vector3 spawnPosition = SpawnPostionForObject() * spawnRadius + transform.position;
         GameObject newObject = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
         newObject.transform.parent = transform;
@@ -99,6 +111,19 @@ public class ObjectSpawner : MonoBehaviour
         }
     }
 
+    void EnableObjectSpawning(bool _enabled)
+    {
+        isSpawning = _enabled;
+        if (isSpawning)
+        {
+            GetReferences(); // only gets references when spawning is enabled
+            StartCoroutine(StartSpawning());
+            return;
+        }
+        else { StopCoroutine(StartSpawning()); }
+    }
+
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -133,8 +158,10 @@ public class ObjectSpawner : MonoBehaviour
         labelStyle.fontStyle = style;
         Handles.Label(transform.position + offsetPosition, textContext, labelStyle);
     }
+    #endif
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ObjectSpawner))]
 public class ObjectSpawnerEditor : Editor
 {
@@ -144,7 +171,7 @@ public class ObjectSpawnerEditor : Editor
         spawner.prefabToSpawn = (GameObject)EditorGUILayout.ObjectField("Prefab to Spawn", spawner.prefabToSpawn, typeof(GameObject), true);
         spawner.spawnRadius = EditorGUILayout.FloatField("Spawn Radius", spawner.spawnRadius);
         spawner.activationRadius = EditorGUILayout.FloatField("Activation Radius", spawner.activationRadius);
-        ObjectSpawner.timeBetweenSpawns = EditorGUILayout.FloatField("TimeBetweenSpawns", ObjectSpawner.timeBetweenSpawns);
+        spawner.timeBetweenSpawns = EditorGUILayout.FloatField("Time Between Spawns", spawner.timeBetweenSpawns);
         spawner.spawnInside = EditorGUILayout.Toggle("Spawn Inside Circle", spawner.spawnInside);
         spawner.limitSpawnAmount = EditorGUILayout.Toggle("Limit Spawning", spawner.limitSpawnAmount);
 
@@ -164,4 +191,6 @@ public class ObjectSpawnerEditor : Editor
         }
     }
 }
+
+#endif
 

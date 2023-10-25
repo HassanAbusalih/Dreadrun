@@ -58,7 +58,7 @@ public class RandomDungeonCreator : MonoBehaviour
         _roomToSpawn = roomPrefabs[_index];
         _roomSpawnPosition = dungeonSpawnPoints[_randomSpawnPointIndex].position;
         _roomSpawnPosition.y = 0;
-        _roomRotation = dungeonSpawnPoints[_randomSpawnPointIndex].rotation;
+        _roomRotation = dungeonSpawnPoints[_randomSpawnPointIndex].localRotation;
     }
 
     private void DestroyAndRemoveSpawnPoint(int _randomSpawnPointIndex)

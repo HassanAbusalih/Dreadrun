@@ -14,4 +14,5 @@ public class PlayerStats
     public float attackSpeed;
     public float Range;
     public float Spread;
+    public float speed;
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent (typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
     float damage;
@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
 
     public void FixedUpdate()
     {
-        rb.velocity = transform.forward * speed * 1000 * Time.deltaTime;
+        rb.velocity = transform.forward * speed * 100 * Time.deltaTime;
         if (Vector3.Distance(transform.position, initialPos) > range) { Destroy(gameObject); }
     }
 
