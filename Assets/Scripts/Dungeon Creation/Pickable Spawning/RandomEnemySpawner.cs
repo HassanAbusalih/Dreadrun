@@ -10,6 +10,7 @@ public class RandomEnemySpawner : PickableBaseSpawning
     [SerializeField] int enemiesSpawned;
     public static List<Transform> EnemySpawnPoints = new List<Transform>();
 
+
     private void Start()
     {
         SpawnEnemiesRepeatedly();
@@ -23,7 +24,7 @@ public class RandomEnemySpawner : PickableBaseSpawning
             EnemySpawnProbability _enemyToSpawn = enemySpawnProbabilities[_randomConsumablePrefabIndex];
 
             float randomNumber = Random.Range(0, 100f);
-            if (randomNumber < _enemyToSpawn.probabilityToNotSpawn) {continue; }
+            if (randomNumber > _enemyToSpawn.probabilityToSpawn) {continue; }
 
             bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_enemyToSpawn.enemyPrefab, EnemySpawnPoints); 
             if (!_isAbleToSpawn) return;
