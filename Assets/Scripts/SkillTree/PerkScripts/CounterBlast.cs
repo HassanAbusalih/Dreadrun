@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class CounterBlast : MonoBehaviour
 {
-    private float explosionRadius = 2f;
-    private float explosionForce = 200f;
+    private float explosionRadius = 4f;
+    private float explosionForce = 4000f;
 
     private float explosionCooldown = 5f;
     private float explosionTimer;
+    private Rigidbody rb;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         explosionTimer = explosionCooldown;
     }
 
@@ -34,10 +36,16 @@ public class CounterBlast : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider nearbyObject in colliders)
         {
+            if(nearbyObject.gameObject == gameObject)
+            {
+                continue;
+            }
+
             if (nearbyObject.TryGetComponent(out Rigidbody rb))
             {
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 0, ForceMode.Impulse);
+                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 3.0f);
             }
+
             if (nearbyObject.TryGetComponent(out IDamagable newDamagable))
             {
                 newDamagable.TakeDamage(damage);
