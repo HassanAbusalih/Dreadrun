@@ -123,6 +123,7 @@ public class ObjectSpawner : MonoBehaviour
         else { StopCoroutine(StartSpawning()); }
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -157,8 +158,10 @@ public class ObjectSpawner : MonoBehaviour
         labelStyle.fontStyle = style;
         Handles.Label(transform.position + offsetPosition, textContext, labelStyle);
     }
+    #endif
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ObjectSpawner))]
 public class ObjectSpawnerEditor : Editor
 {
@@ -188,4 +191,6 @@ public class ObjectSpawnerEditor : Editor
         }
     }
 }
+
+#endif
 

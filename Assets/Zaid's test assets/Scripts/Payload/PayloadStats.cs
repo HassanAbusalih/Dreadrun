@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class PayloadStats : MonoBehaviour
+public class PayloadStats : MonoBehaviour,IDamagable
 {
     [Header("Speed Settings")]
     public float onePlayerSpeed;
@@ -14,7 +14,7 @@ public class PayloadStats : MonoBehaviour
     [Header("Health Settings")]
     [SerializeField] Image healthBar;
     [SerializeField] float maxPayloadHealth;
-    private float payloadHealth;
+    [SerializeField] float payloadHealth;
 
     [Header("EXP Settings")]
     public float storedEXP;

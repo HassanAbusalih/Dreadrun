@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-[CreateAssetMenu(menuName = "PlayerPerks")]
 public class Perk : ScriptableObject
 {
     public string perkName, perkDescription;

@@ -27,14 +27,18 @@ public class PayloadMovement : MonoBehaviour
     [Header("Payload Stats")]
     private PayloadStats payloadStats;
     private float movementSpeed;
-
-    private void Start()
+    private void OnEnable()
     {
         payloadStats = gameObject.GetComponent<PayloadStats>();
         checkpointSystem = gameObject.GetComponent<PayloadCheckpointSystem>();
         reverseTimer = reverseCountDownTime;
         currentPath = GameObject.FindGameObjectWithTag("PayloadPath").GetComponent<PayloadPath>();
         playersInGame = FindObjectsOfType<Player>();
+    }
+
+    private void Start()
+    {
+  
     }
 
     private void Update()
@@ -57,9 +61,9 @@ public class PayloadMovement : MonoBehaviour
     {
         playersOnPayload = 0;
 
-        foreach(Player player in playersInGame)
+        foreach (Player player in playersInGame)
         {
-            if(Vector3.Distance(transform.position, player.gameObject.transform.position) < payloadRange)
+            if (Vector3.Distance(transform.position, player.gameObject.transform.position) < payloadRange)
             {
                 playersOnPayload++;
             }
@@ -78,7 +82,7 @@ public class PayloadMovement : MonoBehaviour
             movementSpeed = payloadStats.threePlayerSpeed;
         }
 
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.001f);
     }
 
     private void FollowPath(float speed)
@@ -102,7 +106,7 @@ public class PayloadMovement : MonoBehaviour
                 }
             }
         }
-        else if (speed < 0) 
+        else if (speed < 0)
         {
             reverseTimer -= Time.deltaTime;
 
