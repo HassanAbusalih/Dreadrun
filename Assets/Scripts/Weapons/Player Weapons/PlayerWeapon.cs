@@ -27,7 +27,7 @@ public abstract class PlayerWeapon : WeaponBase
         {
             if (!equipped)
             {
-                equipped = transform.TryGetComponent(out Player player);
+                equipped = GetComponentInParent<Player>() != null;
             }
         }
         else

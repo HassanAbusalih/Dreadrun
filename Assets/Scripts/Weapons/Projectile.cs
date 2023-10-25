@@ -17,8 +17,8 @@ public class Projectile : MonoBehaviour
         this.damage = damage;
         this.speed = speed;
         this.range = range;
-        gameObject.layer = layer;
         this.effects = effects;
+        gameObject.layer = layer;
         initialPos = transform.position;
     }
 
