@@ -24,11 +24,7 @@ public class RandomDungeonCreator : MonoBehaviour
   
     void StartTheRandomRoomSpawningProcess()
     {
-        if (numberOfRoomsToSpawn > dungeonSpawnPoints.Count)
-        {
-            Debug.LogError("Not enough spawn points to spawn rooms");
-            return;
-        }
+       
         SpawnRoomsRandomly();
     }
 
@@ -37,13 +33,17 @@ public class RandomDungeonCreator : MonoBehaviour
         int roomToSpawnIndex = 0;
         for (int i = 0; i < numberOfRoomsToSpawn; i++)
         {
+
+            if (dungeonSpawnPoints.Count ==0) { Debug.LogError("Not enough spawn points to spawn rooms"); return; }
+
+
             int _randomSpawnPointIndex = UnityEngine.Random.Range(0, dungeonSpawnPoints.Count);
             ResetRoomPrefabsToSpawnIndex(ref roomToSpawnIndex);
 
             GetRoomToSpawnTransformData(roomToSpawnIndex, _randomSpawnPointIndex, out GameObject _roomToSpawn,
-                                                out Vector3 _roomSpawnPosition, out Quaternion _roomRotation);
+                                                out Vector3 _roomSpawnPosition, out Vector3 _roomRotation);
 
-            GameObject _roomSpawned = Instantiate(_roomToSpawn, _roomSpawnPosition, _roomRotation);
+            GameObject _roomSpawned = Instantiate(_roomToSpawn, _roomSpawnPosition, Quaternion.Euler(_roomRotation));
             DestroyAndRemoveSpawnPoint(_randomSpawnPointIndex);
             roomToSpawnIndex++;
         }
@@ -58,12 +58,12 @@ public class RandomDungeonCreator : MonoBehaviour
         else { return _currentRoomToSpawnIndex; }
     }
 
-    void GetRoomToSpawnTransformData(int _index, int _randomSpawnPointIndex, out GameObject _roomToSpawn, out Vector3 _roomSpawnPosition, out Quaternion _roomRotation)
+    void GetRoomToSpawnTransformData(int _index, int _randomSpawnPointIndex, out GameObject _roomToSpawn, out Vector3 _roomSpawnPosition, out Vector3 _roomRotation)
     {
         _roomToSpawn = roomPrefabs[_index];
         _roomSpawnPosition = dungeonSpawnPoints[_randomSpawnPointIndex].position;
-        _roomSpawnPosition.y = 0;
-        _roomRotation = dungeonSpawnPoints[_randomSpawnPointIndex].localRotation;
+        _roomSpawnPosition.y = dungeonSpawnPoints[_randomSpawnPointIndex].root.position.y;
+        _roomRotation = dungeonSpawnPoints[_randomSpawnPointIndex].eulerAngles;
     }
 
     private void DestroyAndRemoveSpawnPoint(int _randomSpawnPointIndex)
