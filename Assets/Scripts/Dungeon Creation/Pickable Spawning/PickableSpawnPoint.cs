@@ -9,7 +9,7 @@ public class PickableSpawnPoint : MonoBehaviour
 
     [SerializeField] bool isEnemySpawnPoint;
 
-    private void Start()
+    private void Awake()
     {
         AddThisSpawnPointToaDesignatedSpawnList();
     }

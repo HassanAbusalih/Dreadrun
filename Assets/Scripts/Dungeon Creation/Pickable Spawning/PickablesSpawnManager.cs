@@ -39,8 +39,9 @@ public class PickablesSpawnManager : PickableBaseSpawning
         AllPickableSpawnPoints.RemoveAll(item => item == null);
     }
     private void Start()
-    {      
-       Invoke("InitializeSpawning", 0.1f);
+    {
+        // Invoke("InitializeSpawning", 0.1f);
+        InitializeSpawning();
     }
 
     void InitializeSpawning()
