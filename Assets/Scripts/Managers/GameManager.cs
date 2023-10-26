@@ -3,96 +3,98 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
+using UnityEngine.Events;
+using Input = UnityEngine.Input;
 
 public class GameManager : MonoBehaviour
 {
-    public enum GameState
+    public static GameManager Instance { get; private set; }
+
+    [Header("Events")]
+    public UnityEvent onWin;
+    public UnityEvent onLose;
+    public UnityEvent onPause;
+    public UnityEvent onResume;
+
+    private bool isGamePaused = false;
+    private bool hasGameEnded = false;
+
+    private void Awake()
     {
-        Play,
-        Pause,
-        Win,
-        Lose
-    }
-
-    public GameState gameState;
-
-    [SerializeField] GameObject pauseUI;
-    [SerializeField] GameObject winUI;
-    [SerializeField] GameObject loseUI;
-    public KeyCode pauseKey;
-
-
-    private void Start()
-    {
-        SetState(GameState.Play);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
     {
 
-        if (UnityEngine.Input.GetKeyDown(pauseKey))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SetState(GameState.Pause);
-        }
-
-        switch (gameState)
-        {
-            case GameState.Play:
-                Time.timeScale = 1;
-                pauseUI.SetActive(false);
-                break;
-
-            case GameState.Pause:
-                Time.timeScale = 0;
-                pauseUI.SetActive(true);
-                break;
-
-            case GameState.Win:
-                Time.timeScale = 0;
-                winUI.SetActive(true);
-                break;
-
-            case GameState.Lose:
-                Time.timeScale = 0;
-                loseUI.SetActive(true);
-                break;
+            TogglePause();
         }
     }
 
-    private void SetState(GameState newState)
+    public void Win()
     {
-        gameState = newState;       
-    }
-
-    public void PauseGame()
-    {
-        if (gameState == GameState.Play)
+        if (!hasGameEnded)
         {
-            SetState(GameState.Pause);
+            onWin.Invoke();
+            EndGame();
         }
     }
 
-    public void ResumeGame()
+    public void Lose()
     {
-        if (gameState == GameState.Pause)
+        if (!hasGameEnded)
         {
-            SetState(GameState.Play);
+            onLose.Invoke();
+            EndGame();
         }
     }
 
-    public void LoseState()
+    public void TogglePause()
     {
-        SetState(GameState.Lose);
+        if (!hasGameEnded)
+        {
+            isGamePaused = !isGamePaused;
+
+            if (isGamePaused)
+            {
+                PauseGame();
+            }
+            else
+            {
+                ResumeGame();
+            }
+        }
     }
 
-    public void WinState()
+    private void PauseGame()
     {
-        SetState(GameState.Win);
+        Time.timeScale = 0;
+        onPause.Invoke();
     }
 
-    //change this to build index later
+    private void ResumeGame()
+    {
+        Time.timeScale = 1;
+        onResume.Invoke();
+    }
+
+    private void EndGame()
+    {
+        hasGameEnded = true;
+        Time.timeScale = 0;
+    }
     public void Restart()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

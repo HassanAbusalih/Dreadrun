@@ -24,6 +24,10 @@ public class PayloadStats : MonoBehaviour,IDamagable
     {
         payloadHealth -= Damage;
         healthBar.fillAmount = payloadHealth / maxPayloadHealth;
+        if(payloadHealth <= 0)
+        {
+            GameManager.Instance.Lose();
+        }
     }
 
     public void AddEXP(float EXP)
