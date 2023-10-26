@@ -5,78 +5,88 @@ using UnityEngine;
 
 public class RandomDungeonCreator : MonoBehaviour
 {
-    public static List<Transform> dungeonSpawnPoints = new List<Transform>();
+   
+    public static List<Transform> smallRoomSpawnPoints = new List<Transform>();
+    [Header("Small Rooms Spawn Settings")]
+    [SerializeField] int smallRoomsToSpawn;
+    [SerializeField] int smallRoomsToSkipAfterFirstIteration;
+    [SerializeField] GameObject[] smallRoomPrefabs;
 
-    [SerializeField] int numberOfRoomsToSpawn;
-    [SerializeField] int roomPrefabToSkipAfterFirstSpawnIteration;
+    public static List<Transform> bigRoomSpawnPoints = new List<Transform>();
+    [Header("Big Rooms Spawn Settings")]
+    [SerializeField] int bigRoomsToSpawn;
+    [SerializeField] int bigRoomsToSkipAfterFirstIteration;
+    [SerializeField] GameObject[] bigRoomPrefabs;
+
+    [Header("Debug Stats")]
+    [SerializeField] int smallRoomsSpawned;
+    [SerializeField] int bigRoomsSpawned;
+
     [SerializeField] bool destroySpawnPointParentOnSpawn;
-    [SerializeField] GameObject[] roomPrefabs;
 
 
+   
 
-  
     private void Start()
     {    
-        dungeonSpawnPoints.RemoveAll(item => item == null);
+        bigRoomSpawnPoints.RemoveAll(item => item == null);
 
-        StartTheRandomRoomSpawningProcess();
+        StartRandomRoomSpawningProcess();
     }
   
-    void StartTheRandomRoomSpawningProcess()
+    void StartRandomRoomSpawningProcess()
     {
-       
-        SpawnRoomsRandomly();
+       SpawnRooms(ref bigRoomsSpawned, bigRoomsToSpawn, ref bigRoomSpawnPoints, bigRoomPrefabs, bigRoomsToSkipAfterFirstIteration);    
     }
 
-    void SpawnRoomsRandomly()
+    private void SpawnRooms(ref int roomsSpawned,int _roomsToSpawn, ref List<Transform> _spawnPoints, GameObject[]_prefabList, int roomsToSkip)
     {
         int roomToSpawnIndex = 0;
-        for (int i = 0; i < numberOfRoomsToSpawn; i++)
+        for (roomsSpawned = 0; roomsSpawned < _roomsToSpawn; roomsSpawned++)
         {
+            if (_spawnPoints.Count == 0) { Debug.LogError("Not enough spawn points to spawn rooms"); return; }
 
-            if (dungeonSpawnPoints.Count ==0) { Debug.LogError("Not enough spawn points to spawn rooms"); return; }
+            int _randomSpawnPointIndex = UnityEngine.Random.Range(0, _spawnPoints.Count);
+            ResetRoomPrefabsToSpawnIndex(ref roomToSpawnIndex,roomsToSkip,_prefabList);
 
-
-            int _randomSpawnPointIndex = UnityEngine.Random.Range(0, dungeonSpawnPoints.Count);
-            ResetRoomPrefabsToSpawnIndex(ref roomToSpawnIndex);
-
-            GetRoomToSpawnTransformData(roomToSpawnIndex, _randomSpawnPointIndex, out GameObject _roomToSpawn,
+            GetRoomSpawnData(_prefabList,_spawnPoints,roomToSpawnIndex, _randomSpawnPointIndex, out GameObject _roomToSpawn,
                                                 out Vector3 _roomSpawnPosition, out Vector3 _roomRotation);
 
             GameObject _roomSpawned = Instantiate(_roomToSpawn, _roomSpawnPosition, Quaternion.Euler(_roomRotation));
-            DestroyAndRemoveSpawnPoint(_randomSpawnPointIndex);
+            DestroyAndRemoveSpawnPoint(_randomSpawnPointIndex,ref _spawnPoints);
             roomToSpawnIndex++;
         }
     }
-    int ResetRoomPrefabsToSpawnIndex(ref int _currentRoomToSpawnIndex)
+
+    int ResetRoomPrefabsToSpawnIndex(ref int _currentRoomToSpawnIndex, int roomsToSkip, GameObject[]roomPrefabList)
     {
-        if (_currentRoomToSpawnIndex == roomPrefabs.Length)
+        if (_currentRoomToSpawnIndex == roomPrefabList.Length)
         {
-            _currentRoomToSpawnIndex = 0 + roomPrefabToSkipAfterFirstSpawnIteration;
+            _currentRoomToSpawnIndex = 0 + roomsToSkip;
             return _currentRoomToSpawnIndex;
         }
         else { return _currentRoomToSpawnIndex; }
     }
 
-    void GetRoomToSpawnTransformData(int _index, int _randomSpawnPointIndex, out GameObject _roomToSpawn, out Vector3 _roomSpawnPosition, out Vector3 _roomRotation)
+    void GetRoomSpawnData(GameObject[] _prefabList,List<Transform>_spawnPoints,int _index, int _randomSpawnPointIndex, out GameObject _roomToSpawn, out Vector3 _roomSpawnPosition, out Vector3 _roomRotation)
     {
-        _roomToSpawn = roomPrefabs[_index];
-        _roomSpawnPosition = dungeonSpawnPoints[_randomSpawnPointIndex].position;
-        _roomSpawnPosition.y = dungeonSpawnPoints[_randomSpawnPointIndex].root.position.y;
-        _roomRotation = dungeonSpawnPoints[_randomSpawnPointIndex].eulerAngles;
+        _roomToSpawn = _prefabList[_index];
+        _roomSpawnPosition = _spawnPoints[_randomSpawnPointIndex].position;
+        _roomSpawnPosition.y = _spawnPoints[_randomSpawnPointIndex].root.position.y;
+        _roomRotation = _spawnPoints[_randomSpawnPointIndex].eulerAngles;
     }
 
-    private void DestroyAndRemoveSpawnPoint(int _randomSpawnPointIndex)
+    private void DestroyAndRemoveSpawnPoint(int _randomSpawnPointIndex,ref List<Transform> _spawnPoints)
     {
         if (destroySpawnPointParentOnSpawn)
         {
-            Destroy(dungeonSpawnPoints[_randomSpawnPointIndex].gameObject.transform.parent.gameObject);
+            Destroy(_spawnPoints[_randomSpawnPointIndex].gameObject.transform.parent.gameObject);
         }
         else
         {
-            Destroy(dungeonSpawnPoints[_randomSpawnPointIndex].gameObject);
+            Destroy(_spawnPoints[_randomSpawnPointIndex].gameObject);
         }
 
-        dungeonSpawnPoints.RemoveAt(_randomSpawnPointIndex);
+        _spawnPoints.RemoveAt(_randomSpawnPointIndex);
     }
 }
