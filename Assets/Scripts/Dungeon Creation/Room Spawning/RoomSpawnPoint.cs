@@ -15,6 +15,8 @@ public class RoomSpawnPoint : MonoBehaviour
 
     void AddThisSpawnPointToDungeonCreatorList()
     {
+        if(doNotSpawnHere) return;
+
         if(SpawnBigRoom) RandomDungeonCreator.bigRoomSpawnPoints.Add(transform);
         else RandomDungeonCreator.smallRoomSpawnPoints.Add(transform);
 
