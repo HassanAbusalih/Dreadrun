@@ -1,18 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Bow : PlayerWeapon
+public class GrenadeLauncher : PlayerWeapon
 {
-    [Header("Bow Properties")]
-    [SerializeField] float minDamageModifier = 10;
-    [SerializeField] float minRange = 10;
+    [Header("Grenade Launcher Properties")]
+    [SerializeField] float minRange = 5;
     [SerializeField] float minSpeed = 5;
     [SerializeField] Image chargeIndicator;
     [SerializeField] Color minColor;
     [SerializeField] Color maxColor;
-    float chargeTime = 0;
+    public float chargeTime = 0;
 
-    void Update()
+    private void Update()
     {
         if (!equipped) { return; }
         if (Input.GetKey(KeyCode.Mouse0))
@@ -24,16 +23,34 @@ public class Bow : PlayerWeapon
             Attack();
             chargeTime = 0;
         }
-        VisualFeedback();
+        if (chargeIndicator != null) { VisualFeedback(); }
     }
 
     public override void Attack()
     {
-        float currentDamage = Mathf.Lerp(minDamageModifier, damageModifier, chargeTime / fireRate);
         float currentRange = Mathf.Lerp(minRange, projectileRange, chargeTime / fireRate);
         float currentSpeed = Mathf.Lerp(minSpeed, projectileRange, chargeTime / fireRate);
+        RaycastHit hit;
+        Vector3 target;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, currentRange))
+        {
+            target = hit.point;
+        }
+        else
+        {
+            Vector3 endPoint = transform.position + transform.forward * currentRange;
+            if (Physics.Raycast(endPoint, Vector3.down, out hit))
+            {
+                target = hit.point;
+            }
+            else
+            {
+                target = endPoint;
+            }
+            // This is so bad aaaaaaa kill me
+        }
         GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
-        projectile.GetComponent<Projectile>().Initialize(currentDamage, currentSpeed, currentRange, 8, effects);
+        projectile.GetComponent<Grenade>().Initialize(target, currentSpeed, damageModifier, 8, effects);
         if (audioSource != null) audioSource.Play();
     }
 
@@ -49,5 +66,11 @@ public class Bow : PlayerWeapon
             chargeIndicator.fillAmount = 0;
             chargeIndicator.color = minColor;
         }
+    }
+
+    public override void UpdateWeaponEffects()
+    {
+        base.UpdateWeaponEffects();
+        effects.RemoveAll((effect) => effect is ExplosiveEffect);
     }
 }

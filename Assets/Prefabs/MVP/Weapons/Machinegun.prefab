@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6410706523432037496}
   - component: {fileID: 6410706523432037497}
   - component: {fileID: 6410706523432037501}
-  - component: {fileID: 4535365100899770714}
   m_Layer: 6
   m_Name: Machinegun
   m_TagString: Untagged
@@ -118,21 +117,9 @@ MonoBehaviour:
   spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
   audioSource: {fileID: 0}
-  rampTime: 2
-  rampDelay: 0.5
---- !u!114 &4535365100899770714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6410706523432037446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a40aed978ba112448e2dbd8382ba372, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponID: 3
+  weaponID: 2
   weaponOffset: {x: 0, y: 0, z: 0}
   weaponRotationOffset: {x: 0, y: 0, z: 0}
   pickUpSoundAudioSource: {fileID: 0}
+  rampTime: 2
+  rampDelay: 0.5

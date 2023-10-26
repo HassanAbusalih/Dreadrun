@@ -9,6 +9,7 @@ public class Machinegun : PlayerWeapon
 
     void Update()
     {
+        if (!equipped) { return; }
         timeSinceLastShot += Time.deltaTime;
         firingDuration += Time.deltaTime;
         if (Input.GetKey(KeyCode.Mouse0))
@@ -34,7 +35,7 @@ public class Machinegun : PlayerWeapon
         float randomAngle = Random.Range(-currentSpread, currentSpread);
         Quaternion projectileRotation = Quaternion.Euler(0, transform.eulerAngles.y + randomAngle, 0);
         GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, projectileRotation);
-        projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8);
+        projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8, effects);
         if (audioSource != null) audioSource.Play();
     }
 }

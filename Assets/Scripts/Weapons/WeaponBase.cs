@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class WeaponBase : MonoBehaviour
 {
     protected float timeSinceLastShot;
+    [Header("Base Weapon Properties")]
     [SerializeField] protected float fireRate = 1;
     [SerializeField] protected float damageModifier = 1;
     [SerializeField] protected float projectileRange = 10;
