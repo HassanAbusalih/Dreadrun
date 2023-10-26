@@ -8,7 +8,6 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
     protected Transform[] players = new Transform[0];
     protected Rigidbody rb;
     float currentHealth;
-    protected LayerMask mask = ~(1 << 12);
 
     private void Start()
     {

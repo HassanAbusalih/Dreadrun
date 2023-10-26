@@ -35,10 +35,15 @@ public class PhaseChanger : MonoBehaviour
 
             if (insideTimer >= requiredTime)
             {
-                wall.SetActive(false);
-                payload.enabled = true;
-                Debug.LogError("Payload enabled");
+                ChangePhase();
             }
         }
     }
-}
+
+    public void ChangePhase()
+    {
+        wall.SetActive(false);
+        payload.EnableMovement();
+        Debug.LogError("Payload enabled");
+    }
+}   

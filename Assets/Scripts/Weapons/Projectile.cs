@@ -50,6 +50,7 @@ public class Projectile : MonoBehaviour
                     effect.ApplyEffect(damagable, damage, new List<IProjectileEffect>(effects));
                 }
             }
+              
         }
         Destroy(gameObject);
     }

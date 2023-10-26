@@ -12,7 +12,7 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
     [SerializeField] LayerMask ground;
-    [SerializeField] GameManager manager;
+
     // player stats 
     [SerializeField]
     public Slider healthBar;
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        rb.velocity = new Vector3(horizontal * playerStats.speed, rb.velocity.y, vertical * playerStats.speed);
+        rb.velocity = new Vector3(horizontal * playerStats.speed, 0, vertical * playerStats.speed);
         if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
         {
             Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
@@ -77,7 +77,6 @@ public class Player : MonoBehaviour, IDamagable
 
         StopDash();
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (isDashing)
@@ -88,13 +87,6 @@ public class Player : MonoBehaviour, IDamagable
             }
         }
 
-    }
-
-    private void StopDash()
-    {
-        isDashing = false;
-        rb.useGravity = true;
-        rb.freezeRotation = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -114,18 +106,20 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
+    private void StopDash()
+    {
+        isDashing = false;
+        rb.useGravity = true;
+        rb.freezeRotation = false;
+    }
+
     public void TakeDamage(float amount)
     {
-        if (TryGetComponent(out CounterBlast counterBlast))
-        {
-            counterBlast.Explode(amount * 0.5f);
-        }
-
         playerStats.health -= amount;
         UpdateHealthBar();
         if (playerStats.health <= 0)
         {
-            //manager.LoseState();
+            PlayerDeath();
         }
     }
 
@@ -135,6 +129,11 @@ public class Player : MonoBehaviour, IDamagable
         {
             healthBar.value = playerStats.health;
         }
+    }
+
+    void PlayerDeath()
+    {
+        GameManager.Instance.Lose();
     }
 
     public void UpdateStaminaBar()

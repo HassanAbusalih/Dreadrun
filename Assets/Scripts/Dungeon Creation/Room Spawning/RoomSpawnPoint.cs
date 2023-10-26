@@ -7,6 +7,7 @@ public class RoomSpawnPoint : MonoBehaviour
 {
     [SerializeField]bool doNotSpawnHere;
     [SerializeField]bool debugMode;
+    [SerializeField]bool SpawnBigRoom;
     private void Awake()
     {
         AddThisSpawnPointToDungeonCreatorList();
@@ -14,8 +15,9 @@ public class RoomSpawnPoint : MonoBehaviour
 
     void AddThisSpawnPointToDungeonCreatorList()
     {
-        if (doNotSpawnHere) return;
-        RandomDungeonCreator.dungeonSpawnPoints.Add(transform);
+        if(SpawnBigRoom) RandomDungeonCreator.bigRoomSpawnPoints.Add(transform);
+        else RandomDungeonCreator.smallRoomSpawnPoints.Add(transform);
+
         if (!debugMode) return;
         Debug.Log(gameObject.name + transform.position);
     }
