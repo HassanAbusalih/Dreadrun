@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GameWinner : MonoBehaviour
 {
-    private bool playerInside = false;
+    [SerializeField] bool playerInside = false;
     private float insideTimer = 0f;
     [SerializeField] float requiredTime = 10f;
-    [SerializeField] GameManager manager;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -34,7 +34,7 @@ public class GameWinner : MonoBehaviour
 
             if (insideTimer >= requiredTime)
             {
-                manager.WinState();
+                GameManager.Instance.Win();
             }
         }
     }

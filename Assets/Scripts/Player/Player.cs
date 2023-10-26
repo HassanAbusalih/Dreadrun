@@ -12,7 +12,7 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
     [SerializeField] LayerMask ground;
-    [SerializeField] GameManager manager;
+
     // player stats 
     [SerializeField]
     public Slider healthBar;
@@ -119,7 +119,7 @@ public class Player : MonoBehaviour, IDamagable
         UpdateHealthBar();
         if (playerStats.health <= 0)
         {
-            manager.LoseState();
+            PlayerDeath();
         }
     }
 
@@ -129,6 +129,11 @@ public class Player : MonoBehaviour, IDamagable
         {
             healthBar.value = playerStats.health;
         }
+    }
+
+    void PlayerDeath()
+    {
+        GameManager.Instance.Lose();
     }
 
     public void UpdateStaminaBar()

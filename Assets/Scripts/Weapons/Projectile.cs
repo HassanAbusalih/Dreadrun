@@ -43,10 +43,14 @@ public class Projectile : MonoBehaviour
         if (collision.transform.TryGetComponent(out IDamagable damagable)) 
         { 
             damagable.TakeDamage(damage); 
-            foreach(IProjectileEffect effect in effects)
+            if(effects !=null)
             {
-                effect.ApplyEffect(damagable, damage, effects);
+                foreach (IProjectileEffect effect in effects)
+                {
+                    effect.ApplyEffect(damagable, damage, effects);
+                }
             }
+              
         }
         Destroy(gameObject);
     }
