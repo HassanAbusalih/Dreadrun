@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShield : MonoBehaviour
+public class PlayerShield : MonoBehaviour, IDamagable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] public float shieldHP;
+    [SerializeField] public float maxShieldHP;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        shieldHP = maxShieldHP;
+    }
+    public void TakeDamage(float Amount)
+    {
+        shieldHP -= Amount;
     }
 }

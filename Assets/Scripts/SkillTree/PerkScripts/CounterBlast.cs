@@ -7,6 +7,7 @@ public class CounterBlast : MonoBehaviour
 
     private float explosionCooldown = 5f;
     private float explosionTimer;
+    LayerMask mask = ((1 << 8) | (1 << 9));
 
     private void Start()
     {
@@ -29,7 +30,7 @@ public class CounterBlast : MonoBehaviour
         }
         explosionTimer = 0;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, mask);
         foreach (Collider nearbyObject in colliders)
         {
             if(nearbyObject.gameObject == gameObject)

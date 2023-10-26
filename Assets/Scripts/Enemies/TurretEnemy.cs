@@ -20,7 +20,8 @@ public class TurretEnemy : EnemyAIBase
         foreach (Transform player in players)
         {
             float distance = Vector3.Distance(transform.position, player.position);
-            if (distance < closestDistance && Physics.Raycast(transform.position, player.position - transform.position, out hit, weapon.ProjectileRange) && hit.transform == player)
+            if (distance < closestDistance && Physics.Raycast(transform.position,
+                player.position - transform.position, out hit, weapon.ProjectileRange, mask) && hit.transform == player)
             {
                 closestPlayer = player;
                 closestDistance = distance;

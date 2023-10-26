@@ -7,6 +7,7 @@ public class ExplosiveEffect : MonoBehaviour, IProjectileEffect
     [SerializeField] float explosionRadius = 5;
     [SerializeField] float explosionForce = 700;
 
+    LayerMask mask = ((1 << 8) | (1 << 9));
     public void ApplyEffect(IDamagable damagable, float damage, List<IProjectileEffect> projectileEffects)
     {
         projectileEffects.RemoveAll((effect) => EffectsToRemove().Contains(effect.GetType()));
@@ -20,7 +21,7 @@ public class ExplosiveEffect : MonoBehaviour, IProjectileEffect
 
     void Explode(float damage, List<IProjectileEffect> projectileEffects)
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, mask);
         foreach (Collider nearbyObject in colliders)
         {
             if (nearbyObject.TryGetComponent(out Rigidbody rb))
