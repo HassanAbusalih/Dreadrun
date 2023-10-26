@@ -15,7 +15,7 @@ public class ExpOrb : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if ((layerMask.value & (1 << other.transform.gameObject.layer)) > 0)
+        if(other.TryGetComponent(out Player player))
         {
             expmanager.AddExperience(expAmount);
             Destroy(this.gameObject);
