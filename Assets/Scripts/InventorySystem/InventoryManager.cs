@@ -1,8 +1,5 @@
-
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.UI;
 using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
@@ -11,9 +8,8 @@ public class InventoryManager : MonoBehaviour
     public Player player;
     public Inventory inventory;
     public Image[] InventorySprites;
+    KeyCode[] keys = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
 
-
-    // Start is called before the first frame update
     void Start()
     {
         player = GetComponent<Player>();
@@ -21,31 +17,16 @@ public class InventoryManager : MonoBehaviour
         inventory.inventoryList = new List<ItemBase>(new ItemBase[inventory.inventorySlots]);
     }
 
-    #region Inputs
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        for (int i = 0; i < keys.Length; i++)
         {
-            UseItem(0);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            UseItem(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            UseItem(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            UseItem(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            UseItem(4);
+            if (Input.GetKeyDown(keys[i]))
+            {
+                UseItem(i);
+            }
         }
     }
-    #endregion
 
     private void OnTriggerEnter(Collider other)
     {
@@ -96,8 +77,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (slot >= 0 && slot < InventorySprites.Length)
         {
-            InventorySprites[slot].sprite = null; 
-                                                  
+            InventorySprites[slot].sprite = null;                                     
         }
     }
 }

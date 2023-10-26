@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Potion", menuName = "Inventory/Speed Potion")]
@@ -15,7 +10,7 @@ public class SpeedPotion : ItemBase
     [SerializeField] float duration;
 
     [SerializeField] GameObject timerPrefab;
-    [SerializeField] Player playerRef;
+    Player playerRef;
 
     public override void UseOnSelf(Player player)
     {

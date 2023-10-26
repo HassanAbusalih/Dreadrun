@@ -43,7 +43,7 @@ public class Projectile : MonoBehaviour
         if (collision.transform.TryGetComponent(out IDamagable damagable))
         {
             damagable.TakeDamage(damage); 
-            if(effects != null)
+            if (effects != null)
             {
                 foreach (IProjectileEffect effect in effects)
                 {

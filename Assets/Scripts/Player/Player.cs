@@ -117,6 +117,10 @@ public class Player : MonoBehaviour, IDamagable
     {
         playerStats.health -= amount;
         UpdateHealthBar();
+        if (TryGetComponent(out CounterBlast counterBlast))
+        {
+            counterBlast.Explode(amount * 0.5f);
+        }
         if (playerStats.health <= 0)
         {
             PlayerDeath();
