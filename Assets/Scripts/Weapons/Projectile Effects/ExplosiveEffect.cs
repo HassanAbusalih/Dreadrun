@@ -32,7 +32,7 @@ public class ExplosiveEffect : MonoBehaviour, IProjectileEffect
                 newDamagable.TakeDamage(damage);
                 foreach (IProjectileEffect effect in projectileEffects)
                 {
-                    effect.ApplyEffect(newDamagable, damage, projectileEffects);
+                    effect.ApplyEffect(newDamagable, damage, new List<IProjectileEffect>(projectileEffects));
                 }
             }
         }
