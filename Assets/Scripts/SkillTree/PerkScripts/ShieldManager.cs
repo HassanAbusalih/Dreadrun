@@ -44,6 +44,7 @@ public class ShieldManager : MonoBehaviour
             {
                 cooldownTimer = 0;
                 playerShield.shieldHP = playerShield.maxShieldHP;
+                //repush
             }
         }
     }

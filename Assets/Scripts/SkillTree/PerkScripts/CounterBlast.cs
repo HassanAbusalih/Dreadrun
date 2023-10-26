@@ -46,6 +46,7 @@ public class CounterBlast : MonoBehaviour
             if (nearbyObject.TryGetComponent(out IDamagable newDamagable))
             {
                 newDamagable.TakeDamage(damage);
+                //repush
             }
         }
     }

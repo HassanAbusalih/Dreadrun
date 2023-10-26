@@ -10,5 +10,6 @@ public class ShieldPerk : Perk
         GameObject newShield = Instantiate(shield, player.transform.position, player.transform.rotation);
         ShieldManager shieldManager = player.gameObject.AddComponent<ShieldManager>();
         shieldManager.GimmieShield(newShield, shieldCD, player);
+        //repush
     }
 }
