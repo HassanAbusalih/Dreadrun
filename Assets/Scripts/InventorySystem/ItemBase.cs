@@ -8,12 +8,13 @@ public class ItemBase : ScriptableObject
     public Sprite icon;
     public bool throwable;
     public string description;
+    public bool hasBuffedItem = false;
     public int itemID;
 
-   
+
     public virtual void UseOnSelf(Player player)
     {
-       
+
     }
-  
+
 }

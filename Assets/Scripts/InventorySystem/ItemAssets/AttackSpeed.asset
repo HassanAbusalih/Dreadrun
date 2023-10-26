@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d87acfc3311d24dbbe1d6f81bebcc1, type: 3}
-  m_Name: Speed Potion
+  m_Script: {fileID: 11500000, guid: 338ca31882627b14e87721ecf3c6dd78, type: 3}
+  m_Name: AttackSpeed
   m_EditorClassIdentifier: 
   name: 
   icon: {fileID: 0}
@@ -18,7 +18,7 @@ MonoBehaviour:
   description: 
   hasBuffedItem: 0
   itemID: 0
-  speedIncrease: 20
-  duration: 5
-  outsideTimerPrefab: {fileID: 5626257875008455720, guid: 61ec3f3287e37884789f863057766e57, type: 3}
+  increaseProjectileSpeed: 10
+  duration: 4
+  timerPrefab: {fileID: 5626257875008455720, guid: 61ec3f3287e37884789f863057766e57, type: 3}
   playerRef: {fileID: 0}
