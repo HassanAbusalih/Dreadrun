@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class PlayerWeapon : WeaponBase
 {
     protected bool equipped;
-    protected List<IProjectileEffect> effects;
+    protected List<IProjectileEffect> effects = new();
     [Header("Weapon Equip Settings")]
     [SerializeField] int weaponID;
     [SerializeField] Vector3 weaponOffset;
@@ -17,6 +17,7 @@ public abstract class PlayerWeapon : WeaponBase
         transform.SetParent(_weaponEquipPosition);
         Vector3 _weaponRotation = _weaponEquipPosition.rotation.eulerAngles + weaponRotationOffset;
         transform.rotation = Quaternion.Euler(_weaponRotation);
+        UpdateWeaponEffects();
         _iD = weaponID;
         if (pickUpSoundAudioSource != null) pickUpSoundAudioSource.Play();
     }
@@ -27,7 +28,7 @@ public abstract class PlayerWeapon : WeaponBase
         {
             if (!equipped)
             {
-                equipped = transform.TryGetComponent(out Player player);
+                equipped = GetComponentInParent<Player>() != null;
             }
         }
         else

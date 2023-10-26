@@ -189,7 +189,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &46940779
 GameObject:
@@ -241,7 +241,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &46940782
 SphereCollider:
@@ -356,7 +356,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &105880496
 SphereCollider:
@@ -421,6 +421,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105880493}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &115580250
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.8119402
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.39999962
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.14946
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332399, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_Name
+      value: Shotgun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
 --- !u!1 &155016917
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +528,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &155016920
 SphereCollider:
@@ -586,7 +643,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &163297509
 SphereCollider:
@@ -701,7 +758,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &292085779
 SphereCollider:
@@ -816,7 +873,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &296183168
 SphereCollider:
@@ -979,7 +1036,7 @@ RectTransform:
   - {fileID: 1075252226}
   - {fileID: 2057324668}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1259,7 +1316,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &567423132 stripped
 Transform:
@@ -1362,7 +1419,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &644099723
 GameObject:
@@ -1414,7 +1471,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &644099726
 SphereCollider:
@@ -1529,7 +1586,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &674198271
 SphereCollider:
@@ -1644,7 +1701,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &678056901
 SphereCollider:
@@ -1846,7 +1903,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &724233962
 SphereCollider:
@@ -1972,7 +2029,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &800592135
 SphereCollider:
@@ -2143,7 +2200,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &898203638
 SphereCollider:
@@ -2432,7 +2489,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1162939261
 GameObject:
@@ -2476,7 +2533,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1207279207
 GameObject:
@@ -2487,7 +2544,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1207279208}
-  - component: {fileID: 1207279209}
   m_Layer: 6
   m_Name: gun
   m_TagString: Untagged
@@ -2510,30 +2566,6 @@ Transform:
   m_Father: {fileID: 567423132}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1207279209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207279207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeffd28595e270540b4d49610baf2017, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireRate: 1
-  damageModifier: 1
-  projectileRange: 10
-  projectileSpeed: 1
-  spreadAngle: 30
-  projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
-  audioSource: {fileID: 0}
-  weaponID: 0
-  weaponOffset: {x: 0, y: 0, z: 0}
-  weaponRotationOffset: {x: 0, y: 0, z: 0}
-  pickUpSoundAudioSource: {fileID: 0}
-  degreesPerProjectile: 5
 --- !u!1 &1276173017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2584,7 +2616,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &1276173020
 SphereCollider:
@@ -2699,7 +2731,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &1334296965
 SphereCollider:
@@ -2820,6 +2852,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1416142338507263347, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
+      propertyPath: weaponEquipPosition
+      value: 
+      objectReference: {fileID: 1207279208}
+    - target: {fileID: 1416142338507263347, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
       propertyPath: playerStats.maxHealth
       value: 5
       objectReference: {fileID: 0}
@@ -2833,7 +2869,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1416142338507263359, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1416142338507263359, guid: c4971bdc424e21149bc150ab20a6d571, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2932,7 +2968,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &1371702660
 SphereCollider:
@@ -3069,7 +3105,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &1594207093
 SphereCollider:
@@ -3184,7 +3220,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &1607197125
 SphereCollider:
@@ -3410,7 +3446,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &1698927285
 SphereCollider:
@@ -3525,7 +3561,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &1717715759
 SphereCollider:
@@ -3683,7 +3719,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &1832551291
 MonoBehaviour:
@@ -3725,7 +3761,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5791127613756451095, guid: 1f07f3599065bf545b2dd9619c0aa2e8, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5791127613756451095, guid: 1f07f3599065bf545b2dd9619c0aa2e8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3823,7 +3859,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &1925235566
 SphereCollider:
@@ -3939,7 +3975,7 @@ Transform:
   - {fileID: 1965700313}
   - {fileID: 1698927283}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1965700312
 GameObject:
@@ -3991,7 +4027,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &1965700315
 SphereCollider:
@@ -4166,7 +4202,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2026313121
 GameObject:
@@ -4218,7 +4254,7 @@ MonoBehaviour:
   expAmount: 20
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   expmanager: {fileID: 0}
 --- !u!135 &2026313124
 SphereCollider:
@@ -4495,26 +4531,6 @@ PrefabInstance:
       propertyPath: perkUIcanvas
       value: 
       objectReference: {fileID: 1128435358}
-    - target: {fileID: 4423540877954294325, guid: 27540d230182864418c6ed6b42d543c0, type: 3}
-      propertyPath: perkPool.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4423540877954294325, guid: 27540d230182864418c6ed6b42d543c0, type: 3}
-      propertyPath: perkPool.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 38e4b1d7150b9364aa7cf430e17b3768, type: 2}
-    - target: {fileID: 4423540877954294325, guid: 27540d230182864418c6ed6b42d543c0, type: 3}
-      propertyPath: perkPool.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: cb2e4dc07b606004484738feaa7f60d4, type: 2}
-    - target: {fileID: 4423540877954294325, guid: 27540d230182864418c6ed6b42d543c0, type: 3}
-      propertyPath: perkPool.Array.data[5]
-      value: 
-      objectReference: {fileID: 11400000, guid: fe62a025937dfe849a54e0d66ee530aa, type: 2}
-    - target: {fileID: 4423540877954294325, guid: 27540d230182864418c6ed6b42d543c0, type: 3}
-      propertyPath: perkPool.Array.data[6]
-      value: 
-      objectReference: {fileID: 11400000, guid: ae2e6ea9d6c7e07428a00672c77a5f60, type: 2}
     - target: {fileID: 4423540877954294325, guid: 27540d230182864418c6ed6b42d543c0, type: 3}
       propertyPath: perkChoices.Array.data[0].perkName
       value: 

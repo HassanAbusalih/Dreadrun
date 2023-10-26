@@ -26,7 +26,14 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
     {
         while (elapsedTime < duration)
         {
-            target.TakeDamage(damagePerTick);
+            if (target != null)
+            {
+                target.TakeDamage(damagePerTick);
+            }
+            else
+            {
+                yield break;
+            }
             elapsedTime += Time.deltaTime;
             yield return null;
         }

@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour
         this.speed = speed;
         this.range = range;
         gameObject.layer = layer;
-        this.effects = effects;
+        this.effects = new List<IProjectileEffect>(effects);
         initialPos = transform.position;
     }
 
@@ -42,12 +42,12 @@ public class Projectile : MonoBehaviour
     {
         if (collision.transform.TryGetComponent(out IDamagable damagable))
         {
-             damagable.TakeDamage(damage); 
+            damagable.TakeDamage(damage); 
             if(effects != null)
             {
                 foreach (IProjectileEffect effect in effects)
                 {
-                    effect.ApplyEffect(damagable, damage, effects);
+                    effect.ApplyEffect(damagable, damage, new List<IProjectileEffect>(effects));
                 }
             }
         }
