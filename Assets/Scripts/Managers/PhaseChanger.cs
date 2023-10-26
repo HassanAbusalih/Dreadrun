@@ -44,6 +44,5 @@ public class PhaseChanger : MonoBehaviour
     {
         wall.SetActive(false);
         payload.EnableMovement();
-        Debug.LogError("Payload enabled");
     }
 }   

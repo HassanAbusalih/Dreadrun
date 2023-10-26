@@ -15,12 +15,12 @@ public class MeleeFodderEnemy : EnemyAIBase
         if (targetPlayer != null && Physics.Raycast(transform.position, targetPlayer.position - transform.position, out hit, detectionRange) && hit.transform == targetPlayer)
         {
             transform.LookAt(targetPlayer.position);
-            Vector3 moveDirection = (targetPlayer.position - transform.position).normalized;
-            rb.velocity = moveDirection * movementSpeed * Time.deltaTime;
+            Vector3 moveDirection = (targetPlayer.position - transform.position).normalized * Time.deltaTime;
+            rb.velocity = new Vector3(moveDirection.x,rb.velocity.y, moveDirection.z)  * movementSpeed;
         }
         else
         {
-            rb.velocity = Vector3.zero;
+            rb.velocity = new Vector3(0,rb.velocity.y,0);
         }
     }
 

@@ -39,8 +39,12 @@ public class PickablesSpawnManager : PickableBaseSpawning
         AllPickableSpawnPoints.RemoveAll(item => item == null);
     }
     private void Start()
+    {      
+       Invoke("InitializeSpawning", 0.1f);
+    }
+
+    void InitializeSpawning()
     {
-        
         InitializeExpOrbTypesDictionary();
         SpawnAllWeapons();
         SpawnAllConsumables();

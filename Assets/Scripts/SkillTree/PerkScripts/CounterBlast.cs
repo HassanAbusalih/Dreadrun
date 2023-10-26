@@ -48,6 +48,12 @@ public class CounterBlast : MonoBehaviour
                 newDamagable.TakeDamage(damage);
                 //repush
             }
-        }
+        }      
+    }
+
+    public void SetCounterBlast(float radius, float force)
+    {
+        explosionRadius = radius;
+        explosionForce = force;
     }
 }

@@ -9,13 +9,13 @@ public class RandomDungeonCreator : MonoBehaviour
     public static List<Transform> smallRoomSpawnPoints = new List<Transform>();
     [Header("Small Rooms Spawn Settings")]
     [SerializeField] int smallRoomsToSpawn;
-    [SerializeField] int smallRoomsToSkipAfterFirstIteration;
+    [SerializeField] int establishedSmallRoom;
     [SerializeField] GameObject[] smallRoomPrefabs;
 
     public static List<Transform> bigRoomSpawnPoints = new List<Transform>();
     [Header("Big Rooms Spawn Settings")]
     [SerializeField] int bigRoomsToSpawn;
-    [SerializeField] int bigRoomsToSkipAfterFirstIteration;
+    [SerializeField] int establishedBigRoom;
     [SerializeField] GameObject[] bigRoomPrefabs;
 
     [Header("Debug Stats")]
@@ -37,8 +37,8 @@ public class RandomDungeonCreator : MonoBehaviour
 
     void StartRandomRoomSpawningProcess()
     {
-        SpawnRooms(ref bigRoomsSpawned, bigRoomsToSpawn, ref bigRoomSpawnPoints, bigRoomPrefabs, bigRoomsToSkipAfterFirstIteration);
-        SpawnRooms(ref smallRoomsSpawned, smallRoomsToSpawn, ref smallRoomSpawnPoints, smallRoomPrefabs, smallRoomsToSkipAfterFirstIteration);
+        SpawnRooms(ref bigRoomsSpawned, bigRoomsToSpawn, ref bigRoomSpawnPoints, bigRoomPrefabs, establishedBigRoom);
+        SpawnRooms(ref smallRoomsSpawned, smallRoomsToSpawn, ref smallRoomSpawnPoints, smallRoomPrefabs, establishedSmallRoom);
     }
 
     private void SpawnRooms(ref int roomsSpawned, int _roomsToSpawn, ref List<Transform> _spawnPoints, GameObject[] _prefabList, int roomsToSkip)

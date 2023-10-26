@@ -11,6 +11,7 @@ public class ItemAssetHolder : MonoBehaviour, ICollectable
     public ItemBase Collect()
     {
         return item;
+
     }
 }
 
