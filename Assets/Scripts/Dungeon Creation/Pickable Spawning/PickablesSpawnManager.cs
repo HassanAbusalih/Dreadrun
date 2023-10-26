@@ -61,8 +61,6 @@ public class PickablesSpawnManager : PickableBaseSpawning
 
             bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(weaponToSpawn,AllPickableSpawnPoints);
             if (!_isAbleToSpawn) return;
-
-            weaponPrefabs.RemoveAt(_randomWeaponIndex);
         }
     }
     void SpawnAllConsumables()

@@ -26,7 +26,7 @@ public class MeleeFodderEnemy : EnemyAIBase
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (targetPlayer != null && collision.transform == targetPlayer)
+        if (targetPlayer != null || collision.gameObject.TryGetComponent(out PayloadStats payload))
         {
             if (targetPlayer.TryGetComponent(out IDamagable player)) { player.TakeDamage(damageOnHit); }
         }

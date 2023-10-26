@@ -23,8 +23,4 @@ public class RoomSpawnPoint : MonoBehaviour
         if (!debugMode) return;
         Debug.Log(gameObject.name + transform.position);
     }
-
-
-
-
 }

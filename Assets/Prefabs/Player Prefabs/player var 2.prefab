@@ -105,7 +105,6 @@ GameObject:
   - component: {fileID: 8117153053641499622}
   - component: {fileID: 8117153053641499623}
   - component: {fileID: 8117153053641499620}
-  - component: {fileID: 8117153053641499621}
   - component: {fileID: 8117153053641499626}
   - component: {fileID: 8117153053641499627}
   - component: {fileID: 8117153053641499624}
@@ -186,19 +185,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8117153053641499621
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8117153053641499625}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8117153053641499626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +216,7 @@ MonoBehaviour:
     attackSpeed: 1
     Range: 1
     Spread: 1
-    speed: 7.5
+    speed: 12
   playerWeapon: {fileID: 0}
   isWeaponPickedUp: 0
   weaponEquipPosition: {fileID: 8117153054145766768}
