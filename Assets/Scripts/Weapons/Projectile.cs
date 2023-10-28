@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour
     Rigidbody rb;
     Vector3 initialPos;
     List<IProjectileEffect> effects;
+    [SerializeField]int layerToIgnore;
 
     public void Initialize(float damage, float speed, float range, int layer, List<IProjectileEffect> effects)
     {
@@ -42,6 +43,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.transform.TryGetComponent(out IDamagable damagable))
         {
+            if(collision.gameObject.layer == layerToIgnore) { return; }
             damagable.TakeDamage(damage); 
             if (effects != null)
             {
