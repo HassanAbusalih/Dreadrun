@@ -7,7 +7,7 @@ public class CounterBlast : MonoBehaviour
 
     private float explosionCooldown = 5f;
     private float explosionTimer;
-    LayerMask mask = ((1 << 8) | (1 << 9));
+    private LayerMask layersToIgnore;
 
     private void Start()
     {
@@ -30,14 +30,13 @@ public class CounterBlast : MonoBehaviour
         }
         explosionTimer = 0;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, mask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, ~layersToIgnore);
         foreach (Collider nearbyObject in colliders)
         {
             if (nearbyObject.gameObject == gameObject)
             {
                 continue;
             }
-
             if (nearbyObject.TryGetComponent(out Rigidbody rb))
             {
                 rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 0, ForceMode.Impulse);
@@ -49,9 +48,10 @@ public class CounterBlast : MonoBehaviour
             }
         }
     }
-    public void SetCounterBlast(float radius, float force)
+    public void SetCounterBlast(float radius, float force, LayerMask layerMask)
     {
         explosionRadius = radius;
         explosionForce = force;
+        layersToIgnore = layerMask;
     }
 }
