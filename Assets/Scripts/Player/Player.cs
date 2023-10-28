@@ -5,13 +5,17 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamagable
 {
-    // player controls 
+
     [SerializeField] Rigidbody rb;
-    [SerializeField] KeyCode dodge;
+
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
     [SerializeField] LayerMask ground;
+
+    [SerializeField] KeyCode dodge;
+    [SerializeField] KeyCode pickUpWeaponKey;
+    [SerializeField] KeyCode dropWeaponKey;
 
     // player stats 
     [SerializeField]
@@ -22,7 +26,7 @@ public class Player : MonoBehaviour, IDamagable
     // player weapon, etc
     [SerializeField]
     public PlayerWeapon playerWeapon;
-    [SerializeField] bool isWeaponPickedUp;
+    bool isWeaponPickedUp;
     [SerializeField] Transform weaponEquipPosition;
     [SerializeField] WeaponIDs weaponIDsSO;
     [SerializeField] int currentWeaponID;
@@ -51,14 +55,22 @@ public class Player : MonoBehaviour, IDamagable
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         rb.velocity = new Vector3(horizontal * playerStats.speed, 0, vertical * playerStats.speed);
+        DashOnInput();
+        DropCurrentWeapon();
+        PickUpUnequippedWeapon(playerWeapon);
+
+    }
+
+    private void DashOnInput()
+    {
         if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
         {
             Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
-            StartCoroutine(Dash(dashDirection));
+            StartCoroutine(StartDash(dashDirection));
         }
     }
 
-    IEnumerator Dash(Vector3 dashDirection)
+    IEnumerator StartDash(Vector3 dashDirection)
     {
         isDashing = true;
         rb.useGravity = false;
@@ -91,17 +103,32 @@ public class Player : MonoBehaviour, IDamagable
 
     private void OnTriggerEnter(Collider other)
     {
-        PickUpWeaponOnTrigger(other.gameObject);
+        if (!other.TryGetComponent(out PlayerWeapon unequippedWeapon) || isWeaponPickedUp) return;
+        playerWeapon = unequippedWeapon;
     }
 
-    void PickUpWeaponOnTrigger(GameObject _weaponCollided)
+    private void OnTriggerExit(Collider other)
     {
-        if (isWeaponPickedUp) return;
+        if(isWeaponPickedUp) return;
+        playerWeapon = null;
+    }
 
-        if (_weaponCollided.TryGetComponent(out PlayerWeapon weaponToEquip))
+    void DropCurrentWeapon()
+    {
+        if (Input.GetKeyDown(dropWeaponKey) && isWeaponPickedUp)
         {
-            weaponToEquip.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
-            playerWeapon = weaponToEquip;
+            playerWeapon.DropWeapon();
+            isWeaponPickedUp = false;
+            currentWeaponID = 0;
+        }
+    }
+
+    void PickUpUnequippedWeapon(PlayerWeapon _weaponToEquip)
+    {
+        if (Input.GetKeyDown(pickUpWeaponKey) && !isWeaponPickedUp)
+        {
+            _weaponToEquip.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
+            playerWeapon = _weaponToEquip;
             isWeaponPickedUp = true;
         }
     }
@@ -122,8 +149,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             counterBlast.Explode(amount * 0.5f);
         }
-        
-       // UpdateHealthBar();
+
         if (playerStats.health <= 0)
         {
             PlayerDeath();
@@ -153,10 +179,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void ScaleWeapon()
     {
-        if (playerWeapon == null)
-        {
-            return;
-        }
+        if (playerWeapon == null) return;
         playerWeapon.FireRate *= playerStats.attackSpeed;
         playerWeapon.DamageModifier *= playerStats.attack;
         playerWeapon.ProjectileRange *= playerStats.Range;

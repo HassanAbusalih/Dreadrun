@@ -1,15 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public abstract class PlayerWeapon : WeaponBase
 {
     protected bool equipped;
     protected List<IProjectileEffect> effects = new();
+    [SerializeField] protected Transform BulletSpawnPoint;
     [Header("Weapon Equip Settings")]
     [SerializeField] int weaponID;
     [SerializeField] Vector3 weaponOffset;
     [SerializeField] Vector3 weaponRotationOffset;
     [SerializeField] AudioSource pickUpSoundAudioSource;
+    [SerializeField] GameObject weaponEquipText;
+
 
     public void PickUpWeapon(Transform _weaponEquipPosition, ref int _iD)
     {
@@ -20,7 +24,16 @@ public abstract class PlayerWeapon : WeaponBase
         UpdateWeaponEffects();
         _iD = weaponID;
         if (pickUpSoundAudioSource != null) pickUpSoundAudioSource.Play();
+        if(weaponEquipText != null) weaponEquipText.SetActive(false);   
     }
+
+    public void DropWeapon()
+    {
+        transform.SetParent(null);
+        effects.Clear();
+        if (weaponEquipText != null) weaponEquipText.SetActive(true);
+    }
+
 
     private void LateUpdate()
     {
