@@ -4,23 +4,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.UI;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using static UnityEditor.Progress;
+using TMPro;
+using UnityEditor;
 
 public class InventoryManager : MonoBehaviour
 {
-    [SerializeField]
     public Player player;
     public Inventory inventory;
     public Image[] InventorySprites;
-
+    public TextMeshProUGUI descriptionText;
+    public Sprite emptySprite;
+    public GameObject descriptionPanel;
 
     // Start is called before the first frame update
     void Start()
     {
+        descriptionPanel.SetActive(false);
         player = GetComponent<Player>();
         inventory = new Inventory();
         inventory.inventoryList = new List<ItemBase>(new ItemBase[inventory.inventorySlots]);
     }
-
     #region Inputs
     private void Update()
     {
@@ -66,16 +71,17 @@ public class InventoryManager : MonoBehaviour
 
     public void AddToUI(ItemBase item)
     {
-        for (int slot = 0; slot < inventory.inventoryList.Count; slot++)
-        {
-            if (InventorySprites[slot].sprite != item.icon)
+        for (int slot = 0; slot < InventorySprites.Length; slot++)
+        {    
+            if (InventorySprites[slot].sprite == emptySprite)
             {
                 inventory.inventoryList[slot] = item;
                 InventorySprites[slot].sprite = item.icon;
-                break;
+                break; 
             }
         }
     }
+
 
     void UseItem(int slot)
     {
@@ -90,14 +96,23 @@ public class InventoryManager : MonoBehaviour
                 UpdateInventoryUISlot(slot, null);
             }
         }
-
     }
     void UpdateInventoryUISlot(int slot, ItemBase item)
     {
         if (slot >= 0 && slot < InventorySprites.Length)
         {
-            InventorySprites[slot].sprite = null; 
-                                                  
+            InventorySprites[slot].sprite = emptySprite;                                        
         }
+    }
+
+    public void ShowDescription(int index)
+    {
+        descriptionText.text = inventory.inventoryList[index].description; 
+        descriptionPanel.SetActive(true);
+    }
+
+    public void HideDescription()
+    {
+        descriptionPanel.SetActive(false);
     }
 }
