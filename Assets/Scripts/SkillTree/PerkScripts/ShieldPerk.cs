@@ -5,11 +5,11 @@ public class ShieldPerk : Perk
 {
     [SerializeField] private GameObject shield;
     [SerializeField] private float shieldCD;
+    [SerializeField] float regenDelay = 1;
+    [SerializeField] float regenDuration = 5;
     public override void ApplyPlayerBuffs(Player player)
     {
         GameObject newShield = Instantiate(shield, player.transform.position, player.transform.rotation);
-        ShieldManager shieldManager = player.gameObject.AddComponent<ShieldManager>();
-        shieldManager.GimmieShield(newShield, shieldCD, player);
-        //repush
+        player.gameObject.AddComponent<ShieldManager>().GimmieShield(newShield, shieldCD, regenDelay, regenDuration, player);
     }
 }
