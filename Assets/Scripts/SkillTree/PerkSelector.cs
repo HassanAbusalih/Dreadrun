@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class PerkSelector : MonoBehaviour
 {
     public PlayerStats playerStats;
     public Player player;
+    public GameObject perkDescriptionPanel;
+    public TextMeshProUGUI descriptionText;
 
     [SerializeField]
     private Perk[] perkPool; //assigned in inspector
@@ -24,6 +27,14 @@ public class PerkSelector : MonoBehaviour
         player = FindObjectOfType<Player>();
     }
 
+    private void Update()
+    {
+        if (perkDescriptionPanel.activeSelf)
+        {
+            perkDescriptionPanel.transform.position = Input.mousePosition;
+        }
+
+    }
     public void RandomPerkSelector()
     {
         perkUIcanvas.SetActive(true);
@@ -59,4 +70,19 @@ public class PerkSelector : MonoBehaviour
         perkChoices[perkIndexSelected].perk.ApplyPlayerBuffs(player);
         perkUIcanvas.SetActive(false);
     }
+
+    public void ShowDescription(int index)
+    {
+        if (index >= 0)
+        {
+            descriptionText.text = perkChoices[index].perk.perkDescription;
+            perkDescriptionPanel.SetActive(true);
+        }
+    }
+
+    public void HideDescription()
+    {
+        perkDescriptionPanel.SetActive(false);
+    }
 }
+

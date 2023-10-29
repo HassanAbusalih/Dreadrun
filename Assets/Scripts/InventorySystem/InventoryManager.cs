@@ -11,9 +11,11 @@ public class InventoryManager : MonoBehaviour
     public Player player;
     public Inventory inventory;
     public Image[] InventorySprites;
+    public GameObject descriptionPanel;
     public TextMeshProUGUI descriptionText;
     public Sprite emptySprite;
-    public GameObject descriptionPanel;
+    KeyCode[] keys = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +25,13 @@ public class InventoryManager : MonoBehaviour
         inventory = new Inventory();
         inventory.inventoryList = new List<ItemBase>(new ItemBase[inventory.inventorySlots]);
     }
-
     private void Update()
     {
+        if(descriptionPanel.activeSelf)
+        {
+            descriptionPanel.transform.position = Input.mousePosition;
+        }
+       
         for (int i = 0; i < keys.Length; i++)
         {
             if (Input.GetKeyDown(keys[i]))
@@ -55,16 +61,15 @@ public class InventoryManager : MonoBehaviour
     public void AddToUI(ItemBase item)
     {
         for (int slot = 0; slot < InventorySprites.Length; slot++)
-        {    
+        {
             if (InventorySprites[slot].sprite == emptySprite)
             {
                 inventory.inventoryList[slot] = item;
                 InventorySprites[slot].sprite = item.icon;
-                break; 
+                break;
             }
         }
     }
-
 
     void UseItem(int slot)
     {
@@ -84,14 +89,17 @@ public class InventoryManager : MonoBehaviour
     {
         if (slot >= 0 && slot < InventorySprites.Length)
         {
-            InventorySprites[slot].sprite = emptySprite;                                        
+            InventorySprites[slot].sprite = emptySprite;
         }
     }
 
     public void ShowDescription(int index)
     {
-        descriptionText.text = inventory.inventoryList[index].description; 
-        descriptionPanel.SetActive(true);
+        if (index >= 0 && index < inventory.inventoryList.Count)
+        {
+            descriptionText.text = inventory.inventoryList[index].description;
+            descriptionPanel.SetActive(true);
+        }
     }
 
     public void HideDescription()
