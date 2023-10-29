@@ -12,7 +12,7 @@ public class PhaseChanger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.TryGetComponent(out Player player))
         {
             playerInside = true;
         }
@@ -20,7 +20,7 @@ public class PhaseChanger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && playerInside)
+        if (other.TryGetComponent(out Player player) && playerInside)
         {
             playerInside = false;
             insideTimer = 0f;
@@ -44,6 +44,5 @@ public class PhaseChanger : MonoBehaviour
     {
         wall.SetActive(false);
         payload.EnableMovement();
-        Debug.LogError("Payload enabled");
     }
 }   

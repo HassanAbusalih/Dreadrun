@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 618790265755795933}
   - component: {fileID: 3418959161567278359}
   - component: {fileID: 4085609973687150993}
-  m_Layer: 0
+  - component: {fileID: 3988681999147313666}
+  m_Layer: 12
   m_Name: shieldaroonis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,3 +99,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shieldHP: 10
   maxShieldHP: 10
+--- !u!135 &3988681999147313666
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3779198821052404930}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.009999998
+  m_Center: {x: 0, y: 0, z: 0}

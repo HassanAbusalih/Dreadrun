@@ -1,8 +1,5 @@
-
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.UI;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using static UnityEditor.Progress;
@@ -26,31 +23,17 @@ public class InventoryManager : MonoBehaviour
         inventory = new Inventory();
         inventory.inventoryList = new List<ItemBase>(new ItemBase[inventory.inventorySlots]);
     }
-    #region Inputs
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        for (int i = 0; i < keys.Length; i++)
         {
-            UseItem(0);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            UseItem(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            UseItem(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            UseItem(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            UseItem(4);
+            if (Input.GetKeyDown(keys[i]))
+            {
+                UseItem(i);
+            }
         }
     }
-    #endregion
 
     private void OnTriggerEnter(Collider other)
     {

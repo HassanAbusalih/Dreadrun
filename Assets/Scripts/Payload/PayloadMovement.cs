@@ -38,7 +38,7 @@ public class PayloadMovement : MonoBehaviour
         payloadStats = gameObject.GetComponent<PayloadStats>();
         checkpointSystem = gameObject.GetComponent<PayloadCheckpointSystem>();
         reverseTimer = reverseCountDownTime;
-        currentPath = GameObject.FindGameObjectWithTag("PayloadPath").GetComponent<PayloadPath>();
+        currentPath = FindObjectOfType<PayloadPath>();
         playersInGame = FindObjectsOfType<Player>();
         payloadAnimator = GetComponent<Animator>();
     }
@@ -152,7 +152,8 @@ public class PayloadMovement : MonoBehaviour
 
     public void EnableMovement()
     {
-        payloadAnimator.SetTrigger("Artifact Enable");
         movementEnabled = true;
+        if (payloadAnimator == null) return;
+        payloadAnimator.SetTrigger("Artifact Enable");
     }
 }

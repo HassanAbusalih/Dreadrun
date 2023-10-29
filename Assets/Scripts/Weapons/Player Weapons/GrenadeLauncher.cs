@@ -58,11 +58,13 @@ public class GrenadeLauncher : PlayerWeapon
     {
         if (chargeTime > 0)
         {
+            chargeIndicator.gameObject.SetActive(true);
             chargeIndicator.fillAmount = chargeTime / fireRate;
             chargeIndicator.color = Color.Lerp(minColor, maxColor, chargeIndicator.fillAmount);
         }
         else
         {
+            chargeIndicator.gameObject.SetActive(false);
             chargeIndicator.fillAmount = 0;
             chargeIndicator.color = minColor;
         }

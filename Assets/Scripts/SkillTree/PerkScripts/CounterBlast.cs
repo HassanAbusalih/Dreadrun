@@ -24,7 +24,7 @@ public class CounterBlast : MonoBehaviour
 
     public void Explode(float damage)
     {
-        if(explosionTimer < explosionCooldown)
+        if (explosionTimer < explosionCooldown)
         {
             return;
         }
@@ -33,21 +33,25 @@ public class CounterBlast : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, mask);
         foreach (Collider nearbyObject in colliders)
         {
-            if(nearbyObject.gameObject == gameObject)
+            if (nearbyObject.gameObject == gameObject)
             {
                 continue;
             }
 
             if (nearbyObject.TryGetComponent(out Rigidbody rb))
             {
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 3.0f);
+                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 0, ForceMode.Impulse);
             }
 
             if (nearbyObject.TryGetComponent(out IDamagable newDamagable))
             {
                 newDamagable.TakeDamage(damage);
-                //repush
             }
         }
+    }
+    public void SetCounterBlast(float radius, float force)
+    {
+        explosionRadius = radius;
+        explosionForce = force;
     }
 }

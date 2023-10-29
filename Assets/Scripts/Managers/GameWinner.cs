@@ -5,30 +5,40 @@ using UnityEngine;
 public class GameWinner : MonoBehaviour
 {
     [SerializeField] bool playerInside = false;
+    [SerializeField] bool payloadInside = false;
     private float insideTimer = 0f;
     [SerializeField] float requiredTime = 10f;
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.TryGetComponent(out Player player))
         {
             playerInside = true;
+        }
+        if (other.TryGetComponent(out PayloadMovement payload))
+        {
+            payloadInside = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && playerInside)
+        if (other.TryGetComponent(out Player player) && playerInside)
         {
             playerInside = false;
+            insideTimer = 0f;
+        }
+        if (other.TryGetComponent(out PayloadMovement payload))
+        {
+            payloadInside = false;
             insideTimer = 0f;
         }
     }
 
     private void Update()
     {
-        if (playerInside)
+        if (playerInside && payloadInside)
         {
             insideTimer += Time.deltaTime;
 

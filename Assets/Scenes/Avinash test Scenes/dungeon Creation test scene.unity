@@ -333,6 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!1 &39971165
 GameObject:
   m_ObjectHideFlags: 0
@@ -4986,6 +4987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!43 &180409203
 Mesh:
   m_ObjectHideFlags: 0
@@ -12549,6 +12551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!1 &374635881
 GameObject:
   m_ObjectHideFlags: 0
@@ -12913,6 +12916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!43 &400827368
 Mesh:
   m_ObjectHideFlags: 0
@@ -21402,6 +21406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!1 &837628525
 GameObject:
   m_ObjectHideFlags: 0
@@ -28985,6 +28990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 1
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!43 &1124494896
 Mesh:
   m_ObjectHideFlags: 0
@@ -30744,6 +30750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!1 &1207201287
 GameObject:
   m_ObjectHideFlags: 0
@@ -33510,6 +33517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 1
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!1 &1382290221
 GameObject:
   m_ObjectHideFlags: 0
@@ -37379,6 +37387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!43 &1532775460
 Mesh:
   m_ObjectHideFlags: 0
@@ -44908,6 +44917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!43 &1727323113
 Mesh:
   m_ObjectHideFlags: 0
@@ -46326,6 +46336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!43 &1823330483
 Mesh:
   m_ObjectHideFlags: 0
@@ -49215,6 +49226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!1 &1863104977
 GameObject:
   m_ObjectHideFlags: 0
@@ -58896,13 +58908,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aef26120582451418431f7b9ac14514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfRoomsToSpawn: 9
-  roomPrefabToSkipAfterFirstSpawnIteration: 0
-  destroySpawnPointParentOnSpawn: 1
-  roomPrefabs:
+  smallRoomsToSpawn: 14
+  smallRoomsToSkipAfterFirstIteration: 0
+  smallRoomPrefabs:
   - {fileID: 211808036424045306, guid: b8a4fc0afe8571844bf069d7f2a31617, type: 3}
   - {fileID: 5311217721504330005, guid: aeaef7ab4fbd4434f8e653d864b8e884, type: 3}
   - {fileID: 5495213927984762104, guid: 88f36e13c8d80c846b8d80951c2d6420, type: 3}
+  bigRoomsToSpawn: 0
+  bigRoomsToSkipAfterFirstIteration: 0
+  bigRoomPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  smallRoomsSpawned: 0
+  bigRoomsSpawned: 0
+  destroySpawnPointParentOnSpawn: 1
 --- !u!1 &4915190222356728826
 GameObject:
   m_ObjectHideFlags: 0
@@ -62656,6 +62676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 1
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!4 &4915190222466169785
 Transform:
   m_ObjectHideFlags: 0
@@ -70548,6 +70569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 1
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!4 &4915190222628463582
 Transform:
   m_ObjectHideFlags: 0
@@ -72974,6 +72996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 1
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!4 &4915190222874325772
 Transform:
   m_ObjectHideFlags: 0
@@ -73991,6 +74014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!4 &4915190222957782727
 Transform:
   m_ObjectHideFlags: 0
@@ -80868,6 +80892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 0
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!4 &4915190223172454338
 Transform:
   m_ObjectHideFlags: 0
@@ -80951,6 +80976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doNotSpawnHere: 1
   debugMode: 0
+  SpawnBigRoom: 0
 --- !u!4 &4915190223189411154
 Transform:
   m_ObjectHideFlags: 0

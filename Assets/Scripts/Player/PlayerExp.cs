@@ -10,6 +10,8 @@ public class PlayerExp : MonoBehaviour
     public ExperienceManager expmanager;
     private void OnEnable()
     {
+        expmanager = FindObjectOfType<ExperienceManager>();
+        perkSelector = FindObjectOfType<PerkSelector>();
         expmanager.OnExperienceChange += HandleExperience;
     }
 
