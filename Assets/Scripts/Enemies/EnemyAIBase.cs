@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public abstract class EnemyAIBase : MonoBehaviour, IDamagable
 {
@@ -8,8 +9,9 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
     protected Transform[] players = new Transform[0];
     protected Rigidbody rb;
     float currentHealth;
+    protected Transform target;
 
-    private void Start()
+    void Awake()
     {
         currentHealth = maxHealth;
         gameObject.layer = 7;
@@ -58,5 +60,25 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
             }
         }
         return closestPlayer;
+    }
+
+    public virtual void Attack()
+    {
+        weapon.Attack();
+    }
+
+    public virtual void Move(Transform target, float movementSpeed)
+    {
+        transform.LookAt(target.position);
+        Vector3 moveDirection = (target.position - transform.position).normalized;
+        rb.velocity = new Vector3(moveDirection.x * movementSpeed, rb.velocity.y, moveDirection.z * movementSpeed); ;
+    }
+
+    public virtual void SpecializedMovement(Transform target)
+    {
+        transform.LookAt(target.position);
+        Vector3 moveDirection = (target.position - transform.position).normalized * Time.deltaTime;
+        rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
+        Debug.Log("Default Specialized Movement?");
     }
 }
