@@ -57,8 +57,7 @@ public class Player : MonoBehaviour, IDamagable
         rb.velocity = new Vector3(horizontal * playerStats.speed, 0, vertical * playerStats.speed);
         DashOnInput();
         DropCurrentWeapon();
-        PickUpUnequippedWeapon(playerWeapon);
-
+        PickUpUnequippedWeapon();
     }
 
     private void DashOnInput()
@@ -89,6 +88,14 @@ public class Player : MonoBehaviour, IDamagable
 
         StopDash();
     }
+
+    private void StopDash()
+    {
+        isDashing = false;
+        rb.useGravity = true;
+        rb.freezeRotation = false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (isDashing)
@@ -98,7 +105,29 @@ public class Player : MonoBehaviour, IDamagable
                 StopDash();
             }
         }
+    }
 
+    void PickUpUnequippedWeapon()
+    {
+        if(playerWeapon == null) return;
+        if (Input.GetKeyDown(pickUpWeaponKey) && !isWeaponPickedUp)
+        {
+            playerWeapon.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
+            isWeaponPickedUp = true;
+            ScaleWeapon();
+        }
+    }
+
+    void DropCurrentWeapon()
+    {
+        if (Input.GetKeyDown(dropWeaponKey) && isWeaponPickedUp)
+        {
+            playerWeapon.DropWeapon();
+            isWeaponPickedUp = false;
+            currentWeaponID = 0;
+            playerWeapon = null;
+            DeScaleWeapon();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -111,33 +140,6 @@ public class Player : MonoBehaviour, IDamagable
     {
         if(isWeaponPickedUp) return;
         playerWeapon = null;
-    }
-
-    void DropCurrentWeapon()
-    {
-        if (Input.GetKeyDown(dropWeaponKey) && isWeaponPickedUp)
-        {
-            playerWeapon.DropWeapon();
-            isWeaponPickedUp = false;
-            currentWeaponID = 0;
-        }
-    }
-
-    void PickUpUnequippedWeapon(PlayerWeapon _weaponToEquip)
-    {
-        if (Input.GetKeyDown(pickUpWeaponKey) && !isWeaponPickedUp)
-        {
-            _weaponToEquip.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
-            playerWeapon = _weaponToEquip;
-            isWeaponPickedUp = true;
-        }
-    }
-
-    private void StopDash()
-    {
-        isDashing = false;
-        rb.useGravity = true;
-        rb.freezeRotation = false;
     }
 
     public void TakeDamage(float amount)
@@ -183,6 +185,14 @@ public class Player : MonoBehaviour, IDamagable
         playerWeapon.FireRate *= playerStats.attackSpeed;
         playerWeapon.DamageModifier *= playerStats.attack;
         playerWeapon.ProjectileRange *= playerStats.Range;
+    }
+
+    public void DeScaleWeapon()
+    {
+        if (playerWeapon == null) return;
+        playerWeapon.FireRate /= playerStats.attackSpeed;
+        playerWeapon.DamageModifier /= playerStats.attack;
+        playerWeapon.ProjectileRange /= playerStats.Range;
     }
 
 }
