@@ -39,8 +39,9 @@ public class PickablesSpawnManager : PickableBaseSpawning
         AllPickableSpawnPoints.RemoveAll(item => item == null);
     }
     private void Start()
-    {      
-       Invoke("InitializeSpawning", 0.1f);
+    {
+        // Invoke("InitializeSpawning", 0.1f);
+        InitializeSpawning();
     }
 
     void InitializeSpawning()
@@ -60,8 +61,6 @@ public class PickablesSpawnManager : PickableBaseSpawning
 
             bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(weaponToSpawn,AllPickableSpawnPoints);
             if (!_isAbleToSpawn) return;
-
-            weaponPrefabs.RemoveAt(_randomWeaponIndex);
         }
     }
     void SpawnAllConsumables()

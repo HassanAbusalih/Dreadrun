@@ -16,17 +16,17 @@ public class MeleeFodderEnemy : EnemyAIBase
         {
             transform.LookAt(targetPlayer.position);
             Vector3 moveDirection = (targetPlayer.position - transform.position).normalized * Time.deltaTime;
-            rb.velocity = new Vector3(moveDirection.x,rb.velocity.y, moveDirection.z)  * movementSpeed;
+            rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z)  * movementSpeed;
         }
         else
         {
-            rb.velocity = new Vector3(0,rb.velocity.y,0);
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (targetPlayer != null && collision.transform == targetPlayer)
+        if (targetPlayer != null && collision.gameObject == targetPlayer.gameObject)
         {
             if (targetPlayer.TryGetComponent(out IDamagable player)) { player.TakeDamage(damageOnHit); }
         }

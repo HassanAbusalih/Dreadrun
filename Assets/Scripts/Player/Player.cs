@@ -116,7 +116,14 @@ public class Player : MonoBehaviour, IDamagable
     public void TakeDamage(float amount)
     {
         playerStats.health -= amount;
+        playerStats.health = Mathf.Clamp(playerStats.health, 0, playerStats.maxHealth);
         UpdateHealthBar();
+        if (TryGetComponent(out CounterBlast counterBlast))
+        {
+            counterBlast.Explode(amount * 0.5f);
+        }
+        
+       // UpdateHealthBar();
         if (playerStats.health <= 0)
         {
             PlayerDeath();
