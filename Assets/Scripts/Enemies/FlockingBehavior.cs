@@ -9,8 +9,7 @@ public class FlockingBehavior : MonoBehaviour
     [SerializeField] float alignmentStrength = 1f;
     [SerializeField] float cohesionStrength = 1f;
     [SerializeField] float separationStrength = 1f;
-    [SerializeField] float maxSpeed = 5f;
-    [SerializeField] float maxSteer = 5f;
+    [SerializeField] float maxSteerPercentage = 1f;
     Rigidbody rb;
 
     void Start()
@@ -18,13 +17,13 @@ public class FlockingBehavior : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void Flocking()
+    public Vector3 Flocking(float maxSpeed)
     {
         List<Transform> neighbors = GetNeighbors();
-        if (neighbors.Count == 0) { return; }
+        if (neighbors.Count == 0) { return Vector3.zero; }
         Vector3 flockingForce = GetAlignment(neighbors) + GetCohesion(neighbors) + GetSeparation(neighbors);
-        Vector3 steering = Vector3.ClampMagnitude(flockingForce, maxSteer);
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity + steering, maxSpeed);
+        Vector3 steering = Vector3.ClampMagnitude(flockingForce, maxSteerPercentage * maxSpeed);
+        return steering;
     }
 
     List<Transform> GetNeighbors()
@@ -71,7 +70,7 @@ public class FlockingBehavior : MonoBehaviour
             float distance = Vector3.Distance(neighbor.position, transform.position);
             if (distance < separationDistance)
             {
-                separation += (transform.position - neighbor.position).normalized / distance;
+                separation += (transform.position - neighbor.position).normalized;
             }
         }
         return separation * separationStrength;

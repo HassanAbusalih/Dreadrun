@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 public abstract class EnemyAIBase : MonoBehaviour, IDamagable
 {
@@ -10,6 +9,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
     protected Rigidbody rb;
     float currentHealth;
     protected Transform target;
+    protected bool retreating;
 
     void Awake()
     {
@@ -69,15 +69,24 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
 
     public virtual void Move(Transform target, float movementSpeed)
     {
-        transform.LookAt(target.position);
-        Vector3 moveDirection = (target.position - transform.position).normalized;
-        rb.velocity = new Vector3(moveDirection.x * movementSpeed, rb.velocity.y, moveDirection.z * movementSpeed); ;
+        if (movementSpeed < 0)
+        {
+            retreating = true;
+        }
+        else
+        {
+            retreating = false;
+        }
+        Vector3 moveDirection = (target.position - transform.position).normalized * movementSpeed;
+        moveDirection.y = 0;
+        transform.rotation = Quaternion.LookRotation(moveDirection);
+        rb.velocity = new(moveDirection.x, rb.velocity.y, moveDirection.z);
     }
 
     public virtual void SpecializedMovement(Transform target)
     {
         transform.LookAt(target.position);
-        Vector3 moveDirection = (target.position - transform.position).normalized * Time.deltaTime;
+        Vector3 moveDirection = (target.position - transform.position).normalized;
         rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
         Debug.Log("Default Specialized Movement?");
     }
