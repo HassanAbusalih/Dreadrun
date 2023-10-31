@@ -15,6 +15,7 @@ public class Grenade : MonoBehaviour
     float duration;
     Rigidbody rb;
     List<IProjectileEffect> effects;
+    [SerializeField] LayerMask layersToIgnore;
 
     public void Initialize(Vector3 target, float speed, float damage, int layer, List<IProjectileEffect> effects)
     {
@@ -63,7 +64,7 @@ public class Grenade : MonoBehaviour
 
     void Explode()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius,layersToIgnore);
         foreach (Collider nearbyObject in colliders)
         {
             if (nearbyObject.TryGetComponent(out Rigidbody rb))
@@ -72,6 +73,7 @@ public class Grenade : MonoBehaviour
             }
             if (nearbyObject.TryGetComponent(out IDamagable damagable))
             {
+
                 damagable.TakeDamage(damage);
                 foreach (IProjectileEffect effect in effects)
                 {

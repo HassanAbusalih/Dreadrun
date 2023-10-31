@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 1332995557446588030}
   - component: {fileID: 1332995557446588025}
   - component: {fileID: 1332995557446588024}
-  m_Layer: 0
-  m_Name: Projectile
+  m_Layer: 8
+  m_Name: Player Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 1332995557446588027}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8977957577065139180}
   m_Father: {fileID: 0}
@@ -115,7 +115,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1332995557446588024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaaacd7cdd535064dacc897d5702a5e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerToIgnore: 6
 --- !u!1 &9091896247509537477
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +140,7 @@ GameObject:
   - component: {fileID: 8977957577065139180}
   - component: {fileID: 4931661954011410266}
   - component: {fileID: 3884922516709497032}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bulletEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,8 +156,8 @@ Transform:
   m_GameObject: {fileID: 9091896247509537477}
   m_LocalRotation: {x: -0, y: 0.9992621, z: -0, w: 0.03840969}
   m_LocalPosition: {x: 0.03, y: 0, z: -0.33}
-  m_LocalScale: {x: 0.29999998, y: 0.29999995, z: 0.29999998}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.40000004, y: 0.40000004, z: 0.40000004}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1332995557446588029}
   m_RootOrder: 0
@@ -244,7 +245,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0.6
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -790,7 +791,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 9.5
+    angle: 7.67
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -933,7 +934,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
     arc:
-      value: 10
+      value: 1
       mode: 3
       spread: 1
       speed:
@@ -995,7 +996,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 40
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1113,20 +1114,20 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 1
-          inSlope: -0.4999969
-          outSlope: -0.4999969
-          tangentMode: 34
+          inSlope: 0.45567593
+          outSlope: 0.45567593
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.33333334
+          outWeight: 0.14855303
         - serializedVersion: 3
           time: 1
-          value: 0.5000031
-          inSlope: -0.4999969
-          outSlope: -0.4999969
-          tangentMode: 34
+          value: 0
+          inSlope: 1.063247
+          outSlope: 1.063247
+          tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.2083602
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2

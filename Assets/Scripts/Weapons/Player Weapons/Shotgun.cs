@@ -32,7 +32,7 @@ public class Shotgun : PlayerWeapon
             float rotation = startAngle + i * rotationAmount;
             Quaternion projectileRotation = Quaternion.Euler(0, transform.eulerAngles.y + rotation, 0);
             Vector3 projectileLocation = Quaternion.Euler(0, rotation, 0) * transform.forward;
-            GameObject projectile = Instantiate(projectilePrefab, transform.position + projectileLocation, projectileRotation);
+            GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + projectileLocation, projectileRotation);
             projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8, effects);
         }
         if (audioSource != null) audioSource.Play();
