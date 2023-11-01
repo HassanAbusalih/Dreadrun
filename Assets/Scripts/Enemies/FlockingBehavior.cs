@@ -10,12 +10,6 @@ public class FlockingBehavior : MonoBehaviour
     [SerializeField] float cohesionStrength = 1f;
     [SerializeField] float separationStrength = 1f;
     [SerializeField] float maxSteerPercentage = 1f;
-    Rigidbody rb;
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
 
     public Vector3 Flocking(float maxSpeed)
     {

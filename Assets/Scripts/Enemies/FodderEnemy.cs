@@ -12,6 +12,8 @@ public class FodderEnemy : EnemyAIBase
     bool clockwiseStrafe;
     FlockingBehavior flockingBehavior;
     Node topNode;
+    [SerializeField][Range(0, 1f)] float strafePercent;
+    [SerializeField][Range(0, 1f)] float flockPercent;
 
     private void Start()
     {
@@ -39,7 +41,7 @@ public class FodderEnemy : EnemyAIBase
 
         Sequencer retreatSeq = new(retreatRange, retreat, attackInterval);
         Sequencer strafeSeq = new(strafeRange, specializedMovement, attackInterval);
-        Sequencer withinShootingRangeSeq = new(shootingRange, attackInterval, moveToTarget);
+        Sequencer withinShootingRangeSeq = new(shootingRange, moveToTarget, attackInterval);
         Sequencer farSeq = new(farRange, moveToTarget);
 
         topNode = new Selector(new Node[] { retreatSeq, strafeSeq, withinShootingRangeSeq, farSeq}, rb, GetClosestPlayer(), GetClosestPlayer);
@@ -71,7 +73,7 @@ public class FodderEnemy : EnemyAIBase
         {
             strafeDirection = -strafeDirection;
         }
-        Vector3 strafeVector = Vector3.ClampMagnitude((movementSpeed * strafeDirection) + flockingForce, movementSpeed);
+        Vector3 strafeVector = ((strafePercent * strafeDirection) + (flockPercent * flockingForce)).normalized * movementSpeed;
         transform.rotation = Quaternion.LookRotation(toTarget, Vector3.up);
         rb.velocity = Vector3.Lerp(rb.velocity, new Vector3(strafeVector.x, rb.velocity.y, strafeVector.z), (Time.time - strafeStartTime) / strafeLength);
     }
