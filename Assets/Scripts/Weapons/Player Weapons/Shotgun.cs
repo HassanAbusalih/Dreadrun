@@ -5,8 +5,9 @@ public class Shotgun : PlayerWeapon
     [Header("Shotgun Properties")]
     [SerializeField] int degreesPerProjectile = 5;
     
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         timeSinceLastShot = fireRate;
     }
     

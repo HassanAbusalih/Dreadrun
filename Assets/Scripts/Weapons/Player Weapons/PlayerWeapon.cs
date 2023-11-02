@@ -16,10 +16,26 @@ public abstract class PlayerWeapon : WeaponBase
     [SerializeField] AudioSource pickUpSoundAudioSource;
     [SerializeField] GameObject weaponEquipText;
     protected bool equipped;
+    [SerializeField] Collider weaponCollider;
 
-    [field : SerializeField] public Sprite weaponIcon { get; private set; }
-    [field : SerializeField] public string weaponDescription{ get; private set; }
-    public static Action<PlayerWeapon> weaponPickedUpOrDropped; 
+    [field: SerializeField] public Sprite weaponIcon { get; private set; }
+    [field: SerializeField] public string weaponDescription { get; private set; }
+    public static Action<PlayerWeapon> weaponPickedUpOrDropped;
+
+
+    protected virtual void Start()
+    {
+
+        Collider[] _weaponCollider = GetComponents<Collider>();
+        for (int i = 0; i < _weaponCollider.Length; i++)
+        {
+            if (_weaponCollider[i].isTrigger == false)
+            {
+                weaponCollider = _weaponCollider[i];
+            }
+        }
+
+    }
 
     public void PickUpWeapon(Transform _weaponEquipPosition, ref int _iD)
     {
@@ -28,13 +44,16 @@ public abstract class PlayerWeapon : WeaponBase
         Vector3 _weaponRotation = _weaponEquipPosition.rotation.eulerAngles + weaponRotationOffset;
         transform.rotation = Quaternion.Euler(_weaponRotation);
         equipped = true;
+        weaponCollider.isTrigger = true;
+
+
 
         UpdateWeaponEffects();
         weaponPickedUpOrDropped?.Invoke(this);
         _iD = weaponID;
 
         if (pickUpSoundAudioSource != null) pickUpSoundAudioSource.Play();
-        if(weaponEquipText != null) weaponEquipText.SetActive(false);   
+        if (weaponEquipText != null) weaponEquipText.SetActive(false);
     }
 
     public void DropWeapon()
@@ -42,6 +61,7 @@ public abstract class PlayerWeapon : WeaponBase
         transform.SetParent(null);
         effects.Clear();
         equipped = false;
+        weaponCollider.isTrigger = false;
 
         weaponPickedUpOrDropped?.Invoke(null);
         if (weaponEquipText != null) weaponEquipText.SetActive(true);
