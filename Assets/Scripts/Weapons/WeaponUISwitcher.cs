@@ -8,7 +8,8 @@ public class WeaponUISwitcher : MonoBehaviour
     Image weaponSlot;
     Image weaponImageHolder;
     [SerializeField] Sprite blankSprite;
-    [SerializeField] float emptyWeaponSlotTransparency;
+    [SerializeField] Color customColor;
+    Color defaultColor;
 
 
     [Header("Description Panel Settings")]
@@ -26,7 +27,7 @@ public class WeaponUISwitcher : MonoBehaviour
         InitializeReferences();
         descriptionPanel.SetActive(false);
         weaponImageHolder.sprite = blankSprite;
-        SetWeaponSlotTransparency(emptyWeaponSlotTransparency);
+        SetWeaponSlotColor(customColor);
 
     }
 
@@ -36,6 +37,8 @@ public class WeaponUISwitcher : MonoBehaviour
         weaponImageHolder = transform.GetChild(0).GetComponent<Image>();
         descriptionPanel = transform.GetChild(2).gameObject;
         weaponDescriptionText = descriptionPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        defaultColor = weaponSlot.color;
+        SetWeaponSlotColor(customColor);
     }
 
     private void OnDisable()
@@ -48,13 +51,13 @@ public class WeaponUISwitcher : MonoBehaviour
         if (_weapon == null)
         {
             weaponImageHolder.sprite = blankSprite;
-            SetWeaponSlotTransparency(emptyWeaponSlotTransparency);
+            SetWeaponSlotColor(customColor);
             weaponDescriptionText.text = "No Weapon Currently Equipped";
             return;
         }
         weaponImageHolder.sprite = _weapon.weaponIcon;
         weaponDescriptionText.text = _weapon.weaponDescription;
-        SetWeaponSlotTransparency(1);
+        SetWeaponSlotColor(defaultColor);
     }
 
     public void ShowWeaponDescription()
@@ -67,9 +70,9 @@ public class WeaponUISwitcher : MonoBehaviour
         descriptionPanel.SetActive(false);
     }
 
-    void SetWeaponSlotTransparency(float _transparency)
+    void SetWeaponSlotColor(Color _newColor)
     {
-        weaponSlot.color = new Color(weaponSlot.color.r, weaponSlot.color.g, weaponSlot.color.b, _transparency);
+        weaponSlot.color = _newColor;
     }
 
 }
