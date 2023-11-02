@@ -126,7 +126,11 @@ public class Player : MonoBehaviour, IDamagable
        // UpdateHealthBar();
         if (playerStats.health <= 0)
         {
-            PlayerDeath();
+            try
+            {
+                PlayerDeath();
+            }
+            catch { }
         }
     }
 

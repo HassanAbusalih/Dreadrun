@@ -8,8 +8,10 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
     protected Transform[] players = new Transform[0];
     protected Rigidbody rb;
     float currentHealth;
+    protected Transform target;
+    protected bool retreating;
 
-    private void Start()
+    void Awake()
     {
         currentHealth = maxHealth;
         gameObject.layer = 7;
@@ -58,5 +60,34 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
             }
         }
         return closestPlayer;
+    }
+
+    public virtual void Attack()
+    {
+        weapon.Attack();
+    }
+
+    public virtual void Move(Transform target, float movementSpeed)
+    {
+        if (movementSpeed < 0)
+        {
+            retreating = true;
+        }
+        else
+        {
+            retreating = false;
+        }
+        Vector3 moveDirection = (target.position - transform.position).normalized * movementSpeed;
+        moveDirection.y = 0;
+        transform.rotation = Quaternion.LookRotation(moveDirection);
+        rb.velocity = new(moveDirection.x, rb.velocity.y, moveDirection.z);
+    }
+
+    public virtual void SpecializedMovement(Transform target)
+    {
+        transform.LookAt(target.position);
+        Vector3 moveDirection = (target.position - transform.position).normalized;
+        rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
+        Debug.Log("Default Specialized Movement?");
     }
 }

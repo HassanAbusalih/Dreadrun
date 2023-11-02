@@ -64,7 +64,7 @@ public class Grenade : MonoBehaviour
 
     void Explode()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius,layersToIgnore);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, ~layersToIgnore);
         foreach (Collider nearbyObject in colliders)
         {
             if (nearbyObject.TryGetComponent(out Rigidbody rb))

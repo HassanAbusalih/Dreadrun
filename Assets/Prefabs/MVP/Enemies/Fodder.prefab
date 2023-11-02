@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5791127613756451099}
   - component: {fileID: 4596950459272303218}
   - component: {fileID: 5791127613756451092}
+  - component: {fileID: 289239295}
   m_Layer: 7
   m_Name: Fodder
   m_TagString: Untagged
@@ -134,9 +135,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  distanceFromPayload: 12
-  movementSpeed: 5
-  maxRotationAngle: 10
+  shootingRange: 15
+  strafeRange: 10
+  retreatRange: 5
+  movementSpeed: 7
+  delayBetweenShots: 1
+  strafePercent: 1
+  flockPercent: 0.2
 --- !u!54 &5791127613756451092
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -151,5 +156,26 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &289239295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5791127613756451101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cefbce732f6b54448e9091a4108dccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  neighborRadius: 10
+  separationDistance: 2
+  flockLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  alignmentStrength: 2
+  cohesionStrength: 0
+  separationStrength: 2
+  maxSteerPercentage: 1
