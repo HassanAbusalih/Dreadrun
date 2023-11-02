@@ -38,6 +38,7 @@ public class PerkSelector : MonoBehaviour
     public void RandomPerkSelector()
     {
         perkUIcanvas.SetActive(true);
+        perkDescriptionPanel.SetActive(false);
         List<int> selectedIndexes = new List<int>();
 
         for (int perkIndex = 0; perkIndex < perkChoices.Length; perkIndex++)
