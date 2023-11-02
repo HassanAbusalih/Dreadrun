@@ -135,11 +135,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  farRange: 20
   shootingRange: 15
   strafeRange: 10
   retreatRange: 5
-  movementSpeed: 15
+  movementSpeed: 12.5
   delayBetweenShots: 1
 --- !u!54 &5791127613756451092
 Rigidbody:
@@ -177,5 +176,4 @@ MonoBehaviour:
   alignmentStrength: 1
   cohesionStrength: 1
   separationStrength: 1
-  maxSpeed: 5
-  maxSteer: 5
+  maxSteerPercentage: 1
