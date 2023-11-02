@@ -22,14 +22,17 @@ public class PerkSelector : MonoBehaviour
 
     void Start()
     {
-        perkUIcanvas.SetActive(false);
+        if(perkUIcanvas != null)
+        {
+            perkUIcanvas.SetActive(false);
+        }
         //playerStats = player.playerStats;
         player = FindObjectOfType<Player>();
     }
 
     private void Update()
     {
-        if (perkDescriptionPanel.activeSelf)
+        if (perkDescriptionPanel != null && perkDescriptionPanel.activeSelf)
         {
             perkDescriptionPanel.transform.position = Input.mousePosition;
         }

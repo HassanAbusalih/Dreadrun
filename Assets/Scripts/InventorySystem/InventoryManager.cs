@@ -20,15 +20,19 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        descriptionPanel.SetActive(false);
+        if(descriptionPanel != null)
+        {
+            descriptionPanel.SetActive(false);
+        }
+      
         player = GetComponent<Player>();
         inventory = new Inventory();
         inventory.inventoryList = new List<ItemBase>(new ItemBase[inventory.inventorySlots]);
     }
     private void Update()
     {
-        if(descriptionPanel.activeSelf)
-        {
+        if(descriptionPanel!=null && descriptionPanel.activeSelf)
+        {     
             descriptionPanel.transform.position = Input.mousePosition;
         }
        

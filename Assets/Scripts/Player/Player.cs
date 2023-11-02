@@ -14,8 +14,8 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] LayerMask ground;
 
     [SerializeField] KeyCode dodge;
-    [SerializeField] KeyCode pickUpWeaponKey;
-    [SerializeField] KeyCode dropWeaponKey;
+    [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
+    [SerializeField] KeyCode dropWeaponKey = KeyCode.Q;
 
     // player stats 
     [SerializeField]
@@ -109,6 +109,7 @@ public class Player : MonoBehaviour, IDamagable
 
     void PickUpUnequippedWeapon()
     {
+        if(pickUpWeaponKey == KeyCode.None) pickUpWeaponKey = KeyCode.E;
         if(playerWeapon == null) return;
         if (Input.GetKeyDown(pickUpWeaponKey) && !isWeaponPickedUp)
         {
@@ -120,6 +121,7 @@ public class Player : MonoBehaviour, IDamagable
 
     void DropCurrentWeapon()
     {
+        if(dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
         if (Input.GetKeyDown(dropWeaponKey) && isWeaponPickedUp)
         {
             playerWeapon.DropWeapon();
