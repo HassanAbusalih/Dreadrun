@@ -9,10 +9,12 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
     float duration = 5;
     float damagePerTick;
     IDamagable target;
+    GameObject targetGameObject;
 
     public void ApplyEffect(IDamagable damagable, float damage, List<IProjectileEffect> projectileEffects)
     {
         target = damagable;
+        targetGameObject = target.gameObject;
         damagePerTick = (damage / duration) * 2;
         StartCoroutine(PoisonTarget());
     }
@@ -26,7 +28,7 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
     {
         while (elapsedTime < duration)
         {
-            if (target != null)
+            if (targetGameObject != null)
             {
                 target.TakeDamage(damagePerTick);
             }
