@@ -19,6 +19,7 @@ public class PerkSelector : MonoBehaviour
 
     [SerializeField]
     private PerkOptions[] perkChoices;
+    [SerializeField] bool debugMode;
 
     void Start()
     {
@@ -35,6 +36,14 @@ public class PerkSelector : MonoBehaviour
         if (perkDescriptionPanel != null && perkDescriptionPanel.activeSelf)
         {
             perkDescriptionPanel.transform.position = Input.mousePosition;
+        }
+
+        if(debugMode)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                RandomPerkSelector();
+            }
         }
 
     }
