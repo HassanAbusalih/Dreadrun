@@ -24,9 +24,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236785749689792148}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 4.999999, z: 0}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8117153053641499622}
@@ -198,13 +198,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8117153053641499624}
-  dodge: 32
   dashDistance: 7.5
   dashDuration: 0.15
   isDashing: 0
   ground:
     serializedVersion: 2
     m_Bits: 2048
+  dodge: 32
+  pickUpWeaponKey: 0
+  dropWeaponKey: 0
   healthBar: {fileID: 0}
   staminaBar: {fileID: 0}
   playerStats:
@@ -218,7 +220,6 @@ MonoBehaviour:
     Spread: 1
     speed: 10
   playerWeapon: {fileID: 0}
-  isWeaponPickedUp: 0
   weaponEquipPosition: {fileID: 8117153054145766768}
   weaponIDsSO: {fileID: 11400000, guid: f035bc046c8350b4f8f8a93b58d9f72c, type: 2}
   currentWeaponID: 0

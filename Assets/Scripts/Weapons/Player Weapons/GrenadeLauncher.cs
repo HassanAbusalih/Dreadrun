@@ -49,7 +49,7 @@ public class GrenadeLauncher : PlayerWeapon
             }
             // This is so bad aaaaaaa kill me
         }
-        GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
+        GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + transform.forward, transform.rotation);
         projectile.GetComponent<Grenade>().Initialize(target, currentSpeed, damageModifier, 8, effects);
         if (audioSource != null) audioSource.Play();
     }
