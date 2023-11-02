@@ -10,8 +10,9 @@ public class PayloadMovement : MonoBehaviour
 
     [Header("Path Follow Settings")]
     [SerializeField] PayloadPath currentPath;
-    [SerializeField] float wayPointSize, movementSpeed;
-    [SerializeField] float rotationSpeed;
+    [SerializeField] float wayPointProximity =0.2f;
+    [SerializeField] float rotationSpeed, movementSpeed;
+    Rigidbody payloadRigidbody;
     int currentNodeID = 0;
 
     [Header("Reverse Settings")]
@@ -22,6 +23,7 @@ public class PayloadMovement : MonoBehaviour
     [SerializeField] float payloadRange;
     [SerializeField] LayerMask enemyLayer;
     [SerializeField] GameObject rangeIndicator;
+    PayloadUI payloadUI;
     Player[] playersInGame;
     int playersOnPayload;
     bool enemyInRange;
@@ -33,6 +35,12 @@ public class PayloadMovement : MonoBehaviour
     [Header("Payload Stats")]
     PayloadStats payloadStats;
 
+
+
+    private void OnValidate()
+    {
+        rangeIndicator.transform.localScale = new Vector3(payloadRange / transform.localScale.x, .1f / transform.localScale.y, payloadRange / transform.localScale.z);
+    }
     private void Start()
     {
         payloadStats = gameObject.GetComponent<PayloadStats>();
@@ -41,10 +49,18 @@ public class PayloadMovement : MonoBehaviour
         currentPath = FindObjectOfType<PayloadPath>();
         playersInGame = FindObjectsOfType<Player>();
         payloadAnimator = GetComponent<Animator>();
+        payloadRigidbody = GetComponent<Rigidbody>();
+        payloadUI = FindObjectOfType<PayloadUI>();
+        enemyLayer = LayerMask.GetMask("Enemy");
     }
 
     private void Update()
     {
+        if(wayPointProximity < 0.1)
+        {
+            Debug.Log("Way point size too small");
+        }
+
         if (movementEnabled)
         {
             rangeIndicator.SetActive(true);
@@ -59,6 +75,11 @@ public class PayloadMovement : MonoBehaviour
                 if (!enemyInRange)
                 {
                     FollowPathForward(movementSpeed);
+                    payloadUI.ChangePayloadUISprite(playersOnPayload);
+                }
+                else
+                {
+                    payloadUI.ChangePayloadUISprite(0);
                 }
             }
             else if (!checkpointSystem.onCheckpoint)
@@ -114,19 +135,22 @@ public class PayloadMovement : MonoBehaviour
 
     private void FollowPathForward(float speed)
     {
-        float node_Distance = Vector3.Distance(currentPath.pathNodes[currentNodeID].position, transform.position);
-        transform.position = Vector3.MoveTowards(transform.position, currentPath.pathNodes[currentNodeID].position, Time.deltaTime * speed);
-
-        Quaternion target_Rotation = Quaternion.LookRotation(currentPath.pathNodes[currentNodeID].position - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, target_Rotation, Time.deltaTime * rotationSpeed);
-
-        if (node_Distance <= wayPointSize)
+        if (currentNodeID < currentPath.pathNodes.Count)
         {
-            currentNodeID++;
-            if (currentPath.pathNodes[currentNodeID - 1].gameObject.CompareTag("Checkpoint") && currentNodeID > lastCheckpointNodeID)
+            float node_Distance = Vector3.Distance(currentPath.pathNodes[currentNodeID].position, transform.position);
+            payloadRigidbody.velocity = (currentPath.pathNodes[currentNodeID].position - transform.position).normalized * speed;
+
+            Quaternion target_Rotation = Quaternion.LookRotation(currentPath.pathNodes[currentNodeID].position - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target_Rotation, Time.deltaTime * rotationSpeed);
+
+            if (node_Distance <= wayPointProximity)
             {
-                lastCheckpointNodeID = currentNodeID;
-                StartCoroutine(checkpointSystem.ActivateCheckpoint());
+                currentNodeID++;
+                if (currentPath.pathNodes[currentNodeID - 1].gameObject.CompareTag("Checkpoint") && currentNodeID > lastCheckpointNodeID)
+                {
+                    lastCheckpointNodeID = currentNodeID;
+                    StartCoroutine(checkpointSystem.ActivateCheckpoint());
+                }
             }
         }
     }
@@ -137,13 +161,15 @@ public class PayloadMovement : MonoBehaviour
         {
             movementSpeed = -speed;
 
+            payloadUI.ChangePayloadUISprite(4);
+
             float node_Distance = Vector3.Distance(currentPath.pathNodes[currentNodeID - 1].position, transform.position);
-            transform.position = Vector3.MoveTowards(transform.position, currentPath.pathNodes[currentNodeID - 1].position, Time.deltaTime * speed);
+            payloadRigidbody.velocity = (currentPath.pathNodes[currentNodeID - 1].position - transform.position).normalized * speed;
 
             Quaternion target_Rotation = Quaternion.LookRotation(currentPath.pathNodes[currentNodeID].position - transform.position);
             transform.rotation = Quaternion.Slerp(transform.rotation, target_Rotation, Time.deltaTime * rotationSpeed);
 
-            if (node_Distance <= wayPointSize)
+            if (node_Distance <= wayPointProximity)
             {
                 currentNodeID--;
             }

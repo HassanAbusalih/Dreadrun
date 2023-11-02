@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class ColliderGizmo : MonoBehaviour
 {
-    private void OnValidate()
-    {
-
-    }
+  
 
 #if UNITY_EDITOR
     void OnDrawGizmos()

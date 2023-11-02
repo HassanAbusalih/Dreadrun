@@ -46,7 +46,6 @@ public class TargetRangeCheck : Node
         {
             return NodeState.Success;
         }
-        Debug.Log(distance);
         return NodeState.Failure;
     }
 }

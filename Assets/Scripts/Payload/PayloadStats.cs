@@ -9,8 +9,7 @@ public class PayloadStats : MonoBehaviour,IDamagable
     public float onePlayerSpeed, twoPlayerSpeed, threePlayerSpeed, reverseSpeed;
 
     [Header("Health Settings")]
-    [SerializeField] Image healthBar;
-    [SerializeField] float maxPayloadHealth, payloadHealth;
+    public float maxPayloadHealth, payloadHealth;
 
     [Header("EXP Settings")]
     public float storedEXP;
@@ -23,7 +22,7 @@ public class PayloadStats : MonoBehaviour,IDamagable
     public void TakeDamage(float Damage)
     {
         payloadHealth -= Damage;
-        healthBar.fillAmount = payloadHealth / maxPayloadHealth;
+
         if(payloadHealth <= 0)
         {
             GameManager.Instance.Lose();

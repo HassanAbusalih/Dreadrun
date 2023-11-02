@@ -6,14 +6,17 @@ using UnityEngine.UI;
 public class PayloadCheckpointSystem : MonoBehaviour
 {
     [NonSerialized] public bool onCheckpoint = false;
+    [SerializeField] float checkpointDuration;
+    float checkpointTimer;
 
-    [SerializeField] float checkpointDuration, checkpointTimer;
     [SerializeField] Canvas checkpointUI;
     [SerializeField] Image checkpointTimeBar;
 
     Player[] playersInGame;
     PayloadStats payloadStats;
     ObjectSpawner[] enemySpawners;
+
+   
 
     private void Start()
     {
@@ -39,12 +42,12 @@ public class PayloadCheckpointSystem : MonoBehaviour
         checkpointUI.enabled = true;
         onCheckpoint = true;
 
-        foreach(Player player in playersInGame)
+        foreach (Player player in playersInGame)
         {
             player.gameObject.GetComponent<PlayerExp>().LevelUp();
         }
 
-        foreach(ObjectSpawner spawner in enemySpawners)
+        foreach (ObjectSpawner spawner in enemySpawners)
         {
             spawner.enabled = false;
         }
@@ -61,7 +64,7 @@ public class PayloadCheckpointSystem : MonoBehaviour
         checkpointUI.enabled = false;
         onCheckpoint = false;
 
-        foreach(ObjectSpawner spawner in enemySpawners)
+        foreach (ObjectSpawner spawner in enemySpawners)
         {
             spawner.enabled = true;
         }

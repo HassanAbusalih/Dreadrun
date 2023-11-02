@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameWinner : MonoBehaviour
 {
-    [SerializeField] bool playerInside = false;
-    [SerializeField] bool payloadInside = false;
+    bool playerInside = false;
+    bool payloadInside = false;
     private float insideTimer = 0f;
     [SerializeField] float requiredTime = 10f;
 
