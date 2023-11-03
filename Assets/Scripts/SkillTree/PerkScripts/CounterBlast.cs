@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CounterBlast : MonoBehaviour
@@ -8,6 +9,7 @@ public class CounterBlast : MonoBehaviour
     private float explosionCooldown = 5f;
     private float explosionTimer;
     private LayerMask layersToIgnore;
+    private GameObject vfx;
 
     private void Start()
     {
@@ -47,11 +49,13 @@ public class CounterBlast : MonoBehaviour
                 newDamagable.TakeDamage(damage);
             }
         }
+        Instantiate(vfx, transform.position, transform.rotation);
     }
-    public void SetCounterBlast(float radius, float force, LayerMask layerMask)
+    public void SetCounterBlast(float radius, float force, LayerMask layerMask, GameObject vfx)
     {
         explosionRadius = radius;
         explosionForce = force;
         layersToIgnore = layerMask;
+        this.vfx = vfx;
     }
 }

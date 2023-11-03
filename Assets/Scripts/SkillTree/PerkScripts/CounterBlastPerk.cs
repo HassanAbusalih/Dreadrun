@@ -6,8 +6,9 @@ public class CounterBlastPerk : Perk
     [SerializeField] float explosionRadius = 4f;
     [SerializeField] float explosionForce = 4000f;
     [SerializeField] LayerMask layersToIgnore;
+    [SerializeField] GameObject vfx;
     public override void ApplyPlayerBuffs(Player player)
     {    
-        player.gameObject.AddComponent<CounterBlast>().SetCounterBlast(explosionRadius, explosionForce, layersToIgnore);
+        player.gameObject.AddComponent<CounterBlast>().SetCounterBlast(explosionRadius, explosionForce, layersToIgnore, vfx);
     }
 }

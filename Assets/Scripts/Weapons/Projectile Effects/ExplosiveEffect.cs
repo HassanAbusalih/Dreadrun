@@ -7,18 +7,21 @@ public class ExplosiveEffect : MonoBehaviour, IProjectileEffect
     float explosionRadius = 5;
     float explosionForce = 700;
     LayerMask layersToIgnore;
-
-    public void Setup(float explosionRadius, float explosionForce, LayerMask layersToIgnore)
+    private GameObject explosiveEffect;
+    public void Setup(float explosionRadius, float explosionForce, LayerMask layersToIgnore, GameObject explosiveEffect)
     {
         this.explosionRadius = explosionRadius;
         this.explosionForce = explosionForce;
         this.layersToIgnore = layersToIgnore;
+        this.explosiveEffect = explosiveEffect;
     }
 
     public void ApplyEffect(IDamagable damagable, float damage, List<IProjectileEffect> projectileEffects)
     {
         projectileEffects.RemoveAll((effect) => EffectsToRemove().Contains(effect.GetType()));
         Explode(damage / 2, projectileEffects);
+        GameObject instiatedParticles = Instantiate(explosiveEffect, damagable.gameObject.transform.position, damagable.gameObject.transform.rotation);
+        Invoke("DeleteVFX", 1f);
     }
 
     public List<Type> EffectsToRemove()
@@ -44,5 +47,10 @@ public class ExplosiveEffect : MonoBehaviour, IProjectileEffect
                 }
             }
         }
+    }
+
+    void DeleteVFX(GameObject gameObject)
+    {
+        Destroy(gameObject);
     }
 }

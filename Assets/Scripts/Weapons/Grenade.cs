@@ -16,6 +16,7 @@ public class Grenade : MonoBehaviour
     Rigidbody rb;
     List<IProjectileEffect> effects;
     [SerializeField] LayerMask layersToIgnore;
+    [SerializeField] GameObject explosionVFX;
 
     public void Initialize(Vector3 target, float speed, float damage, int layer, List<IProjectileEffect> effects)
     {
@@ -83,6 +84,7 @@ public class Grenade : MonoBehaviour
                 }
             }
         }
+        Instantiate(explosionVFX, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 
