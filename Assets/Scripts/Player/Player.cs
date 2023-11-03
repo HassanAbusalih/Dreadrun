@@ -157,7 +157,7 @@ public class Player : MonoBehaviour, IDamagable
         playerWeapon = null;
     }
 
-    void DecreaseHealth(float amount)
+    void ChangeHealth(float amount)
     {
         if (isInvincible) return;
         playerStats.health -= amount;
@@ -174,9 +174,8 @@ public class Player : MonoBehaviour, IDamagable
     }
 
     public void TakeDamage(float amount)
-    {
-        
-        DecreaseHealth(amount);
+    {    
+        ChangeHealth(amount);
         UpdateHealthBar();
         if (TryGetComponent(out CounterBlast counterBlast))
         {
@@ -211,6 +210,7 @@ public class Player : MonoBehaviour, IDamagable
         playerWeapon.FireRate *= playerStats.attackSpeed;
         playerWeapon.DamageModifier *= playerStats.attack;
         playerWeapon.ProjectileRange *= playerStats.Range;
+        playerWeapon.SpreadAngle *= playerStats.SpreadMultiplier;
     }
 
     public void DeScaleWeapon()
@@ -219,6 +219,7 @@ public class Player : MonoBehaviour, IDamagable
         playerWeapon.FireRate /= playerStats.attackSpeed;
         playerWeapon.DamageModifier /= playerStats.attack;
         playerWeapon.ProjectileRange /= playerStats.Range;
+        playerWeapon.SpreadAngle /= playerStats.SpreadMultiplier;
     }
 
 }
