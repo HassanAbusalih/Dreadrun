@@ -1,10 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using static UnityEditor.Progress;
 using TMPro;
-using UnityEditor;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -16,22 +13,19 @@ public class InventoryManager : MonoBehaviour
     public Sprite emptySprite;
     KeyCode[] keys = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
 
-
-    // Start is called before the first frame update
     void Start()
     {
         if(descriptionPanel != null)
         {
             descriptionPanel.SetActive(false);
         }
-      
         player = GetComponent<Player>();
         inventory = new Inventory();
         inventory.inventoryList = new List<ItemBase>(new ItemBase[inventory.inventorySlots]);
     }
     private void Update()
     {
-        if(descriptionPanel!=null && descriptionPanel.activeSelf)
+        if(descriptionPanel != null && descriptionPanel.activeSelf)
         {     
             descriptionPanel.transform.position = Input.mousePosition;
         }

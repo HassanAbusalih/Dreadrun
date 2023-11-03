@@ -45,14 +45,13 @@ public class Projectile : MonoBehaviour
         {
             if(collision.gameObject.layer == layerToIgnore) { return; }
             damagable.TakeDamage(damage); 
-            if (effects != null)
+            if (effects != null && !damagable.gameObject.TryGetComponent(out PayloadStats payload))
             {
                 foreach (IProjectileEffect effect in effects)
                 {
                     effect.ApplyEffect(damagable, damage, new List<IProjectileEffect>(effects));
                 }
             }
-              
         }
         Destroy(gameObject);
     }

@@ -73,11 +73,13 @@ public class Grenade : MonoBehaviour
             }
             if (nearbyObject.TryGetComponent(out IDamagable damagable))
             {
-
                 damagable.TakeDamage(damage);
-                foreach (IProjectileEffect effect in effects)
+                if (effects != null && !damagable.gameObject.TryGetComponent(out PayloadStats payload))
                 {
-                    effect.ApplyEffect(damagable, damage, effects);
+                    foreach (IProjectileEffect effect in effects)
+                    {
+                        effect.ApplyEffect(damagable, damage, new List<IProjectileEffect>(effects));
+                    }
                 }
             }
         }
