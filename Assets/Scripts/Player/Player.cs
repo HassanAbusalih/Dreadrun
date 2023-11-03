@@ -8,10 +8,14 @@ public class Player : MonoBehaviour, IDamagable
 
     [SerializeField] Rigidbody rb;
 
+    [Header("Dashing Settings")]
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
+    [SerializeField] bool isInvincible;
     [SerializeField] LayerMask ground;
+    Color defaultColor;
+    [SerializeField] Color dashColor;
 
     [SerializeField] KeyCode dodge;
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
@@ -23,7 +27,7 @@ public class Player : MonoBehaviour, IDamagable
     public Slider staminaBar;
     public PlayerStats playerStats;
 
-    // player weapon, etc
+    // player weapon,etc
     [SerializeField]
     public PlayerWeapon playerWeapon;
     bool isWeaponPickedUp;
@@ -37,6 +41,7 @@ public class Player : MonoBehaviour, IDamagable
         weaponIDsSO.InitializeWeaponIDsDictionary();
         playerStats.health = playerStats.maxHealth;
         playerStats.stamina = playerStats.maxStamina;
+        defaultColor = GetComponent<Renderer>().material.color;
 
         if (healthBar != null)
         {
@@ -76,6 +81,7 @@ public class Player : MonoBehaviour, IDamagable
         rb.freezeRotation = true;
         Vector3 endPosition = transform.position + dashDirection * dashDistance;
         float elapsedTime = 0f;
+        EnableInvincibility(true);
 
         while (elapsedTime < dashDuration && isDashing)
         {
@@ -94,6 +100,13 @@ public class Player : MonoBehaviour, IDamagable
         isDashing = false;
         rb.useGravity = true;
         rb.freezeRotation = false;
+        EnableInvincibility(false);
+    }
+
+    void EnableInvincibility(bool _enabled)
+    {
+        isInvincible = _enabled;
+        GetComponent<Renderer>().material.color = _enabled ? dashColor : defaultColor;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -144,16 +157,12 @@ public class Player : MonoBehaviour, IDamagable
         playerWeapon = null;
     }
 
-    public void TakeDamage(float amount)
+    void DecreaseHealth(float amount)
     {
+        if (isInvincible) return;
         playerStats.health -= amount;
         playerStats.health = Mathf.Clamp(playerStats.health, 0, playerStats.maxHealth);
         UpdateHealthBar();
-        if (TryGetComponent(out CounterBlast counterBlast))
-        {
-            counterBlast.Explode(amount * 0.5f);
-        }
-
         if (playerStats.health <= 0)
         {
             try
@@ -161,6 +170,17 @@ public class Player : MonoBehaviour, IDamagable
                 PlayerDeath();
             }
             catch { }
+        }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        
+        DecreaseHealth(amount);
+        UpdateHealthBar();
+        if (TryGetComponent(out CounterBlast counterBlast))
+        {
+            counterBlast.Explode(amount * 0.5f);
         }
     }
 
