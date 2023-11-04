@@ -92,15 +92,15 @@ public class PayloadMovement : MonoBehaviour
 
     private void RotateTowardsPath()
     {
-        Quaternion targetRotation;
+        Quaternion targetRotation = Quaternion.identity;
 
         if (isMovingForward)
         {
             targetRotation = Quaternion.LookRotation(currentPath.pathNodes[NextWayPoint].position - transform.position);
         }
-        else
+        else if (NextWayPoint > 0)
         {
-            targetRotation = Quaternion.LookRotation(currentPath.pathNodes[NextWayPoint - 1].position - transform.position);
+            targetRotation = Quaternion.LookRotation(transform.position - currentPath.pathNodes[NextWayPoint - 1].position);
         }
 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
@@ -160,7 +160,7 @@ public class PayloadMovement : MonoBehaviour
         {
             isMovingForward = true;
 
-            payloadUI.ChangePayloadUISprite(playersOnPayload);
+            payloadUI.ChangePayloadStateDisplay(playersOnPayload);
 
             float nodeDistance = Vector3.Distance(currentPath.pathNodes[NextWayPoint].position, transform.position);
             payloadRigidbody.velocity = (currentPath.pathNodes[NextWayPoint].position - transform.position).normalized * speed;
@@ -186,7 +186,7 @@ public class PayloadMovement : MonoBehaviour
 
             movementSpeed = -speed;
 
-            payloadUI.ChangePayloadUISprite(4);
+            payloadUI.ChangePayloadStateDisplay(4);
 
             float nodeDistance = Vector3.Distance(currentPath.pathNodes[NextWayPoint - 1].position, transform.position);
             payloadRigidbody.velocity = (currentPath.pathNodes[NextWayPoint - 1].position - transform.position).normalized * speed;
@@ -201,7 +201,7 @@ public class PayloadMovement : MonoBehaviour
     private void StopPayload()
     {
         // Stop the payload's movement
-        payloadUI.ChangePayloadUISprite(0);
+        payloadUI.ChangePayloadStateDisplay(0);
 
         if (isMovingForward)
         {
