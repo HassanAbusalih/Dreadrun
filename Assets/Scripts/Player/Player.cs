@@ -126,9 +126,9 @@ public class Player : MonoBehaviour, IDamagable
         if(playerWeapon == null) return;
         if (Input.GetKeyDown(pickUpWeaponKey) && !isWeaponPickedUp)
         {
+            ScaleWeapon();
             playerWeapon.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
             isWeaponPickedUp = true;
-            ScaleWeapon();
         }
     }
 
@@ -137,11 +137,12 @@ public class Player : MonoBehaviour, IDamagable
         if(dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
         if (Input.GetKeyDown(dropWeaponKey) && isWeaponPickedUp)
         {
+            DeScaleWeapon();
             playerWeapon.DropWeapon();
             isWeaponPickedUp = false;
             currentWeaponID = 0;
             playerWeapon = null;
-            DeScaleWeapon();
+         
         }
     }
 
@@ -210,7 +211,7 @@ public class Player : MonoBehaviour, IDamagable
         playerWeapon.FireRate *= playerStats.attackSpeed;
         playerWeapon.DamageModifier *= playerStats.attack;
         playerWeapon.ProjectileRange *= playerStats.Range;
-        playerWeapon.SpreadAngle *= playerStats.SpreadMultiplier;
+        playerWeapon.SpreadAngle *= playerStats.Spread;
     }
 
     public void DeScaleWeapon()
@@ -219,7 +220,7 @@ public class Player : MonoBehaviour, IDamagable
         playerWeapon.FireRate /= playerStats.attackSpeed;
         playerWeapon.DamageModifier /= playerStats.attack;
         playerWeapon.ProjectileRange /= playerStats.Range;
-        playerWeapon.SpreadAngle /= playerStats.SpreadMultiplier;
+        playerWeapon.SpreadAngle /= playerStats.Spread;
     }
 
 }

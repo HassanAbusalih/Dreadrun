@@ -14,7 +14,6 @@ public class HealthUp : Perk
     {
         float increaseAmount = player.playerStats.maxHealth * (HPScaling / 100f);
         player.playerStats.maxHealth += increaseAmount;
-        player.ScaleWeapon();
-        Debug.Log("hp increased");
+        player.playerStats.health += increaseAmount;   
     }
 }
