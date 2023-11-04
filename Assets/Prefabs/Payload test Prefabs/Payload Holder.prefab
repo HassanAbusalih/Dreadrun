@@ -561,9 +561,9 @@ Rigidbody:
   m_GameObject: {fileID: 3431555032321860646}
   serializedVersion: 2
   m_Mass: 10000
-  m_Drag: 1.5
+  m_Drag: 3
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
@@ -700,7 +700,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3431555032319482754}
   payloadStateImage: {fileID: 8242476341063840096}
-  payloadStatesSprites: []
+  payloadStatesSprites:
+  - {fileID: 21300000, guid: cc83e91b1d14cfd40b04d1efcf8d5666, type: 3}
+  - {fileID: 21300000, guid: 0c62502315b8a3d45a65a4e8fb8e0f5f, type: 3}
+  - {fileID: 21300000, guid: df252e77834c67f4cbc8cb8ee5ff469c, type: 3}
+  - {fileID: 21300000, guid: 0a87fc07710dddb499389012614cbced, type: 3}
+  - {fileID: 21300000, guid: d9dcb695a56ac7b40a8466f31cf7add7, type: 3}
   rangeIndicatorRingRenderer: {fileID: 4061895842329600591}
   rangeIndicatorFillRenderer: {fileID: 663522014}
   rangeIndicatorFillMaterials:
@@ -1072,8 +1077,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.034, y: 0.07999998, z: 0.03471026}
-  m_Center: {x: 0, y: 1.1073176e-17, z: -0.004931591}
+  m_Size: {x: 0.034, y: 0.07999997, z: 0.022109613}
+  m_Center: {x: -1.0089318e-12, y: -3.5280013e-16, z: 0.0013687316}
 --- !u!1001 &5824494048139375022
 PrefabInstance:
   m_ObjectHideFlags: 0
