@@ -160,7 +160,7 @@ public class Player : MonoBehaviour, IDamagable
 
     void ChangeHealth(float amount)
     {
-        if (isInvincible) return;
+       // if (isInvincible) return;
         playerStats.health -= amount;
         playerStats.health = Mathf.Clamp(playerStats.health, 0, playerStats.maxHealth);
         UpdateHealthBar();
@@ -222,5 +222,8 @@ public class Player : MonoBehaviour, IDamagable
         playerWeapon.ProjectileRange /= playerStats.Range;
         playerWeapon.SpreadAngle /= playerStats.Spread;
     }
+
+
+    // 224 lines of code
 
 }
