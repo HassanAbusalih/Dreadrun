@@ -40,6 +40,7 @@ public class PayloadUI : MonoBehaviour
         payloadStats = FindObjectOfType<PayloadStats>();
         payloadPath = FindObjectOfType<PayloadPath>();
 
+        GameManager.Instance.onPhaseChange.AddListener(EnablePayloadUI);
 
         // Calculate total path length
         for (int i = 0; i < payloadPath.pathNodes.Count - 1; i++)
@@ -56,6 +57,8 @@ public class PayloadUI : MonoBehaviour
                 InstantiateCheckpointMarker(checkpointPosition);
             }
         }
+
+        gameObject.SetActive(false);
     }
 
     private void Update()
@@ -136,5 +139,10 @@ public class PayloadUI : MonoBehaviour
     private void LookAtCamera(GameObject gameObject)
     {
         gameObject.transform.LookAt(gameObject.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+    }
+
+    void EnablePayloadUI()
+    {
+        gameObject.SetActive(true);
     }
 }

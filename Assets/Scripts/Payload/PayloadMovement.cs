@@ -43,10 +43,6 @@ public class PayloadMovement : MonoBehaviour
     private void Start()
     {
         InitializeVariables();
-        reverseTimer = reverseCountDownTime;
-        currentPath = FindObjectOfType<PayloadPath>();
-        playersInGame = FindObjectsOfType<Player>();
-        GameManager.Instance.onPhaseChange.AddListener(EnableMovement);
     }
 
     private void Update()
@@ -76,8 +72,6 @@ public class PayloadMovement : MonoBehaviour
                     StopPayload();
             }
         }
-        else
-            StopPayload();
     }
 
     private void UpdateRangeIndicatorScale()
@@ -204,7 +198,7 @@ public class PayloadMovement : MonoBehaviour
         else
         {
             payloadRigidbody.velocity = Vector3.zero;
-            StopPayload();
+            payloadUI.ChangePayloadStateDisplay(0);
         }
     }
 
@@ -248,12 +242,21 @@ public class PayloadMovement : MonoBehaviour
         }
     }
 
-    public void EnableMovement()
+    void EnableMovement()
     {
         // Enable the payload's movement and trigger the artifact animation
         movementEnabled = true;
         if (payloadAnimator == null) return;
+        payloadUI = FindObjectOfType<PayloadUI>();
         payloadAnimator.SetTrigger("Artifact Enable");
+    }
+
+    void DisableMovement()
+    {
+        // Stop the payload and disable the payload's movement
+        payloadRigidbody.velocity = Vector3.zero;
+        payloadUI.ChangePayloadStateDisplay(0);
+        movementEnabled = false;
     }
 
     private void InitializeVariables()
@@ -263,7 +266,12 @@ public class PayloadMovement : MonoBehaviour
         checkpointSystem = gameObject.GetComponent<PayloadCheckpointSystem>();
         payloadAnimator = GetComponent<Animator>();
         payloadRigidbody = GetComponent<Rigidbody>();
-        payloadUI = FindObjectOfType<PayloadUI>();
         enemyLayer = LayerMask.GetMask("Enemy");
+        reverseTimer = reverseCountDownTime;
+        currentPath = FindObjectOfType<PayloadPath>();
+        playersInGame = FindObjectsOfType<Player>();
+        GameManager.Instance.onPhaseChange.AddListener(EnableMovement);
+        PayloadCheckpointSystem.Instance.onCheckpointActivate.AddListener(DisableMovement);
+        PayloadCheckpointSystem.Instance.onCheckpointDeactivate.AddListener(EnableMovement);
     }
 }
