@@ -175,6 +175,7 @@ public class PayloadMovement : MonoBehaviour
         {
             payloadRigidbody.velocity = Vector3.zero;
             movementEnabled = false;
+            GameManager.Instance.Win();
         }
     }
 
