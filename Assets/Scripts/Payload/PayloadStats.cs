@@ -6,14 +6,15 @@ using UnityEngine;
 public class PayloadStats : MonoBehaviour,IDamagable
 {
     [Header("Speed Settings")]
-    public float onePlayerSpeed, twoPlayerSpeed, threePlayerSpeed, reverseSpeed;
+    public float onePlayerSpeed;
+    public float twoPlayerSpeed;
+    public float threePlayerSpeed;
+    public float reverseSpeed;
 
     [Header("Health Settings")]
-    public float maxPayloadHealth, payloadHealth;
+    public float maxPayloadHealth;
+    public float payloadHealth;
 
-    [Header("EXP Settings")]
-    public float storedEXP;
-    
     void Start()
     {
         payloadHealth = maxPayloadHealth;
@@ -27,11 +28,6 @@ public class PayloadStats : MonoBehaviour,IDamagable
         {
             GameManager.Instance.Lose();
         }
-    }
-
-    public void AddEXP(float EXP)
-    {
-        storedEXP += EXP;
     }
 }
     

@@ -13,18 +13,16 @@ public class PayloadCheckpointSystem : MonoBehaviour
     [SerializeField] Image checkpointTimeBar;
 
     Player[] playersInGame;
-    PayloadStats payloadStats;
+    PayloadMovement payloadMovement;
     ObjectSpawner[] enemySpawners;
-
-   
 
     private void Start()
     {
         enemySpawners = FindObjectsOfType<ObjectSpawner>();
-        payloadStats = FindObjectOfType<PayloadStats>();
         checkpointTimer = checkpointDuration;
         checkpointUI.enabled = false;
         playersInGame = FindObjectsOfType<Player>();
+        payloadMovement = FindObjectOfType<PayloadMovement>();
     }
 
     private void Update()
@@ -42,6 +40,8 @@ public class PayloadCheckpointSystem : MonoBehaviour
         checkpointUI.enabled = true;
         onCheckpoint = true;
 
+        payloadMovement.movementEnabled = false;
+
         foreach (Player player in playersInGame)
         {
             player.gameObject.GetComponent<PlayerExp>().LevelUp();
@@ -52,8 +52,6 @@ public class PayloadCheckpointSystem : MonoBehaviour
             spawner.enabled = false;
         }
 
-        payloadStats.storedEXP = 0;
-
         yield return new WaitForSeconds(checkpointDuration);
 
         DeactivateCheckpoint();
@@ -63,6 +61,8 @@ public class PayloadCheckpointSystem : MonoBehaviour
     {
         checkpointUI.enabled = false;
         onCheckpoint = false;
+
+        payloadMovement.movementEnabled = true;
 
         foreach (ObjectSpawner spawner in enemySpawners)
         {
