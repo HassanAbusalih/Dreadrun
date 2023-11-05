@@ -3,18 +3,22 @@ using UnityEngine;
 
 public class FogTrigger : MonoBehaviour
 {
+    [Header("Fog Particle Settings")]
     [SerializeField] Vector2 fogBoxScale;
     [SerializeField] float particleEmissionRate;
-    [SerializeField] float fadeOutDuration;
-    [SerializeField] bool destroyAfterFadeOut;
     [SerializeField] Color fogColor;
 
-    protected ParticleSystem fog;
+    [Header("Fog Trigger Settings")]
+    [SerializeField] float delayToFadeOut;
+    [SerializeField] float fadeOutDuration;
+    [SerializeField] bool destroyAfterFadeOut;
+    
+    ParticleSystem fog;
+    BoxCollider boxCollider;
     float delayToDestroy;
     float elapsedTime;
     bool startFading;
-    BoxCollider boxCollider;
-
+    
     void Start()
     {
         delayToDestroy = fadeOutDuration + 4f;
@@ -41,8 +45,13 @@ public class FogTrigger : MonoBehaviour
     {
         if (other.TryGetComponent(out Player player))
         {
-            startFading = true;
+            Invoke(nameof(EnableFogFadingOut), delayToFadeOut);
         }
+    }
+
+    void EnableFogFadingOut()
+    {
+        startFading = true;
     }
 
     private void Update()
