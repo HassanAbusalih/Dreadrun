@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PhaseChanger : MonoBehaviour
 {
     float insideTimer = 0f;
     Player[] playersInGame;
-    PayloadMovement payloadMovementComponent;
     [SerializeField] float requiredTime = 10f;
     [SerializeField] float requiredDistance = 10f;
     [SerializeField] GameObject wall;
@@ -20,7 +18,7 @@ public class PhaseChanger : MonoBehaviour
     private void Start()
     {
         playersInGame = FindObjectsOfType<Player>();
-        payloadMovementComponent = gameObject.GetComponent<PayloadMovement>();
+        GameManager.Instance.onPhaseChange.AddListener(ChangePhase);
     }
 
     private void Update()
@@ -31,7 +29,7 @@ public class PhaseChanger : MonoBehaviour
 
             if (insideTimer >= requiredTime)
             {
-                ChangePhase();
+                GameManager.Instance.ChangePhase();
             }
         }
     }
@@ -61,7 +59,10 @@ public class PhaseChanger : MonoBehaviour
     public void ChangePhase()
     {
         wall.SetActive(false);
-        payloadMovementComponent.EnableMovement();
         Destroy(this);
+    }
+    void OnDestroy()
+    {
+        GameManager.Instance.onPhaseChange.RemoveListener(ChangePhase);
     }
 }

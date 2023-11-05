@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PayloadMovement : MonoBehaviour
@@ -47,6 +46,7 @@ public class PayloadMovement : MonoBehaviour
         reverseTimer = reverseCountDownTime;
         currentPath = FindObjectOfType<PayloadPath>();
         playersInGame = FindObjectsOfType<Player>();
+        GameManager.Instance.onPhaseChange.AddListener(EnableMovement);
     }
 
     private void Update()
