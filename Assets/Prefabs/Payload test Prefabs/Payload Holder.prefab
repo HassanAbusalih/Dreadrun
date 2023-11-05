@@ -782,6 +782,7 @@ GameObject:
   - component: {fileID: 8796393706979348884}
   - component: {fileID: 5697658053404842044}
   - component: {fileID: 8076904364686084284}
+  - component: {fileID: 1076379060}
   - component: {fileID: 3431555032399982181}
   - component: {fileID: 3431555032399982191}
   m_Layer: 6
@@ -866,6 +867,21 @@ MonoBehaviour:
   checkpointDuration: 10
   checkpointUI: {fileID: 0}
   checkpointTimeBar: {fileID: 0}
+--- !u!114 &1076379060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431555032321860646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec93979ee061884ba3dba81e1888f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredTime: 5
+  requiredDistance: 8
+  wall: {fileID: 0}
 --- !u!95 &3431555032399982181
 Animator:
   serializedVersion: 5

@@ -4,32 +4,28 @@ using UnityEngine;
 
 public class PhaseChanger : MonoBehaviour
 {
-    private bool playerInside = false;
-    private float insideTimer = 0f;
+    float insideTimer = 0f;
+    Player[] playersInGame;
+    PayloadMovement payloadMovementComponent;
     [SerializeField] float requiredTime = 10f;
-    [SerializeField] PayloadMovement payload;
+    [SerializeField] float requiredDistance = 10f;
     [SerializeField] GameObject wall;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnDrawGizmos()
     {
-        if (other.TryGetComponent(out Player player))
-        {
-            playerInside = true;
-        }
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, requiredDistance);
     }
 
-    private void OnTriggerExit(Collider other)
+    private void Start()
     {
-        if (other.TryGetComponent(out Player player) && playerInside)
-        {
-            playerInside = false;
-            insideTimer = 0f;
-        }
+        playersInGame = FindObjectsOfType<Player>();
+        payloadMovementComponent = gameObject.GetComponent<PayloadMovement>();
     }
 
     private void Update()
     {
-        if (playerInside)
+        if (CheckIfAllPlayersAreInRange())
         {
             insideTimer += Time.deltaTime;
 
@@ -40,9 +36,32 @@ public class PhaseChanger : MonoBehaviour
         }
     }
 
+    private bool CheckIfAllPlayersAreInRange()
+    {
+        int playersInRange = 0;
+
+        foreach (Player player in playersInGame)
+        {
+            if (Vector3.Distance(player.transform.position, transform.position) <= requiredDistance)
+            {
+                playersInRange++;
+            }
+        }
+
+        if (playersInRange == playersInGame.Length)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void ChangePhase()
     {
         wall.SetActive(false);
-        payload.EnableMovement();
+        payloadMovementComponent.EnableMovement();
+        Destroy(this);
     }
-}   
+}
