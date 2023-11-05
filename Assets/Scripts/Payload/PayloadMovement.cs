@@ -210,7 +210,8 @@ public class PayloadMovement : MonoBehaviour
     {
         // Stop the payload's movement
         payloadUI.ChangePayloadStateDisplay(0);
-        RotateTowardsPath();
+        if (payloadRigidbody.velocity.magnitude > 0)
+            RotateTowardsPath();
 
         if (isMovingForward && NextWayPointIndex < currentPath.pathNodes.Count)
         {
