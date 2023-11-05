@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b14164630edba7043bcee9309ee24577, type: 2}
+  - {fileID: 2100000, guid: 4b09cd94a49f02b418df0813afaed58b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -168,6 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1192403564}
+  - component: {fileID: 125341596}
   m_Layer: 6
   m_Name: Payload UI
   m_TagString: Untagged
@@ -193,6 +194,38 @@ Transform:
   m_Father: {fileID: 3431555032321860647}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &125341596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192403563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52ce7d63f517f1499fce4d285b0d476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthUI: {fileID: 3431555032426853028}
+  healthBar: {fileID: 3431555032319482754}
+  payloadStateImage: {fileID: 8242476341063840096}
+  payloadStatesSprites:
+  - {fileID: 21300000, guid: cc83e91b1d14cfd40b04d1efcf8d5666, type: 3}
+  - {fileID: 21300000, guid: 0c62502315b8a3d45a65a4e8fb8e0f5f, type: 3}
+  - {fileID: 21300000, guid: df252e77834c67f4cbc8cb8ee5ff469c, type: 3}
+  - {fileID: 21300000, guid: 0a87fc07710dddb499389012614cbced, type: 3}
+  - {fileID: 21300000, guid: d9dcb695a56ac7b40a8466f31cf7add7, type: 3}
+  rangeIndicatorRingRenderer: {fileID: 4061895842329600591}
+  rangeIndicatorFillRenderer: {fileID: 663522014}
+  rangeIndicatorForwardColor: {r: 0, g: 1, b: 0, a: 1}
+  rangeIndicatorReverseColor: {r: 1, g: 0, b: 0, a: 1}
+  rangeIndicatorStopColor: {r: 1, g: 1, b: 0, a: 1}
+  rangeIndicatorFillAlpha: 0.3
+  rangeIndicatorRingGlowIntensity: 1
+  pathProgressBar: {fileID: 1718027869}
+  checkpointMarkerPrefab: {fileID: 2495320778173097652, guid: ff647a5ff778d634e818a3aa27d7b505, type: 3}
+  progressBarTransform: {fileID: 1112873000}
+  payloadTransform: {fileID: 2342130431648423151}
 --- !u!1 &1693624753
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +915,6 @@ GameObject:
   - component: {fileID: 3431555032426853033}
   - component: {fileID: 3431555032426853032}
   - component: {fileID: 3431555032426853035}
-  - component: {fileID: 344371324}
   m_Layer: 6
   m_Name: Payload Health UI
   m_TagString: Untagged
@@ -974,40 +1006,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &344371324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3431555032426853028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52ce7d63f517f1499fce4d285b0d476, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 3431555032319482754}
-  payloadStateImage: {fileID: 8242476341063840096}
-  payloadStatesSprites:
-  - {fileID: 21300000, guid: cc83e91b1d14cfd40b04d1efcf8d5666, type: 3}
-  - {fileID: 21300000, guid: 0c62502315b8a3d45a65a4e8fb8e0f5f, type: 3}
-  - {fileID: 21300000, guid: df252e77834c67f4cbc8cb8ee5ff469c, type: 3}
-  - {fileID: 21300000, guid: 0a87fc07710dddb499389012614cbced, type: 3}
-  - {fileID: 21300000, guid: d9dcb695a56ac7b40a8466f31cf7add7, type: 3}
-  rangeIndicatorRingRenderer: {fileID: 4061895842329600591}
-  rangeIndicatorFillRenderer: {fileID: 663522014}
-  rangeIndicatorFillMaterials:
-  - {fileID: 2100000, guid: b14164630edba7043bcee9309ee24577, type: 2}
-  - {fileID: 2100000, guid: 4b09cd94a49f02b418df0813afaed58b, type: 2}
-  - {fileID: 2100000, guid: 83cb9ef2db19a644cbedc706ed85dfd9, type: 2}
-  rangeIndicatorRingMaterials:
-  - {fileID: 2100000, guid: 0daf1e4e96212dd4199f3ae6b0a53a52, type: 2}
-  - {fileID: 2100000, guid: e3d541762d97f6c49bee0dfb0d68d744, type: 2}
-  - {fileID: 2100000, guid: 259544fd8306fa941adc7becd038827a, type: 2}
-  pathProgressBar: {fileID: 1718027869}
-  checkpointMarkerPrefab: {fileID: 2495320778173097652, guid: ff647a5ff778d634e818a3aa27d7b505, type: 3}
-  progressBarTransform: {fileID: 1112873000}
-  payloadTransform: {fileID: 2342130431648423151}
 --- !u!1 &5041582069792209539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,7 +1156,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: b449455fa100e0c46a8f098017671546, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 0daf1e4e96212dd4199f3ae6b0a53a52, type: 2}
+      objectReference: {fileID: 2100000, guid: e3d541762d97f6c49bee0dfb0d68d744, type: 2}
     - target: {fileID: 919132149155446097, guid: b449455fa100e0c46a8f098017671546, type: 3}
       propertyPath: m_Name
       value: RangeIndicator
