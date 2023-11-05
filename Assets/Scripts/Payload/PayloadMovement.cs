@@ -204,6 +204,7 @@ public class PayloadMovement : MonoBehaviour
         else
         {
             payloadRigidbody.velocity = Vector3.zero;
+            StopPayload();
         }
     }
 
@@ -211,35 +212,38 @@ public class PayloadMovement : MonoBehaviour
     {
         // Stop the payload's movement
         payloadUI.ChangePayloadStateDisplay(0);
+
         if (payloadRigidbody.velocity.magnitude > 0)
+        {
             RotateTowardsPath();
 
-        if (isMovingForward && NextWayPointIndex < currentPath.pathNodes.Count)
-        {
-            float nodeDistance = Vector3.Distance(currentPath.pathNodes[NextWayPointIndex].position, transform.position);
-            payloadRigidbody.velocity = (currentPath.pathNodes[NextWayPointIndex].position - transform.position).normalized * payloadRigidbody.velocity.magnitude;
-
-            if (nodeDistance <= waypointProximity)
+            if (isMovingForward && NextWayPointIndex < currentPath.pathNodes.Count)
             {
-                NextWayPointIndex++;
-                payloadUI.UpdateLastWayPointIndex(NextWayPointIndex - 1);
+                float nodeDistance = Vector3.Distance(currentPath.pathNodes[NextWayPointIndex].position, transform.position);
+                payloadRigidbody.velocity = (currentPath.pathNodes[NextWayPointIndex].position - transform.position).normalized * payloadRigidbody.velocity.magnitude;
 
-                if (currentPath.pathNodes[NextWayPointIndex - 1].gameObject.CompareTag("Checkpoint") && NextWayPointIndex > lastCheckpointNodeID)
+                if (nodeDistance <= waypointProximity)
                 {
-                    lastCheckpointNodeID = NextWayPointIndex;
-                    StartCoroutine(checkpointSystem.ActivateCheckpoint());
+                    NextWayPointIndex++;
+                    payloadUI.UpdateLastWayPointIndex(NextWayPointIndex - 1);
+
+                    if (currentPath.pathNodes[NextWayPointIndex - 1].gameObject.CompareTag("Checkpoint") && NextWayPointIndex > lastCheckpointNodeID)
+                    {
+                        lastCheckpointNodeID = NextWayPointIndex;
+                        StartCoroutine(checkpointSystem.ActivateCheckpoint());
+                    }
                 }
             }
-        }
-        else if (NextWayPointIndex > 0)
-        {
-            float nodeDistance = Vector3.Distance(currentPath.pathNodes[NextWayPointIndex - 1].position, transform.position);
-            payloadRigidbody.velocity = (currentPath.pathNodes[NextWayPointIndex - 1].position - transform.position).normalized * payloadRigidbody.velocity.magnitude;
-
-            if (nodeDistance <= waypointProximity)
+            else if (NextWayPointIndex > 0)
             {
-                NextWayPointIndex--;
-                payloadUI.UpdateLastWayPointIndex(NextWayPointIndex - 1);
+                float nodeDistance = Vector3.Distance(currentPath.pathNodes[NextWayPointIndex - 1].position, transform.position);
+                payloadRigidbody.velocity = (currentPath.pathNodes[NextWayPointIndex - 1].position - transform.position).normalized * payloadRigidbody.velocity.magnitude;
+
+                if (nodeDistance <= waypointProximity)
+                {
+                    NextWayPointIndex--;
+                    payloadUI.UpdateLastWayPointIndex(NextWayPointIndex - 1);
+                }
             }
         }
     }

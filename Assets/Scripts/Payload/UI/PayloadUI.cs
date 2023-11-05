@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +8,10 @@ public class PayloadUI : MonoBehaviour
 {
     private PayloadStats payloadStats;
     private PayloadPath payloadPath;
-    private int NextWayPointIndex;
+    private int previousWayPointIndex;
 
     [Header("Health Bar Settings")]
+    [SerializeField] private GameObject healthUI;
     [SerializeField] private Image healthBar;
 
     [Header("Payload State Settings")]
@@ -19,8 +21,12 @@ public class PayloadUI : MonoBehaviour
     [Header("Range Indicator Settings")]
     [SerializeField] private MeshRenderer rangeIndicatorRingRenderer;
     [SerializeField] private MeshRenderer rangeIndicatorFillRenderer;
-    [SerializeField] private Material[] rangeIndicatorFillMaterials;
-    [SerializeField] private Material[] rangeIndicatorRingMaterials;
+    [SerializeField] private Color rangeIndicatorForwardColor;
+    [SerializeField] private Color rangeIndicatorReverseColor;
+    [SerializeField] private Color rangeIndicatorStopColor;
+    [SerializeField][Range(0, 1)] private float rangeIndicatorFillAlpha; // Transparency of the fill color
+    [SerializeField][Range(1, 10)] private float rangeIndicatorRingGlowIntensity; // Glow intensity of the ring color
+    private int lastState = -1; // The last state of the payload, used to check if the state has changed
 
     [Header("Progress Bar Settings")]
     [SerializeField] private Image pathProgressBar;
@@ -57,45 +63,41 @@ public class PayloadUI : MonoBehaviour
         healthBar.fillAmount = payloadStats.payloadHealth / payloadStats.maxPayloadHealth;
 
         // Calculate length of path travelled and update progress bar
-        float traveledPathLength = CalculatePathLengthUpToWaypoint(NextWayPointIndex);
-        if (NextWayPointIndex < payloadPath.pathNodes.Count - 1)
-            traveledPathLength += Vector3.Distance(payloadTransform.position, payloadPath.pathNodes[NextWayPointIndex].position);
+        float traveledPathLength = CalculatePathLengthUpToWaypoint(previousWayPointIndex);
+        if (previousWayPointIndex < payloadPath.pathNodes.Count - 1 && previousWayPointIndex > 0)
+            traveledPathLength += Vector3.Distance(payloadTransform.position, payloadPath.pathNodes[previousWayPointIndex].position);
 
         pathProgressBar.fillAmount = traveledPathLength / totalPathLength;
     }
 
     private void LateUpdate()
     {
-        LookAtCamera();
+        LookAtCamera(healthUI);
     }
 
     public void ChangePayloadStateDisplay(int state)
     {
-        if (payloadStateImage.sprite != payloadStatesSprites[state])
+        if (payloadStateImage.sprite != payloadStatesSprites[state] && state != lastState)
         {
             payloadStateImage.sprite = payloadStatesSprites[state];
 
             switch (state)
             {
                 case 0:
-                    rangeIndicatorFillRenderer.material = rangeIndicatorFillMaterials[0];
-                    rangeIndicatorRingRenderer.material = rangeIndicatorRingMaterials[0];
+                    UpdateRangeIndicatorColor(rangeIndicatorStopColor, rangeIndicatorRingGlowIntensity, rangeIndicatorFillAlpha);
                     break;
 
                 case 1:
                 case 2:
                 case 3:
-                    rangeIndicatorFillRenderer.material = rangeIndicatorFillMaterials[1];
-                    rangeIndicatorRingRenderer.material = rangeIndicatorRingMaterials[1];
+                    UpdateRangeIndicatorColor(rangeIndicatorForwardColor, rangeIndicatorRingGlowIntensity, rangeIndicatorFillAlpha);
                     break;
 
                 case 4:
-                    rangeIndicatorFillRenderer.material = rangeIndicatorFillMaterials[2];
-                    rangeIndicatorRingRenderer.material = rangeIndicatorRingMaterials[2];
+                    UpdateRangeIndicatorColor(rangeIndicatorReverseColor, rangeIndicatorRingGlowIntensity, rangeIndicatorFillAlpha);
                     break;
             }
         }
-
     }
 
     private float CalculatePathLengthUpToWaypoint(int waypointIndex)
@@ -120,13 +122,19 @@ public class PayloadUI : MonoBehaviour
         checkpointMarkerRectTransform.anchoredPosition = new Vector2(0, 0);
     }
 
-    public void UpdateLastWayPointIndex(int index)
+    private void UpdateRangeIndicatorColor(Color color, float ringGlowIntensity, float fillTransparency)
     {
-        NextWayPointIndex = index;
+        rangeIndicatorFillRenderer.material.SetColor("_BaseColor", new Color(color.r, color.g, color.b, fillTransparency));
+        rangeIndicatorRingRenderer.material.SetColor("_Color", new Color(color.r * ringGlowIntensity, color.g * ringGlowIntensity, color.b * ringGlowIntensity, 1));
     }
 
-    public void LookAtCamera()
+    public void UpdateLastWayPointIndex(int index)
     {
-        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        previousWayPointIndex = index;
+    }
+
+    private void LookAtCamera(GameObject gameObject)
+    {
+        gameObject.transform.LookAt(gameObject.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 }
