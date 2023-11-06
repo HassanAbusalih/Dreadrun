@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class PayloadUI : MonoBehaviour
 {
-    private PayloadStats payloadStats;
     private PayloadPath payloadPath;
     private int previousWayPointIndex;
 
@@ -15,17 +15,16 @@ public class PayloadUI : MonoBehaviour
     [SerializeField] private Image healthBar;
 
     [Header("Payload State Settings")]
-    [SerializeField] private Image payloadStateImage;
-    [SerializeField] private Sprite[] payloadStatesSprites;
+    [SerializeField] private DecalProjector payloadStateDecal;
+    [SerializeField] private Texture[] payloadStatesTextures;
 
     [Header("Range Indicator Settings")]
-    [SerializeField] private MeshRenderer rangeIndicatorRingRenderer;
-    [SerializeField] private MeshRenderer rangeIndicatorFillRenderer;
+    [SerializeField] private GameObject rangeIndicator;
+    [SerializeField] private DecalProjector rangeIndicatorDecal;
     [SerializeField] private Color rangeIndicatorForwardColor;
     [SerializeField] private Color rangeIndicatorReverseColor;
     [SerializeField] private Color rangeIndicatorStopColor;
-    [SerializeField][Range(0, 1)] private float rangeIndicatorFillAlpha; // Transparency of the fill color
-    [SerializeField][Range(1, 10)] private float rangeIndicatorRingGlowIntensity; // Glow intensity of the ring color
+    [SerializeField][Range(1, 10)] private float rangeIndicatorColorIntensity; // Glow intensity of the ring color
     private int lastState = -1; // The last state of the payload, used to check if the state has changed
 
     [Header("Progress Bar Settings")]
@@ -37,7 +36,6 @@ public class PayloadUI : MonoBehaviour
 
     private void Start()
     {
-        payloadStats = FindObjectOfType<PayloadStats>();
         payloadPath = FindObjectOfType<PayloadPath>();
 
         GameManager.Instance.onPhaseChange.AddListener(EnablePayloadUI);
@@ -63,7 +61,9 @@ public class PayloadUI : MonoBehaviour
 
     private void Update()
     {
-        healthBar.fillAmount = payloadStats.payloadHealth / payloadStats.maxPayloadHealth;
+        healthBar.fillAmount = PayloadStats.instance.payloadHealth / PayloadStats.instance.maxPayloadHealth;
+
+        UpdateRangeIndicatorScale();
 
         // Calculate length of path travelled and update progress bar
         float traveledPathLength = CalculatePathLengthUpToWaypoint(previousWayPointIndex);
@@ -80,27 +80,30 @@ public class PayloadUI : MonoBehaviour
 
     public void ChangePayloadStateDisplay(int state)
     {
-        if (payloadStateImage.sprite != payloadStatesSprites[state] && state != lastState)
+        payloadStateDecal.material.SetTexture("Base_Map", payloadStatesTextures[state]);
+
+        switch (state)
         {
-            payloadStateImage.sprite = payloadStatesSprites[state];
+            case 0:
+                UpdateRangeIndicatorColor(rangeIndicatorStopColor, rangeIndicatorColorIntensity);
+                break;
 
-            switch (state)
-            {
-                case 0:
-                    UpdateRangeIndicatorColor(rangeIndicatorStopColor, rangeIndicatorRingGlowIntensity, rangeIndicatorFillAlpha);
-                    break;
+            case 1:
+            case 2:
+            case 3:
+                UpdateRangeIndicatorColor(rangeIndicatorForwardColor, rangeIndicatorColorIntensity);
+                break;
 
-                case 1:
-                case 2:
-                case 3:
-                    UpdateRangeIndicatorColor(rangeIndicatorForwardColor, rangeIndicatorRingGlowIntensity, rangeIndicatorFillAlpha);
-                    break;
-
-                case 4:
-                    UpdateRangeIndicatorColor(rangeIndicatorReverseColor, rangeIndicatorRingGlowIntensity, rangeIndicatorFillAlpha);
-                    break;
-            }
+            case 4:
+                UpdateRangeIndicatorColor(rangeIndicatorReverseColor, rangeIndicatorColorIntensity);
+                break;
         }
+
+    }
+    private void UpdateRangeIndicatorScale()
+    {
+        // Update the scale of the range indicator to match the payload's range
+        rangeIndicator.transform.localScale = new Vector3(PayloadStats.instance.payloadRange / transform.localScale.x, PayloadStats.instance.payloadRange / transform.localScale.y, PayloadStats.instance.payloadRange / transform.localScale.z);
     }
 
     private float CalculatePathLengthUpToWaypoint(int waypointIndex)
@@ -125,10 +128,9 @@ public class PayloadUI : MonoBehaviour
         checkpointMarkerRectTransform.anchoredPosition = new Vector2(0, 0);
     }
 
-    private void UpdateRangeIndicatorColor(Color color, float ringGlowIntensity, float fillTransparency)
+    private void UpdateRangeIndicatorColor(Color color, float ringGlowIntensity)
     {
-        rangeIndicatorFillRenderer.material.SetColor("_BaseColor", new Color(color.r, color.g, color.b, fillTransparency));
-        rangeIndicatorRingRenderer.material.SetColor("_Color", new Color(color.r * ringGlowIntensity, color.g * ringGlowIntensity, color.b * ringGlowIntensity, 1));
+        rangeIndicatorDecal.material.SetColor("_Color", new Color(color.r * ringGlowIntensity, color.g * ringGlowIntensity, color.b * ringGlowIntensity, 1));
     }
 
     public void UpdateLastWayPointIndex(int index)

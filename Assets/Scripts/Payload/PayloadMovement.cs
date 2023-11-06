@@ -21,8 +21,6 @@ public class PayloadMovement : MonoBehaviour
 
     [Header("Object Detection Settings")]
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private GameObject rangeIndicator;
-    public float payloadRange;
     private PayloadUI payloadUI;
     private Player[] playersInGame;
     private int playersOnPayload;
@@ -31,14 +29,6 @@ public class PayloadMovement : MonoBehaviour
     [Header("Checkpoint Settings")]
     private PayloadCheckpointSystem checkpointSystem;
     private int lastCheckpointNodeID = 0;
-
-    [Header("Payload Stats")]
-    private PayloadStats payloadStats;
-
-    private void OnValidate()
-    {
-        UpdateRangeIndicatorScale();
-    }
 
     private void Start()
     {
@@ -67,17 +57,11 @@ public class PayloadMovement : MonoBehaviour
                 reverseTimer -= Time.deltaTime;
 
                 if (reverseTimer <= 0)
-                    FollowPathReverse(payloadStats.reverseSpeed);
+                    FollowPathReverse(PayloadStats.instance.reverseSpeed);
                 else
                     StopPayload();
             }
         }
-    }
-
-    private void UpdateRangeIndicatorScale()
-    {
-        // Update the scale of the range indicator to match the payload's range
-        rangeIndicator.transform.localScale = new Vector3(payloadRange / transform.localScale.x, .1f / transform.localScale.y, payloadRange / transform.localScale.z);
     }
 
     private void RotateTowardsPath()
@@ -99,7 +83,7 @@ public class PayloadMovement : MonoBehaviour
     private IEnumerator CheckForObjectsInRange()
     {
         // Check for nearby enemies and players on the payload
-        Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, payloadRange, enemyLayer);
+        Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, PayloadStats.instance.payloadRange, enemyLayer);
 
         if (enemiesInRange.Length > 0)
         {
@@ -114,7 +98,7 @@ public class PayloadMovement : MonoBehaviour
         int playerCount = 0;
         foreach (Player player in playersInGame)
         {
-            if (Vector3.Distance(transform.position, player.transform.position) < payloadRange)
+            if (Vector3.Distance(transform.position, player.transform.position) < PayloadStats.instance.payloadRange)
             {
                 playerCount++;
             }
@@ -126,15 +110,15 @@ public class PayloadMovement : MonoBehaviour
         switch (playersOnPayload)
         {
             case 1:
-                movementSpeed = payloadStats.onePlayerSpeed;
+                movementSpeed = PayloadStats.instance.onePlayerSpeed;
                 break;
 
             case 2:
-                movementSpeed = payloadStats.twoPlayerSpeed;
+                movementSpeed = PayloadStats.instance.twoPlayerSpeed;
                 break;
 
             case 3:
-                movementSpeed = payloadStats.threePlayerSpeed;
+                movementSpeed = PayloadStats.instance.threePlayerSpeed;
                 break;
         }
 
@@ -262,7 +246,6 @@ public class PayloadMovement : MonoBehaviour
     private void InitializeVariables()
     {
         // Initialize required variables
-        payloadStats = gameObject.GetComponent<PayloadStats>();
         checkpointSystem = gameObject.GetComponent<PayloadCheckpointSystem>();
         payloadAnimator = GetComponent<Animator>();
         payloadRigidbody = GetComponent<Rigidbody>();

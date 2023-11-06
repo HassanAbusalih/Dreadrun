@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PayloadStats : MonoBehaviour,IDamagable
 {
+    public static PayloadStats instance;
+
     [Header("Speed Settings")]
     public float onePlayerSpeed;
     public float twoPlayerSpeed;
@@ -15,8 +17,20 @@ public class PayloadStats : MonoBehaviour,IDamagable
     public float maxPayloadHealth;
     public float payloadHealth;
 
+    [Header("Range Settings")]
+    public float payloadRange;
+
     void Start()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         payloadHealth = maxPayloadHealth;
     }
 

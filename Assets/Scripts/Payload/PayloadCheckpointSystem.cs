@@ -19,10 +19,6 @@ public class PayloadCheckpointSystem : MonoBehaviour
     [SerializeField] Canvas checkpointUI;
     [SerializeField] Image checkpointTimeBar;
 
-    Player[] playersInGame;
-    PayloadMovement payloadMovement;
-    ObjectSpawner[] enemySpawners;
-
     private void Start()
     {
         if (Instance == null)
@@ -34,11 +30,8 @@ public class PayloadCheckpointSystem : MonoBehaviour
             Destroy(gameObject);
         }
 
-        enemySpawners = FindObjectsOfType<ObjectSpawner>();
         checkpointTimer = checkpointDuration;
         checkpointUI.enabled = false;
-        playersInGame = FindObjectsOfType<Player>();
-        payloadMovement = FindObjectOfType<PayloadMovement>();
     }
 
     private void Update()
