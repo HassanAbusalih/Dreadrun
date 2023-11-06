@@ -13,8 +13,7 @@ public class HealingPotion : ItemBase
     {
         if(player.playerStats.maxHealth >= player.playerStats.health)
         {
-            player.playerStats.health += healingAmount;
-            player.UpdateHealthBar();
+           player.ChangeHealth(healingAmount);
         }
         Debug.Log("Player health now at " +  player.playerStats.health);
     }

@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public class Dashing : MonoBehaviour
 {
-    [SerializeField] Rigidbody rb;
+    Rigidbody rb;
+    Player player;
 
     [Header("Dashing Settings")]
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
+    [SerializeField] float staminaCost;
     [SerializeField] bool isDashing;
     [SerializeField] Color dashColor;
     [SerializeField] KeyCode dodge = KeyCode.Space;
@@ -15,6 +19,19 @@ public class Dashing : MonoBehaviour
 
     bool isInvincible = false;
     Color defaultColor;
+
+    public Action<float> onDashing;
+
+    public delegate float canDash();
+    public canDash canPlayerDash;
+  
+
+    private void OnEnable()
+    {
+        player = GetComponent<Player>();
+        if (player == null) return;
+        player.canPLayerTakeDamage += GetPlayerInvincibility;
+    }
 
     private void Start()
     {
@@ -27,10 +44,23 @@ public class Dashing : MonoBehaviour
         DashOnInput();
     }
 
+    private void OnDisable()
+    {
+        if (player == null) return;
+        player.canPLayerTakeDamage -= GetPlayerInvincibility;
+    }
+
+    bool GetPlayerInvincibility()
+    {
+        return isInvincible;
+    }
+
     private void DashOnInput()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
         {
+            float currentStamina = canPlayerDash?.Invoke() ?? 0f;
+            if (currentStamina <= 0) return;
             Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
             StartCoroutine(StartDash(dashDirection));
         }
@@ -44,6 +74,7 @@ public class Dashing : MonoBehaviour
         Vector3 endPosition = transform.position + dashDirection * dashDistance;
         float elapsedTime = 0f;
         EnableInvincibility(true);
+        onDashing?.Invoke(-staminaCost);
 
         while (elapsedTime < dashDuration && isDashing)
         {
