@@ -12,9 +12,18 @@ public class AttackSpeed : Perk
 
     public override void ApplyPlayerBuffs(Player player)
     {
+        if (player.playerWeapon != null)
+        {
+            player.playerWeapon.FireRate /= player.playerStats.attackSpeed;
+        }
         float increaseAmount = player.playerStats.attackSpeed * (attackSpeedScaling / 100f);
         player.playerStats.attackSpeed += increaseAmount;
-        player.ScaleWeapon();
+
+        if (player.playerWeapon != null)
+        {
+            player.playerWeapon.FireRate *= player.playerStats.attackSpeed;
+        }
+
     }
 }
 
