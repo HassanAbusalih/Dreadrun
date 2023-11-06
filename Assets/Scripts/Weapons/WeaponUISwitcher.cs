@@ -11,7 +11,6 @@ public class WeaponUISwitcher : MonoBehaviour
     [SerializeField] Color customColor;
     Color defaultColor;
 
-
     [Header("Description Panel Settings")]
     GameObject descriptionPanel;
     TextMeshProUGUI weaponDescriptionText;

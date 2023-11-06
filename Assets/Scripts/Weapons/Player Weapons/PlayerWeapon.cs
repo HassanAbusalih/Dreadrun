@@ -25,7 +25,6 @@ public abstract class PlayerWeapon : WeaponBase
 
     protected virtual void Start()
     {
-
         Collider[] _weaponCollider = GetComponents<Collider>();
         for (int i = 0; i < _weaponCollider.Length; i++)
         {
@@ -34,7 +33,6 @@ public abstract class PlayerWeapon : WeaponBase
                 weaponCollider = _weaponCollider[i];
             }
         }
-
     }
 
     public void PickUpWeapon(Transform _weaponEquipPosition, ref int _iD)
