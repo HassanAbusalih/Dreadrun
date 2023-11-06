@@ -4366,6 +4366,10 @@ PrefabInstance:
       propertyPath: wall
       value: 
       objectReference: {fileID: 1412019405}
+    - target: {fileID: 1361957696524275050, guid: b6d4bbee7506ae84084ee0a798dbc81f, type: 3}
+      propertyPath: m_Name
+      value: Artifact Spawnpoint
+      objectReference: {fileID: 0}
     - target: {fileID: 3431555032321860646, guid: b6d4bbee7506ae84084ee0a798dbc81f, type: 3}
       propertyPath: m_Name
       value: Payload Holder
@@ -40431,6 +40435,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3583066881149013968, guid: 62bb9be98711802448e135069d902808, type: 3}
   m_PrefabInstance: {fileID: 73112321}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1276226227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1276226228}
+  - component: {fileID: 1276226229}
+  m_Layer: 0
+  m_Name: Artifact Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1276226228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276226227}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -23.076973, y: 14.378283, z: -193.08194}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 35
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1276226229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276226227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2758829527bcaa349afe1d68c0c21951, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  artifactSpawnPoint: {fileID: 1379328940}
+  artifacts:
+  - {fileID: 11400000, guid: c90d418a1a27ef54b87ed99b0b26e9ec, type: 2}
+  - {fileID: 11400000, guid: 0e8c02a3da84d7645883b3dfabdff451, type: 2}
+  effectRange: 0
+  minArtifactLevel: 1
+  maxArtifactLevel: 3
 --- !u!4 &1278229603 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3583066881149013968, guid: 62bb9be98711802448e135069d902808, type: 3}
@@ -44903,6 +44958,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eb936ceaf7471047abe3cdd1302eee8, type: 3}
+--- !u!1 &1379328940 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1361957696524275050, guid: b6d4bbee7506ae84084ee0a798dbc81f, type: 3}
+  m_PrefabInstance: {fileID: 125341587}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1379891247 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3583066881149013968, guid: 62bb9be98711802448e135069d902808, type: 3}
