@@ -1,162 +1,94 @@
+using UnityEngine;
 using System.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
+    [SerializeField] GameObject prefabToSpawn;
+    [SerializeField] float activationRadius;
+    [SerializeField] float timeBetweenBatches = 3f;
+    [SerializeField] int batchSize = 5;
+    [SerializeField] int maxSpawnCount = 10;
+    [SerializeField] Transform spawnPosition;
+    [SerializeField] Vector3 spawnOffset = new(1f, 0, 1f);
     Transform payload;
     Transform[] players;
+    Coroutine spawning;
+    int spawnCount = 0;
 
-    public GameObject prefabToSpawn;
-    public float activationRadius;
-    public float spawnRadius;
-    public float timeBetweenSpawns = 3f;
-
-    public bool spawnInside;
-    public bool limitSpawnAmount = false;
-    bool isSpawning;
-
-    private int spawnCount = 0;
-    public int maxSpawnCount = 10;
-
-
-
-    private void OnEnable()
+    void Start()
     {
-       EnableObjectSpawning(true);
-    }
-
-    private void OnDisable()
-    {
-        EnableObjectSpawning(false);
-
-    }
-
-    private void GetReferences()
-    {
-        PayloadMovement payload = FindObjectOfType<PayloadMovement>();
-        if (payload != null)
-        {
-            this.payload = payload.transform;
-        }
+        if (spawnPosition == null) { spawnPosition = transform; }
+        payload = FindObjectOfType<PayloadMovement>()?.transform;
         Player[] players = FindObjectsOfType<Player>();
         this.players = new Transform[players.Length];
-        for (int i = 0; i < this.players.Length; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             this.players[i] = players[i].transform;
         }
+        spawnCount = 0;
     }
 
-    private IEnumerator StartSpawning()
+    void Update()
     {
-        while (isSpawning)
+        if (payload != null && spawning == null && Vector3.Distance(transform.position, payload.position) <= activationRadius)
         {
-            if (payload != null && Vector3.Distance(transform.position, payload.position) <= activationRadius)
+            spawning = StartCoroutine(Spawning());
+        }
+    }
+
+    IEnumerator Spawning()
+    {
+        while (spawnCount < maxSpawnCount)
+        {
+            for (int i = 0; i < batchSize; i++)
             {
-                if (limitSpawnAmount)
+                if (spawnCount >= maxSpawnCount)
                 {
-                    SpawnObjectWithMax();
-                    yield return new WaitForSeconds(timeBetweenSpawns);
+                    yield break;
                 }
-                else
-                {
-                    SpawnObject();
-                    yield return new WaitForSeconds(timeBetweenSpawns);
-                }
+                SpawnObject();
+                yield return new WaitForSeconds(0.2f);
             }
-            yield return null;
+            yield return new WaitForSeconds(timeBetweenBatches);
         }
     }
 
-    public  void SpawnObject()
+    void SpawnObject()
     {
-        if (this.enabled == false) return;
-        Vector3 spawnPosition = SpawnPostionForObject() * spawnRadius + transform.position;
-        GameObject newObject = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
-        newObject.transform.parent = transform;
-        ProvideReferenceToObjectSpawned(newObject, true);
+        Vector3 position = transform.position;
+        if (spawnPosition != null) { position = spawnPosition.position; }
+        Vector3 randomOffset = new(Random.Range(-spawnOffset.x, spawnOffset.x), 0, Random.Range(-spawnOffset.z, spawnOffset.z));
+        GameObject newObject = Instantiate(prefabToSpawn, position + randomOffset, Quaternion.identity, transform);
+        if (newObject.TryGetComponent(out EnemyAIBase enemy)) { enemy.Initialize(payload, players); }
+        spawnCount++;
     }
 
+    public void TestSpawner() => StartCoroutine(Testing());
 
-    Vector3  SpawnPostionForObject()
+    IEnumerator Testing()
     {
-        Vector3 outsideRandomPoition = new Vector3(Random.insideUnitCircle.x, 0, Random.insideUnitCircle.y).normalized ;
-        Vector3 insiderandomPosition = new Vector3(Random.insideUnitCircle.x, 0, Random.insideUnitCircle.y) ;
-        return spawnInside ? insiderandomPosition  : outsideRandomPoition ;
-    }
-
-    void ProvideReferenceToObjectSpawned( GameObject gameObject, bool giveReference )
-    {
-        if(giveReference)
-        {
-            if (gameObject.TryGetComponent(out EnemyAIBase enemy))
-            {
-                enemy.Initialize(payload, players);
-            }
-        }
-    }
-
-    private void SpawnObjectWithMax()
-    {
-        if (spawnCount < maxSpawnCount)
-        {
-            SpawnObject();
-            spawnCount++;
-        }
-        else
-        {
-            CancelInvoke("SpawnObjectWithMax");
-        }
-    }
-
-    void EnableObjectSpawning(bool _enabled)
-    {
-        isSpawning = _enabled;
-        if (isSpawning)
-        {
-            GetReferences(); // only gets references when spawning is enabled
-            StartCoroutine(StartSpawning());
-            return;
-        }
-        else { StopCoroutine(StartSpawning()); }
+        yield return Spawning();
+        spawnCount = 0;
     }
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, spawnRadius);
-
+        Gizmos.DrawWireSphere(transform.position, activationRadius);
         Gizmos.color = new Color(0, 0, 0, 0.2f);
-        Gizmos.DrawSphere(transform.position, spawnRadius);
-
-        Handles.color = Color.black;
-        Handles.DrawWireDisc(transform.position, Vector3.up, spawnRadius, 5f);
-
-        Handles.color = new Color(1, 0, 0, 0.2f);
-        Handles.DrawSolidDisc(transform.position, Vector3.up, spawnRadius);
-
-        SetTextAndStyle(gameObject.name, Vector3.up, FontStyle.Normal, Color.black);
-    }
-
-    private void  OnDrawGizmosSelected()
-    {
-        Gizmos.color = new Color(0, 0, 1, 0.2f);
-        Gizmos.DrawSphere(transform.position,spawnRadius);
-        Gizmos.color = new Color(0, 1, 0, 0.2f);
         Gizmos.DrawSphere(transform.position, activationRadius);
-        SetTextAndStyle(gameObject.name, Vector3.up, FontStyle.BoldAndItalic, Color.blue);
-    }
+        Handles.color = new Color(1, 0, 0, 0.2f);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, activationRadius);
 
-    void SetTextAndStyle(string textContext,Vector3 offsetPosition,FontStyle style, Color textColor)
-    {
-        GUIStyle labelStyle = new GUIStyle();
-        labelStyle.normal.textColor = textColor;
+        GUIStyle labelStyle = new();
+        labelStyle.normal.textColor = Color.black;
         labelStyle.alignment = TextAnchor.MiddleCenter;
-        labelStyle.fontStyle = style;
-        Handles.Label(transform.position + offsetPosition, textContext, labelStyle);
+        labelStyle.fontStyle = FontStyle.Normal;
+        Handles.Label(transform.position + Vector3.up, gameObject.name, labelStyle);
     }
     #endif
 }
@@ -167,30 +99,16 @@ public class ObjectSpawnerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        base.OnInspectorGUI();
         ObjectSpawner spawner = (ObjectSpawner)target;
-        spawner.prefabToSpawn = (GameObject)EditorGUILayout.ObjectField("Prefab to Spawn", spawner.prefabToSpawn, typeof(GameObject), true);
-        spawner.spawnRadius = EditorGUILayout.FloatField("Spawn Radius", spawner.spawnRadius);
-        spawner.activationRadius = EditorGUILayout.FloatField("Activation Radius", spawner.activationRadius);
-        spawner.timeBetweenSpawns = EditorGUILayout.FloatField("Time Between Spawns", spawner.timeBetweenSpawns);
-        spawner.spawnInside = EditorGUILayout.Toggle("Spawn Inside Circle", spawner.spawnInside);
-        spawner.limitSpawnAmount = EditorGUILayout.Toggle("Limit Spawning", spawner.limitSpawnAmount);
-
-        if (spawner.limitSpawnAmount)
+        if (GUILayout.Button("Test Spawning"))
         {
-            spawner.maxSpawnCount = EditorGUILayout.IntField("Max Spawn Count", spawner.maxSpawnCount);
+            spawner.TestSpawner();
         }
-
-        if (GUILayout.Button("Spawn Object Now"))
-        {
-            spawner.SpawnObject();
-        }
-
         if (GUI.changed)
         {
             EditorUtility.SetDirty(target);
         }
     }
 }
-
 #endif
-

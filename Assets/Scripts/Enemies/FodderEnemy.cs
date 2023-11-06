@@ -1,23 +1,22 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody), typeof(FlockingBehavior))]
 public class FodderEnemy : EnemyAIBase
 {
     [SerializeField] float shootingRange = 7.0f;
     [SerializeField] float strafeRange = 5.0f;
     [SerializeField] float retreatRange = 3.0f;
-    [SerializeField] float movementSpeed = 3.0f;
     [SerializeField] float delayBetweenShots = 1f;
     float strafeStartTime;
     float strafeLength;
     bool clockwiseStrafe;
-    FlockingBehavior flockingBehavior;
     Node topNode;
     [SerializeField][Range(0, 1f)] float strafePercent;
     [SerializeField][Range(0, 1f)] float flockPercent;
 
     private void Start()
     {
-        if (!TryGetComponent(out flockingBehavior))
+        if (flockingBehavior == null)
         {
             gameObject.AddComponent<FlockingBehavior>();
         }
@@ -44,7 +43,7 @@ public class FodderEnemy : EnemyAIBase
         Sequencer withinShootingRangeSeq = new(shootingRange, moveToTarget, attackInterval);
         Sequencer farSeq = new(farRange, moveToTarget);
 
-        topNode = new Selector(new Node[] { retreatSeq, strafeSeq, withinShootingRangeSeq, farSeq}, rb, GetClosestPlayer(), GetClosestPlayer);
+        topNode = new Selector(new Node[] { retreatSeq, strafeSeq, withinShootingRangeSeq, farSeq});
     }
 
     void Update()

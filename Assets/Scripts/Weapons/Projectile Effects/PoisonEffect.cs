@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PoisonEffect : MonoBehaviour, IProjectileEffect
 {
-
     float duration = 5;
     float damagePerTick;
     IDamagable target;
@@ -18,7 +17,6 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
         targetGameObject = target.gameObject;
         damagePerTick = (damage / duration) / 2;
         StartCoroutine(PoisonTarget(targetGameObject, target));
-        Debug.Log("COOOOOOOOOCK");
     }
 
     public List<Type> EffectsToRemove()
@@ -29,8 +27,7 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
     IEnumerator PoisonTarget(GameObject targetGameObject, IDamagable target)
     {
         float elapsedTime = 0;
-        GameObject vfx = Instantiate(poisonedVFX, targetGameObject.transform.position, targetGameObject.transform.rotation);
-        vfx.transform.SetParent(targetGameObject.transform, true);
+        GameObject vfx = Instantiate(poisonedVFX, targetGameObject.transform.position, targetGameObject.transform.rotation, targetGameObject.transform);
         while (elapsedTime < duration)
         {
             if (targetGameObject != null)
@@ -40,18 +37,16 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
             }
             else
             {
-                elapsedTime = 0;
                 Destroy(vfx);
                 yield break;
             }
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        elapsedTime = 0;
         Destroy(vfx);
     }
 
-    public  void FetchVFX(GameObject vfx)
+    public void FetchVFX(GameObject vfx)
     {
         poisonedVFX = vfx;
     }

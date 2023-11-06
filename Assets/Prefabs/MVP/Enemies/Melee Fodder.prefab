@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5791127613756451096}
   - component: {fileID: 5791127613756451092}
   - component: {fileID: 7136765785968525618}
+  - component: {fileID: 1936169686}
   m_Layer: 7
   m_Name: Melee Fodder
   m_TagString: Untagged
@@ -114,7 +115,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &7136765785968525618
 MonoBehaviour:
@@ -130,5 +131,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   detectionRange: 30
-  movementSpeed: 250
-  damageOnHit: 5
+  attackRange: 6
+  attackCooldown: 3
+  movementSpeed: 5
+  dashSpeedModifier: 20
+  chargeSpeedModifier: 0.3
+  chargeTime: 2
+  dashTime: 1
+--- !u!114 &1936169686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5791127613756451101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cefbce732f6b54448e9091a4108dccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  neighborRadius: 10
+  separationDistance: 2
+  flockLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  alignmentStrength: 1
+  cohesionStrength: 1
+  separationStrength: 1
+  maxSteerPercentage: 1
