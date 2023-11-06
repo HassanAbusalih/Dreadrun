@@ -44,8 +44,6 @@ public abstract class PlayerWeapon : WeaponBase
         equipped = true;
         weaponCollider.isTrigger = true;
 
-
-
         UpdateWeaponEffects();
         weaponPickedUpOrDropped?.Invoke(this);
         _iD = weaponID;

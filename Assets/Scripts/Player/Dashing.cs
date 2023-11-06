@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Dashing : MonoBehaviour
@@ -10,12 +9,12 @@ public class Dashing : MonoBehaviour
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
-    [SerializeField] bool isInvincible;
-    [SerializeField] LayerMask ground;
-    Color defaultColor;
     [SerializeField] Color dashColor;
-
     [SerializeField] KeyCode dodge = KeyCode.Space;
+    [SerializeField] LayerMask ground;
+
+    bool isInvincible = false;
+    Color defaultColor;
 
     private void Start()
     {
@@ -51,10 +50,8 @@ public class Dashing : MonoBehaviour
             Vector3 newPosition = Vector3.MoveTowards(transform.position, endPosition, Time.deltaTime * (dashDistance / dashDuration));
             rb.MovePosition(newPosition);
             elapsedTime += Time.deltaTime;
-
             yield return null;
         }
-
         StopDash();
     }
     private void StopDash()

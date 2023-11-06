@@ -1,23 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamagable
 {
-
-    [SerializeField] Rigidbody rb;
-
-    [Header("Dashing Settings")]
-    [SerializeField] float dashDistance;
-    [SerializeField] float dashDuration;
-    [SerializeField] bool isDashing;
-    [SerializeField] bool isInvincible;
-    [SerializeField] LayerMask ground;
-    Color defaultColor;
-    [SerializeField] Color dashColor;
-
-    [SerializeField] KeyCode dodge;
+    Rigidbody rb;
+    [Header("Player Input Settings")]
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
     [SerializeField] KeyCode dropWeaponKey = KeyCode.Q;
 
@@ -27,13 +14,12 @@ public class Player : MonoBehaviour, IDamagable
     public Slider staminaBar;
     public PlayerStats playerStats;
 
-    // player weapon,etc
-    [SerializeField]
-    public PlayerWeapon playerWeapon;
-    bool isWeaponPickedUp;
+    [Header("EquippedWeaponInfo")]
     [SerializeField] Transform weaponEquipPosition;
     [SerializeField] WeaponIDs weaponIDsSO;
     [SerializeField] int currentWeaponID;
+    public PlayerWeapon playerWeapon;
+    bool isWeaponPickedUp;
 
     private void Start()
     {
@@ -41,7 +27,6 @@ public class Player : MonoBehaviour, IDamagable
         weaponIDsSO.InitializeWeaponIDsDictionary();
         playerStats.health = playerStats.maxHealth;
         playerStats.stamina = playerStats.maxStamina;
-        defaultColor = GetComponent<Renderer>().material.color;
 
         if (healthBar != null)
         {
@@ -60,73 +45,17 @@ public class Player : MonoBehaviour, IDamagable
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         rb.velocity = new Vector3(horizontal * playerStats.speed, 0, vertical * playerStats.speed);
-        DashOnInput();
-        DropCurrentWeapon();
         PickUpUnequippedWeapon();
-    }
-
-    private void DashOnInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
-        {
-            Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
-            StartCoroutine(StartDash(dashDirection));
-        }
-    }
-
-    IEnumerator StartDash(Vector3 dashDirection)
-    {
-        isDashing = true;
-        rb.useGravity = false;
-        rb.freezeRotation = true;
-        Vector3 endPosition = transform.position + dashDirection * dashDistance;
-        float elapsedTime = 0f;
-        EnableInvincibility(true);
-
-        while (elapsedTime < dashDuration && isDashing)
-        {
-            Vector3 newPosition = Vector3.MoveTowards(transform.position, endPosition, Time.deltaTime * (dashDistance / dashDuration));
-            rb.MovePosition(newPosition);
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-
-        StopDash();
-    }
-
-    private void StopDash()
-    {
-        isDashing = false;
-        rb.useGravity = true;
-        rb.freezeRotation = false;
-        EnableInvincibility(false);
-    }
-
-    void EnableInvincibility(bool _enabled)
-    {
-        isInvincible = _enabled;
-        GetComponent<Renderer>().material.color = _enabled ? dashColor : defaultColor;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (isDashing)
-        {
-            if (collision.gameObject.layer != ground)
-            {
-                StopDash();
-            }
-        }
+        DropCurrentWeapon();
     }
 
     void PickUpUnequippedWeapon()
     {
-        if(pickUpWeaponKey == KeyCode.None) pickUpWeaponKey = KeyCode.E;
-        if(playerWeapon == null) return;
+        if (pickUpWeaponKey == KeyCode.None) pickUpWeaponKey = KeyCode.E;
+        if (playerWeapon == null) return;
         if (Input.GetKeyDown(pickUpWeaponKey) && !isWeaponPickedUp)
         {
-            ScaleWeapon();
+            ScaleOrDescaleWeapon(true);
             playerWeapon.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
             isWeaponPickedUp = true;
         }
@@ -134,15 +63,14 @@ public class Player : MonoBehaviour, IDamagable
 
     void DropCurrentWeapon()
     {
-        if(dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
+        if (dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
         if (Input.GetKeyDown(dropWeaponKey) && isWeaponPickedUp)
         {
-            DeScaleWeapon();
+            ScaleOrDescaleWeapon(false);
             playerWeapon.DropWeapon();
             isWeaponPickedUp = false;
             currentWeaponID = 0;
             playerWeapon = null;
-         
         }
     }
 
@@ -154,13 +82,13 @@ public class Player : MonoBehaviour, IDamagable
 
     private void OnTriggerExit(Collider other)
     {
-        if(isWeaponPickedUp) return;
+        if (isWeaponPickedUp) return;
         playerWeapon = null;
     }
 
     void ChangeHealth(float amount)
     {
-       // if (isInvincible) return;
+        // if (isInvincible) return;
         playerStats.health -= amount;
         playerStats.health = Mathf.Clamp(playerStats.health, 0, playerStats.maxHealth);
         UpdateHealthBar();
@@ -175,7 +103,7 @@ public class Player : MonoBehaviour, IDamagable
     }
 
     public void TakeDamage(float amount)
-    {    
+    {
         ChangeHealth(amount);
         UpdateHealthBar();
         if (TryGetComponent(out CounterBlast counterBlast))
@@ -205,25 +133,16 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
-    public void ScaleWeapon()
+    void ScaleOrDescaleWeapon(bool _scaled)
     {
         if (playerWeapon == null) return;
-        playerWeapon.FireRate *= playerStats.attackSpeed;
-        playerWeapon.DamageModifier *= playerStats.attack;
-        playerWeapon.ProjectileRange *= playerStats.Range;
-        playerWeapon.SpreadAngle *= playerStats.Spread;
+        float _scaleFactor = _scaled ? 1/playerStats.attackSpeed : playerStats.attackSpeed;
+        playerWeapon.FireRate *= _scaleFactor;
+        _scaleFactor = _scaled ? playerStats.attack : 1/playerStats.attack;
+        playerWeapon.DamageModifier *= _scaleFactor;
+        _scaleFactor = _scaled ? playerStats.Range : 1/playerStats.Range;
+        playerWeapon.ProjectileRange *= _scaleFactor;
+        _scaleFactor = _scaled ? playerStats.Spread : 1/playerStats.Spread;
+        playerWeapon.SpreadAngle *= _scaleFactor;
     }
-
-    public void DeScaleWeapon()
-    {
-        if (playerWeapon == null) return;
-        playerWeapon.FireRate /= playerStats.attackSpeed;
-        playerWeapon.DamageModifier /= playerStats.attack;
-        playerWeapon.ProjectileRange /= playerStats.Range;
-        playerWeapon.SpreadAngle /= playerStats.Spread;
-    }
-
-
-    // 224 lines of code
-
 }
