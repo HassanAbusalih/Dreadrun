@@ -11,12 +11,15 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
     [SerializeField] bool isDashing;
+    public bool controllerEnabled;
     [SerializeField] LayerMask ground;
 
-    [SerializeField] KeyCode dodge;
+    [SerializeField] KeyCode controllerDodge;
+    [SerializeField] KeyCode keyDodge;
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
     [SerializeField] KeyCode dropWeaponKey = KeyCode.Q;
-
+    [SerializeField] KeyCode controllerPickUp;
+    [SerializeField] KeyCode controllerDrop;
     // player stats 
     [SerializeField]
     public Slider healthBar;
@@ -62,7 +65,7 @@ public class Player : MonoBehaviour, IDamagable
 
     private void DashOnInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
+        if (Input.GetKeyDown(controllerDodge)||Input.GetKeyDown(keyDodge) && !isDashing)
         {
             Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
             StartCoroutine(StartDash(dashDirection));
@@ -110,8 +113,9 @@ public class Player : MonoBehaviour, IDamagable
     void PickUpUnequippedWeapon()
     {
         if(pickUpWeaponKey == KeyCode.None) pickUpWeaponKey = KeyCode.E;
-        if(playerWeapon == null) return;
-        if (Input.GetKeyDown(pickUpWeaponKey) && !isWeaponPickedUp)
+        if (controllerPickUp == KeyCode.None) controllerPickUp = KeyCode.JoystickButton3;
+        if (playerWeapon == null) return;
+        if (Input.GetKeyDown(pickUpWeaponKey) ||Input.GetKeyDown(controllerPickUp) && !isWeaponPickedUp)
         {
             playerWeapon.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
             isWeaponPickedUp = true;
@@ -122,7 +126,8 @@ public class Player : MonoBehaviour, IDamagable
     void DropCurrentWeapon()
     {
         if(dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
-        if (Input.GetKeyDown(dropWeaponKey) && isWeaponPickedUp)
+        if (controllerDrop == KeyCode.None) controllerDrop = KeyCode.JoystickButton3;
+        if (Input.GetKeyDown(dropWeaponKey)|| Input.GetKeyDown(controllerDrop) && isWeaponPickedUp)
         {
             playerWeapon.DropWeapon();
             isWeaponPickedUp = false;

@@ -15,11 +15,11 @@ public class Bow : PlayerWeapon
     void Update()
     {
         if (!equipped) { return; }
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("shoot"))
         {
             chargeTime = Mathf.Min(chargeTime + Time.deltaTime, fireRate);
         }
-        else if (Input.GetKeyUp(KeyCode.Mouse0))
+        else if (Input.GetKeyUp(KeyCode.Mouse0) || Input.GetButtonUp("shoot"))
         {
             Attack();
             chargeTime = 0;
