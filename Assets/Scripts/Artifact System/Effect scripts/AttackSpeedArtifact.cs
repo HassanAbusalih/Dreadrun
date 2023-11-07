@@ -1,15 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Attack Artifact Object", menuName = "ArtifactsEffects/Attack Artifact")]
-public class AttackArtifact : Artifact
+[CreateAssetMenu(fileName = "Attack Speed Artifact Object", menuName = "ArtifactsEffects/Attack Speed Artifact")]
+public class AttackSpeedArtifact : Artifact
 {
-    [SerializeField] float attackIncreasePerLevel;
+    [SerializeField] float attackSpeedIncreasePerLevel;
 
     bool buffApplied = false;
 
-    public float TotalAttackIncrease
+    public float TotalAttackSpeedIncrease
     {
-        get { return level * attackIncreasePerLevel; }
+        get { return level * attackSpeedIncreasePerLevel; }
     }
 
     public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager Manager)
@@ -18,15 +20,14 @@ public class AttackArtifact : Artifact
         {
             if (Vector3.Distance(player.transform.position, artifactPosition) <= effectRange && buffApplied == false)
             {
-                player.playerStats.attack += TotalAttackIncrease;
+                player.playerStats.attackSpeed += TotalAttackSpeedIncrease;
                 buffApplied = true;
             }
             else if (Vector3.Distance(player.transform.position, artifactPosition) > effectRange && buffApplied == true)
             {
-                player.playerStats.attack -= TotalAttackIncrease;
+                player.playerStats.attackSpeed -= TotalAttackSpeedIncrease;
                 buffApplied = false;
             }
         }
     }
 }
-

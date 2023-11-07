@@ -6,7 +6,7 @@ public class RegenArtifact : Artifact
 {
     [SerializeField] float regenPerSecondPerLevel;
 
-    float AttackStrength
+    float TotalHealthRegenPerSecond
     {
         get { return level * regenPerSecondPerLevel; }
     }
@@ -26,7 +26,7 @@ public class RegenArtifact : Artifact
     {
         while (true)
         {
-            player.playerStats.health += AttackStrength;
+            player.playerStats.health += TotalHealthRegenPerSecond;
             yield return new WaitForSeconds(1);
         }
     }
