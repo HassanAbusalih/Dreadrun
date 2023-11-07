@@ -9,6 +9,7 @@ using Input = UnityEngine.Input;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public Player[] players;
 
     [Header("Events")]
     public UnityEvent onWin;
@@ -18,6 +19,17 @@ public class GameManager : MonoBehaviour
 
     private bool isGamePaused = false;
     private bool hasGameEnded = false;
+
+
+    private void OnEnable()
+    {
+        players = FindObjectsOfType<Player>();
+        foreach (Player player in players)
+        {
+            player.OnPlayerDeath += Lose;
+        }
+
+    }
 
     private void Awake()
     {
@@ -31,9 +43,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        foreach (Player player in players)
+        {
+            player.OnPlayerDeath -= Lose;
+        }
+    }
+
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();

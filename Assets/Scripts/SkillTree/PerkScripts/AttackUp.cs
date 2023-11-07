@@ -12,9 +12,17 @@ public class AttackUp : Perk
 
     public override void ApplyPlayerBuffs(Player player)
     {
+        if(player.playerWeapon != null)
+        {
+            player.playerWeapon.DamageModifier /= player.playerStats.attack;
+        }
+
         float increaseAmount = player.playerStats.attack * (attackScaling / 100f);
         player.playerStats.attack += increaseAmount;
-        player.ScaleWeapon();
-        Debug.Log(player.playerStats.attack);
+
+        if (player.playerWeapon != null)
+        {
+            player.playerWeapon.DamageModifier *= player.playerStats.attack;
+        }
     }
 }
