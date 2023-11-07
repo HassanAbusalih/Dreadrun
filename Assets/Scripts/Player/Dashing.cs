@@ -16,6 +16,7 @@ public class Dashing : MonoBehaviour
     [SerializeField] Color dashColor;
     [SerializeField] KeyCode dodge = KeyCode.Space;
     [SerializeField] LayerMask ground;
+    [SerializeField] SoundSO dashSFX;
 
     bool isInvincible = false;
     Color defaultColor;
@@ -24,7 +25,7 @@ public class Dashing : MonoBehaviour
 
     public delegate float canDash();
     public canDash canPlayerDash;
-  
+
 
     private void OnEnable()
     {
@@ -62,6 +63,7 @@ public class Dashing : MonoBehaviour
             float currentStamina = canPlayerDash?.Invoke() ?? 0f;
             if (currentStamina <= 0) return;
             Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
+
             StartCoroutine(StartDash(dashDirection));
         }
     }
@@ -75,7 +77,7 @@ public class Dashing : MonoBehaviour
         float elapsedTime = 0f;
         EnableInvincibility(true);
         onDashing?.Invoke(-staminaCost);
-
+        dashSFX.Play();
         while (elapsedTime < dashDuration && isDashing)
         {
             Vector3 newPosition = Vector3.MoveTowards(transform.position, endPosition, Time.deltaTime * (dashDistance / dashDuration));

@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IDamagable
 
     [Header("EquippedWeaponInfo")]
     public PlayerStats playerStats;
-    [SerializeField]Slider healthBar;
+    [SerializeField] Slider healthBar;
     [SerializeField] Slider staminaBar;
 
     [Header("EquippedWeaponInfo")]
@@ -27,6 +27,9 @@ public class Player : MonoBehaviour, IDamagable
     public Action OnPlayerDeath;
     public delegate bool takeDamage();
     public takeDamage canPLayerTakeDamage;
+
+    [SerializeField] SoundSO takeDamageSFX;
+    float timer;
 
     private void OnEnable()
     {
@@ -115,6 +118,7 @@ public class Player : MonoBehaviour, IDamagable
         bool _allowToTakeDamage = canPLayerTakeDamage?.Invoke() ?? true;
         if (_allowToTakeDamage) return;
         ChangeHealth(-amount);
+
     }
 
     public void ChangeHealth(float amount)
@@ -143,7 +147,7 @@ public class Player : MonoBehaviour, IDamagable
 
     float GetPlayerStamina()
     {
-        return playerStats.stamina ;
+        return playerStats.stamina;
     }
 
     void ScaleOrDescaleWeapon(bool _scaled)

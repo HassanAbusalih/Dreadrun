@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    AudioSource audioSource;
+    [SerializeField] AudioSource audioSource;
     public void AudioSources(AudioClip audioClip)
     {
         audioSource.PlayOneShot(audioClip);

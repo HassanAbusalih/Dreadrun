@@ -20,9 +20,9 @@ public class SoundSO : ScriptableObject
         }
 
         source.clip = clips;
-
+        source.playOnAwake = false;
         source.Play();
         Destroy(source.gameObject, source.clip.length / source.pitch);
         return source;
-    }   
+    }
 }
