@@ -1,21 +1,22 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PickablesSpawnManager : PickableBaseSpawning
 {
     [Header("Weapon Spawn Settings")]
-    [SerializeField] int amountOfWeaponsToSpawn;
+    [SerializeField] int minimumWeaponsToSpawn;
     [SerializeField] private List<GameObject> weaponPrefabs;
 
     [Header("Consumable Spawn Settings")]
-    [SerializeField] int amountOfConsumablesToSpawn;
+    [SerializeField] int minimumConsumablesToSpawn;
     [SerializeField] private List<GameObject> consumablePrefabs;
 
     [Header("Exp Orbs  Spawn Settings")]
     [Tooltip("Exp amount is the actual total value of exp it has to spawn based on given spawn points")]
-    [SerializeField] int amountOfExpToSpawn = 500;
+    [SerializeField] int minimumExpToSpawn = 500;
     [SerializeField] private GameObject[] expOrbPrefabs;
 
 
@@ -32,7 +33,10 @@ public class PickablesSpawnManager : PickableBaseSpawning
     [SerializeField] private int expOrbsSpawned;
     [SerializeField] private int totalExpSpawnedInSoFar;
 
-    public static List<Transform> AllPickableSpawnPoints = new List<Transform>();
+    [SerializeField] Transform allSpawnPointsParent;
+    public List<Transform> AllPickableSpawnPoints = new List<Transform>();
+
+    
 
     private void Awake()
     {
@@ -40,20 +44,57 @@ public class PickablesSpawnManager : PickableBaseSpawning
     }
     private void Start()
     {
-        // Invoke("InitializeSpawning", 0.1f);
         InitializeSpawning();
+    }
+
+
+    private void OnValidate()
+    {
+        ShowErrorWhenCantSpawnAllItems();
+        AddChildrenToSpawnPointsList();  
+    }
+
+    public void AddChildrenToSpawnPointsList()
+    {
+        if (allSpawnPointsParent == null) { return; }
+        foreach (Transform child in allSpawnPointsParent)
+        {
+            if (AllPickableSpawnPoints.Contains(child)) { continue; }
+            AllPickableSpawnPoints.Add(child);
+        }
+        AllPickableSpawnPoints.RemoveAll(item => item == null);
+    }
+
+    void ShowErrorWhenCantSpawnAllItems()
+    {
+        float _totalItemsToSpawn = minimumWeaponsToSpawn + minimumConsumablesToSpawn + minimumExpToSpawn;
+        float _totalSpawnPoints = AllPickableSpawnPoints.Count;
+        if (_totalItemsToSpawn > _totalSpawnPoints)
+        {
+            Debug.LogError("There are not enough spawn points to spawn all the items, try reducing the minimum amounts of certain items");
+        }
+    }
+
+    private void InitializeExpOrbTypesDictionary()
+    {
+        if (expOrbPrefabs.Length == 0) { return; }
+
+        allExpOrbValueTypesDictionary.Add(expOrbPrefabs[0], lowExpOrbValue);
+        allExpOrbValueTypesDictionary.Add(expOrbPrefabs[1], mediumExpOrbValue);
+        allExpOrbValueTypesDictionary.Add(expOrbPrefabs[2], highExpOrbValue);
     }
 
     void InitializeSpawning()
     {
         InitializeExpOrbTypesDictionary();
         SpawnAllWeapons();
-        SpawnAllConsumables();
         SpawnAllExpOrbs();
+        SpawnAllConsumables();
+        
     }
     void SpawnAllWeapons()
     {
-        for (weaponsSpawned = 0; weaponsSpawned < amountOfWeaponsToSpawn; weaponsSpawned++)
+        for (weaponsSpawned = 0; weaponsSpawned < minimumWeaponsToSpawn; weaponsSpawned++)
         {
             if (weaponPrefabs.Count == 0) { return; } // if there are no more weapons to spawn, then return
             int _randomWeaponIndex = Random.Range(0, weaponPrefabs.Count);
@@ -63,10 +104,11 @@ public class PickablesSpawnManager : PickableBaseSpawning
             if (!_isAbleToSpawn) return;
         }
     }
+
     void SpawnAllConsumables()
     {
         if (consumablePrefabs.Count == 0) { return; }
-        for (consumablesSpawned = 0; consumablesSpawned < amountOfConsumablesToSpawn; consumablesSpawned++)
+        for (consumablesSpawned = 0; consumablesSpawned < minimumConsumablesToSpawn; consumablesSpawned++)
         {
             int _probabilityToSpawnConsumable = Random.Range(0, 10);
             if (_probabilityToSpawnConsumable <= 4) { continue; } // 40% chance, that it may not spawn a consumable at a spawn point
@@ -82,7 +124,7 @@ public class PickablesSpawnManager : PickableBaseSpawning
     void SpawnAllExpOrbs()
     {
         if (expOrbPrefabs.Length == 0) { return; }
-        for (expOrbsSpawned = 0; totalExpSpawnedInSoFar < amountOfExpToSpawn; expOrbsSpawned++)
+        for (expOrbsSpawned = 0; totalExpSpawnedInSoFar < minimumExpToSpawn; expOrbsSpawned++)
         {
             int _probabilityToSpawnExpOrb = Random.Range(0, 10);
             if (_probabilityToSpawnExpOrb <= 4) { continue; } // 40% chance, that it may not spawn an exp orb
@@ -96,12 +138,21 @@ public class PickablesSpawnManager : PickableBaseSpawning
         }
     }
 
-    private void InitializeExpOrbTypesDictionary()
-    {
-        if (expOrbPrefabs.Length == 0) { return; }
+}
 
-        allExpOrbValueTypesDictionary.Add(expOrbPrefabs[0], lowExpOrbValue);
-        allExpOrbValueTypesDictionary.Add(expOrbPrefabs[1], mediumExpOrbValue);
-        allExpOrbValueTypesDictionary.Add(expOrbPrefabs[2], highExpOrbValue);
+#if UNITY_EDITOR
+[CustomEditor(typeof(PickablesSpawnManager))]
+public class PickableSpawningEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        PickablesSpawnManager _pickablesSpawnManager = (PickablesSpawnManager)target;
+
+        if (GUILayout.Button("UpdateSpawnPointsList"))
+        {
+            _pickablesSpawnManager.AddChildrenToSpawnPointsList();
+        }     
     }
 }
+#endif
