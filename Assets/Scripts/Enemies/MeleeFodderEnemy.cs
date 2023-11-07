@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(FlockingBehavior))]
+[RequireComponent(typeof(Rigidbody))]
 public class MeleeFodderEnemy : EnemyAIBase
 {
     [SerializeField] float detectionRange = 10;
@@ -14,10 +14,12 @@ public class MeleeFodderEnemy : EnemyAIBase
     [SerializeField] float dashTime = 0.2f;
     float lastAttackTime;
     Coroutine chargeAndAttack;
+    LayerMask mask;
 
     private void Start()
     {
         lastAttackTime -= attackCooldown;
+        mask = ~(LayerMask.GetMask("Enemy Projectile"));
     }
 
     private void Update()
@@ -44,7 +46,7 @@ public class MeleeFodderEnemy : EnemyAIBase
     {
         RaycastHit hit;
         Vector3 directionToTarget = target.position - transform.position;
-        if (Physics.Raycast(transform.position, directionToTarget, out hit, detectionRange))
+        if (Physics.Raycast(transform.position, directionToTarget, out hit, detectionRange, mask))
         {
             return hit.transform == target;
         }
@@ -53,7 +55,7 @@ public class MeleeFodderEnemy : EnemyAIBase
 
     public override void Move(Transform target, float movementSpeed)
     {
-        Vector3 moveDirection = (target.position - transform.position).normalized + flockingBehavior.Flocking(movementSpeed);
+        Vector3 moveDirection = (target.position - transform.position).normalized;
         moveDirection = moveDirection.normalized * movementSpeed;
         moveDirection.y = 0;
         transform.rotation = Quaternion.LookRotation(moveDirection);
@@ -63,7 +65,6 @@ public class MeleeFodderEnemy : EnemyAIBase
     IEnumerator ChargeAndAttack(Transform player)
     {
         float startTime = Time.time;
-        Debug.Log("Charging");
         while (Time.time < startTime + chargeTime)
         {
             Move(player, movementSpeed * chargeSpeedModifier);
@@ -71,19 +72,42 @@ public class MeleeFodderEnemy : EnemyAIBase
         }
 
         startTime = Time.time;
-        Debug.Log("Dashing");
+        (weapon as MeleeFodderWeapon).Attack(dashTime);
         while (Time.time < startTime + dashTime)
         {
             Move(player, dashSpeedModifier);
             yield return null;
         }
 
-        Debug.Log("Finished");
         lastAttackTime = Time.time;
-        yield return new WaitForSeconds(attackCooldown);
-
-        Debug.Log("Ready to go again!");
         chargeAndAttack = null;
+    }
+
+    void StopAttack()
+    {
+        if (chargeAndAttack != null) 
+        {
+            StopCoroutine(chargeAndAttack);
+            chargeAndAttack = null;
+        }
+        lastAttackTime = Time.time;
+    }
+
+    private void OnDisable()
+    {
+        if (weapon != null)
+        {
+            (weapon as MeleeFodderWeapon).hit -= StopAttack;
+        }
+    }
+
+    private void OnEnable()
+    {
+        weapon = GetComponentInChildren<MeleeFodderWeapon>();
+        if (weapon != null)
+        {
+            (weapon as MeleeFodderWeapon).hit += StopAttack;
+        }
     }
 
     private void OnDrawGizmos()

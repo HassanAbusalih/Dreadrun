@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(FlockingBehavior))]
@@ -82,5 +83,13 @@ public class FodderEnemy : EnemyAIBase
         strafeLength = Random.Range(2f, 10f);
         strafeStartTime = Time.time;
         clockwiseStrafe = (Random.value > 0.5f);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Handles.color = new Color(1, 0, 0, 0.2f);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, strafeRange);
+        Handles.color = new Color(0, 1, 0, 0.2f);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, shootingRange);
     }
 }
