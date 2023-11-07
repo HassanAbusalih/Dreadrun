@@ -323,6 +323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8638308016335638104}
   - component: {fileID: 6844628722110975248}
+  - component: {fileID: 3719294756779177725}
   m_Layer: 0
   m_Name: 'Attack Potion '
   m_TagString: Untagged
@@ -364,6 +365,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverHeight: 0.5
   hoverSpeed: 1
+--- !u!114 &3719294756779177725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8983203457622611170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25c7d39fc89a5e4e8751fb80c53ab88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: cc30de07aed99bf4f89bfd8a7aa90009, type: 2}
 --- !u!1001 &8100803799669694873
 PrefabInstance:
   m_ObjectHideFlags: 0

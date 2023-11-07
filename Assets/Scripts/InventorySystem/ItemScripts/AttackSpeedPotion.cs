@@ -11,15 +11,18 @@ public class AttackSpeedPotion : ItemBase
 
     [SerializeField] float duration;
     float timer = 0f;
-    
+
     [SerializeField] GameObject timerPrefab;
-    [SerializeField] Player playerRef;
-    
+    Player playerRef;
+
+    [SerializeField] SoundSO attackSpeedSFX;
+
     public override void UseOnSelf(Player player)
     {
         hasBuffedItem = true;
         defaultProjectileSpeed = player.playerWeapon.ProjectileSpeed;
         player.playerWeapon.ProjectileSpeed += increaseProjectileSpeed;
+        attackSpeedSFX.Play();
         Debug.Log("Increased Projectile speed");
         GetTimer();
         playerRef = player;

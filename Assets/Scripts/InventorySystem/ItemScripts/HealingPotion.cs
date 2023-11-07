@@ -8,14 +8,15 @@ public class HealingPotion : ItemBase
 {
     [SerializeField]
     private int healingAmount;
-    
+    [SerializeField] SoundSO healthSFX;
+
     public override void UseOnSelf(Player player)
     {
-        if(player.playerStats.maxHealth >= player.playerStats.health)
+        if (player.playerStats.maxHealth >= player.playerStats.health)
         {
-            player.playerStats.health += healingAmount;
-            player.UpdateHealthBar();
+            player.ChangeHealth(healingAmount);
+            healthSFX.Play();
         }
-        Debug.Log("Player health now at " +  player.playerStats.health);
+        Debug.Log("Player health now at " + player.playerStats.health);
     }
 }

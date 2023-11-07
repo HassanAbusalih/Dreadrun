@@ -12,10 +12,11 @@ public class InventoryManager : MonoBehaviour
     public TextMeshProUGUI descriptionText;
     public Sprite emptySprite;
     KeyCode[] keys = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
+    [SerializeField] SoundSO pickUpItemSFX;
 
     void Start()
     {
-        if(descriptionPanel != null)
+        if (descriptionPanel != null)
         {
             descriptionPanel.SetActive(false);
         }
@@ -25,11 +26,11 @@ public class InventoryManager : MonoBehaviour
     }
     private void Update()
     {
-        if(descriptionPanel != null && descriptionPanel.activeSelf)
-        {     
+        if (descriptionPanel != null && descriptionPanel.activeSelf)
+        {
             descriptionPanel.transform.position = Input.mousePosition;
         }
-       
+
         for (int i = 0; i < keys.Length; i++)
         {
             if (Input.GetKeyDown(keys[i]))
@@ -46,6 +47,7 @@ public class InventoryManager : MonoBehaviour
         if (collectable != null)
         {
             AddItem(collectable.Collect());
+            pickUpItemSFX.Play();
             Destroy(other.gameObject);
         }
     }

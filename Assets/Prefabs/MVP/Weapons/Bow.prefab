@@ -1025,7 +1025,9 @@ MonoBehaviour:
   weaponRotationOffset: {x: 0, y: 0, z: 0}
   pickUpSoundAudioSource: {fileID: 0}
   weaponEquipText: {fileID: 8056389074488403370}
-  weaponCollider: []
+  weaponCollider: {fileID: 0}
+  weaponPickupSFX: {fileID: 11400000, guid: 4fecdca4699ad13469649196f094e19d, type: 2}
+  weaponDropSFX: {fileID: 11400000, guid: 60cbd8d5baca08844af90d8417edc947, type: 2}
   <weaponIcon>k__BackingField: {fileID: 21300000, guid: 6dd225d76b2cdbe49958329293f8b942, type: 3}
   <weaponDescription>k__BackingField: Charge to shoot stronger arrows
   minDamageModifier: 1
@@ -1034,6 +1036,8 @@ MonoBehaviour:
   chargeIndicator: {fileID: 5750728681389879302}
   minColor: {r: 1, g: 0.93979645, b: 0, a: 1}
   maxColor: {r: 1, g: 0, b: 0, a: 1}
+  bowShotSFX: {fileID: 11400000, guid: edcf898b4b2e9874ba05c4cc7c667fac, type: 2}
+  bowWindUpSFX: {fileID: 11400000, guid: e2102ffedcb74e548a7c943c7871326d, type: 2}
 --- !u!114 &5917459817227016423
 MonoBehaviour:
   m_ObjectHideFlags: 0
