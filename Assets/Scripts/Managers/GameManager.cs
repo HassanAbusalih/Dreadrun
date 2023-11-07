@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent onLose;
     public UnityEvent onPause;
     public UnityEvent onResume;
+    public UnityEvent onPhaseChange;
 
     private bool isGamePaused = false;
     private bool hasGameEnded = false;
@@ -111,9 +112,15 @@ public class GameManager : MonoBehaviour
         hasGameEnded = true;
         Time.timeScale = 0;
     }
+
     public void Restart()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ChangePhase()
+    {
+        onPhaseChange.Invoke();
     }
 }

@@ -2,29 +2,36 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class PayloadCheckpointSystem : MonoBehaviour
 {
-    [NonSerialized] public bool onCheckpoint = false;
+    public static PayloadCheckpointSystem Instance { get; private set; }
+
+    [Header("Events")]
+    public UnityEvent onCheckpointActivate;
+    public UnityEvent onCheckpointDeactivate;
+
+    [SerializeField] bool onCheckpoint = false;
     [SerializeField] float checkpointDuration;
     float checkpointTimer;
 
     [SerializeField] Canvas checkpointUI;
     [SerializeField] Image checkpointTimeBar;
 
-    Player[] playersInGame;
-    PayloadStats payloadStats;
-    ObjectSpawner[] enemySpawners;
-
-   
-
     private void Start()
     {
-        enemySpawners = FindObjectsOfType<ObjectSpawner>();
-        payloadStats = FindObjectOfType<PayloadStats>();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         checkpointTimer = checkpointDuration;
         checkpointUI.enabled = false;
-        playersInGame = FindObjectsOfType<Player>();
     }
 
     private void Update()
@@ -42,31 +49,10 @@ public class PayloadCheckpointSystem : MonoBehaviour
         checkpointUI.enabled = true;
         onCheckpoint = true;
 
-        foreach (Player player in playersInGame)
-        {
-            player.gameObject.GetComponent<PlayerExp>().LevelUp();
-        }
-
-        foreach (ObjectSpawner spawner in enemySpawners)
-        {
-            spawner.enabled = false;
-        }
-
-        payloadStats.storedEXP = 0;
+        onCheckpointActivate.Invoke();
 
         yield return new WaitForSeconds(checkpointDuration);
 
-        DeactivateCheckpoint();
-    }
-
-    private void DeactivateCheckpoint()
-    {
-        checkpointUI.enabled = false;
-        onCheckpoint = false;
-
-        foreach (ObjectSpawner spawner in enemySpawners)
-        {
-            spawner.enabled = true;
-        }
+        onCheckpointDeactivate.Invoke();
     }
 }
