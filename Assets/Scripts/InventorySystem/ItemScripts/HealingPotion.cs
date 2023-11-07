@@ -8,6 +8,8 @@ public class HealingPotion : ItemBase
 {
     [SerializeField]
     private int healingAmount;
+
+    [SerializeField] SoundSO healthUseSFX;
     
     public override void UseOnSelf(Player player)
     {
@@ -15,6 +17,7 @@ public class HealingPotion : ItemBase
         {
             player.playerStats.health += healingAmount;
             player.UpdateHealthBar();
+            healthUseSFX.Play();
         }
         Debug.Log("Player health now at " +  player.playerStats.health);
     }

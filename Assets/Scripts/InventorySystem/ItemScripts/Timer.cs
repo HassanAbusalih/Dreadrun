@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
     bool timerStarts;
 
     public Action onTimerMet;
+    [SerializeField] SoundSO finishedTimerSFX;
 
     public void SetTimerAndDuration(float timer, float duration)
     {
@@ -30,6 +31,7 @@ public class Timer : MonoBehaviour
             onTimerMet?.Invoke();
             timerStarts = false;
             Destroy(gameObject);
+            finishedTimerSFX.Play();
         }
     }
 }

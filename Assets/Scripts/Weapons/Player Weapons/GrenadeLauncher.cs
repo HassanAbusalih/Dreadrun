@@ -10,6 +10,7 @@ public class GrenadeLauncher : PlayerWeapon
     [SerializeField] Color minColor;
     [SerializeField] Color maxColor;
     public float chargeTime = 0;
+    [SerializeField] SoundSO grenadeLauncherShotSFX;
 
     private void Update()
     {
@@ -17,10 +18,12 @@ public class GrenadeLauncher : PlayerWeapon
         if (Input.GetKey(KeyCode.Mouse0))
         {
             chargeTime = Mathf.Min(chargeTime + Time.deltaTime, fireRate);
+          
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             Attack();
+            grenadeLauncherShotSFX.Play();
             chargeTime = 0;
         }
         if (chargeIndicator != null) { VisualFeedback(); }

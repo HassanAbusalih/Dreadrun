@@ -4,13 +4,15 @@ public class Shotgun : PlayerWeapon
 {
     [Header("Shotgun Properties")]
     [SerializeField] int degreesPerProjectile = 5;
-    
+
+    [Header("Shotgun Sound")]
+    [SerializeField] SoundSO shotgunSFX;
     protected override void Start()
     {
         base.Start();
         timeSinceLastShot = fireRate;
     }
-    
+
     private void Update()
     {
         if (!equipped) { return; }
@@ -18,6 +20,7 @@ public class Shotgun : PlayerWeapon
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Attack();
+
         }
     }
 
@@ -36,6 +39,6 @@ public class Shotgun : PlayerWeapon
             GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + projectileLocation, projectileRotation);
             projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8, effects);
         }
-        if (audioSource != null) audioSource.Play();
+        shotgunSFX.Play();
     }
 }

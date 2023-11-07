@@ -8,6 +8,7 @@ public class PlayerExp : MonoBehaviour
 
     public PerkSelector perkSelector;
     public ExperienceManager expmanager;
+    [SerializeField] SoundSO levelUpSFX;
     private void OnEnable()
     {
         expmanager = FindObjectOfType<ExperienceManager>();
@@ -21,6 +22,7 @@ public class PlayerExp : MonoBehaviour
         if(currentExp >= maxExpToLevelUp)
         {
             LevelUp();
+            levelUpSFX.Play();
         }
     }
 
