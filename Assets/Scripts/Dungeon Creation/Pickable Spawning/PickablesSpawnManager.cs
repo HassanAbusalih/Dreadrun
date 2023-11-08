@@ -35,6 +35,7 @@ public class PickablesSpawnManager : PickableBaseSpawning
     [SerializeField][Range(0, 100)] int HighExpOrbProbability = 10;
 
     [Header("Spawning Debug Stats")]
+    public int TotalLootQualityPoints;
     [SerializeField] private int weaponsSpawned;
     [SerializeField] private int consumablesSpawned;
     [SerializeField] private int expOrbsSpawned;
@@ -44,18 +45,15 @@ public class PickablesSpawnManager : PickableBaseSpawning
     [SerializeField] Transform allSpawnPointsParent;
     public List<Transform> AllPickableSpawnPoints = new List<Transform>();
 
-
-
     private void Awake()
     {
         AllPickableSpawnPoints.RemoveAll(item => item == null);
     }
     private void Start()
     {
-        //InitializeExpOrbTypesDictionary();
         SpawnAllWeapons();
-        //SpawnAllExpOrbs();
-        // SpawnAllConsumables();
+        SpawnAllExpOrbs();
+        SpawnAllConsumables();
     }
 
     private void OnValidate()
@@ -77,7 +75,7 @@ public class PickablesSpawnManager : PickableBaseSpawning
 
     void ShowErrorWhenCantSpawnAllItems()
     {
-        float _totalItemsToSpawn = minimumWeaponsToSpawn + minimumConsumablesToSpawn + minimumExpToSpawn;
+        float _totalItemsToSpawn = minimumWeaponsToSpawn + minimumConsumablesToSpawn + (minimumExpToSpawn/20);
         float _totalSpawnPoints = AllPickableSpawnPoints.Count;
         if (_totalItemsToSpawn > _totalSpawnPoints)
         {
@@ -87,95 +85,99 @@ public class PickablesSpawnManager : PickableBaseSpawning
 
     void SpawnAllWeapons()
     {
-        if(!SpawnWeapons) { return; }
+        if (!SpawnWeapons) { return; }
         for (weaponsSpawned = 0; weaponsSpawned < minimumWeaponsToSpawn;)
         {
             if (weaponRarities.AllWeaponTypes.Count == 0) { return; }
+            if(AllPickableSpawnPoints.Count == 0) { return; }
             int _randomWeaponRarityNumber = Random.Range(0, 100);
-            bool _isAbleToSpawn = false;
 
-            if (_randomWeaponRarityNumber <= CommonWeaponsProbability && _randomWeaponRarityNumber > RareWeaponsProbability && _randomWeaponRarityNumber > LegendaryWeaponsProbability)
-            {
-                ItemRarityListClass CommonWeaponRarityList = weaponRarities.AllWeaponTypes[0];
-                int _randomWeaponIndex = Random.Range(0, CommonWeaponRarityList.ItemRarityList.Count);
-                GameObject _weaponToSpawn = CommonWeaponRarityList.ItemRarityList[_randomWeaponIndex];
-                _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_weaponToSpawn, AllPickableSpawnPoints);
-                if (_isAbleToSpawn) { weaponsSpawned++; }
-                continue;
-            }
-
-            if (_randomWeaponRarityNumber <= RareWeaponsProbability && _randomWeaponRarityNumber > LegendaryWeaponsProbability)
-            {
-                ItemRarityListClass RareWeaponRarityList = weaponRarities.AllWeaponTypes[1];
-                int _randomWeaponIndex = Random.Range(0, RareWeaponRarityList.ItemRarityList.Count);
-                GameObject _weaponToSpawn = RareWeaponRarityList.ItemRarityList[_randomWeaponIndex];
-                _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_weaponToSpawn, AllPickableSpawnPoints);
-                if (_isAbleToSpawn) { weaponsSpawned++; }
-                continue;
-            }
-
-            if (_randomWeaponRarityNumber <= LegendaryWeaponsProbability)
-            {
-                ItemRarityListClass LegendaryWeaponRarityList = weaponRarities.AllWeaponTypes[2];
-                int _randomWeaponIndex = Random.Range(0, LegendaryWeaponRarityList.ItemRarityList.Count);
-                GameObject _weaponToSpawn = LegendaryWeaponRarityList.ItemRarityList[_randomWeaponIndex];
-                _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_weaponToSpawn, AllPickableSpawnPoints);
-                if (_isAbleToSpawn) { weaponsSpawned++; }
-                continue;
-            }
+            if (SpawnItemFromRarityTypes(weaponRarities.AllWeaponTypes, _randomWeaponRarityNumber,
+                LegendaryConsumablesProbability, ref weaponsSpawned, 2)) continue;
+            if (SpawnItemFromRarityTypes(weaponRarities.AllWeaponTypes, _randomWeaponRarityNumber,
+                RareConsumablesProbability, ref weaponsSpawned, 1)) continue;
+            SpawnItemFromRarityTypes(weaponRarities.AllWeaponTypes, _randomWeaponRarityNumber,
+                CommonConsumablesProbability, ref weaponsSpawned, 0);
         }
     }
 
-    bool SpawnObjectFromWeaponRarityTypesList(int _randomRarityNumber, int _targetProbability, ref int _itemsSpawned, int _rarityIndex)
+    void SpawnAllConsumables()
+    {
+        if (!SpawnConsumables) { return; }
+        for (consumablesSpawned = 0; consumablesSpawned < minimumConsumablesToSpawn;)
+        {
+            if (consumableRarities.AllConsumableTypes.Count == 0) { return; }
+            if (AllPickableSpawnPoints.Count == 0) { return; }
+            int _randomConsumableRarityNumber = Random.Range(0, 100);
+
+            if (SpawnItemFromRarityTypes(consumableRarities.AllConsumableTypes, _randomConsumableRarityNumber,
+                LegendaryConsumablesProbability, ref consumablesSpawned, 2)) continue;
+            if (SpawnItemFromRarityTypes(consumableRarities.AllConsumableTypes, _randomConsumableRarityNumber,
+                RareConsumablesProbability, ref consumablesSpawned, 1)) continue;
+            SpawnItemFromRarityTypes(consumableRarities.AllConsumableTypes, _randomConsumableRarityNumber,
+                CommonConsumablesProbability, ref consumablesSpawned, 0);
+        }
+    }
+
+    void SpawnAllExpOrbs()
+    {
+        if (!SpawnExpOrbs) { return; }
+        for (expOrbsSpawned = 0; totalExpSpawnedInSoFar < minimumExpToSpawn;)
+        {
+            if (expOrbRarities.AllExpOrbTypes.Count == 0) { return; }
+            if (AllPickableSpawnPoints.Count == 0) { return; }
+            int _randomExpOrbRarityNumber = Random.Range(0, 100);
+
+            if (SpawnExpOrbBasedOnProbability(expOrbRarities.AllExpOrbTypes, _randomExpOrbRarityNumber,
+                HighExpOrbProbability, ref expOrbsSpawned, 2)) continue;
+            if (SpawnExpOrbBasedOnProbability(expOrbRarities.AllExpOrbTypes, _randomExpOrbRarityNumber,
+                MediumExpOrbProbability, ref expOrbsSpawned, 1)) continue;
+            SpawnExpOrbBasedOnProbability(expOrbRarities.AllExpOrbTypes, _randomExpOrbRarityNumber,
+                LowExpOrbProbability, ref expOrbsSpawned, 0);
+        }
+    }
+    #region Item Spawning Helper Functions
+
+    protected bool SpawnItemFromRarityList(ref int _itemsSpawned, ItemRarityListClass ItemRarityList)
+    {
+        int _randomItemIndex = Random.Range(0, ItemRarityList.ItemRarityList.Count);
+        GameObject _itemToSpawn = ItemRarityList.ItemRarityList[_randomItemIndex];
+        bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_itemToSpawn, AllPickableSpawnPoints);
+        if (!_isAbleToSpawn) return false;
+        TotalLootQualityPoints += (int)ItemRarityList.ListRarityType;
+        _itemsSpawned++; return true;
+    }
+
+    // i screwed up in my structure initially and thats why this function exists
+    protected bool SpawnExpOrbFromRarityList(ref int _itemsSpawned, List<ItemRarityClass> _ExpOrbRarityList, int _prefabIndex)
+    {
+        GameObject _expOrbToSpawn = _ExpOrbRarityList[_prefabIndex].Item;
+        bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_expOrbToSpawn, AllPickableSpawnPoints);
+        if (!_isAbleToSpawn) return false;
+        totalExpSpawnedInSoFar += _expOrbToSpawn.GetComponent<ExpOrb>().ExpAmount;
+        TotalLootQualityPoints += (int)_ExpOrbRarityList[_prefabIndex].RarityType;
+        _itemsSpawned++; return true;
+    }
+
+    bool SpawnItemFromRarityTypes(List<ItemRarityListClass> _itemRarityTypes, int _randomRarityNumber, int _targetProbability, ref int _itemsSpawned, int _rarityIndex)
     {
         if (_randomRarityNumber <= _targetProbability)
         {
-            ItemRarityListClass ItemRarityList = weaponRarities.AllWeaponTypes[_rarityIndex];
-            int _randomWeaponIndex = Random.Range(0, ItemRarityList.ItemRarityList.Count);
-            GameObject _weaponToSpawn = ItemRarityList.ItemRarityList[_randomWeaponIndex];
-            bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_weaponToSpawn, AllPickableSpawnPoints);
-            if (!_isAbleToSpawn) return false;
-            _itemsSpawned++; return true;     
+            ItemRarityListClass ItemRarityList = _itemRarityTypes[_rarityIndex];
+            return SpawnItemFromRarityList(ref _itemsSpawned, ItemRarityList);
         }
         return false;
     }
-
-
-
-
-    /*  void SpawnAllConsumables()
-      {
-          if (consumablePrefabs.Count == 0) { return; }
-          for (consumablesSpawned = 0; consumablesSpawned < minimumConsumablesToSpawn; consumablesSpawned++)
-          {
-              int _probabilityToSpawnConsumable = Random.Range(0, 10);
-              if (_probabilityToSpawnConsumable <= 4) { continue; } // 40% chance, that it may not spawn a consumable at a spawn point
-
-              int _randomConsumablePrefabIndex = Random.Range(0, consumablePrefabs.Count);
-              GameObject _consumableToSpawn = consumablePrefabs[_randomConsumablePrefabIndex];
-
-              bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_consumableToSpawn, AllPickableSpawnPoints);
-              if (!_isAbleToSpawn) return;
-          }
-      } */
-
-    /*  void SpawnAllExpOrbs()
-      {
-          if (expOrbPrefabs.Length == 0) { return; }
-          for (expOrbsSpawned = 0; totalExpSpawnedInSoFar < minimumExpToSpawn; expOrbsSpawned++)
-          {
-              int _probabilityToSpawnExpOrb = Random.Range(0, 10);
-              if (_probabilityToSpawnExpOrb <= 4) { continue; } // 40% chance, that it may not spawn an exp orb
-
-              GameObject expOrbTypeToSpawn = expOrbPrefabs[Random.Range(0, expOrbPrefabs.Length)];
-              int _expValue = allExpOrbValueTypesDictionary[expOrbTypeToSpawn];
-
-              bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(expOrbTypeToSpawn, AllPickableSpawnPoints);
-              if (!_isAbleToSpawn) return;
-              totalExpSpawnedInSoFar += _expValue;
-          }
-      } */
-
+    // i screwed up in my structure initially and thats why this function exists
+    bool SpawnExpOrbBasedOnProbability(List<ItemRarityClass> _itemRarityList, int _randomRarityNumber, int _targetProbability, ref int _itemsSpawned, int _prefabRarityIndex)
+    {
+        if (_randomRarityNumber <= _targetProbability)
+        {
+            return SpawnExpOrbFromRarityList(ref _itemsSpawned, _itemRarityList, _prefabRarityIndex);
+        }
+        return false;
+    }
+    #endregion
 }
 
 #if UNITY_EDITOR
