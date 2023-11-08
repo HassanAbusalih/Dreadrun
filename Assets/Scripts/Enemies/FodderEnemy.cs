@@ -1,23 +1,23 @@
+using UnityEditor;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody), typeof(FlockingBehavior))]
 public class FodderEnemy : EnemyAIBase
 {
     [SerializeField] float shootingRange = 7.0f;
     [SerializeField] float strafeRange = 5.0f;
     [SerializeField] float retreatRange = 3.0f;
-    [SerializeField] float movementSpeed = 3.0f;
     [SerializeField] float delayBetweenShots = 1f;
     float strafeStartTime;
     float strafeLength;
     bool clockwiseStrafe;
-    FlockingBehavior flockingBehavior;
     Node topNode;
     [SerializeField][Range(0, 1f)] float strafePercent;
     [SerializeField][Range(0, 1f)] float flockPercent;
 
     private void Start()
     {
-        if (!TryGetComponent(out flockingBehavior))
+        if (flockingBehavior == null)
         {
             gameObject.AddComponent<FlockingBehavior>();
         }
@@ -44,7 +44,7 @@ public class FodderEnemy : EnemyAIBase
         Sequencer withinShootingRangeSeq = new(shootingRange, moveToTarget, attackInterval);
         Sequencer farSeq = new(farRange, moveToTarget);
 
-        topNode = new Selector(new Node[] { retreatSeq, strafeSeq, withinShootingRangeSeq, farSeq}, rb, GetClosestPlayer(), GetClosestPlayer);
+        topNode = new Selector(new Node[] { retreatSeq, strafeSeq, withinShootingRangeSeq, farSeq});
     }
 
     void Update()
@@ -65,6 +65,7 @@ public class FodderEnemy : EnemyAIBase
         else if (retreating)
         {
             Move(target, -movementSpeed);
+            return;
         }
         Vector3 toTarget = (target.position - transform.position).normalized;
         Vector3 strafeDirection = Vector3.Cross(toTarget, Vector3.up);
@@ -83,5 +84,15 @@ public class FodderEnemy : EnemyAIBase
         strafeLength = Random.Range(2f, 10f);
         strafeStartTime = Time.time;
         clockwiseStrafe = (Random.value > 0.5f);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Handles.color = new Color(0, 0, 1, 0.2f);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, retreatRange);
+        Handles.color = new Color(0.5f, 0, 0.5f, 0.1f);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, strafeRange);
+        Handles.color = new Color(1, 0, 0, 0.05f);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, shootingRange);
     }
 }
