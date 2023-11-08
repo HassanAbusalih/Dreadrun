@@ -11,6 +11,7 @@ public enum ItemRarityTypes
 [System.Serializable]
 public class ItemRarityClass 
 {
+    public string ItemNameAndType;
     public ItemRarityTypes RarityType;
     public GameObject Item;  
 }

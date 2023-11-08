@@ -4,7 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AllConsumableRarities", menuName = "ItemRarities/AllConsumableRarities")]
 public class AllConsumableRarities : ScriptableObject
 {
-    public ItemRarityListClass CommonConsumables;
-    public ItemRarityListClass RareConsumables;
-    public ItemRarityListClass LegendaryConsumables;
+    public List<ItemRarityListClass> AllConsumableTypes;
 }
+
