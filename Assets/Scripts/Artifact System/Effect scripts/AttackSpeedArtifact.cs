@@ -5,25 +5,26 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack Speed Artifact Object", menuName = "ArtifactsEffects/Attack Speed Artifact")]
 public class AttackSpeedArtifact : Artifact
 {
-    [SerializeField] float attackSpeedIncreasePerLevel;
+    [SerializeField] private float attackSpeedIncreasePerLevel;
 
-    bool buffApplied = false;
+    private bool buffApplied;
 
-    public float TotalAttackSpeedIncrease
+    private float TotalAttackSpeedIncrease => level * attackSpeedIncreasePerLevel;
+
+    public override void InitializeArtifact() { }
+
+    public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager manager)
     {
-        get { return level * attackSpeedIncreasePerLevel; }
-    }
-
-    public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager Manager)
-    {
-        foreach (Player player in Manager.playersInGame)
+        foreach (Player player in manager.PlayersInGame)
         {
-            if (Vector3.Distance(player.transform.position, artifactPosition) <= effectRange && buffApplied == false)
+            bool isPlayerInRange = (player.transform.position - artifactPosition).sqrMagnitude <= effectRange * effectRange;
+
+            if (isPlayerInRange && !buffApplied)
             {
                 player.playerStats.attackSpeed += TotalAttackSpeedIncrease;
                 buffApplied = true;
             }
-            else if (Vector3.Distance(player.transform.position, artifactPosition) > effectRange && buffApplied == true)
+            else if (!isPlayerInRange && buffApplied)
             {
                 player.playerStats.attackSpeed -= TotalAttackSpeedIncrease;
                 buffApplied = false;

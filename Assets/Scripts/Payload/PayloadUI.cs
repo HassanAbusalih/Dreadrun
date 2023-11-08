@@ -1,15 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class PayloadUI : MonoBehaviour
 {
-    private PayloadPath payloadPath;
-    private int previousWayPointIndex;
-
     [Header("Health Bar Settings")]
     [SerializeField] private GameObject healthUI;
     [SerializeField] private Image healthBar;
@@ -24,53 +18,33 @@ public class PayloadUI : MonoBehaviour
     [SerializeField] private Color rangeIndicatorForwardColor;
     [SerializeField] private Color rangeIndicatorReverseColor;
     [SerializeField] private Color rangeIndicatorStopColor;
-    [SerializeField][Range(1, 10)] private float rangeIndicatorColorIntensity; // Glow intensity of the ring color
-    private int lastState = -1; // The last state of the payload, used to check if the state has changed
+    [SerializeField][Range(1, 10)] private float rangeIndicatorColorIntensity;
 
     [Header("Progress Bar Settings")]
     [SerializeField] private Image pathProgressBar;
     [SerializeField] private GameObject checkpointMarkerPrefab;
     [SerializeField] private RectTransform progressBarTransform;
-    [SerializeField] Transform payloadTransform;
-    float totalPathLength;
+    [SerializeField] private Transform payloadTransform;
+
+    private PayloadPath payloadPath;
+    private int previousWayPointIndex;
+    private float totalPathLength;
 
     private void Start()
     {
         payloadPath = FindObjectOfType<PayloadPath>();
-
         GameManager.Instance.onPhaseChange.AddListener(EnablePayloadUI);
 
-        // Calculate total path length
-        for (int i = 0; i < payloadPath.pathNodes.Count - 1; i++)
-        {
-            totalPathLength += Vector3.Distance(payloadPath.pathNodes[i].position, payloadPath.pathNodes[i + 1].position);
-        }
-
-        // Instantiate checkpoint markers
-        for (int i = 0; i < payloadPath.pathNodes.Count; i++)
-        {
-            if (payloadPath.pathNodes[i].tag == "Checkpoint")
-            {
-                float checkpointPosition = CalculatePathLengthUpToWaypoint(i) / totalPathLength;
-                InstantiateCheckpointMarker(checkpointPosition);
-            }
-        }
-
+        totalPathLength = CalculateTotalPathLength();
+        InstantiateCheckpointMarkers();
         gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        healthBar.fillAmount = PayloadStats.instance.payloadHealth / PayloadStats.instance.maxPayloadHealth;
-
+        UpdateHealthBar();
         UpdateRangeIndicatorScale();
-
-        // Calculate length of path travelled and update progress bar
-        float traveledPathLength = CalculatePathLengthUpToWaypoint(previousWayPointIndex);
-        if (previousWayPointIndex < payloadPath.pathNodes.Count - 1 && previousWayPointIndex > 0)
-            traveledPathLength += Vector3.Distance(payloadTransform.position, payloadPath.pathNodes[previousWayPointIndex].position);
-
-        pathProgressBar.fillAmount = traveledPathLength / totalPathLength;
+        UpdateProgressBar();
     }
 
     private void LateUpdate()
@@ -81,29 +55,39 @@ public class PayloadUI : MonoBehaviour
     public void ChangePayloadStateDisplay(int state)
     {
         payloadStateDecal.material.SetTexture("Base_Map", payloadStatesTextures[state]);
-
-        switch (state)
+        Color color = state switch
         {
-            case 0:
-                UpdateRangeIndicatorColor(rangeIndicatorStopColor, rangeIndicatorColorIntensity);
-                break;
-
-            case 1:
-            case 2:
-            case 3:
-                UpdateRangeIndicatorColor(rangeIndicatorForwardColor, rangeIndicatorColorIntensity);
-                break;
-
-            case 4:
-                UpdateRangeIndicatorColor(rangeIndicatorReverseColor, rangeIndicatorColorIntensity);
-                break;
-        }
-
+            0 => rangeIndicatorStopColor,
+            1 or 2 or 3 => rangeIndicatorForwardColor,
+            4 => rangeIndicatorReverseColor,
+            _ => Color.white
+        };
+        UpdateRangeIndicatorColor(color, rangeIndicatorColorIntensity);
     }
+
+    private void UpdateHealthBar()
+    {
+        healthBar.fillAmount = PayloadStats.instance.payloadHealth / PayloadStats.instance.maxPayloadHealth;
+    }
+
     private void UpdateRangeIndicatorScale()
     {
-        // Update the scale of the range indicator to match the payload's range
         rangeIndicator.transform.localScale = new Vector3(PayloadStats.instance.payloadRange / transform.localScale.x, PayloadStats.instance.payloadRange / transform.localScale.y, PayloadStats.instance.payloadRange / transform.localScale.z);
+    }
+
+    private void UpdateRangeIndicatorColor(Color color, float ringGlowIntensity)
+    {
+        rangeIndicatorDecal.material.SetColor("_Color", new Color(color.r * ringGlowIntensity, color.g * ringGlowIntensity, color.b * ringGlowIntensity, 1));
+    }
+
+    private float CalculateTotalPathLength()
+    {
+        float length = 0;
+        for (int i = 0; i < payloadPath.pathNodes.Count - 1; i++)
+        {
+            length += Vector3.Distance(payloadPath.pathNodes[i].position, payloadPath.pathNodes[i + 1].position);
+        }
+        return length;
     }
 
     private float CalculatePathLengthUpToWaypoint(int waypointIndex)
@@ -116,21 +100,35 @@ public class PayloadUI : MonoBehaviour
         return length;
     }
 
+    private void UpdateProgressBar()
+    {
+        float traveledPathLength = CalculatePathLengthUpToWaypoint(previousWayPointIndex);
+        if (previousWayPointIndex < payloadPath.pathNodes.Count - 1 && previousWayPointIndex > 0)
+            traveledPathLength += Vector3.Distance(payloadTransform.position, payloadPath.pathNodes[previousWayPointIndex].position);
+
+        pathProgressBar.fillAmount = traveledPathLength / totalPathLength;
+    }
+
+    private void InstantiateCheckpointMarkers()
+    {
+        for (int i = 0; i < payloadPath.pathNodes.Count; i++)
+        {
+            if (payloadPath.pathNodes[i].tag == "Checkpoint")
+            {
+                float checkpointPosition = CalculatePathLengthUpToWaypoint(i) / totalPathLength;
+                InstantiateCheckpointMarker(checkpointPosition);
+            }
+        }
+    }
+
     private void InstantiateCheckpointMarker(float position)
     {
-        GameObject checkpointMarker = Instantiate(checkpointMarkerPrefab);
-        checkpointMarker.transform.SetParent(progressBarTransform, false);
-
+        GameObject checkpointMarker = Instantiate(checkpointMarkerPrefab, progressBarTransform);
         RectTransform checkpointMarkerRectTransform = checkpointMarker.GetComponent<RectTransform>();
         checkpointMarkerRectTransform.anchorMin = new Vector2(0.5f, position);
         checkpointMarkerRectTransform.anchorMax = new Vector2(0.5f, position);
         checkpointMarkerRectTransform.pivot = new Vector2(0.5f, 0.5f);
-        checkpointMarkerRectTransform.anchoredPosition = new Vector2(0, 0);
-    }
-
-    private void UpdateRangeIndicatorColor(Color color, float ringGlowIntensity)
-    {
-        rangeIndicatorDecal.material.SetColor("_Color", new Color(color.r * ringGlowIntensity, color.g * ringGlowIntensity, color.b * ringGlowIntensity, 1));
+        checkpointMarkerRectTransform.anchoredPosition = Vector2.zero;
     }
 
     public void UpdateLastWayPointIndex(int index)

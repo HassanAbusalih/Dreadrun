@@ -3,25 +3,26 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack Artifact Object", menuName = "ArtifactsEffects/Attack Artifact")]
 public class AttackArtifact : Artifact
 {
-    [SerializeField] float attackIncreasePerLevel;
+    [SerializeField] private float attackIncreasePerLevel;
 
-    bool buffApplied = false;
+    private bool buffApplied;
 
-    public float TotalAttackIncrease
+    private float TotalAttackIncrease => level * attackIncreasePerLevel;
+
+    public override void InitializeArtifact() { }
+
+    public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager manager)
     {
-        get { return level * attackIncreasePerLevel; }
-    }
-
-    public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager Manager)
-    {
-        foreach (Player player in Manager.playersInGame)
+        foreach (Player player in manager.PlayersInGame)
         {
-            if (Vector3.Distance(player.transform.position, artifactPosition) <= effectRange && buffApplied == false)
+            bool isPlayerInRange = (player.transform.position - artifactPosition).sqrMagnitude <= effectRange * effectRange;
+
+            if (isPlayerInRange && !buffApplied)
             {
                 player.playerStats.attack += TotalAttackIncrease;
                 buffApplied = true;
             }
-            else if (Vector3.Distance(player.transform.position, artifactPosition) > effectRange && buffApplied == true)
+            else if (!isPlayerInRange && buffApplied)
             {
                 player.playerStats.attack -= TotalAttackIncrease;
                 buffApplied = false;

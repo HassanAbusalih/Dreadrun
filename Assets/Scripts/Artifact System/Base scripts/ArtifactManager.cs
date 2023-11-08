@@ -4,23 +4,29 @@ using Random = UnityEngine.Random;
 
 public class ArtifactManager : MonoBehaviour
 {
-    [SerializeField] GameObject artifactSpawnPoint;
-    [SerializeField] Artifact[] artifacts;
-    [SerializeField] float effectRange;
-    [SerializeField] int minArtifactLevel;
-    [SerializeField] int maxArtifactLevel;
-    [NonSerialized] public Player[] playersInGame;
+    [SerializeField] private GameObject artifactSpawnPoint;
+    [SerializeField] private Artifact[] artifacts;
+    [SerializeField] private float effectRange;
+    [SerializeField] private int minArtifactLevel;
+    [SerializeField] private int maxArtifactLevel;
+    [NonSerialized] public Player[] PlayersInGame;
     private Artifact currentArtifact;
     private GameObject artifactGameObject;
 
     private void Start()
     {
-        playersInGame = FindObjectsOfType<Player>();
+        GameManager.Instance.onPhaseChange.AddListener(EnableArtifactSystem);
+
+        PlayersInGame = FindObjectsOfType<Player>();
 
         if (currentArtifact == null)
         {
-            currentArtifact = SpawnArtifact();
+            currentArtifact = SpawnNewArtifact();
         }
+
+        currentArtifact.InitializeArtifact();
+
+        gameObject.SetActive(false);
     }
 
     private void Update()
@@ -29,7 +35,7 @@ public class ArtifactManager : MonoBehaviour
 
         if (currentArtifact == null)
         {
-            currentArtifact = SpawnArtifact();
+            currentArtifact = SpawnNewArtifact();
         }
         else
         {
@@ -37,22 +43,20 @@ public class ArtifactManager : MonoBehaviour
         }
     }
 
-    Artifact SpawnArtifact()
+    private Artifact SpawnNewArtifact()
     {
         int artifactIndex = Random.Range(0, artifacts.Length);
         currentArtifact = artifacts[artifactIndex];
 
-        if (currentArtifact.prefab != null)
-        {
-            artifactGameObject = Instantiate(currentArtifact.prefab, artifactSpawnPoint.transform);
-        }
-        else
-        {
-            artifactGameObject = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), artifactSpawnPoint.transform);
-        }
+        artifactGameObject = Instantiate(currentArtifact.prefab ?? GameObject.CreatePrimitive(PrimitiveType.Sphere), artifactSpawnPoint.transform);
 
-        currentArtifact.level = Random.Range(minArtifactLevel, maxArtifactLevel + 1);
+        currentArtifact.level = Random.Range(minArtifactLevel, maxArtifactLevel);
 
         return currentArtifact;
+    }
+
+    private void EnableArtifactSystem()
+    {
+        gameObject.SetActive(true);
     }
 }

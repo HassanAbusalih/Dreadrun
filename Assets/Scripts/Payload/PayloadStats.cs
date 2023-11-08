@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
 
-public class PayloadStats : MonoBehaviour,IDamagable
+public class PayloadStats : MonoBehaviour, IDamagable
 {
     public static PayloadStats instance;
 
@@ -20,9 +17,9 @@ public class PayloadStats : MonoBehaviour,IDamagable
     [Header("Range Settings")]
     public float payloadRange;
 
-    void Start()
+    private void Start()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -34,14 +31,13 @@ public class PayloadStats : MonoBehaviour,IDamagable
         payloadHealth = maxPayloadHealth;
     }
 
-    public void TakeDamage(float Damage)
+    public void TakeDamage(float damage)
     {
-        payloadHealth -= Damage;
+        payloadHealth -= damage;
 
-        if(payloadHealth <= 0)
+        if (payloadHealth <= 0)
         {
             GameManager.Instance.Lose();
         }
     }
 }
-    
