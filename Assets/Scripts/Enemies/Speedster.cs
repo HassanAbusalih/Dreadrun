@@ -8,8 +8,8 @@ public class Speedster : EnemyAIBase
     [SerializeField] float retreatRange = 3.0f;
     [SerializeField] float shotCooldown = 1f;
     [SerializeField] float distanceToTravelBeforeShooting = 10f;
-    [SerializeField] Vector3 positionAroundTarget = Vector3.zero;
-    [SerializeField] float distanceTravelled;
+    Vector3 positionAroundTarget = Vector3.zero;
+    float distanceTravelled;
     Node topNode;
     Coroutine stopAndShoot;
 
@@ -50,11 +50,13 @@ public class Speedster : EnemyAIBase
         {
             return;
         }
-        else if (retreating)
+        if (retreating)
         {
             GeneratePosition();
-            retreating = false;
+            Move(player, -movementSpeed);
+            return;
         }
+
         if (distanceTravelled >= distanceToTravelBeforeShooting)
         {
             if (stopAndShoot == null) 
@@ -80,9 +82,12 @@ public class Speedster : EnemyAIBase
 
     void GeneratePosition()
     {
-        Debug.Log("Hello!");
         positionAroundTarget = Random.insideUnitSphere * shootingRange;
         positionAroundTarget.y = 0f;
+        if (positionAroundTarget.magnitude < retreatRange)
+        {
+            positionAroundTarget = positionAroundTarget.normalized * retreatRange;
+        }
     }
 
     IEnumerator StopAndShoot(Transform target)
@@ -99,13 +104,9 @@ public class Speedster : EnemyAIBase
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, shootingRange);
-        Gizmos.color = new Color(0, 0, 0, 0.2f);
-        Gizmos.DrawSphere(transform.position, shootingRange);
-        Handles.color = new Color(1, 0, 0, 0.2f);
-        Handles.DrawSolidDisc(transform.position, Vector3.up, shootingRange);
-        Handles.color = new Color(1, 0, 0, 0.2f);
+        Handles.color = new Color(0, 0, 1, 0.2f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, retreatRange);
+        Handles.color = new Color(1, 0, 0, 0.1f);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, shootingRange);
     }
 }

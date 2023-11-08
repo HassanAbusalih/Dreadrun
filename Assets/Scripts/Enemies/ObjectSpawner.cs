@@ -84,6 +84,14 @@ public class ObjectSpawner : MonoBehaviour
         Handles.color = new Color(1, 0, 0, 0.2f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, activationRadius);
 
+        if (spawnPosition != null)
+        {
+            Gizmos.color = new Color(0, 1, 0, 0.2f);
+            Gizmos.DrawSphere(spawnPosition.position, spawnOffset.magnitude);
+            Gizmos.color = new Color(0, 0, 0, 0.5f);
+            Gizmos.DrawWireSphere(spawnPosition.position, spawnOffset.magnitude);
+        }
+
         GUIStyle labelStyle = new();
         labelStyle.normal.textColor = Color.black;
         labelStyle.alignment = TextAnchor.MiddleCenter;
