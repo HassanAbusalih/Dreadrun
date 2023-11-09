@@ -9,15 +9,28 @@ using Input = UnityEngine.Input;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public Player[] players;
 
     [Header("Events")]
     public UnityEvent onWin;
     public UnityEvent onLose;
     public UnityEvent onPause;
     public UnityEvent onResume;
+    public UnityEvent onPhaseChange;
 
     private bool isGamePaused = false;
     private bool hasGameEnded = false;
+
+
+    private void OnEnable()
+    {
+        players = FindObjectsOfType<Player>();
+        foreach (Player player in players)
+        {
+            player.OnPlayerDeath += Lose;
+        }
+
+    }
 
     private void Awake()
     {
@@ -31,9 +44,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        foreach (Player player in players)
+        {
+            player.OnPlayerDeath -= Lose;
+        }
+    }
+
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
@@ -92,9 +112,15 @@ public class GameManager : MonoBehaviour
         hasGameEnded = true;
         Time.timeScale = 0;
     }
+
     public void Restart()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ChangePhase()
+    {
+        onPhaseChange.Invoke();
     }
 }

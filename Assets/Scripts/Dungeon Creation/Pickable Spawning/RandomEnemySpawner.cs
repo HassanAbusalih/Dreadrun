@@ -18,7 +18,7 @@ public class RandomEnemySpawner : PickableBaseSpawning
     void SpawnEnemiesRepeatedly()
     {
         if (enemySpawnProbabilities.Count == 0) { return; }
-        for (enemiesSpawned = 0; enemiesSpawned < enemiesToSpawn; )
+        for (enemiesSpawned = 0; enemiesSpawned < enemiesToSpawn;)
         {
             int _randomConsumablePrefabIndex = Random.Range(0, enemySpawnProbabilities.Count);
             EnemySpawnProbability _enemyToSpawn = enemySpawnProbabilities[_randomConsumablePrefabIndex];
@@ -31,6 +31,12 @@ public class RandomEnemySpawner : PickableBaseSpawning
             enemiesSpawned++;
         }
     }
+
+    // for loop to spawn min enemies to spawn 
+    // for loop to spawn for the remaining spawn points
+
+
+    // figure out how to spawn on a room to room basis
 
 }
 

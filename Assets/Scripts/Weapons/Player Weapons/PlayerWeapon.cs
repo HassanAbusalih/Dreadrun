@@ -17,6 +17,8 @@ public abstract class PlayerWeapon : WeaponBase
     [SerializeField] GameObject weaponEquipText;
     protected bool equipped;
     [SerializeField] Collider weaponCollider;
+    [SerializeField] SoundSO weaponPickupSFX;
+    [SerializeField] SoundSO weaponDropSFX;
 
     [field: SerializeField] public Sprite weaponIcon { get; private set; }
     [field: SerializeField] public string weaponDescription { get; private set; }
@@ -46,7 +48,7 @@ public abstract class PlayerWeapon : WeaponBase
         equipped = true;
         weaponCollider.isTrigger = true;
 
-
+        weaponPickupSFX.Play();
 
         UpdateWeaponEffects();
         weaponPickedUpOrDropped?.Invoke(this);
@@ -62,7 +64,7 @@ public abstract class PlayerWeapon : WeaponBase
         effects.Clear();
         equipped = false;
         weaponCollider.isTrigger = false;
-
+        weaponDropSFX.Play();
         weaponPickedUpOrDropped?.Invoke(null);
         if (weaponEquipText != null) weaponEquipText.SetActive(true);
     }

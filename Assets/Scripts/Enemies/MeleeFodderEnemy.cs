@@ -1,34 +1,120 @@
+using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class MeleeFodderEnemy : EnemyAIBase
 {
     [SerializeField] float detectionRange = 10;
-    [SerializeField] float movementSpeed = 5;
-    [SerializeField] float damageOnHit = 5;
-    Transform targetPlayer;
+    [SerializeField] float attackRange = 2.0f;
+    [SerializeField] float attackCooldown = 1.5f;
+    [SerializeField] float dashSpeedModifier = 5f;
+    [SerializeField] float chargeSpeedModifier = 0.5f;
+    [SerializeField] float chargeTime = 1f;
+    [SerializeField] float dashTime = 0.2f;
+    float lastAttackTime;
+    Coroutine chargeAndAttack;
+    LayerMask mask;
 
-    private void FixedUpdate()
+    private void Start()
     {
-        targetPlayer = GetClosestPlayer();
-        RaycastHit hit;
-        if (targetPlayer != null && Physics.Raycast(transform.position, targetPlayer.position - transform.position, out hit, detectionRange) && hit.transform == targetPlayer)
+        lastAttackTime -= attackCooldown;
+        mask = ~(LayerMask.GetMask("Enemy Projectile"));
+    }
+
+    private void Update()
+    {
+        Transform closestPlayer = GetClosestPlayer();
+        if (closestPlayer == null || !LineOfSight(closestPlayer) || Time.time <= attackCooldown + lastAttackTime)
         {
-            transform.LookAt(targetPlayer.position);
-            Vector3 moveDirection = (targetPlayer.position - transform.position).normalized * Time.deltaTime;
-            rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z)  * movementSpeed;
+            rb.velocity = new(0f, rb.velocity.y, 0f);
+            return;
         }
-        else
+
+        float distanceToPlayer = Vector3.Distance(transform.position, closestPlayer.position);
+        if (distanceToPlayer <= detectionRange && distanceToPlayer > attackRange)
         {
-            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            Move(closestPlayer, movementSpeed);
+        }
+        else if (distanceToPlayer <= attackRange && chargeAndAttack == null)
+        {
+            chargeAndAttack = StartCoroutine(ChargeAndAttack(closestPlayer));
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    bool LineOfSight(Transform target)
     {
-        if (targetPlayer != null && collision.gameObject == targetPlayer.gameObject)
+        RaycastHit hit;
+        Vector3 directionToTarget = target.position - transform.position;
+        if (Physics.Raycast(transform.position, directionToTarget, out hit, detectionRange, mask))
         {
-            if (targetPlayer.TryGetComponent(out IDamagable player)) { player.TakeDamage(damageOnHit); }
+            return hit.transform == target;
         }
+        return false;
+    }
+
+    public override void Move(Transform target, float movementSpeed)
+    {
+        Vector3 moveDirection = (target.position - transform.position).normalized;
+        moveDirection = moveDirection.normalized * movementSpeed;
+        moveDirection.y = 0;
+        transform.rotation = Quaternion.LookRotation(moveDirection);
+        rb.velocity = new(moveDirection.x, rb.velocity.y, moveDirection.z);
+    }
+
+    IEnumerator ChargeAndAttack(Transform player)
+    {
+        float startTime = Time.time;
+        while (Time.time < startTime + chargeTime)
+        {
+            Move(player, movementSpeed * chargeSpeedModifier);
+            yield return null;
+        }
+
+        startTime = Time.time;
+        (weapon as MeleeFodderWeapon).Attack(dashTime);
+        while (Time.time < startTime + dashTime)
+        {
+            Move(player, dashSpeedModifier);
+            yield return null;
+        }
+
+        lastAttackTime = Time.time;
+        chargeAndAttack = null;
+    }
+
+    void StopAttack()
+    {
+        if (chargeAndAttack != null) 
+        {
+            StopCoroutine(chargeAndAttack);
+            chargeAndAttack = null;
+        }
+        lastAttackTime = Time.time;
+    }
+
+    private void OnDisable()
+    {
+        if (weapon != null)
+        {
+            (weapon as MeleeFodderWeapon).hit -= StopAttack;
+        }
+    }
+
+    private void OnEnable()
+    {
+        weapon = GetComponentInChildren<MeleeFodderWeapon>();
+        if (weapon != null)
+        {
+            (weapon as MeleeFodderWeapon).hit += StopAttack;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Handles.color = new Color(0, 0, 1, 0.2f);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, attackRange);
+        Handles.color = new Color(1, 0, 0, 0.1f);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, detectionRange);
     }
 }

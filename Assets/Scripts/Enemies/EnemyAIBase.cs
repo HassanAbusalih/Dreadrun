@@ -1,15 +1,19 @@
 using UnityEngine;
 
-public abstract class EnemyAIBase : MonoBehaviour, IDamagable
+public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
 {
     [SerializeField] float maxHealth = 5;
+    [SerializeField] protected float movementSpeed = 3f;
     protected WeaponBase weapon;
     protected Transform payload;
     protected Transform[] players = new Transform[0];
     protected Rigidbody rb;
-    float currentHealth;
     protected Transform target;
     protected bool retreating;
+    protected FlockingBehavior flockingBehavior;
+    float currentHealth;
+
+    public bool slowed { get; set; }
 
     void Awake()
     {
@@ -17,6 +21,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
         gameObject.layer = 7;
         weapon = GetComponent<WeaponBase>();
         rb = GetComponent<Rigidbody>();
+        flockingBehavior = GetComponent<FlockingBehavior>();
         if (players.Length == 0)
         {
             GetPlayers();
@@ -64,7 +69,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
 
     public virtual void Attack()
     {
-        weapon.Attack();
+        weapon?.Attack();
     }
 
     public virtual void Move(Transform target, float movementSpeed)
@@ -89,5 +94,23 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable
         Vector3 moveDirection = (target.position - transform.position).normalized;
         rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
         Debug.Log("Default Specialized Movement?");
+    }
+
+    public void ApplySlow(float slowModifier)
+    {
+        if (!slowed)
+        {
+            movementSpeed *= slowModifier;
+            slowed = true;
+        }
+    }
+
+    public void RemoveSlow(float slowModifier)
+    {
+        if (slowed)
+        {
+            movementSpeed /= slowModifier;
+            slowed = false;
+        }
     }
 }

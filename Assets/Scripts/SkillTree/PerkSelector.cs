@@ -21,6 +21,8 @@ public class PerkSelector : MonoBehaviour
     private PerkOptions[] perkChoices;
     [SerializeField] bool debugMode;
 
+    private PerkCollectorManager perkCollectorManager;
+
     void Start()
     {
         if(perkUIcanvas != null)
@@ -28,6 +30,7 @@ public class PerkSelector : MonoBehaviour
             perkUIcanvas.SetActive(false);
         }
         //playerStats = player.playerStats;
+        perkCollectorManager = FindObjectOfType<PerkCollectorManager>();
         player = FindObjectOfType<Player>();
     }
 
@@ -45,7 +48,6 @@ public class PerkSelector : MonoBehaviour
                 RandomPerkSelector();
             }
         }
-
     }
     public void RandomPerkSelector()
     {
@@ -72,9 +74,9 @@ public class PerkSelector : MonoBehaviour
     {
         foreach (var choice in perkChoices)
         {
-            choice.perkName.text = choice.perk.perkName;
-            choice.perkSprite.sprite = choice.perk.perkIcon;
-            Debug.Log("Selected Perk: " + choice.perk.perkName);
+            choice.perkName.text = choice.perk.name;
+            choice.perkSprite.sprite = choice.perk.icon;
+            Debug.Log("Selected Perk: " + choice.perk.name);
         }
     }
 
@@ -82,13 +84,14 @@ public class PerkSelector : MonoBehaviour
     {
         perkChoices[perkIndexSelected].perk.ApplyPlayerBuffs(player);
         perkUIcanvas.SetActive(false);
+        perkCollectorManager.AcquirePerk(perkChoices[perkIndexSelected].perk);
     }
 
     public void ShowDescription(int index)
     {
         if (index >= 0)
         {
-            descriptionText.text = perkChoices[index].perk.perkDescription;
+            descriptionText.text = perkChoices[index].perk.description;
             perkDescriptionPanel.SetActive(true);
         }
     }

@@ -8,11 +8,16 @@ public class PlayerExp : MonoBehaviour
 
     public PerkSelector perkSelector;
     public ExperienceManager expmanager;
+    [SerializeField] SoundSO levelUpSFX;
     private void OnEnable()
     {
-        expmanager = FindObjectOfType<ExperienceManager>();
+        if(expmanager != null)
+        {
+            expmanager = FindObjectOfType<ExperienceManager>();
+            expmanager.OnExperienceChange += HandleExperience;
+        }
         perkSelector = FindObjectOfType<PerkSelector>();
-        expmanager.OnExperienceChange += HandleExperience;
+       
     }
 
     private void HandleExperience(int newExperience)
@@ -21,6 +26,7 @@ public class PlayerExp : MonoBehaviour
         if(currentExp >= maxExpToLevelUp)
         {
             LevelUp();
+            levelUpSFX.Play();
         }
     }
 
@@ -35,6 +41,10 @@ public class PlayerExp : MonoBehaviour
 
     private void OnDisable()
     {
-        expmanager.OnExperienceChange -= HandleExperience;
+        if(expmanager != null)
+        {
+            expmanager.OnExperienceChange -= HandleExperience;
+        }
+      
     }
 }

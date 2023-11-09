@@ -33,11 +33,12 @@ public class ScatterEffect : MonoBehaviour, IProjectileEffect
         float rotationAmount = 360 / projectileCount;
         for (int i = 0; i < projectileCount; i++)
         {
-            float rotation = i * rotationAmount;
+            float angleOffset = UnityEngine.Random.Range(0f, 360f);
+            float rotation = i * rotationAmount + angleOffset;
             Quaternion projectileRotation = Quaternion.Euler(0, rotation, 0) * transform.rotation;
             Vector3 projectileLocation = Quaternion.Euler(0, rotation, 0) * transform.forward;
             GameObject projectile = Instantiate(projectilePrefab, enemy.position + projectileLocation, projectileRotation);
-            projectile.GetComponent<Projectile>().Initialize(damage, projectileSpeed, projectileRange, 9, effects);
+            projectile.GetComponent<Projectile>().Initialize(damage, projectileSpeed, projectileRange, 8, effects);
         }
     }
 }

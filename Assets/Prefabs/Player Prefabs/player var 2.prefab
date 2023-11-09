@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 2493309698041285641}
   - component: {fileID: 2075876340}
   - component: {fileID: 1051192184}
+  - component: {fileID: 8117153054539464799}
   m_Layer: 6
   m_Name: player var 2
   m_TagString: Player
@@ -222,20 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df69244d340cce74294bd80c2fa7e37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 8117153053641499624}
-  dashDistance: 7.5
-  dashDuration: 0.15
-  isDashing: 0
-  isInvincible: 0
-  ground:
-    serializedVersion: 2
-    m_Bits: 2048
-  dashColor: {r: 0.07742861, g: 0.024279075, b: 0.5849056, a: 0.47058824}
-  dodge: 32
   pickUpWeaponKey: 101
   dropWeaponKey: 113
-  healthBar: {fileID: 5692323966559541926}
-  staminaBar: {fileID: 5692323966483992306}
   playerStats:
     health: 0
     maxHealth: 100
@@ -246,10 +235,12 @@ MonoBehaviour:
     Range: 1
     Spread: 1
     speed: 15
-  playerWeapon: {fileID: 0}
+  healthBar: {fileID: 0}
+  staminaBar: {fileID: 0}
   weaponEquipPosition: {fileID: 8117153054145766768}
   weaponIDsSO: {fileID: 11400000, guid: f035bc046c8350b4f8f8a93b58d9f72c, type: 2}
-  currentWeaponID: 0
+  playerWeapon: {fileID: 0}
+  takeDamageSFX: {fileID: 11400000, guid: 3b8518f4fca09724d993cf4dbdca0f1b, type: 2}
 --- !u!114 &8117153053641499627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +267,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!114 &2493309698041285641
 MonoBehaviour:
@@ -296,6 +287,7 @@ MonoBehaviour:
   expAmountToLevelUp: 50
   perkSelector: {fileID: 0}
   expmanager: {fileID: 0}
+  levelUpSFX: {fileID: 0}
 --- !u!135 &2075876340
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -321,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ddd1cac9ac23b4e985628bd1eaf3d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 8117153053641499626}
   inventory:
     inventorySlots: 5
     inventoryList: []
@@ -334,6 +326,29 @@ MonoBehaviour:
   descriptionPanel: {fileID: 8268336395197399849}
   descriptionText: {fileID: 8268336395281836070}
   emptySprite: {fileID: 21300000, guid: d4846583bfeb63d4586b331aa5322cfd, type: 3}
+  pickUpItemSFX: {fileID: 11400000, guid: 99bfc8ccacd0fcf429304d3b0f7c14c3, type: 2}
+--- !u!114 &8117153054539464799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8117153053641499625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a00c21f4fe4060a409291960ce3acae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashDistance: 15
+  dashDuration: 0.2
+  staminaCost: 0
+  isDashing: 0
+  dashColor: {r: 0.13264506, g: 0.2248548, b: 0.764151, a: 0.5529412}
+  dodge: 32
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048
+  dashSFX: {fileID: 11400000, guid: 650607ad15d612c44bee73228ccaf994, type: 2}
 --- !u!1 &8117153054145766769
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +409,7 @@ PrefabInstance:
       objectReference: {fileID: 1230524964154506128}
     - target: {fileID: 4423540877954294325, guid: 27540d230182864418c6ed6b42d543c0, type: 3}
       propertyPath: perkPool.Array.size
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4423540877954294325, guid: 27540d230182864418c6ed6b42d543c0, type: 3}
       propertyPath: perkDescriptionPanel
@@ -428,6 +443,10 @@ PrefabInstance:
       propertyPath: perkPool.Array.data[9]
       value: 
       objectReference: {fileID: 11400000, guid: 3995a845bf5041a4392494544ab05010, type: 2}
+    - target: {fileID: 4423540877954294325, guid: 27540d230182864418c6ed6b42d543c0, type: 3}
+      propertyPath: perkPool.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d8345e33be678649a61bf900d8c56de, type: 2}
     - target: {fileID: 4423540877954294325, guid: 27540d230182864418c6ed6b42d543c0, type: 3}
       propertyPath: perkChoices.Array.data[0].perkName
       value: 
@@ -1336,28 +1355,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7741635090044817169, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
   m_PrefabInstance: {fileID: 7143710627606292096}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5692323966483992306 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3304723529624152178, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
-  m_PrefabInstance: {fileID: 7143710627606292096}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5692323966559541926 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3304723529716382758, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
-  m_PrefabInstance: {fileID: 7143710627606292096}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5692323968055211548 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3304723531215442076, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
