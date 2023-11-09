@@ -25,7 +25,9 @@ public class PickableBaseSpawning : MonoBehaviour
 
         GameObject _pickableSpawned = Instantiate(_pickableToSpawn, _randomSpawnPosition, Quaternion.identity);
         _pickableSpawned.transform.parent = this.transform;
+         Transform _pickableTransform = _spawnPoints[_randomPickableSpawnPointIndex];
         _spawnPoints.RemoveAt(_randomPickableSpawnPointIndex);
+        Destroy(_pickableTransform.gameObject);
         return true;
     }
 }

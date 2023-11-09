@@ -36,6 +36,7 @@ public class RandomEnemySpawner : PickableBaseSpawning
 
     void SpawnEnemiesBasedOnLootPoints(int _totalLootPoints)
     {
+        if (spawnEnemiesNormally) return;
         SpawnedInLootPoints = _totalLootPoints;
         if (_totalLootPoints <= badLootPointsLimit) { SpawnEnemies(minAmountOfEnemiesToSpawn); }
         else if (_totalLootPoints <= mediumLootPointsLimit) { SpawnEnemies(midAmountOfEnemiesToSpawn); }
