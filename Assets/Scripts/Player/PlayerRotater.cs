@@ -7,8 +7,7 @@ public class PlayerRotater : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] float rotationSpeed;
     [SerializeField] bool controllerEnabled;
-    private float currentRotation = 0f;
-
+    private Vector3 inputVector;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -29,10 +28,20 @@ public class PlayerRotater : MonoBehaviour
 
     void ControllerRotation()
     {
-        float joystickInputX = Input.GetAxis("RightStickHorizontal");
-        float rotationAngle = joystickInputX * rotationSpeed;
-        currentRotation += rotationAngle;
-        transform.rotation = Quaternion.Euler(0, currentRotation, 0);
+        float rightStickX = Input.GetAxis("RightStickX");
+        float rightStickY = Input.GetAxis("RightStickY");
+
+        // Calculate the input vector
+        Vector3 inputVector = new Vector3(rightStickX, rightStickY, 0);
+
+        // Rotate the player based on input
+        if (inputVector != Vector3.zero)
+        {
+            float targetAngle = Mathf.Atan2(inputVector.x, inputVector.y) * Mathf.Rad2Deg;
+            Vector3 currentEulerAngles = transform.eulerAngles;
+            currentEulerAngles.y = Mathf.MoveTowardsAngle(currentEulerAngles.y, targetAngle, rotationSpeed * Time.deltaTime);
+            transform.eulerAngles = currentEulerAngles;
+        }
     }
 
     void MouseRotation() 
