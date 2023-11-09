@@ -23,10 +23,7 @@ public class RegenArtifact : Artifact
 
     private IEnumerator RegenHealth(Player player)
     {
-        while (true)
-        {
-            player.playerStats.health += TotalHealthRegenPerSecond;
-            yield return new WaitForSeconds(1);
-        }
+        player.playerStats.health += TotalHealthRegenPerSecond;
+        yield return new WaitForSeconds(1);
     }
 }

@@ -47,8 +47,14 @@ public class ArtifactManager : MonoBehaviour
     {
         int artifactIndex = Random.Range(0, artifacts.Length);
         currentArtifact = artifacts[artifactIndex];
-
-        artifactGameObject = Instantiate(currentArtifact.prefab ?? GameObject.CreatePrimitive(PrimitiveType.Sphere), artifactSpawnPoint.transform);
+        if (currentArtifact.prefab == null)
+        {
+            artifactGameObject = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), artifactSpawnPoint.transform);
+        }
+        else
+        {
+            artifactGameObject = Instantiate(currentArtifact.prefab, artifactSpawnPoint.transform);
+        }
 
         currentArtifact.level = Random.Range(minArtifactLevel, maxArtifactLevel);
 
