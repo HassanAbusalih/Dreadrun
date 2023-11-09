@@ -8,7 +8,7 @@ public class RandomEnemySpawner : PickableBaseSpawning
 
     [SerializeField] int enemiesToSpawn;
     [SerializeField] int enemiesSpawned;
-    public static List<Transform> EnemySpawnPoints = new List<Transform>();
+    public  List<Transform> EnemySpawnPoints = new List<Transform>();
 
 
     private void Start()

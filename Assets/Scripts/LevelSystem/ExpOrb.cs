@@ -6,6 +6,7 @@ using UnityEngine;
 public class ExpOrb : MonoBehaviour
 {
     [SerializeField] int expAmount;
+    public int  ExpAmount => expAmount;
     public LayerMask layerMask;
     public ExperienceManager expmanager;
     [SerializeField] SoundSO expOrbPickUpSFX;

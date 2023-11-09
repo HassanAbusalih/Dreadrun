@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae6dafd76e4450f4d85e0233792419b7, type: 3}
+  m_Name: AllConsumableRarities
+  m_EditorClassIdentifier: 
+  AllConsumableTypes:
+  - ItemNameAndRarity: Common Consumables
+    ListRarityType: 0
+    ItemRarityList:
+    - {fileID: 2997669418606170151, guid: e162c6d91905a8e49a7f35b06bacec76, type: 3}
+    - {fileID: 1524638017004850258, guid: e3d37577736372749be2bbbe60826a06, type: 3}
+  - ItemNameAndRarity: Rare Consumables
+    ListRarityType: 5
+    ItemRarityList:
+    - {fileID: 7894489001172497434, guid: cf189dc2e8ec96e41b85424ed970badf, type: 3}
+    - {fileID: 1303053292653104129, guid: a321c9d48ae3b0f448cc7534065cec5f, type: 3}
+  - ItemNameAndRarity: Legendary Consumables
+    ListRarityType: 10
+    ItemRarityList:
+    - {fileID: 1625664604486810806, guid: d419c073b92e83a489048b836e81d489, type: 3}
+    - {fileID: 611745631771758742, guid: 6ac87666544c6c24893fa06651fafe65, type: 3}
