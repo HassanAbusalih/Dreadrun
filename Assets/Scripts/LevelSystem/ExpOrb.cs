@@ -20,11 +20,10 @@ public class ExpOrb : MonoBehaviour
         if (other.TryGetComponent(out Player player))
         {
             expmanager.AddExperience(expAmount);
+            expOrbPickUpSFX.Play();
             Destroy(this.gameObject);
         }
     }
-    private void OnDestroy()
-    {
-        expOrbPickUpSFX.Play();
-    }
+
+
 }
