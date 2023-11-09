@@ -6,6 +6,6 @@ using UnityEngine;
 [Serializable]
 public class Inventory 
 {
-    public int inventorySlots;
-    public List<ItemBase> inventoryList;
+    public int inventorySlots = 5;
+    public ItemBase[] inventoryList;
 }

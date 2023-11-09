@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class ItemAssetHolder : MonoBehaviour, ICollectable
 {
-    public ItemBase item;
+    public Collectable item;
     public Collectable Collect()
     {
         return item;
-
     }
 }
 

@@ -5,5 +5,5 @@ using UnityEngine;
 public class PerkCollectable : Collectable
 {
     [SerializeField]
-    private Perk perk;
+    public Perk perk;
 }

@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
 public class InventoryManager : MonoBehaviour
 {
     public Player player;
@@ -13,6 +11,7 @@ public class InventoryManager : MonoBehaviour
     public Sprite emptySprite;
     KeyCode[] keys = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
     [SerializeField] SoundSO pickUpItemSFX;
+    private int slotCounter = 0;
 
     void Start()
     {
@@ -22,7 +21,7 @@ public class InventoryManager : MonoBehaviour
         }
         player = GetComponent<Player>();
         inventory = new Inventory();
-        inventory.inventoryList = new List<ItemBase>(new ItemBase[inventory.inventorySlots]);
+        inventory.inventoryList = new ItemBase[inventory.inventorySlots];
     }
     private void Update()
     {
@@ -44,17 +43,29 @@ public class InventoryManager : MonoBehaviour
     {
         ICollectable collectable = other.GetComponent<ICollectable>();
 
-        if (collectable != null && collectable is ItemBase)
+        if (collectable != null && slotCounter < inventory.inventorySlots)
         {
-            AddItem((collectable.Collect() as ItemBase));
-            pickUpItemSFX.Play();
-            Destroy(other.gameObject);
+            ItemBase item = collectable.Collect() as ItemBase;
+            if (item != null)
+            {
+                AddItem(item);
+                pickUpItemSFX.Play();
+                Destroy(other.gameObject);
+            }
         }
     }
 
     public void AddItem(ItemBase item)
     {
-        inventory.inventoryList.Add(item);
+        slotCounter++;
+        for (int i = 0; i < inventory.inventoryList.Length; i++)
+        {
+            if (inventory.inventoryList[i] == null)
+            {
+                inventory.inventoryList[i] = item;
+                break;
+            }
+        }
         AddToUI(item);
     }
 
@@ -73,7 +84,7 @@ public class InventoryManager : MonoBehaviour
 
     void UseItem(int slot)
     {
-        if (slot >= 0 && slot < inventory.inventoryList.Count)
+        if (slot >= 0 && slot < inventory.inventoryList.Length)
         {
             ItemBase item = inventory.inventoryList[slot];
 
@@ -82,6 +93,7 @@ public class InventoryManager : MonoBehaviour
                 item.UseOnSelf(player);
                 inventory.inventoryList[slot] = null;
                 UpdateInventoryUISlot(slot, null);
+                slotCounter--;
             }
         }
     }
@@ -95,7 +107,7 @@ public class InventoryManager : MonoBehaviour
 
     public void ShowDescription(int index)
     {
-        if (index >= 0 && index < inventory.inventoryList.Count)
+        if (index >= 0 && InventorySprites[index].sprite != emptySprite)
         {
             descriptionText.text = inventory.inventoryList[index].description;
             descriptionPanel.SetActive(true);

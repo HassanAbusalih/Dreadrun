@@ -20,6 +20,7 @@ public class ChurchRoom : MonoBehaviour
     {
         if (isPlayerInside && Input.GetKey(KeyCode.E))
         {
+            
             pressTime += Time.deltaTime;
             barFill.fillAmount = pressTime / toggleTime;
             if (pressTime >= toggleTime && !isToggling)
@@ -38,7 +39,7 @@ public class ChurchRoom : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        isPlayerInside = other.CompareTag("Player");
+        isPlayerInside = other.TryGetComponent(out Player player);
     }
 
     void FaithDecider()
