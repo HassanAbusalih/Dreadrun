@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IDamagable
     public bool controllerEnabled;
     [SerializeField] LayerMask ground;
 
-    [SerializeField] KeyCode controllerDodge;
+
     [SerializeField] KeyCode keyDodge;
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
     [SerializeField] KeyCode dropWeaponKey = KeyCode.Q;
@@ -65,7 +65,7 @@ public class Player : MonoBehaviour, IDamagable
 
     private void DashOnInput()
     {
-        if (Input.GetKeyDown(controllerDodge)||Input.GetKeyDown(keyDodge) && !isDashing)
+        if (Input.GetKeyDown(controllerDodge)||Input.GetKeyDown(KeyCode.JoystickButton0) && !isDashing)
         {
             Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
             StartCoroutine(StartDash(dashDirection));
