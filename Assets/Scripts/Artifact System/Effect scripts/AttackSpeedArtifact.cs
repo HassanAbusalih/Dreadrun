@@ -1,13 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Attack Artifact Object", menuName = "ArtifactsEffects/Attack Artifact")]
-public class AttackArtifact : Artifact
+[CreateAssetMenu(fileName = "Attack Speed Artifact Object", menuName = "ArtifactsEffects/Attack Speed Artifact")]
+public class AttackSpeedArtifact : Artifact
 {
-    [SerializeField] private float attackIncreasePerLevel;
+    [SerializeField] private float attackSpeedIncreasePerLevel;
 
     private bool buffApplied;
 
-    private float TotalAttackIncrease => level * attackIncreasePerLevel;
+    private float TotalAttackSpeedIncrease => level * attackSpeedIncreasePerLevel;
 
     public override void InitializeArtifact() { }
 
@@ -19,15 +21,14 @@ public class AttackArtifact : Artifact
 
             if (isPlayerInRange && !buffApplied)
             {
-                player.playerStats.attack += TotalAttackIncrease;
+                player.playerStats.attackSpeed += TotalAttackSpeedIncrease;
                 buffApplied = true;
             }
             else if (!isPlayerInRange && buffApplied)
             {
-                player.playerStats.attack -= TotalAttackIncrease;
+                player.playerStats.attackSpeed -= TotalAttackSpeedIncrease;
                 buffApplied = false;
             }
         }
     }
 }
-

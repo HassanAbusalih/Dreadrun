@@ -4,29 +4,28 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Regen Artifact Object", menuName = "ArtifactsEffects/Regen Artifact")]
 public class RegenArtifact : Artifact
 {
-    [SerializeField] float regenPerSecondPerLevel;
+    [SerializeField] private float regenPerSecondPerLevel;
 
-    float AttackStrength
-    {
-        get { return level * regenPerSecondPerLevel; }
-    }
+    private float TotalHealthRegenPerSecond => level * regenPerSecondPerLevel;
 
-    public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager Manager)
+    public override void InitializeArtifact() { }
+
+    public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager manager)
     {
-        foreach (Player player in Manager.playersInGame)
+        foreach (Player player in manager.PlayersInGame)
         {
-            if (Vector3.Distance(player.transform.position, artifactPosition) <= effectRange)
+            if ((player.transform.position - artifactPosition).sqrMagnitude <= effectRange * effectRange)
             {
-                Manager.StartCoroutine(RegenHealth(player));
+                manager.StartCoroutine(RegenHealth(player));
             }
         }
     }
 
-    IEnumerator RegenHealth(Player player)
+    private IEnumerator RegenHealth(Player player)
     {
         while (true)
         {
-            player.playerStats.health += AttackStrength;
+            player.playerStats.health += TotalHealthRegenPerSecond;
             yield return new WaitForSeconds(1);
         }
     }

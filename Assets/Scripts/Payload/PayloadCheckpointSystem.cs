@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,12 +11,12 @@ public class PayloadCheckpointSystem : MonoBehaviour
     public UnityEvent onCheckpointActivate;
     public UnityEvent onCheckpointDeactivate;
 
-    [SerializeField] bool onCheckpoint = false;
-    [SerializeField] float checkpointDuration;
-    float checkpointTimer;
+    [SerializeField] private bool onCheckpoint = false;
+    [SerializeField] private float checkpointDuration;
+    private float checkpointTimer;
 
-    [SerializeField] Canvas checkpointUI;
-    [SerializeField] Image checkpointTimeBar;
+    [SerializeField] private Canvas checkpointUI;
+    [SerializeField] private Image checkpointTimeBar;
 
     private void Start()
     {
