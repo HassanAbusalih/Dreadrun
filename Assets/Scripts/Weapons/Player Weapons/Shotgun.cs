@@ -17,7 +17,7 @@ public class Shotgun : PlayerWeapon
     {
         if (!equipped) { return; }
         timeSinceLastShot += Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0)|| Input.GetButtonDown("shoot"))
         {
             Attack();
 

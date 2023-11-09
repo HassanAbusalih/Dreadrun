@@ -14,7 +14,7 @@ public class Machinegun : PlayerWeapon
         if (!equipped) { return; }
         timeSinceLastShot += Time.deltaTime;
         firingDuration += Time.deltaTime;
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("shoot"))
         {
             Attack();
         }

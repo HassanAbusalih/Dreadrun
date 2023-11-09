@@ -6,13 +6,14 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamagable
 {
+    public bool controllerEnabled;
     Rigidbody rb;
     Dashing playerDash;
     [Header("Player Input Settings")]
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
     [SerializeField] KeyCode dropWeaponKey = KeyCode.Q;
-
-    [Header("EquippedWeaponInfo")]
+    [SerializeField] KeyCode controllerPickUp;
+    [SerializeField] KeyCode controllerDrop;
     public PlayerStats playerStats;
     [SerializeField] Slider healthBar;
     [SerializeField] Slider staminaBar;
@@ -86,8 +87,9 @@ public class Player : MonoBehaviour, IDamagable
 
     void DropCurrentWeapon()
     {
-        if (dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
-        if (Input.GetKeyDown(dropWeaponKey) && isWeaponPickedUp)
+        if(dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
+        if (controllerDrop == KeyCode.None) controllerDrop = KeyCode.JoystickButton3;
+        if ((Input.GetKeyDown(dropWeaponKey)|| Input.GetKeyDown(controllerDrop)) && isWeaponPickedUp)
         {
             ScaleOrDescaleWeapon(false);
             playerWeapon.DropWeapon();
