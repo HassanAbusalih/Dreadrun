@@ -84,16 +84,13 @@ MonoBehaviour:
   projectileSpeed: 10
   spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
-  audioSource: {fileID: 0}
+  soundSO: {fileID: 11400000, guid: edcf898b4b2e9874ba05c4cc7c667fac, type: 2}
   BulletSpawnPoint: {fileID: 4290101404766230428}
   weaponID: 1
   weaponOffset: {x: 0, y: 0, z: 0}
   weaponRotationOffset: {x: 0, y: 0, z: 0}
-  pickUpSoundAudioSource: {fileID: 0}
   weaponEquipText: {fileID: 1542810004159222196}
   weaponCollider: {fileID: 0}
-  weaponPickupSFX: {fileID: 0}
-  weaponDropSFX: {fileID: 0}
   <weaponIcon>k__BackingField: {fileID: 21300000, guid: 6dd225d76b2cdbe49958329293f8b942, type: 3}
   <weaponDescription>k__BackingField: Charge to shoot stronger arrows
   minDamageModifier: 1
@@ -102,8 +99,6 @@ MonoBehaviour:
   chargeIndicator: {fileID: 6737797975797298180}
   minColor: {r: 1, g: 0.93979645, b: 0, a: 1}
   maxColor: {r: 1, g: 0, b: 0, a: 1}
-  bowShotSFX: {fileID: 11400000, guid: edcf898b4b2e9874ba05c4cc7c667fac, type: 2}
-  bowWindUpSFX: {fileID: 11400000, guid: e2102ffedcb74e548a7c943c7871326d, type: 2}
 --- !u!114 &6704422319109240639
 MonoBehaviour:
   m_ObjectHideFlags: 0

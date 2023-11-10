@@ -479,16 +479,13 @@ MonoBehaviour:
   projectileSpeed: 12
   spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 0b53ec8e121e72f43a40f849be1cc247, type: 3}
-  audioSource: {fileID: 0}
+  soundSO: {fileID: 11400000, guid: 01a076e3bcdbe9a4889f9fd61cb18e1e, type: 2}
   BulletSpawnPoint: {fileID: 6820443232250149194}
   weaponID: 5
   weaponOffset: {x: 0, y: 0, z: 0}
   weaponRotationOffset: {x: 0, y: 0, z: 0}
-  pickUpSoundAudioSource: {fileID: 0}
   weaponEquipText: {fileID: 434639461031808662}
   weaponCollider: {fileID: 0}
-  weaponPickupSFX: {fileID: 11400000, guid: 60cbd8d5baca08844af90d8417edc947, type: 2}
-  weaponDropSFX: {fileID: 11400000, guid: 4fecdca4699ad13469649196f094e19d, type: 2}
   <weaponIcon>k__BackingField: {fileID: 21300000, guid: c075e4f264781bb49af4f317dab3f7bc, type: 3}
   <weaponDescription>k__BackingField: When charged and released it goes BOOM!
   minRange: 2.5
@@ -497,7 +494,6 @@ MonoBehaviour:
   minColor: {r: 1, g: 0.9411765, b: 0, a: 1}
   maxColor: {r: 1, g: 0, b: 0, a: 1}
   chargeTime: 0
-  grenadeLauncherShotSFX: {fileID: 11400000, guid: 0183ab3c4f81cef4182290c8bd3cc82a, type: 2}
 --- !u!114 &7577617672211074472
 MonoBehaviour:
   m_ObjectHideFlags: 0

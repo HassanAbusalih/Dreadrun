@@ -14,18 +14,17 @@ public class AttackSpeedPotion : ItemBase
 
     [SerializeField] GameObject timerPrefab;
     Player playerRef;
-
-    [SerializeField] SoundSO attackSpeedSFX;
-
     public override void UseOnSelf(Player player)
     {
         hasBuffedItem = true;
-        defaultProjectileSpeed = player.playerWeapon.ProjectileSpeed;
-        player.playerWeapon.ProjectileSpeed += increaseProjectileSpeed;
-        attackSpeedSFX.Play();
-        Debug.Log("Increased Projectile speed");
-        GetTimer();
-        playerRef = player;
+        if (player.playerWeapon != null)
+        {
+            defaultProjectileSpeed = player.playerWeapon.ProjectileSpeed;
+            player.playerWeapon.ProjectileSpeed += increaseProjectileSpeed;
+            Debug.Log("Increased Projectile speed");
+            GetTimer();
+            playerRef = player;
+        }
     }
 
     void GetTimer()
@@ -40,5 +39,6 @@ public class AttackSpeedPotion : ItemBase
         playerRef.playerWeapon.ProjectileSpeed = defaultProjectileSpeed;
         hasBuffedItem = false;
     }
+
 }
 

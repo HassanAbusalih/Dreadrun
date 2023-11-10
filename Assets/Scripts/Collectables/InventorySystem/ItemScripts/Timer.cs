@@ -5,16 +5,17 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    float timer=0;
-    float duration=0;
+    float timer = 0;
+    float duration = 0;
     bool timerStarts;
 
     public Action onTimerMet;
     [SerializeField] SoundSO finishedTimerSFX;
+    AudioSource audioSource;
 
     public void SetTimerAndDuration(float timer, float duration)
     {
-        this.timer = timer; 
+        this.timer = timer;
         this.duration = duration;
         timerStarts = true;
     }
@@ -26,12 +27,12 @@ public class Timer : MonoBehaviour
     void TimerSet()
     {
         timer += Time.deltaTime;
-        if(timer > duration && timerStarts)
+        if (timer > duration && timerStarts)
         {
             onTimerMet?.Invoke();
             timerStarts = false;
+            finishedTimerSFX.PlaySound(ref audioSource, 0, this.gameObject, false, false);
             Destroy(gameObject);
-            finishedTimerSFX.Play();
         }
     }
 }

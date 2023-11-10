@@ -223,8 +223,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df69244d340cce74294bd80c2fa7e37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controllerEnabled: 0
   pickUpWeaponKey: 101
   dropWeaponKey: 113
+  controllerPickUp: 0
+  controllerDrop: 0
   playerStats:
     health: 0
     maxHealth: 100
@@ -235,8 +238,8 @@ MonoBehaviour:
     Range: 1
     Spread: 1
     speed: 15
-  healthBar: {fileID: 0}
-  staminaBar: {fileID: 0}
+  healthBar: {fileID: 5692323966559541926}
+  staminaBar: {fileID: 5692323966483992306}
   weaponEquipPosition: {fileID: 8117153054145766768}
   weaponIDsSO: {fileID: 11400000, guid: f035bc046c8350b4f8f8a93b58d9f72c, type: 2}
   playerWeapon: {fileID: 0}
@@ -253,6 +256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b41121c7b2d1b4eb52c093d57090ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 0
+  controllerEnabled: 0
 --- !u!54 &8117153053641499624
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -287,7 +292,7 @@ MonoBehaviour:
   expAmountToLevelUp: 50
   perkSelector: {fileID: 0}
   expmanager: {fileID: 0}
-  levelUpSFX: {fileID: 0}
+  levelUpSFX: {fileID: 11400000, guid: 40ea079c75b8e8f42b5069a3548ed6dc, type: 2}
 --- !u!135 &2075876340
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1355,6 +1360,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7741635090044817169, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
   m_PrefabInstance: {fileID: 7143710627606292096}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5692323966483992306 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3304723529624152178, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
+  m_PrefabInstance: {fileID: 7143710627606292096}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5692323966559541926 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3304723529716382758, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
+  m_PrefabInstance: {fileID: 7143710627606292096}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5692323968055211548 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3304723531215442076, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
