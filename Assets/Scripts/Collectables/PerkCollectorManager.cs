@@ -31,7 +31,6 @@ public class PerkCollectorManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         ICollectable collectable = other.GetComponent<ICollectable>();
-
         if (collectable != null)
         {
             Perk perk = collectable.Collect() as Perk;

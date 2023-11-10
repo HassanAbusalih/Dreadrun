@@ -72,6 +72,7 @@ public class Dashing : MonoBehaviour
 
     IEnumerator StartDash(Vector3 dashDirection)
     {
+        rb.constraints = RigidbodyConstraints.FreezePositionY;
         isDashing = true;
         rb.useGravity = false;
         rb.freezeRotation = true;
@@ -96,6 +97,8 @@ public class Dashing : MonoBehaviour
         rb.useGravity = true;
         rb.freezeRotation = false;
         EnableInvincibility(false);
+        rb.constraints = RigidbodyConstraints.None;
+
     }
 
     void EnableInvincibility(bool _enabled)
