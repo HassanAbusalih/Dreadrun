@@ -85,7 +85,7 @@ public class RandomEnemySpawner : PickableBaseSpawning
         float _totalPossibleEnemiesToSpawn = maxAmountOfEnemiesToSpawn;
         float _totalSpawnPoints = EnemySpawnPoints.Count;
         if (_totalPossibleEnemiesToSpawn < _totalSpawnPoints) return;
-        Debug.LogError("There are not enough spawn points to spawn all the ENEMIES, try reducing the minimum amounts of certain items");
+        //Debug.LogError("There are not enough spawn points to spawn all the ENEMIES, try reducing the minimum amounts of certain items");
     }
 }
 #if UNITY_EDITOR
