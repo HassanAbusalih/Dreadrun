@@ -10,7 +10,9 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField] protected float projectileSpeed = 1;
     [SerializeField] protected float spreadAngle = 30;
     [SerializeField] protected GameObject projectilePrefab;
-    [SerializeField] protected AudioSource audioSource;
+    [SerializeField] protected SoundSO soundSO;
+    protected AudioSource audioSource;
+
     public float FireRate { get => fireRate; set => fireRate = value; }
     public float ProjectileRange { get => projectileRange; set => projectileRange = value; }
     public float ProjectileSpeed { get => projectileSpeed; set => projectileSpeed = value; }

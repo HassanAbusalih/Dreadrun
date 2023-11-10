@@ -30,7 +30,6 @@ public class Player : MonoBehaviour, IDamagable
     public takeDamage canPLayerTakeDamage;
 
     [SerializeField] SoundSO takeDamageSFX;
-    float timer;
 
     private void OnEnable()
     {
@@ -55,6 +54,7 @@ public class Player : MonoBehaviour, IDamagable
         playerStats.stamina = playerStats.maxStamina;
         InitializePlayerUI(healthBar, playerStats.maxHealth, playerStats.health);
         InitializePlayerUI(staminaBar, playerStats.maxStamina, playerStats.stamina);
+        currentWeaponID = 0;
     }
 
     void InitializePlayerUI(Slider playerUiBar, float MaxValue, float CurrentValue)
@@ -68,7 +68,9 @@ public class Player : MonoBehaviour, IDamagable
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        rb.velocity = new Vector3(horizontal * playerStats.speed, rb.velocity.y, vertical * playerStats.speed);
+        Vector3 movement = new Vector3(horizontal, 0, vertical);
+        movement = movement.normalized * playerStats.speed;
+        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
         PickUpUnequippedWeapon();
         DropCurrentWeapon();
     }

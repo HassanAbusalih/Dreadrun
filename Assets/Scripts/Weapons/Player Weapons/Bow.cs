@@ -12,10 +12,6 @@ public class Bow : PlayerWeapon
     [SerializeField] Color maxColor;
     float chargeTime = 0;
 
-    [Header("BowSound")]
-    [SerializeField] SoundSO bowShotSFX;
-    [SerializeField] SoundSO bowWindUpSFX;
-
     bool hasPlayedWindUpSFX = false;
 
     void Update()
@@ -26,14 +22,13 @@ public class Bow : PlayerWeapon
             chargeTime = Mathf.Min(chargeTime + Time.deltaTime, fireRate);
             if (!hasPlayedWindUpSFX)
             {
-                bowWindUpSFX.Play();
+                soundSO.PlaySound(ref audioSource, 3, this.gameObject);
                 hasPlayedWindUpSFX = true;
             }
 
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0) || Input.GetButtonUp("shoot"))
         {
-            bowShotSFX.Play();
             Attack();
             chargeTime = 0;
             hasPlayedWindUpSFX = false;
@@ -48,7 +43,7 @@ public class Bow : PlayerWeapon
         float currentSpeed = Mathf.Lerp(minSpeed, projectileRange, chargeTime / fireRate);
         GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + transform.forward, transform.rotation);
         projectile.GetComponent<Projectile>().Initialize(currentDamage, currentSpeed, currentRange, 8, effects);
-        if (audioSource != null) audioSource.Play();
+        soundSO.PlaySound(ref audioSource, 2, this.gameObject);
     }
 
     void VisualFeedback()

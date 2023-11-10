@@ -12,14 +12,11 @@ public class SpeedPotion : ItemBase
     [SerializeField] GameObject timerPrefab;
     Player playerRef;
 
-    [SerializeField] SoundSO speedPotionSFX;
-
     public override void UseOnSelf(Player player)
     {
         hasBuffedItem = true;
         defaultSpeed = player.playerStats.speed;
         player.playerStats.speed = speedIncrease;
-        speedPotionSFX.Play();
 
         Debug.Log("Speed increased");
         GetTimer();
