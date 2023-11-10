@@ -12,6 +12,7 @@ public class Dashing : MonoBehaviour
     [SerializeField] float dashForce; 
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
+    [SerializeField] AnimationCurve dashCurve;
     [SerializeField] float staminaCost;
     [SerializeField] bool isDashing;
     [SerializeField] Color dashColor;
@@ -65,7 +66,6 @@ public class Dashing : MonoBehaviour
             float currentStamina = canPlayerDash?.Invoke() ?? 0f;
             if (currentStamina <= 0) return;
             Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
-
             StartCoroutine(StartDash(dashDirection));
         }
     }
@@ -83,8 +83,10 @@ public class Dashing : MonoBehaviour
 
         while (elapsedTime < dashDuration && isDashing)
         {
-            Vector3 newPosition = Vector3.MoveTowards(transform.position, endPosition, Time.deltaTime * (dashDistance / dashDuration));
-            rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
+            
+            float dashProgress = elapsedTime / dashDuration;
+            Vector3 _dashForce = Vector3.Lerp(Vector3.zero, dashDirection *dashForce, dashCurve.Evaluate(dashProgress));
+            rb.AddForce(_dashForce, ForceMode.Impulse);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
