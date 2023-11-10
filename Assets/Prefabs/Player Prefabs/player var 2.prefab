@@ -130,10 +130,10 @@ GameObject:
   - component: {fileID: 8117153053641499627}
   - component: {fileID: 8117153053641499624}
   - component: {fileID: 2493309698041285641}
-  - component: {fileID: 2075876340}
   - component: {fileID: 1051192184}
   - component: {fileID: 8117153054539464799}
   - component: {fileID: 1993931373}
+  - component: {fileID: 6732823299735300801}
   m_Layer: 6
   m_Name: player var 2
   m_TagString: Player
@@ -294,19 +294,6 @@ MonoBehaviour:
   perkSelector: {fileID: 0}
   expmanager: {fileID: 0}
   levelUpSFX: {fileID: 11400000, guid: 40ea079c75b8e8f42b5069a3548ed6dc, type: 2}
---- !u!135 &2075876340
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8117153053641499625}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1051192184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +355,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acquiredPerks: []
+--- !u!65 &6732823299735300801
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8117153053641499625}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8, y: 2.726113, z: 1.5}
+  m_Center: {x: 0, y: 1.4630563, z: -0.25}
 --- !u!1 &8117153054145766769
 GameObject:
   m_ObjectHideFlags: 0
