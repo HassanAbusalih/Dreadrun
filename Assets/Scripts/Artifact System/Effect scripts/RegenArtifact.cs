@@ -7,8 +7,12 @@ public class RegenArtifact : Artifact
     [SerializeField] private float regenPerSecondPerLevel;
 
     private float TotalHealthRegenPerSecond => level * regenPerSecondPerLevel;
+    private Coroutine regenRoutine = null;
 
-    public override void InitializeArtifact() { }
+    public override void InitializeArtifact()
+    {
+        regenRoutine = null;
+    }
 
     public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager manager)
     {
@@ -16,14 +20,22 @@ public class RegenArtifact : Artifact
         {
             if ((player.transform.position - artifactPosition).sqrMagnitude <= effectRange * effectRange)
             {
-                manager.StartCoroutine(RegenHealth(player));
+                regenRoutine = manager.StartCoroutine(RegenHealth(player));
+            }
+            else
+            {
+                if (regenRoutine != null)
+                    manager.StopCoroutine(regenRoutine);
             }
         }
     }
 
     private IEnumerator RegenHealth(Player player)
     {
-        player.playerStats.health += TotalHealthRegenPerSecond;
-        yield return new WaitForSeconds(1);
+        while (player.playerStats.health < player.playerStats.maxHealth)
+        {
+            player.playerStats.health += TotalHealthRegenPerSecond;
+            yield return new WaitForSeconds(1);
+        }
     }
 }
