@@ -234,20 +234,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df69244d340cce74294bd80c2fa7e37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  dashDistance: 0
-  dashDuration: 0
-  isDashing: 0
-  isInvincible: 0
-  ground:
-    serializedVersion: 2
-    m_Bits: 0
-  dashColor: {r: 0, g: 0, b: 0, a: 0}
-  dodge: 0
+  controllerEnabled: 0
   pickUpWeaponKey: 101
   dropWeaponKey: 113
-  healthBar: {fileID: 0}
-  staminaBar: {fileID: 0}
+  controllerPickUp: 0
+  controllerDrop: 0
   playerStats:
     health: 0
     maxHealth: 0
@@ -258,10 +249,12 @@ MonoBehaviour:
     Range: 0
     Spread: 0
     speed: 0
-  playerWeapon: {fileID: 0}
+  healthBar: {fileID: 0}
+  staminaBar: {fileID: 0}
   weaponEquipPosition: {fileID: 0}
   weaponIDsSO: {fileID: 0}
-  currentWeaponID: 0
+  playerWeapon: {fileID: 0}
+  takeDamageSFX: {fileID: 0}
 --- !u!54 &13989984
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5547,20 +5540,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df69244d340cce74294bd80c2fa7e37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  dashDistance: 0
-  dashDuration: 0
-  isDashing: 0
-  isInvincible: 0
-  ground:
-    serializedVersion: 2
-    m_Bits: 0
-  dashColor: {r: 0, g: 0, b: 0, a: 0}
-  dodge: 0
+  controllerEnabled: 0
   pickUpWeaponKey: 101
   dropWeaponKey: 113
-  healthBar: {fileID: 0}
-  staminaBar: {fileID: 0}
+  controllerPickUp: 0
+  controllerDrop: 0
   playerStats:
     health: 0
     maxHealth: 0
@@ -5571,10 +5555,12 @@ MonoBehaviour:
     Range: 0
     Spread: 0
     speed: 0
-  playerWeapon: {fileID: 0}
+  healthBar: {fileID: 0}
+  staminaBar: {fileID: 0}
   weaponEquipPosition: {fileID: 0}
   weaponIDsSO: {fileID: 0}
-  currentWeaponID: 0
+  playerWeapon: {fileID: 0}
+  takeDamageSFX: {fileID: 0}
 --- !u!54 &543866994
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5622,32 +5608,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathColor: {r: 0, g: 1, b: 0, a: 1}
   pathNodes:
-  - {fileID: 595886071}
-  - {fileID: 923341638}
-  - {fileID: 288066015}
-  - {fileID: 1982760988}
-  - {fileID: 270996478}
-  - {fileID: 711040179}
-  - {fileID: 198018542}
-  - {fileID: 1021003397}
-  - {fileID: 1678495462}
-  - {fileID: 627088804}
-  - {fileID: 1498275224}
-  - {fileID: 602893549}
-  - {fileID: 1996932504}
-  - {fileID: 1430598296}
-  - {fileID: 1207416300}
-  - {fileID: 472453762}
-  - {fileID: 58993829}
-  - {fileID: 1545193262}
-  - {fileID: 336572219}
-  - {fileID: 292739246}
-  - {fileID: 651732876}
-  - {fileID: 1260162409}
-  - {fileID: 210840885}
-  - {fileID: 1584217628}
-  nodesContainer:
-  - {fileID: 592051404}
   - {fileID: 595886071}
   - {fileID: 923341638}
   - {fileID: 288066015}
@@ -5950,17 +5910,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &845159955 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1133649110603294764, guid: c0d96f86fd8f20c43ae79d1f6059cbe6, type: 3}
-  m_PrefabInstance: {fileID: 1133649110898996799}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &923341637
 GameObject:
   m_ObjectHideFlags: 0
@@ -5992,11 +5941,6 @@ Transform:
   m_Father: {fileID: 592051404}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!223 &992507297 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 1133649110448604062, guid: c0d96f86fd8f20c43ae79d1f6059cbe6, type: 3}
-  m_PrefabInstance: {fileID: 1133649110898996799}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1021003396
 GameObject:
   m_ObjectHideFlags: 0
@@ -6225,6 +6169,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1076379060, guid: b6d4bbee7506ae84084ee0a798dbc81f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3431555032321860646, guid: b6d4bbee7506ae84084ee0a798dbc81f, type: 3}
       propertyPath: m_Name
       value: Payload Holder
@@ -6273,14 +6221,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8076904364686084284, guid: b6d4bbee7506ae84084ee0a798dbc81f, type: 3}
-      propertyPath: checkpointUI
-      value: 
-      objectReference: {fileID: 992507297}
-    - target: {fileID: 8076904364686084284, guid: b6d4bbee7506ae84084ee0a798dbc81f, type: 3}
-      propertyPath: checkpointTimeBar
-      value: 
-      objectReference: {fileID: 845159955}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6d4bbee7506ae84084ee0a798dbc81f, type: 3}
 --- !u!1 &1379664150
@@ -6394,20 +6334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df69244d340cce74294bd80c2fa7e37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  dashDistance: 0
-  dashDuration: 0
-  isDashing: 0
-  isInvincible: 0
-  ground:
-    serializedVersion: 2
-    m_Bits: 0
-  dashColor: {r: 0, g: 0, b: 0, a: 0}
-  dodge: 0
+  controllerEnabled: 0
   pickUpWeaponKey: 101
   dropWeaponKey: 113
-  healthBar: {fileID: 0}
-  staminaBar: {fileID: 0}
+  controllerPickUp: 0
+  controllerDrop: 0
   playerStats:
     health: 0
     maxHealth: 0
@@ -6418,10 +6349,12 @@ MonoBehaviour:
     Range: 0
     Spread: 0
     speed: 0
-  playerWeapon: {fileID: 0}
+  healthBar: {fileID: 0}
+  staminaBar: {fileID: 0}
   weaponEquipPosition: {fileID: 0}
   weaponIDsSO: {fileID: 0}
-  currentWeaponID: 0
+  playerWeapon: {fileID: 0}
+  takeDamageSFX: {fileID: 0}
 --- !u!54 &1379664156
 Rigidbody:
   m_ObjectHideFlags: 0

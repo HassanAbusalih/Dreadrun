@@ -7,7 +7,7 @@ public class ExplosiveArtifact : Artifact
     [SerializeField] private float explosionDamagePerLevel;
     [SerializeField] private float pushBackForcePerLevel;
     [SerializeField] private float explosionRadius;
-    [SerializeField] private int enemiesRequiredForExplosion;
+    [SerializeField] private int enemiesRequired;
     [SerializeField] private int explosionCooldown;
     [SerializeField] private LayerMask enemyLayer;
 
@@ -28,7 +28,7 @@ public class ExplosiveArtifact : Artifact
 
         Collider[] enemiesInRange = Physics.OverlapSphere(artifactPosition, effectRange, enemyLayer);
 
-        if (enemiesInRange.Length < enemiesRequiredForExplosion) return;
+        if (enemiesInRange.Length < enemiesRequired) return;
 
         foreach (Collider enemy in enemiesInRange)
         {
