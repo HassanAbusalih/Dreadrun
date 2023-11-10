@@ -26,7 +26,7 @@ public class Bow : PlayerWeapon
             chargeTime = Mathf.Min(chargeTime + Time.deltaTime, fireRate);
             if (!hasPlayedWindUpSFX)
             {
-                bowWindUpSFX.Play();
+                PlaySound(ref audioSource, bowWindUpSFX);
                 hasPlayedWindUpSFX = true;
             }
 

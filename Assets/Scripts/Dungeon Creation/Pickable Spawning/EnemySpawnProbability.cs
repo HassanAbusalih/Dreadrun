@@ -7,6 +7,6 @@ using UnityEngine;
 public class EnemySpawnProbability
 {
     public GameObject enemyPrefab;
-    public float probabilityToSpawn;
+    [Range(0,100)]public float probabilityToSpawn;
 
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -8,41 +6,22 @@ public class SoundSO : ScriptableObject
 {
     [SerializeField] AudioMixerGroup mixerGroup;
     public AudioClip clips;
-    [HideInInspector]
-    public AudioSource audioSource;
 
-    public AudioSource Play(bool isLooping = false)
+    public AudioSource Play(AudioSource newSource = null, bool isLooping = false)
     {
-
-        AudioSource source = null;
+        AudioSource source = newSource;
         if (source == null)
         {
             GameObject obj = new GameObject("Sound", typeof(AudioSource));
             source = obj.GetComponent<AudioSource>();
-            audioSource = source;
             source.outputAudioMixerGroup = mixerGroup;
         }
 
         source.clip = clips;
         source.playOnAwake = false;
         source.loop = isLooping;
-        source.Play();
-
-        if (source.loop == true)
-        {
-            return source;
-        }
-        audioSource = null;
-        Destroy(source.gameObject, source.clip.length / source.pitch);
+        source.PlayOneShot(clips);
 
         return source;
-    }
-    public AudioSource Stop()
-    {
-        if (audioSource != null)
-        {
-            audioSource.Stop();
-        }
-        return audioSource;
     }
 }

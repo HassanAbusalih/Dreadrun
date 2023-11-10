@@ -4279,7 +4279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6582194848177568909, guid: 5b94a63d94ef1ef4aa4e08ee49965d0c, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6582194848177568909, guid: 5b94a63d94ef1ef4aa4e08ee49965d0c, type: 3}
       propertyPath: m_LocalScale.x
@@ -7571,11 +7571,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 5791127613756451101, guid: b0ba983eed78ddc4b824be9bbee03c98, type: 3}
   activationRadius: 30
-  spawnRadius: 5
-  timeBetweenSpawns: 2
-  spawnInside: 1
-  limitSpawnAmount: 1
+  timeBetweenBatches: 3
+  batchSize: 5
   maxSpawnCount: 2
+  spawnPosition: {fileID: 0}
+  spawnOffset: {x: 1, y: 0, z: 1}
 --- !u!1001 &177402488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8573,9 +8573,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  detectionRange: 15
   movementSpeed: 100
-  damageOnHit: 5
+  detectionRange: 15
+  attackRange: 2
+  attackCooldown: 1.5
+  dashSpeedModifier: 5
+  chargeSpeedModifier: 0.5
+  chargeTime: 1
+  dashTime: 0.2
 --- !u!54 &198052459
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8707,11 +8712,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 5791127613756451101, guid: b0ba983eed78ddc4b824be9bbee03c98, type: 3}
   activationRadius: 45
-  spawnRadius: 5
-  timeBetweenSpawns: 0.5
-  spawnInside: 1
-  limitSpawnAmount: 1
+  timeBetweenBatches: 3
+  batchSize: 5
   maxSpawnCount: 15
+  spawnPosition: {fileID: 0}
+  spawnOffset: {x: 1, y: 0, z: 1}
 --- !u!1001 &199415722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10333,9 +10338,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  detectionRange: 15
   movementSpeed: 100
-  damageOnHit: 5
+  detectionRange: 15
+  attackRange: 2
+  attackCooldown: 1.5
+  dashSpeedModifier: 5
+  chargeSpeedModifier: 0.5
+  chargeTime: 1
+  dashTime: 0.2
 --- !u!54 &256195222
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16283,11 +16293,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 5791127613756451101, guid: b0ba983eed78ddc4b824be9bbee03c98, type: 3}
   activationRadius: 50
-  spawnRadius: 5
-  timeBetweenSpawns: 0.2
-  spawnInside: 1
-  limitSpawnAmount: 1
+  timeBetweenBatches: 3
+  batchSize: 5
   maxSpawnCount: 3
+  spawnPosition: {fileID: 0}
+  spawnOffset: {x: 1, y: 0, z: 1}
 --- !u!1 &454883753 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 376768229676222338, guid: 7be4a5b5ae966f64dbf5d0f3fdb700f6, type: 3}
@@ -16857,7 +16867,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &463321519
 MonoBehaviour:
@@ -16923,9 +16933,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  detectionRange: 15
   movementSpeed: 100
-  damageOnHit: 5
+  detectionRange: 15
+  attackRange: 2
+  attackCooldown: 1.5
+  dashSpeedModifier: 5
+  chargeSpeedModifier: 0.5
+  chargeTime: 1
+  dashTime: 0.2
 --- !u!54 &463724488
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20017,11 +20032,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 5791127613756451101, guid: b0ba983eed78ddc4b824be9bbee03c98, type: 3}
   activationRadius: 30
-  spawnRadius: 5
-  timeBetweenSpawns: 1
-  spawnInside: 1
-  limitSpawnAmount: 1
+  timeBetweenBatches: 3
+  batchSize: 5
   maxSpawnCount: 3
+  spawnPosition: {fileID: 0}
+  spawnOffset: {x: 1, y: 0, z: 1}
 --- !u!1001 &544516363
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21091,7 +21106,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27024,9 +27039,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  detectionRange: 15
   movementSpeed: 100
-  damageOnHit: 5
+  detectionRange: 15
+  attackRange: 2
+  attackCooldown: 1.5
+  dashSpeedModifier: 5
+  chargeSpeedModifier: 0.5
+  chargeTime: 1
+  dashTime: 0.2
 --- !u!54 &761965444
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -37901,6 +37921,14 @@ PrefabInstance:
       propertyPath: expAmountToLevelUp
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 5692323967105727851, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5692323967952561764, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8117153053641499622, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -39062,7 +39090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1591820781244675858, guid: ed8fb8067e7c15d46aa510d897f76841, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1591820781244675858, guid: ed8fb8067e7c15d46aa510d897f76841, type: 3}
       propertyPath: m_LocalPosition.x
@@ -39996,6 +40024,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6635840385820850471, guid: cc3fca89652ebc74aab16170bdac5002, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4284073130835332840, guid: cc3fca89652ebc74aab16170bdac5002, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -47484,9 +47516,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  detectionRange: 15
   movementSpeed: 100
-  damageOnHit: 5
+  detectionRange: 15
+  attackRange: 2
+  attackCooldown: 1.5
+  dashSpeedModifier: 5
+  chargeSpeedModifier: 0.5
+  chargeTime: 1
+  dashTime: 0.2
 --- !u!54 &1299817434
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -48908,9 +48945,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  detectionRange: 15
   movementSpeed: 100
-  damageOnHit: 5
+  detectionRange: 15
+  attackRange: 2
+  attackCooldown: 1.5
+  dashSpeedModifier: 5
+  chargeSpeedModifier: 0.5
+  chargeTime: 1
+  dashTime: 0.2
 --- !u!54 &1328453740
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -49588,11 +49630,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 5791127613756451101, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
   activationRadius: 60
-  spawnRadius: 5
-  timeBetweenSpawns: 0.1
-  spawnInside: 1
-  limitSpawnAmount: 1
+  timeBetweenBatches: 3
+  batchSize: 5
   maxSpawnCount: 20
+  spawnPosition: {fileID: 0}
+  spawnOffset: {x: 1, y: 0, z: 1}
 --- !u!1 &1353198967
 GameObject:
   m_ObjectHideFlags: 0
@@ -50044,7 +50086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3552099269844985627, guid: 353d787a28da0b842b0e381f38fe57b1, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3552099269844985627, guid: 353d787a28da0b842b0e381f38fe57b1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55093,9 +55135,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  detectionRange: 15
   movementSpeed: 100
-  damageOnHit: 5
+  detectionRange: 15
+  attackRange: 2
+  attackCooldown: 1.5
+  dashSpeedModifier: 5
+  chargeSpeedModifier: 0.5
+  chargeTime: 1
+  dashTime: 0.2
 --- !u!54 &1480006440
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -60170,13 +60217,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1592561178}
     m_Modifications:
+    - target: {fileID: 1954216400, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -36.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1954216400, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 45.7
+      objectReference: {fileID: 0}
     - target: {fileID: 1120472868554901372, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1120472868554901372, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -150.19
+      value: -110.72
       objectReference: {fileID: 0}
     - target: {fileID: 1120472868554901372, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
       propertyPath: m_LocalPosition.y
@@ -60184,7 +60239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1120472868554901372, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.12
+      value: -38.75
       objectReference: {fileID: 0}
     - target: {fileID: 1120472868554901372, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
       propertyPath: m_LocalRotation.w
@@ -60228,7 +60283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1120472868554901375, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
       propertyPath: activationRadius
-      value: 75
+      value: 9.65
       objectReference: {fileID: 0}
     - target: {fileID: 1120472868554901375, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
       propertyPath: timeBetweenSpawns
@@ -60557,9 +60612,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  detectionRange: 15
   movementSpeed: 100
-  damageOnHit: 5
+  detectionRange: 15
+  attackRange: 2
+  attackCooldown: 1.5
+  dashSpeedModifier: 5
+  chargeSpeedModifier: 0.5
+  chargeTime: 1
+  dashTime: 0.2
 --- !u!54 &1615140082
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -61039,7 +61099,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1120472868554901372, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1120472868554901372, guid: 4925b2f9cccd4bd4786b36c3cd778753, type: 3}
       propertyPath: m_LocalPosition.x
@@ -62685,11 +62745,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 5791127613756451101, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
   activationRadius: 15
-  spawnRadius: 5
-  timeBetweenSpawns: 1
-  spawnInside: 1
-  limitSpawnAmount: 1
+  timeBetweenBatches: 3
+  batchSize: 5
   maxSpawnCount: 5
+  spawnPosition: {fileID: 0}
+  spawnOffset: {x: 1, y: 0, z: 1}
 --- !u!1 &1677041010 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6751101236397314955, guid: 05d19acb26eb13644b9ca23365b55675, type: 3}
@@ -65400,24 +65460,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3583066881149013968, guid: 62bb9be98711802448e135069d902808, type: 3}
   m_PrefabInstance: {fileID: 1987255209}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1756935272 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1533704253, guid: 8e640c33fab1c594596be3814f15c058, type: 3}
-  m_PrefabInstance: {fileID: 1294510459}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1756935277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1756935272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ea7f96e971d564795b94d2aa6358dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  increaseDamage: 5
 --- !u!4 &1757544690 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5143642477035303783, guid: 6eb936ceaf7471047abe3cdd1302eee8, type: 3}
@@ -65824,9 +65866,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  detectionRange: 15
   movementSpeed: 100
-  damageOnHit: 5
+  detectionRange: 15
+  attackRange: 2
+  attackCooldown: 1.5
+  dashSpeedModifier: 5
+  chargeSpeedModifier: 0.5
+  chargeTime: 1
+  dashTime: 0.2
 --- !u!54 &1766558798
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -68146,9 +68193,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  detectionRange: 15
   movementSpeed: 100
-  damageOnHit: 5
+  detectionRange: 15
+  attackRange: 2
+  attackCooldown: 1.5
+  dashSpeedModifier: 5
+  chargeSpeedModifier: 0.5
+  chargeTime: 1
+  dashTime: 0.2
 --- !u!54 &1808697676
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -68989,11 +69041,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 5791127613756451101, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
   activationRadius: 20
-  spawnRadius: 5
-  timeBetweenSpawns: 1
-  spawnInside: 1
-  limitSpawnAmount: 1
+  timeBetweenBatches: 3
+  batchSize: 5
   maxSpawnCount: 15
+  spawnPosition: {fileID: 0}
+  spawnOffset: {x: 1, y: 0, z: 1}
 --- !u!1001 &1829407332
 PrefabInstance:
   m_ObjectHideFlags: 0
