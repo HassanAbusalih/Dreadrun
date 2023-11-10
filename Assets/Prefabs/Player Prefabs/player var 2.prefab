@@ -128,11 +128,11 @@ GameObject:
   - component: {fileID: 8117153053641499620}
   - component: {fileID: 8117153053641499626}
   - component: {fileID: 8117153053641499627}
+  - component: {fileID: 8117153054539464799}
   - component: {fileID: 8117153053641499624}
   - component: {fileID: 2493309698041285641}
   - component: {fileID: 2075876340}
   - component: {fileID: 1051192184}
-  - component: {fileID: 8117153054539464799}
   m_Layer: 6
   m_Name: player var 2
   m_TagString: Player
@@ -258,6 +258,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 0
   controllerEnabled: 0
+--- !u!114 &8117153054539464799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8117153053641499625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a00c21f4fe4060a409291960ce3acae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashForce: 1e+9
+  dashDistance: 15
+  dashDuration: 0.5
+  staminaCost: 0
+  isDashing: 0
+  dashColor: {r: 0.13264506, g: 0.2248548, b: 0.764151, a: 0.5529412}
+  dodge: 32
+  ground:
+    serializedVersion: 2
+    m_Bits: 2048
+  dashSFX: {fileID: 11400000, guid: 650607ad15d612c44bee73228ccaf994, type: 2}
 --- !u!54 &8117153053641499624
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -332,28 +355,6 @@ MonoBehaviour:
   descriptionText: {fileID: 8268336395281836070}
   emptySprite: {fileID: 21300000, guid: d4846583bfeb63d4586b331aa5322cfd, type: 3}
   pickUpItemSFX: {fileID: 11400000, guid: 99bfc8ccacd0fcf429304d3b0f7c14c3, type: 2}
---- !u!114 &8117153054539464799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8117153053641499625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a00c21f4fe4060a409291960ce3acae2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashDistance: 15
-  dashDuration: 0.2
-  staminaCost: 0
-  isDashing: 0
-  dashColor: {r: 0.13264506, g: 0.2248548, b: 0.764151, a: 0.5529412}
-  dodge: 32
-  ground:
-    serializedVersion: 2
-    m_Bits: 2048
-  dashSFX: {fileID: 11400000, guid: 650607ad15d612c44bee73228ccaf994, type: 2}
 --- !u!1 &8117153054145766769
 GameObject:
   m_ObjectHideFlags: 0
