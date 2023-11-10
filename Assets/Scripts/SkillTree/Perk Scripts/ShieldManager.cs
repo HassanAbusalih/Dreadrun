@@ -18,7 +18,7 @@ public class ShieldManager : MonoBehaviour
             playerShield.transform.position = player.transform.position;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && playerShield.shieldHP > 0)
+        if (Input.GetKey(KeyCode.LeftShift)|| Input.GetKey(KeyCode.JoystickButton2) && playerShield.shieldHP > 0)
         {
             playerShield.gameObject.SetActive(true);
             regenTimer = 0;
