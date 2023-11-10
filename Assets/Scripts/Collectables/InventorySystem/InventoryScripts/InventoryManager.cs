@@ -11,7 +11,6 @@ public class InventoryManager : MonoBehaviour
     public Sprite emptySprite;
     KeyCode[] keys = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
     [SerializeField] SoundSO pickUpItemSFX;
-    AudioSource audioSource;
     private int slotCounter = 0;
 
     void Start()
@@ -50,7 +49,7 @@ public class InventoryManager : MonoBehaviour
             if (item != null)
             {
                 AddItem(item);
-                pickUpItemSFX.PlaySound(ref audioSource, 0, this.gameObject);
+                pickUpItemSFX.Play();
                 Destroy(other.gameObject);
             }
         }
@@ -92,7 +91,6 @@ public class InventoryManager : MonoBehaviour
             if (item != null)
             {
                 item.UseOnSelf(player);
-                item.itemSound.PlaySound(ref audioSource, 0, this.gameObject);
                 inventory.inventoryList[slot] = null;
                 UpdateInventoryUISlot(slot, null);
                 slotCounter--;

@@ -13,10 +13,12 @@ public abstract class PlayerWeapon : WeaponBase
     [SerializeField] protected int weaponID;
     [SerializeField] Vector3 weaponOffset;
     [SerializeField] Vector3 weaponRotationOffset;
+    [SerializeField] AudioSource pickUpSoundAudioSource;
     [SerializeField] GameObject weaponEquipText;
     protected bool equipped;
     [SerializeField] Collider weaponCollider;
-
+    [SerializeField] SoundSO weaponPickupSFX;
+    [SerializeField] SoundSO weaponDropSFX;
 
     [field: SerializeField] public Sprite weaponIcon { get; private set; }
     [field: SerializeField] public string weaponDescription { get; private set; }
@@ -46,11 +48,13 @@ public abstract class PlayerWeapon : WeaponBase
         equipped = true;
         weaponCollider.isTrigger = true;
 
-        soundSO.PlaySound(ref audioSource, 0, this.gameObject);
+        weaponPickupSFX.Play();
 
         UpdateWeaponEffects();
         weaponPickedUpOrDropped?.Invoke(this);
         _iD = weaponID;
+
+        if (pickUpSoundAudioSource != null) pickUpSoundAudioSource.Play();
         if (weaponEquipText != null) weaponEquipText.SetActive(false);
     }
 
@@ -60,7 +64,7 @@ public abstract class PlayerWeapon : WeaponBase
         effects.Clear();
         equipped = false;
         weaponCollider.isTrigger = false;
-        soundSO.PlaySound(ref audioSource, 1, this.gameObject);
+        weaponDropSFX.Play();
         weaponPickedUpOrDropped?.Invoke(null);
         if (weaponEquipText != null) weaponEquipText.SetActive(true);
     }

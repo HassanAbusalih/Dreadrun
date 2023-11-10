@@ -9,10 +9,7 @@ public class AttackArtifact : Artifact
 
     private float TotalAttackIncrease => level * attackIncreasePerLevel;
 
-    public override void InitializeArtifact()
-    {
-           buffApplied = false;
-    }
+    public override void InitializeArtifact() { }
 
     public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager manager)
     {

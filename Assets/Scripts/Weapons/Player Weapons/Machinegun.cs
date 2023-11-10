@@ -7,6 +7,8 @@ public class Machinegun : PlayerWeapon
     [SerializeField] float rampDelay = 0.5f;
     float firingDuration;
 
+    [SerializeField] SoundSO machineGunSFX;
+
     void Update()
     {
         if (!equipped) { return; }
@@ -36,7 +38,7 @@ public class Machinegun : PlayerWeapon
         Quaternion projectileRotation = Quaternion.Euler(0, transform.eulerAngles.y + randomAngle, 0);
         GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + transform.forward, projectileRotation);
         projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8, effects);
-        soundSO.PlaySound(ref audioSource, 2, this.gameObject);
+        machineGunSFX.Play();
         
     }
 }

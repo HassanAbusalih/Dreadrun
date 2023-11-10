@@ -10,18 +10,20 @@ public class GrenadeLauncher : PlayerWeapon
     [SerializeField] Color minColor;
     [SerializeField] Color maxColor;
     public float chargeTime = 0;
+    [SerializeField] SoundSO grenadeLauncherShotSFX;
 
     private void Update()
     {
         if (!equipped) { return; }
-        if (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("shoot"))
+        if (Input.GetKey(KeyCode.Mouse0)||Input.GetButton("shoot"))
         {
             chargeTime = Mathf.Min(chargeTime + Time.deltaTime, fireRate);
-
+          
         }
-        else if (Input.GetKeyUp(KeyCode.Mouse0) || Input.GetButtonUp("shoot"))
+        else if (Input.GetKeyUp(KeyCode.Mouse0)|| Input.GetButtonUp("shoot"))
         {
             Attack();
+            grenadeLauncherShotSFX.Play();
             chargeTime = 0;
         }
         if (chargeIndicator != null) { VisualFeedback(); }
@@ -52,7 +54,7 @@ public class GrenadeLauncher : PlayerWeapon
         }
         GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + transform.forward, transform.rotation);
         projectile.GetComponent<Grenade>().Initialize(target, currentSpeed, damageModifier, 8, effects);
-        soundSO.PlaySound(ref audioSource, 2, this.gameObject);
+        if (audioSource != null) audioSource.Play();
     }
 
     void VisualFeedback()

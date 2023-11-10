@@ -35,24 +35,52 @@ public class PickablesSpawnManager : PickableBaseSpawning
     [SerializeField][Range(0, 100)] int HighExpOrbProbability = 10;
 
     [Header("Spawning Debug Stats")]
-    [SerializeField] int TotalLootPoints;
+    public int TotalLootQualityPoints;
     [SerializeField] private int weaponsSpawned;
     [SerializeField] private int consumablesSpawned;
     [SerializeField] private int expOrbsSpawned;
     [SerializeField] private int totalExpSpawnedInSoFar;
 
     [Header("SpawnPoints Info")]
-    public Transform SpawnPointsParent;
-    public List<Transform> PickableSpawnPoints = new List<Transform>();
+    [SerializeField] Transform allSpawnPointsParent;
+    public List<Transform> AllPickableSpawnPoints = new List<Transform>();
 
-    public Action<int> OnAllItemsSpawned;
-
+    private void Awake()
+    {
+        AllPickableSpawnPoints.RemoveAll(item => item == null);
+    }
     private void Start()
     {
         SpawnAllWeapons();
         SpawnAllExpOrbs();
         SpawnAllConsumables();
-        OnAllItemsSpawned?.Invoke(TotalLootPoints);
+    }
+
+    private void OnValidate()
+    {
+        ShowErrorWhenCantSpawnAllItems();
+        AddChildrenToSpawnPointsList();
+    }
+
+    public void AddChildrenToSpawnPointsList()
+    {
+        if (allSpawnPointsParent == null) { return; }
+        foreach (Transform child in allSpawnPointsParent)
+        {
+            if (AllPickableSpawnPoints.Contains(child)) { continue; }
+            AllPickableSpawnPoints.Add(child);
+        }
+        AllPickableSpawnPoints.RemoveAll(item => item == null);
+    }
+
+    void ShowErrorWhenCantSpawnAllItems()
+    {
+        float _totalItemsToSpawn = minimumWeaponsToSpawn + minimumConsumablesToSpawn + (minimumExpToSpawn/20);
+        float _totalSpawnPoints = AllPickableSpawnPoints.Count;
+        if (_totalItemsToSpawn > _totalSpawnPoints)
+        {
+            Debug.LogError("There are not enough spawn points to spawn all the items, try reducing the minimum amounts of certain items");
+        }
     }
 
     void SpawnAllWeapons()
@@ -61,7 +89,7 @@ public class PickablesSpawnManager : PickableBaseSpawning
         for (weaponsSpawned = 0; weaponsSpawned < minimumWeaponsToSpawn;)
         {
             if (weaponRarities.AllWeaponTypes.Count == 0) { return; }
-            if(PickableSpawnPoints.Count == 0) { return; }
+            if(AllPickableSpawnPoints.Count == 0) { return; }
             int _randomWeaponRarityNumber = Random.Range(0, 100);
 
             if (SpawnItemFromRarityTypes(weaponRarities.AllWeaponTypes, _randomWeaponRarityNumber,
@@ -79,7 +107,7 @@ public class PickablesSpawnManager : PickableBaseSpawning
         for (consumablesSpawned = 0; consumablesSpawned < minimumConsumablesToSpawn;)
         {
             if (consumableRarities.AllConsumableTypes.Count == 0) { return; }
-            if (PickableSpawnPoints.Count == 0) { return; }
+            if (AllPickableSpawnPoints.Count == 0) { return; }
             int _randomConsumableRarityNumber = Random.Range(0, 100);
 
             if (SpawnItemFromRarityTypes(consumableRarities.AllConsumableTypes, _randomConsumableRarityNumber,
@@ -97,7 +125,7 @@ public class PickablesSpawnManager : PickableBaseSpawning
         for (expOrbsSpawned = 0; totalExpSpawnedInSoFar < minimumExpToSpawn;)
         {
             if (expOrbRarities.AllExpOrbTypes.Count == 0) { return; }
-            if (PickableSpawnPoints.Count == 0) { return; }
+            if (AllPickableSpawnPoints.Count == 0) { return; }
             int _randomExpOrbRarityNumber = Random.Range(0, 100);
 
             if (SpawnExpOrbBasedOnProbability(expOrbRarities.AllExpOrbTypes, _randomExpOrbRarityNumber,
@@ -114,9 +142,9 @@ public class PickablesSpawnManager : PickableBaseSpawning
     {
         int _randomItemIndex = Random.Range(0, ItemRarityList.ItemRarityList.Count);
         GameObject _itemToSpawn = ItemRarityList.ItemRarityList[_randomItemIndex];
-        bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_itemToSpawn, PickableSpawnPoints);
+        bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_itemToSpawn, AllPickableSpawnPoints);
         if (!_isAbleToSpawn) return false;
-        TotalLootPoints += (int)ItemRarityList.ListRarityType;
+        TotalLootQualityPoints += (int)ItemRarityList.ListRarityType;
         _itemsSpawned++; return true;
     }
 
@@ -124,10 +152,10 @@ public class PickablesSpawnManager : PickableBaseSpawning
     protected bool SpawnExpOrbFromRarityList(ref int _itemsSpawned, List<ItemRarityClass> _ExpOrbRarityList, int _prefabIndex)
     {
         GameObject _expOrbToSpawn = _ExpOrbRarityList[_prefabIndex].Item;
-        bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_expOrbToSpawn, PickableSpawnPoints);
+        bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_expOrbToSpawn, AllPickableSpawnPoints);
         if (!_isAbleToSpawn) return false;
         totalExpSpawnedInSoFar += _expOrbToSpawn.GetComponent<ExpOrb>().ExpAmount;
-        TotalLootPoints += (int)_ExpOrbRarityList[_prefabIndex].RarityType;
+        TotalLootQualityPoints += (int)_ExpOrbRarityList[_prefabIndex].RarityType;
         _itemsSpawned++; return true;
     }
 
@@ -150,22 +178,6 @@ public class PickablesSpawnManager : PickableBaseSpawning
         return false;
     }
     #endregion
-
-    private void OnValidate()
-    {
-        ShowErrorWhenCantSpawnAllItems();
-        AddChildrenToSpawnPointsList(SpawnPointsParent, PickableSpawnPoints);
-    }
-
-    void ShowErrorWhenCantSpawnAllItems()
-    {
-        float _totalItemsToSpawn = minimumWeaponsToSpawn + minimumConsumablesToSpawn + (minimumExpToSpawn / 20);
-        float _totalSpawnPoints = PickableSpawnPoints.Count;
-        if (_totalItemsToSpawn > _totalSpawnPoints)
-        {
-            Debug.LogError("There are not enough spawn points to spawn all the items, try reducing the minimum amounts of certain items");
-        }
-    }
 }
 
 #if UNITY_EDITOR
@@ -179,7 +191,7 @@ public class PickableSpawningEditor : Editor
 
         if (GUILayout.Button("UpdateSpawnPointsList"))
         {
-            _pickablesSpawnManager.AddChildrenToSpawnPointsList(_pickablesSpawnManager.SpawnPointsParent, _pickablesSpawnManager.PickableSpawnPoints);
+            _pickablesSpawnManager.AddChildrenToSpawnPointsList();
         }
     }
 }

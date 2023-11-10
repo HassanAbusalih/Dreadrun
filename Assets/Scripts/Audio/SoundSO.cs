@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -5,52 +7,42 @@ using UnityEngine.Audio;
 public class SoundSO : ScriptableObject
 {
     [SerializeField] AudioMixerGroup mixerGroup;
-    public AudioClip[] audioClips;
+    public AudioClip clips;
+    [HideInInspector]
+    public AudioSource audioSource;
 
-    private AudioSource Play(int index, AudioSource newSource = null, bool isLooping = false, bool setAsChild = true)
+    public AudioSource Play(bool isLooping = false)
     {
-        AudioSource source = newSource;
+
+        AudioSource source = null;
         if (source == null)
         {
             GameObject obj = new GameObject("Sound", typeof(AudioSource));
             source = obj.GetComponent<AudioSource>();
+            audioSource = source;
             source.outputAudioMixerGroup = mixerGroup;
         }
+
+        source.clip = clips;
         source.playOnAwake = false;
         source.loop = isLooping;
-        source.PlayOneShot(GetSound(index));
-        if (!setAsChild)
+        source.Play();
+
+        if (source.loop == true)
         {
-            Destroy(source.gameObject, 1);
+            return source;
         }
+        audioSource = null;
+        Destroy(source.gameObject, source.clip.length / source.pitch);
+
         return source;
     }
-
-    public AudioClip GetSound(int index)
+    public AudioSource Stop()
     {
-        if (index < audioClips.Length)
+        if (audioSource != null)
         {
-            return audioClips[index];
+            audioSource.Stop();
         }
-        else
-        {
-            return null;
-        }
-    }
-
-    public void PlaySound(ref AudioSource source, int index, GameObject gameObject, bool isLooping = false, bool setAsChild = true)
-    {
-        if (source == null)
-        {
-            source = Play(index, null, isLooping, setAsChild);
-            if (setAsChild)
-            {
-                source.gameObject.transform.parent = gameObject.transform;
-            }
-        }
-        else
-        {
-            source.PlayOneShot(GetSound(index));
-        }
+        return audioSource;
     }
 }

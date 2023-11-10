@@ -33,12 +33,11 @@ public class PayloadUI : MonoBehaviour
     private void Start()
     {
         payloadPath = FindObjectOfType<PayloadPath>();
-        if (GameManager.Instance != null)
-            GameManager.Instance.onPhaseChange.AddListener(EnablePayloadUI);
+        GameManager.Instance.onPhaseChange.AddListener(EnablePayloadUI);
 
         totalPathLength = CalculateTotalPathLength();
         InstantiateCheckpointMarkers();
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     private void Update()

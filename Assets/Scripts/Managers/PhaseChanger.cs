@@ -1,4 +1,3 @@
-using System.Net;
 using UnityEngine;
 
 public class PhaseChanger : MonoBehaviour
@@ -18,8 +17,7 @@ public class PhaseChanger : MonoBehaviour
     private void Start()
     {
         playersInGame = FindObjectsOfType<Player>();
-        if (GameManager.Instance != null)
-            GameManager.Instance.onPhaseChange.AddListener(ChangePhase);
+        GameManager.Instance.onPhaseChange.AddListener(ChangePhase);
     }
 
     private void Update()
@@ -59,9 +57,7 @@ public class PhaseChanger : MonoBehaviour
 
     public void ChangePhase()
     {
-        if (wall != null)
-            wall.SetActive(false);
-
+        wall.SetActive(false);
         Destroy(this);
     }
     void OnDestroy()

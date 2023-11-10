@@ -5,6 +5,8 @@ public class Shotgun : PlayerWeapon
     [Header("Shotgun Properties")]
     [SerializeField] int degreesPerProjectile = 5;
 
+    [Header("Shotgun Sound")]
+    [SerializeField] SoundSO shotgunSFX;
     protected override void Start()
     {
         base.Start();
@@ -37,6 +39,6 @@ public class Shotgun : PlayerWeapon
             GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + projectileLocation, projectileRotation);
             projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8, effects);
         }
-        soundSO.PlaySound(ref audioSource, 2, this.gameObject);
+        shotgunSFX.Play();
     }
 }

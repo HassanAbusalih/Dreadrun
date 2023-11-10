@@ -17,7 +17,6 @@ public class Dashing : MonoBehaviour
     [SerializeField] KeyCode dodge = KeyCode.Space;
     [SerializeField] LayerMask ground;
     [SerializeField] SoundSO dashSFX;
-    AudioSource audioSource;
 
     bool isInvincible = false;
     Color defaultColor;
@@ -78,7 +77,7 @@ public class Dashing : MonoBehaviour
         float elapsedTime = 0f;
         EnableInvincibility(true);
         onDashing?.Invoke(-staminaCost);
-        dashSFX.PlaySound(ref audioSource, 0, this.gameObject);
+        dashSFX.Play();
         while (elapsedTime < dashDuration && isDashing)
         {
             Vector3 newPosition = Vector3.MoveTowards(transform.position, endPosition, Time.deltaTime * (dashDistance / dashDuration));

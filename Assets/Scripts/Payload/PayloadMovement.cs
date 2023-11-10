@@ -53,7 +53,7 @@ public class PayloadMovement : MonoBehaviour
                 else
                     StopPayload();
             }
-            else if (nextWayPointIndex > 0)
+            else
             {
                 reverseTimer -= Time.deltaTime;
 
@@ -94,7 +94,7 @@ public class PayloadMovement : MonoBehaviour
 
     private void FollowPathReverse(float speed)
     {
-        // Move the payload in reverse along the path
+        // Move the payload backward along the path
         isMovingForward = false;
 
         payloadUI.ChangePayloadStateDisplay(4);
@@ -119,7 +119,7 @@ public class PayloadMovement : MonoBehaviour
 
     private void StopPayload()
     {
-        // Stop the payload's movement using the payload's rigidbody
+        // Stop the payload's movement
         payloadUI.ChangePayloadStateDisplay(0);
 
         if (payloadRigidbody.velocity.magnitude > 0)
@@ -174,7 +174,7 @@ public class PayloadMovement : MonoBehaviour
 
     private IEnumerator CheckForObjectsInRange()
     {
-        // Check for enemies within the payload's range
+        // Check for nearby enemies and players on the payload
         Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, PayloadStats.instance.payloadRange, enemyLayer);
 
         enemyInRange = enemiesInRange.Length > 0;
@@ -182,7 +182,7 @@ public class PayloadMovement : MonoBehaviour
         // Count the number of players within the payload's range
         playersOnPayload = playersInGame.Count(player => Vector3.Distance(transform.position, player.transform.position) < PayloadStats.instance.payloadRange);
 
-        // Determine movement speed based on the number of players within the payload's range
+        // Determine movement speed based on the number of players on the payload
         movementSpeed = playersOnPayload switch
         {
             0 => 0,
@@ -223,7 +223,6 @@ public class PayloadMovement : MonoBehaviour
     {
         // Stop the payload and disable the payload's movement
         payloadRigidbody.velocity = Vector3.zero;
-        RotateTowardsPath();
         payloadUI.ChangePayloadStateDisplay(0);
         movementEnabled = false;
     }
@@ -237,9 +236,8 @@ public class PayloadMovement : MonoBehaviour
         enemyLayer = LayerMask.GetMask("Enemy");
         reverseTimer = reverseCountDownTime;
         currentPath = FindObjectOfType<PayloadPath>();
-        playersInGame = FindObjectsOfType<Player>() ?? null;
-        payloadUI = FindObjectOfType<PayloadUI>() ?? null;
-        //GameManager.Instance.onPhaseChange.AddListener(EnableMovement);
+        playersInGame = FindObjectsOfType<Player>();
+        GameManager.Instance.onPhaseChange.AddListener(EnableMovement);
         PayloadCheckpointSystem.Instance.onCheckpointActivate.AddListener(DisableMovement);
         PayloadCheckpointSystem.Instance.onCheckpointDeactivate.AddListener(EnableMovement);
     }
