@@ -24,14 +24,10 @@ public class PerkCollectorManager : MonoBehaviour
         return (perk.unique && !acquiredPerks.Contains(perk)) || !perk.unique;
     }
 
-    public bool RequiresUI(Perk perk)
-    {
-        return (perk.needsUI);
-    }
     public void AcquirePerk(Perk perk)
     {
         INeedUI needUI = perk.ApplyPlayerBuffs(player);
-        if (RequiresUI(perk))
+        if (needUI != null)
         {
             for (int i = 0; i < AbilityIcon.Length && i < cooldownText.Length; i++)
             {
@@ -41,7 +37,7 @@ public class PerkCollectorManager : MonoBehaviour
                     float abilityCooldown = perk.FetchCooldown();
                     cooldownText[i].text = abilityCooldown.ToString();
 
-                    if (needUI != null && AcquireablePerk(perk)) 
+                    if (AcquireablePerk(perk)) 
                     {
                         needUI.OnCoolDown += ()=> HandleCD(perk.FetchCooldown(), i);
                         break;

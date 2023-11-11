@@ -1,7 +1,6 @@
 public class Perk : Collectable
 {
     public bool unique;
-    public bool needsUI;
 
     public virtual INeedUI ApplyPlayerBuffs(Player player)
     {
@@ -12,5 +11,4 @@ public class Perk : Collectable
     {
         return float.MinValue;
     }
-
 }
