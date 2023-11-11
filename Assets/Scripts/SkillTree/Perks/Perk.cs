@@ -8,7 +8,11 @@ public class Perk : Collectable
     public virtual void ApplyPlayerBuffs(Player player)
     {
      
-    } 
+    }
+    public virtual void ApplyPlayerBuffs(Player player, ref INeedUI needUI)
+    {
+       
+    }
 
     public virtual float FetchCooldown()
     {

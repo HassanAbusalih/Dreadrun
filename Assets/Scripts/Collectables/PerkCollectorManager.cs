@@ -42,13 +42,18 @@ public class PerkCollectorManager : MonoBehaviour
                     AbilityIcon[i].sprite = perk.icon;
                     float abilityCooldown = perk.FetchCooldown();
                     cooldownText[i].text = abilityCooldown.ToString();
-                    break;
+
+                    if (perk is INeedUI && AcquireablePerk(perk)) 
+                    {
+                        INeedUI needUI = (INeedUI)perk;
+                        needUI.OnCoolDown += () => HandleCD(perk.FetchCooldown(), cooldownText[i]);
+                        break;
+                    }
                 }
             }
-        }
-      
-
+        } 
     }
+
     private void OnTriggerEnter(Collider other)
     {
         ICollectable collectable = other.GetComponent<ICollectable>();
@@ -64,5 +69,21 @@ public class PerkCollectorManager : MonoBehaviour
                 Destroy(other.gameObject);
             }
         }
+    }
+    private void HandleCD(float cooldown, TextMeshProUGUI text)
+    {
+        StartCoroutine(StartCD(cooldown, text));
+    }
+
+    private IEnumerator StartCD(float cooldown, TextMeshProUGUI text)
+    {
+        float timer = cooldown;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            text.text = timer.ToString("F1");
+            yield return null;
+        }
+        text.text = "0.0";
     }
 }
