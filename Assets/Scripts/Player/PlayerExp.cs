@@ -9,7 +9,6 @@ public class PlayerExp : MonoBehaviour
     public PerkSelector perkSelector;
     public ExperienceManager expmanager;
     [SerializeField] SoundSO levelUpSFX;
-    AudioSource audioSource;
     private void OnEnable()
     {
         if (expmanager != null)
@@ -27,7 +26,10 @@ public class PlayerExp : MonoBehaviour
         if (currentExp >= maxExpToLevelUp)
         {
             LevelUp();
-            levelUpSFX.PlaySound(ref audioSource, 0, this.gameObject);
+            if (levelUpSFX != null)
+            {
+                levelUpSFX.PlaySound(0, AudioSourceType.Player);
+            }
         }
     }
 

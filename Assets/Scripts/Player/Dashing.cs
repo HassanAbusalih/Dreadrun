@@ -78,7 +78,7 @@ public class Dashing : MonoBehaviour
         float elapsedTime = 0f;
         EnableInvincibility(true);
         onDashing?.Invoke(-staminaCost);
-        dashSFX.PlaySound(ref audioSource, 0, this.gameObject);
+        dashSFX.PlaySound(0, AudioSourceType.Player);
         while (elapsedTime < dashDuration && isDashing)
         {
             Vector3 newPosition = Vector3.MoveTowards(transform.position, endPosition, Time.deltaTime * (dashDistance / dashDuration));
