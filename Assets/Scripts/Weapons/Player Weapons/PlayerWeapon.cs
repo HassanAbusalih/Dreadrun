@@ -46,7 +46,7 @@ public abstract class PlayerWeapon : WeaponBase
         equipped = true;
         weaponCollider.isTrigger = true;
 
-        soundSO.PlaySound(ref audioSource, 0, this.gameObject);
+        //soundSO.PlaySound(ref audioSource, 0, this.gameObject);
 
         UpdateWeaponEffects();
         weaponPickedUpOrDropped?.Invoke(this);
@@ -60,7 +60,7 @@ public abstract class PlayerWeapon : WeaponBase
         effects.Clear();
         equipped = false;
         weaponCollider.isTrigger = false;
-        soundSO.PlaySound(ref audioSource, 1, this.gameObject);
+        //soundSO.PlaySound(ref audioSource, 1, this.gameObject);
         weaponPickedUpOrDropped?.Invoke(null);
         if (weaponEquipText != null) weaponEquipText.SetActive(true);
     }

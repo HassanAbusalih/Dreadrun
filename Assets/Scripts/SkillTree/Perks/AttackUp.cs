@@ -10,7 +10,7 @@ public class AttackUp : Perk
     [SerializeField]
     private int ATKIncrease;
 
-    public override void ApplyPlayerBuffs(Player player)
+    public override INeedUI ApplyPlayerBuffs(Player player)
     {
         if(player.playerWeapon != null)
         {
@@ -24,5 +24,6 @@ public class AttackUp : Perk
         {
             player.playerWeapon.DamageModifier *= player.playerStats.attack;
         }
+        return null;
     }
 }
