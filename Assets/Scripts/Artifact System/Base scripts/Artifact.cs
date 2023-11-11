@@ -1,13 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Artifact : ScriptableObject
+public abstract class Artifact
 {
     public GameObject prefab;
-    [NonSerialized] public int level;
+    public int level;
+    public ArtifactManager manager;
+    public ScriptableObject settings;
 
-    public abstract void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager manager);
-    public abstract void InitializeArtifact();
+    public abstract void ApplyArtifactEffects();
 }

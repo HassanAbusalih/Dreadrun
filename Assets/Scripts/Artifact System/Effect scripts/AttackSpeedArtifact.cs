@@ -1,35 +1,25 @@
+using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Attack Speed Artifact Object", menuName = "ArtifactsEffects/Attack Speed Artifact")]
+[Serializable]
 public class AttackSpeedArtifact : Artifact
 {
-    [SerializeField] private float attackSpeedIncreasePerLevel;
+    AttackSpeedArtifactSettings ArtifactSettings => (AttackSpeedArtifactSettings)base.settings;
+    private float TotalAttackSpeedIncrease => level * ArtifactSettings.attackSpeedIncreasePerLevel;
 
-    private bool buffApplied;
-
-    private float TotalAttackSpeedIncrease => level * attackSpeedIncreasePerLevel;
-
-    public override void InitializeArtifact()
-    {
-        buffApplied = false;
-    }
-
-    public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager manager)
+    public override void ApplyArtifactEffects()
     {
         foreach (Player player in manager.PlayersInGame)
         {
-            bool isPlayerInRange = (player.transform.position - artifactPosition).sqrMagnitude <= effectRange * effectRange;
-
-            if (isPlayerInRange && !buffApplied)
-            {
-                player.playerStats.attackSpeed += TotalAttackSpeedIncrease;
-                buffApplied = true;
-            }
-            else if (!isPlayerInRange && buffApplied)
-            {
-                player.playerStats.attackSpeed -= TotalAttackSpeedIncrease;
-                buffApplied = false;
-            }
+            if ((player.transform.position - manager.artifactPosition).sqrMagnitude <= manager.effectRange * manager.effectRange)
+                player.GetComponent<Player>().playerStats.attackSpeed += TotalAttackSpeedIncrease;
+            else
+                RemoveArtifactEffects(player);
         }
+    }
+
+    void RemoveArtifactEffects(Player player)
+    {
+        player.playerStats.attackSpeed -= TotalAttackSpeedIncrease;
     }
 }

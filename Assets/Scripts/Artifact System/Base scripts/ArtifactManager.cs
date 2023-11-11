@@ -1,64 +1,71 @@
 using System;
+using System.Linq;
 using UnityEngine;
+using System.Reflection;
 using Random = UnityEngine.Random;
 
 public class ArtifactManager : MonoBehaviour
 {
+    [NonSerialized] public LayerMask enemyLayer;
+    [NonSerialized] public Player[] PlayersInGame;
+    [NonSerialized] public GameObject artifactGameObject;
+    [NonSerialized] public Vector3 artifactPosition;
+    [ConditionalHide("useCustomEffectRange", true)] public float effectRange;
+
+    [SerializeField] private ScriptableObject[] artifactSettings;
+    [SerializeField] private Artifact[] artifactTypes;
     [SerializeField] private GameObject artifactSpawnPoint;
-    [SerializeField] private Artifact[] artifacts;
-    [SerializeField] private float effectRange;
     [SerializeField] private int minArtifactLevel;
     [SerializeField] private int maxArtifactLevel;
-    [NonSerialized] public Player[] PlayersInGame;
+    [SerializeField] private bool useCustomEffectRange;
+
     private Artifact currentArtifact;
-    private GameObject artifactGameObject;
 
     private void Start()
     {
         GameManager.Instance.onPhaseChange.AddListener(EnableArtifactSystem);
-
         PlayersInGame = FindObjectsOfType<Player>();
+        artifactTypes = CreateArtifactInstances();
+        enemyLayer = LayerMask.GetMask("Enemy");
 
         if (currentArtifact == null)
         {
             currentArtifact = SpawnNewArtifact();
+            currentArtifact.manager = this;
         }
 
-        currentArtifact.InitializeArtifact();
-
+        artifactPosition = artifactGameObject.transform.position;
         gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        effectRange = PayloadStats.instance.payloadRange;
+        if (!useCustomEffectRange)
+            effectRange = PayloadStats.instance.payloadRange;
 
-        if (currentArtifact == null)
-        {
-            currentArtifact = SpawnNewArtifact();
-        }
-        else
-        {
-            currentArtifact.ApplyArtifactBuffs(artifactGameObject.transform.position, effectRange, this);
-        }
+        currentArtifact.ApplyArtifactEffects();
     }
 
     private Artifact SpawnNewArtifact()
     {
-        int artifactIndex = Random.Range(0, artifacts.Length);
-        currentArtifact = artifacts[artifactIndex];
-        if (currentArtifact.prefab == null)
-        {
-            artifactGameObject = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), artifactSpawnPoint.transform);
-        }
-        else
-        {
-            artifactGameObject = Instantiate(currentArtifact.prefab, artifactSpawnPoint.transform);
-        }
-
+        currentArtifact = artifactTypes[Random.Range(0, artifactTypes.Length)];
+        artifactGameObject = Instantiate(currentArtifact.prefab ?? GameObject.CreatePrimitive(PrimitiveType.Sphere), artifactSpawnPoint.transform);
         currentArtifact.level = Random.Range(minArtifactLevel, maxArtifactLevel);
-
         return currentArtifact;
+    }
+
+    private Artifact[] CreateArtifactInstances()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        Type[] artifactTypes = assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(Artifact)) && !t.IsAbstract).ToArray();
+        Artifact[] artifactInstances = artifactTypes.Select(t => (Artifact)Activator.CreateInstance(t)).ToArray();
+
+        foreach (Artifact artifact in artifactInstances)
+        {
+            artifact.settings = artifactSettings.FirstOrDefault(s => s.GetType().Name == artifact.GetType().Name + "Settings");
+        }
+
+        return artifactInstances;
     }
 
     private void EnableArtifactSystem()

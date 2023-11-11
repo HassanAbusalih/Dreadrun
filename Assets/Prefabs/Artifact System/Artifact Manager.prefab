@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4450652408169680019}
-  - component: {fileID: 4450652408169680018}
+  - component: {fileID: 1780850042170147835}
   m_Layer: 0
   m_Name: Artifact Manager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4450652408169680018
+--- !u!114 &1780850042170147835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,11 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2758829527bcaa349afe1d68c0c21951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  artifactSpawnPoint: {fileID: 0}
-  artifacts:
-  - {fileID: 11400000, guid: c90d418a1a27ef54b87ed99b0b26e9ec, type: 2}
-  - {fileID: 11400000, guid: 8e74f210171f2a448a9b114968bacc1e, type: 2}
-  - {fileID: 11400000, guid: 0e8c02a3da84d7645883b3dfabdff451, type: 2}
   effectRange: 0
-  minArtifactLevel: 1
-  maxArtifactLevel: 3
+  artifactSettings:
+  - {fileID: 11400000, guid: a1ca900b9078e7c41ba3cf85c488428e, type: 2}
+  - {fileID: 11400000, guid: 9082ceb42f214ad4b99452b1a7c1b6aa, type: 2}
+  - {fileID: 11400000, guid: 3ce397f2bf012be4389fc034b30b3ff9, type: 2}
+  - {fileID: 11400000, guid: a0939b991fd17a9469a6bf228959e374, type: 2}
+  artifactSpawnPoint: {fileID: 0}
+  minArtifactLevel: 0
+  maxArtifactLevel: 0
+  useCustomEffectRange: 0

@@ -1,33 +1,30 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Regen Artifact Object", menuName = "ArtifactsEffects/Regen Artifact")]
+[Serializable]
 public class RegenArtifact : Artifact
 {
-    [SerializeField] private float regenPerSecondPerLevel;
+    private Dictionary<Player, Coroutine> regenCoroutines;
 
-    private float TotalHealthRegenPerSecond => level * regenPerSecondPerLevel;
-    private Coroutine regenRoutine = null;
+    RegenArtifactSettings ArtifactSettings => (RegenArtifactSettings)base.settings;
+    private float TotalHealthRegenPerSecond => level * ArtifactSettings.regenPerSecondPerLevel;
 
-    public override void InitializeArtifact()
-    {
-        regenRoutine = null;
-    }
-
-    public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager manager)
+    public override void ApplyArtifactEffects()
     {
         foreach (Player player in manager.PlayersInGame)
         {
-            if ((player.transform.position - artifactPosition).sqrMagnitude <= effectRange * effectRange)
-            {
-                regenRoutine = manager.StartCoroutine(RegenHealth(player));
-            }
+            if ((player.transform.position - manager.artifactPosition).sqrMagnitude <= manager.effectRange * manager.effectRange)
+                regenCoroutines.Add(player, manager.StartCoroutine(RegenHealth(player)));
             else
-            {
-                if (regenRoutine != null)
-                    manager.StopCoroutine(regenRoutine);
-            }
+                RemoveArtifactEffects(player);
         }
+    }
+
+    void RemoveArtifactEffects(Player player)
+    {
+        manager.StopCoroutine(regenCoroutines[player]);
     }
 
     private IEnumerator RegenHealth(Player player)
