@@ -17,7 +17,6 @@ public class ShieldManager : MonoBehaviour, INeedUI
     {
         ShieldBrokenCooldown();
 
-
         if (player != null)
         {
             playerShield.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + yOffSet, player.transform.position.z);

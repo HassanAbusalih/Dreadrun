@@ -9,7 +9,6 @@ public class PerkCollectorManager : MonoBehaviour
     [SerializeField]
     List<Perk> acquiredPerks = new List<Perk>();
     private Player player;
-    private PerkSelector perkSelector;
 
     public Sprite blank;
 
@@ -19,7 +18,6 @@ public class PerkCollectorManager : MonoBehaviour
     private void Start()
     {
         player = GetComponent<Player>();
-        perkSelector = FindObjectOfType<PerkSelector>();
     }
     public bool AcquireablePerk(Perk perk)
     {
@@ -32,7 +30,7 @@ public class PerkCollectorManager : MonoBehaviour
     }
     public void AcquirePerk(Perk perk)
     {
-        acquiredPerks.Add(perk);
+        INeedUI needUI = perk.ApplyPlayerBuffs(player);
         if (RequiresUI(perk))
         {
             for (int i = 0; i < AbilityIcon.Length && i < cooldownText.Length; i++)
@@ -43,15 +41,15 @@ public class PerkCollectorManager : MonoBehaviour
                     float abilityCooldown = perk.FetchCooldown();
                     cooldownText[i].text = abilityCooldown.ToString();
 
-                    if (perk is INeedUI && AcquireablePerk(perk)) 
+                    if (needUI != null && AcquireablePerk(perk)) 
                     {
-                        INeedUI needUI = (INeedUI)perk;
-                        needUI.OnCoolDown += () => HandleCD(perk.FetchCooldown(), cooldownText[i]);
+                        needUI.OnCoolDown += ()=> HandleCD(perk.FetchCooldown(), i);
                         break;
                     }
                 }
             }
         } 
+        acquiredPerks.Add(perk);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,7 +58,6 @@ public class PerkCollectorManager : MonoBehaviour
         if (collectable != null)
         {
             Perk perk = collectable.Collect() as Perk;
-           
 
             if (perk != null && AcquireablePerk(perk)) 
             {
@@ -70,20 +67,21 @@ public class PerkCollectorManager : MonoBehaviour
             }
         }
     }
-    private void HandleCD(float cooldown, TextMeshProUGUI text)
+    private void HandleCD(float cooldown, int index)
     {
-        StartCoroutine(StartCD(cooldown, text));
+        StartCoroutine(StartCD(cooldown, index));
     }
 
-    private IEnumerator StartCD(float cooldown, TextMeshProUGUI text)
+    private IEnumerator StartCD(float cooldown, int index)
     {
         float timer = cooldown;
         while (timer > 0)
         {
             timer -= Time.deltaTime;
-            text.text = timer.ToString("F1");
+            cooldownText[index].text = timer.ToString("F1");
+            //cooldownBoxes???[index].fillAmount = timer / cooldown;
             yield return null;
         }
-        text.text = "0.0";
+        cooldownText[index].text = "0.0";
     }
 }

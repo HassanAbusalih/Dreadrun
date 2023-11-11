@@ -1,7 +1,7 @@
-using Unity.Mathematics;
+using System;
 using UnityEngine;
 
-public class CounterBlast : MonoBehaviour
+public class CounterBlast : MonoBehaviour, INeedUI
 {
     private float explosionRadius = 4f;
     private float explosionForce = 4000f;
@@ -10,6 +10,8 @@ public class CounterBlast : MonoBehaviour
     private float explosionTimer;
     private LayerMask layersToIgnore;
     private GameObject vfx;
+
+    public event Action OnCoolDown;
 
     private void Start()
     {
@@ -30,7 +32,9 @@ public class CounterBlast : MonoBehaviour
         {
             return;
         }
+
         explosionTimer = 0;
+        OnCoolDown.Invoke();
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, ~layersToIgnore);
         foreach (Collider nearbyObject in colliders)
