@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEditor.Animations;
+using System;
 
 public class PerkCollectorManager : MonoBehaviour
 {
@@ -15,6 +17,9 @@ public class PerkCollectorManager : MonoBehaviour
     public Image[] AbilityIcon;
     public TextMeshProUGUI[] cooldownText;
     public Image[] AbilityGreyout;
+
+    public Animator[] AbilityVFX;
+    public GameObject abilityDescription;
 
     private void Start()
     {
@@ -36,8 +41,8 @@ public class PerkCollectorManager : MonoBehaviour
                 {
                     AbilityIcon[i].sprite = perk.icon;
                     float abilityCooldown = perk.FetchCooldown();
-                    cooldownText[i].text = abilityCooldown.ToString();
-
+                    cooldownText[i].text = "";
+                    AbilityGreyout[i].fillAmount = 0f;
                     if (AcquireablePerk(perk))
                     {
                         needUI.OnCoolDown += () => HandleCD(perk.FetchCooldown(), i);
@@ -72,14 +77,20 @@ public class PerkCollectorManager : MonoBehaviour
     private IEnumerator StartCD(float cooldown, int index)
     {
         float timer = cooldown;
-        while (timer > 0)
+        while (timer >= 0)
         {
             timer -= Time.deltaTime;
             int roundedTimer = Mathf.FloorToInt(timer);
             cooldownText[index].text = roundedTimer.ToString();
             AbilityGreyout[index].fillAmount = timer / cooldown;
+            AbilityVFX[index].SetBool("AbilityRefreshed", false);
+
+            if (timer < 1)
+            {
+                cooldownText[index].text = "";
+                AbilityVFX[index].SetBool("AbilityRefreshed", true);
+            }
             yield return null;
         }
-        cooldownText[index].text = "0";
     }
 }
