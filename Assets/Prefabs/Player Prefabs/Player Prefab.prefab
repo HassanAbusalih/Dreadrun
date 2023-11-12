@@ -211,8 +211,8 @@ GameObject:
   - component: {fileID: 5531912465785331505}
   - component: {fileID: 4350660472619407266}
   - component: {fileID: 7953162199124342851}
-  - component: {fileID: 5531912466909114302}
   - component: {fileID: 5531912465785331506}
+  - component: {fileID: 1377004998872599972}
   m_Layer: 6
   m_Name: 'player '
   m_TagString: Player
@@ -422,19 +422,6 @@ MonoBehaviour:
   perkSelector: {fileID: 4423540878030522066}
   expmanager: {fileID: 851680745961679646}
   levelUpSFX: {fileID: 11400000, guid: 40ea079c75b8e8f42b5069a3548ed6dc, type: 2}
---- !u!135 &5531912466909114302
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4350660472619407267}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5531912465785331506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,6 +448,20 @@ MonoBehaviour:
   descriptionText: {fileID: 2595001740282039237}
   emptySprite: {fileID: 21300000, guid: d4846583bfeb63d4586b331aa5322cfd, type: 3}
   pickUpItemSFX: {fileID: 11400000, guid: 99bfc8ccacd0fcf429304d3b0f7c14c3, type: 2}
+--- !u!136 &1377004998872599972
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4350660472619407267}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.59
+  m_Height: 1.47
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8117153053641499625
 GameObject:
   m_ObjectHideFlags: 0
