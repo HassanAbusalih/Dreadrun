@@ -29,10 +29,10 @@ public class ArtifactManager : MonoBehaviour
         if (currentArtifact == null)
         {
             currentArtifact = SpawnNewArtifact();
-            currentArtifact.manager = this;
+            artifactPosition = artifactGameObject.transform.position;
+            Debug.Log(currentArtifact);
         }
 
-        artifactPosition = artifactGameObject.transform.position;
         gameObject.SetActive(false);
     }
 
@@ -47,8 +47,8 @@ public class ArtifactManager : MonoBehaviour
     private Artifact SpawnNewArtifact()
     {
         Artifact[] artifactInstances = CreateArtifactInstances();
-        currentArtifact = artifactInstances[Random.Range(0, artifactInstances.Length)];
-        artifactGameObject = Instantiate(currentArtifact.prefab,artifactSpawnPoint.transform.position, Quaternion.identity, artifactSpawnPoint.transform);
+        currentArtifact = artifactInstances[2];
+        artifactGameObject = Instantiate(currentArtifact.prefab, artifactSpawnPoint.transform.position, Quaternion.identity, artifactSpawnPoint.transform);
         currentArtifact.level = Random.Range(minArtifactLevel, maxArtifactLevel);
         return currentArtifact;
     }
@@ -62,6 +62,7 @@ public class ArtifactManager : MonoBehaviour
         foreach (Artifact artifact in artifactInstances)
         {
             artifact.settings = artifactSettings.FirstOrDefault(s => s.GetType().Name == artifact.GetType().Name + "Settings");
+            artifact.manager = this;
             artifact.Initialize();
         }
 

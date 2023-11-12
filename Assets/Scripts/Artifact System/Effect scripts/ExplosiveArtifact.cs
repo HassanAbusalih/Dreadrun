@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 [Serializable]
 public class ExplosiveArtifact : Artifact
@@ -14,6 +15,7 @@ public class ExplosiveArtifact : Artifact
     public override void Initialize()
     {
         this.prefab = ArtifactSettings.artifactPrefab;
+        ArtifactSettings.ShockwaveEffect = prefab.GetComponentInChildren<VisualEffect>();
     }
 
     public override void ApplyArtifactEffects()
@@ -32,6 +34,7 @@ public class ExplosiveArtifact : Artifact
             if (rb != null)
             {
                 rb.AddExplosionForce(TotalPushBackForce, manager.artifactPosition, ArtifactSettings.explosionRadius, 0, ForceMode.Impulse);
+                ArtifactSettings.ShockwaveEffect.Play();
             }
 
             if (enemyDamagable != null)
