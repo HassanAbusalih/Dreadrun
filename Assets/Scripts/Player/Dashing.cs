@@ -59,7 +59,7 @@ public class Dashing : MonoBehaviour
 
     private void DashOnInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
+        if ((Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown(KeyCode.JoystickButton0))  && !isDashing)
         {
             float currentStamina = canPlayerDash?.Invoke() ?? 0f;
             if (currentStamina <= 0) return;
