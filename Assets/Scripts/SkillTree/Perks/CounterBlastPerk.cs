@@ -8,9 +8,11 @@ public class CounterBlastPerk : Perk
     [SerializeField] LayerMask layersToIgnore;
     [SerializeField] GameObject vfx;
     [SerializeField] float cooldown = 5f;
-    public override void ApplyPlayerBuffs(Player player)
-    {    
-        player.gameObject.AddComponent<CounterBlast>().SetCounterBlast(explosionRadius, explosionForce, layersToIgnore, vfx, cooldown);
+    public override INeedUI ApplyPlayerBuffs(Player player)
+    {
+        CounterBlast cbat = player.gameObject.AddComponent<CounterBlast>();
+        cbat.SetCounterBlast(explosionRadius, explosionForce, layersToIgnore, vfx, cooldown);
+        return cbat;
     }
 
     public override float FetchCooldown()
