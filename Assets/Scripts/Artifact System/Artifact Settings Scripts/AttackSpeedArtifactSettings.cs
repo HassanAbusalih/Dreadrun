@@ -1,8 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AttackSpeedArtifactSettings", menuName = "ArtifactSettings/AttackSpeedArtifactSettings")]
-public class AttackSpeedArtifactSettings : ScriptableObject
+public class AttackSpeedArtifactSettings : ArtifactSettings
 {
-    public GameObject artifactPrefab;
     public float attackSpeedIncreasePerLevel;
 }

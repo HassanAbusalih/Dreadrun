@@ -7,25 +7,39 @@ using UnityEngine.VFX;
 public class ExplosiveArtifact : Artifact
 {
     private bool canExplode = true;
+    VisualEffect ShockwaveEffect;
 
+    // Cast the value of inherited settings variable to the correct settings type and assign it to a variable for easier use
     ExplosiveArtifactSettings ArtifactSettings => (ExplosiveArtifactSettings)base.settings;
     private float TotalExplosionDamage => level * ArtifactSettings.explosionDamagePerLevel;
     private float TotalPushBackForce => level * ArtifactSettings.pushBackForcePerLevel;
 
     public override void Initialize()
     {
-        this.prefab = ArtifactSettings.artifactPrefab;
-        ArtifactSettings.ShockwaveEffect = prefab.GetComponentInChildren<VisualEffect>();
+        ShockwaveEffect = gameObject.GetComponentInChildren<VisualEffect>();
     }
 
     public override void ApplyArtifactEffects()
     {
         if (!canExplode) return;
 
-        Collider[] enemiesInRange = Physics.OverlapSphere(manager.artifactGameObject.transform.position, ArtifactSettings.explosionRadius, manager.enemyLayer);
+        Collider[] enemiesInRange = GetEnemiesInRange();
 
         if (enemiesInRange.Length < ArtifactSettings.enemiesRequired) return;
 
+        ApplyExplosionEffect(enemiesInRange);
+
+        canExplode = false;
+        manager.StartCoroutine(ExplosionCooldown());
+    }
+
+    private Collider[] GetEnemiesInRange()
+    {
+        return Physics.OverlapSphere(manager.artifactGameObject.transform.position, ArtifactSettings.explosionRadius, manager.enemyLayer);
+    }
+
+    private void ApplyExplosionEffect(Collider[] enemiesInRange)
+    {
         foreach (Collider enemyInRange in enemiesInRange)
         {
             Rigidbody rb = enemyInRange.GetComponent<Rigidbody>();
@@ -34,7 +48,7 @@ public class ExplosiveArtifact : Artifact
             if (rb != null)
             {
                 rb.AddExplosionForce(TotalPushBackForce, manager.artifactPosition, ArtifactSettings.explosionRadius, 0, ForceMode.Impulse);
-                ArtifactSettings.ShockwaveEffect.Play();
+                ShockwaveEffect.Play();
             }
 
             if (enemyDamagable != null)
@@ -42,9 +56,6 @@ public class ExplosiveArtifact : Artifact
                 enemyDamagable.TakeDamage(TotalExplosionDamage);
             }
         }
-
-        canExplode = false;
-        manager.StartCoroutine(ExplosionCooldown());
     }
 
     private IEnumerator ExplosionCooldown()

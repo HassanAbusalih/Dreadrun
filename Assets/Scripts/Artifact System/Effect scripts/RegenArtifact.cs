@@ -6,8 +6,9 @@ using UnityEngine;
 [Serializable]
 public class RegenArtifact : Artifact
 {
-    private Dictionary<Player, Coroutine> regenCoroutines;
+    private Dictionary<Player, Coroutine> regenCoroutines = new Dictionary<Player, Coroutine>();
 
+    // Cast the value of inherited settings variable to the correct settings type and assign it to a variable for easier use
     RegenArtifactSettings ArtifactSettings => (RegenArtifactSettings)base.settings;
     private float TotalHealthRegenPerSecond => level * ArtifactSettings.regenPerSecondPerLevel;
 
@@ -15,7 +16,7 @@ public class RegenArtifact : Artifact
 
     public override void Initialize()
     {
-        this.prefab = ArtifactSettings.artifactPrefab;
+        this.gameObject = ArtifactSettings.artifactPrefab;
     }
 
     public override void ApplyArtifactEffects()
@@ -24,20 +25,27 @@ public class RegenArtifact : Artifact
         {
             if ((player.transform.position - manager.artifactPosition).sqrMagnitude <= manager.effectRange * manager.effectRange)
             {
-                regenCoroutines.Add(player, manager.StartCoroutine(RegenHealth(player)));
-                buffapplied = true;
+                if (!regenCoroutines.ContainsKey(player))
+                {
+                    StartHealthRegen(player);
+                }
             }
-            else if (buffapplied)
+            else if (regenCoroutines.ContainsKey(player))
             {
-                RemoveArtifactEffects(player);
-                buffapplied = false;
+                StopHealthRegen(player);
             }
         }
     }
 
-    void RemoveArtifactEffects(Player player)
+    void StopHealthRegen(Player player)
     {
         manager.StopCoroutine(regenCoroutines[player]);
+        regenCoroutines.Remove(player);
+    }
+
+    void StartHealthRegen(Player player)
+    {
+        regenCoroutines.Add(player, manager.StartCoroutine(RegenHealth(player)));
     }
 
     private IEnumerator RegenHealth(Player player)

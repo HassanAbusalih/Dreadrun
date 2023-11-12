@@ -3,10 +3,8 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 [CreateAssetMenu(fileName = "ExplosiveArtifactSettings", menuName = "ArtifactSettings/ExplosiveArtifactSettings")]
-public class ExplosiveArtifactSettings : ScriptableObject
+public class ExplosiveArtifactSettings : ArtifactSettings
 {
-    [NonSerialized]public VisualEffect ShockwaveEffect;
-    public GameObject artifactPrefab;
     public float explosionDamagePerLevel;
     public float pushBackForcePerLevel;
     public float explosionRadius;
