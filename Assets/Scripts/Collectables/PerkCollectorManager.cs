@@ -14,6 +14,7 @@ public class PerkCollectorManager : MonoBehaviour
 
     public Image[] AbilityIcon;
     public TextMeshProUGUI[] cooldownText;
+    public Image[] AbilityGreyout;
 
     private void Start()
     {
@@ -37,14 +38,14 @@ public class PerkCollectorManager : MonoBehaviour
                     float abilityCooldown = perk.FetchCooldown();
                     cooldownText[i].text = abilityCooldown.ToString();
 
-                    if (AcquireablePerk(perk)) 
+                    if (AcquireablePerk(perk))
                     {
-                        needUI.OnCoolDown += ()=> HandleCD(perk.FetchCooldown(), i);
+                        needUI.OnCoolDown += () => HandleCD(perk.FetchCooldown(), i);
                         break;
                     }
                 }
             }
-        } 
+        }
         acquiredPerks.Add(perk);
     }
 
@@ -55,7 +56,7 @@ public class PerkCollectorManager : MonoBehaviour
         {
             Perk perk = collectable.Collect() as Perk;
 
-            if (perk != null && AcquireablePerk(perk)) 
+            if (perk != null && AcquireablePerk(perk))
             {
                 AcquirePerk(perk);
                 perk.ApplyPlayerBuffs(player);
@@ -74,10 +75,11 @@ public class PerkCollectorManager : MonoBehaviour
         while (timer > 0)
         {
             timer -= Time.deltaTime;
-            cooldownText[index].text = timer.ToString("F1");
-            //cooldownBoxes???[index].fillAmount = timer / cooldown;
+            int roundedTimer = Mathf.FloorToInt(timer);
+            cooldownText[index].text = roundedTimer.ToString();
+            AbilityGreyout[index].fillAmount = timer / cooldown;
             yield return null;
         }
-        cooldownText[index].text = "0.0";
+        cooldownText[index].text = "0";
     }
 }
