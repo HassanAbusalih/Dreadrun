@@ -10,9 +10,11 @@ public class LookAtPayload : MonoBehaviour
     [Header("Settings")]
     [SerializeField] float distanceToShow;
     [SerializeField] Vector3 offset;
-    [SerializeField] AnimationCurve scaleCurve;
-    [SerializeField] float scaleTime;
     [SerializeField] Color loopingColor;
+    [SerializeField] AnimationCurve scaleCurve;
+    [SerializeField] float frequency;
+    [SerializeField] float amplitude;
+
 
     [Header("Debug")]
     [SerializeField] float distanceFromPayload;
@@ -60,21 +62,26 @@ public class LookAtPayload : MonoBehaviour
             isShowing = false;
             arrowSprite.enabled = false;
         }
-        DirectSpriteToPayload();
+
+        if (isShowing)
+        {
+            DirectSpriteToPayload();
+            animateArrow();
+        }
     }
 
     void DirectSpriteToPayload()
     {
-        if (isShowing)
-        {
-            parent.position = player.position;
-            transform.localPosition = offset;
-            parent.LookAt(payload.transform);
+        parent.position = player.position;
+        transform.localPosition = offset;
+        parent.LookAt(payload.transform);
+    }
 
-            float _scaleTime = scaleCurve.Evaluate(Mathf.Sin(scaleTime * Time.time));
-            transform.localScale = Vector3.Lerp(Vector3.one *1.5f, Vector3.one,_scaleTime);
-            arrowSprite.color = Color.Lerp(Color.white,loopingColor,_scaleTime);
-        }
+    void animateArrow()
+    {
+        float _scaleTime = scaleCurve.Evaluate(Mathf.Sin(frequency * Time.time) * amplitude);
+        transform.localScale = Vector3.Lerp(Vector3.one * 1.5f, Vector3.one, _scaleTime);
+        arrowSprite.color = Color.Lerp(Color.white, loopingColor, _scaleTime);
     }
 
     private void OnDrawGizmos()

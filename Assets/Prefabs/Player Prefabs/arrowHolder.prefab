@@ -23,15 +23,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293095248352754330}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 2.825126, y: 4.8186874, z: -29.166285}
-  m_LocalScale: {x: 3.367014, y: 3.3670146, z: 3.367014}
+  m_LocalScale: {x: 2.1196313, y: 2.1196313, z: 2.1196313}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6293095248808236304}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &6293095248808236305
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,13 +131,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 6293095248352754325}
   player: {fileID: 0}
-  distanceToShow: 15
+  distanceToShow: 25
   offset: {x: 0, y: 0.2, z: 1.2}
+  loopingColor: {r: 1, g: 0.89839494, b: 0, a: 1}
   scaleCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.021068573
+      value: 0.0062408447
+      inSlope: -0.8434894
+      outSlope: -0.8434894
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.0550217
+    - serializedVersion: 3
+      time: 0.55983526
+      value: 0.18573624
+      inSlope: -Infinity
+      outSlope: -Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.63212204
+      outSlope: -0.63212204
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.14488758
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  scaleTime: 0
-  distanceFromPayload: 0
+  frequency: 10
+  amplitude: 1
+  distanceFromPayload: 41.509697
