@@ -11,6 +11,11 @@ public class ExplosiveArtifact : Artifact
     private float TotalExplosionDamage => level * ArtifactSettings.explosionDamagePerLevel;
     private float TotalPushBackForce => level * ArtifactSettings.pushBackForcePerLevel;
 
+    public override void Initialize()
+    {
+        this.prefab = ArtifactSettings.artifactPrefab;
+    }
+
     public override void ApplyArtifactEffects()
     {
         if (!canExplode) return;

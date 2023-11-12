@@ -13,7 +13,6 @@ public class ArtifactManager : MonoBehaviour
     [ConditionalHide("useCustomEffectRange", true)] public float effectRange;
 
     [SerializeField] private ScriptableObject[] artifactSettings;
-    [SerializeField] private Artifact[] artifactTypes;
     [SerializeField] private GameObject artifactSpawnPoint;
     [SerializeField] private int minArtifactLevel;
     [SerializeField] private int maxArtifactLevel;
@@ -25,7 +24,6 @@ public class ArtifactManager : MonoBehaviour
     {
         GameManager.Instance.onPhaseChange.AddListener(EnableArtifactSystem);
         PlayersInGame = FindObjectsOfType<Player>();
-        artifactTypes = CreateArtifactInstances();
         enemyLayer = LayerMask.GetMask("Enemy");
 
         if (currentArtifact == null)
@@ -48,8 +46,9 @@ public class ArtifactManager : MonoBehaviour
 
     private Artifact SpawnNewArtifact()
     {
-        currentArtifact = artifactTypes[Random.Range(0, artifactTypes.Length)];
-        artifactGameObject = Instantiate(currentArtifact.prefab ?? GameObject.CreatePrimitive(PrimitiveType.Sphere), artifactSpawnPoint.transform);
+        Artifact[] artifactInstances = CreateArtifactInstances();
+        currentArtifact = artifactInstances[Random.Range(0, artifactInstances.Length)];
+        artifactGameObject = Instantiate(currentArtifact.prefab,artifactSpawnPoint.transform.position, Quaternion.identity, artifactSpawnPoint.transform);
         currentArtifact.level = Random.Range(minArtifactLevel, maxArtifactLevel);
         return currentArtifact;
     }
@@ -63,6 +62,7 @@ public class ArtifactManager : MonoBehaviour
         foreach (Artifact artifact in artifactInstances)
         {
             artifact.settings = artifactSettings.FirstOrDefault(s => s.GetType().Name == artifact.GetType().Name + "Settings");
+            artifact.Initialize();
         }
 
         return artifactInstances;

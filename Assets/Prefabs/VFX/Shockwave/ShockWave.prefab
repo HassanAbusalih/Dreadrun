@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2849205125230335385}
   - component: {fileID: 2849205125230335384}
   - component: {fileID: 2849205125230335387}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShockWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2849205125230335386}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.48, y: 2.03, z: 3.5797663}
-  m_LocalScale: {x: 0.09310208, y: 0.1, z: 0.17015277}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -41,7 +41,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2849205125230335386}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 20b9b0a3378941a49a0be5b2ad21c9f0, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 5acd3be0e54d1a74c8e63bb9dfd2127d, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -56,7 +56,7 @@ VisualEffect:
       - m_Value: 1
         m_Name: NoiseScale
         m_Overridden: 1
-      - m_Value: 0.8
+      - m_Value: 0.25
         m_Name: Lifetime
         m_Overridden: 1
       - m_Value: 1.3
@@ -65,13 +65,13 @@ VisualEffect:
       - m_Value: 0.2
         m_Name: Size
         m_Overridden: 1
-      - m_Value: -1
+      - m_Value: -0.05
         m_Name: Magnification
         m_Overridden: 1
       - m_Value: 1
         m_Name: Strength
         m_Overridden: 1
-      - m_Value: 0.5
+      - m_Value: 10
         m_Name: DistortionScale
         m_Overridden: 1
     m_Vector2f:
@@ -203,7 +203,7 @@ VisualEffect:
       - m_Value: {fileID: 2800000, guid: 22d6556b9f215d24ea6c44262f453cce, type: 3}
         m_Name: WaveTexture
         m_Overridden: 1
-      - m_Value: {fileID: 2800000, guid: e6a5dcc72c65c28459713270617df70c, type: 3}
+      - m_Value: {fileID: 0}
         m_Name: Mask
         m_Overridden: 1
       - m_Value: {fileID: 0}

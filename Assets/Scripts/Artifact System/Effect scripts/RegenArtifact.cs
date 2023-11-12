@@ -11,14 +11,27 @@ public class RegenArtifact : Artifact
     RegenArtifactSettings ArtifactSettings => (RegenArtifactSettings)base.settings;
     private float TotalHealthRegenPerSecond => level * ArtifactSettings.regenPerSecondPerLevel;
 
+    bool buffapplied = false;
+
+    public override void Initialize()
+    {
+        this.prefab = ArtifactSettings.artifactPrefab;
+    }
+
     public override void ApplyArtifactEffects()
     {
         foreach (Player player in manager.PlayersInGame)
         {
             if ((player.transform.position - manager.artifactPosition).sqrMagnitude <= manager.effectRange * manager.effectRange)
+            {
                 regenCoroutines.Add(player, manager.StartCoroutine(RegenHealth(player)));
-            else
+                buffapplied = true;
+            }
+            else if (buffapplied)
+            {
                 RemoveArtifactEffects(player);
+                buffapplied = false;
+            }
         }
     }
 
