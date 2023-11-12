@@ -9,6 +9,7 @@ public class Dashing : MonoBehaviour
     Player player;
 
     [Header("Dashing Settings")]
+    [SerializeField] float dashForce; 
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
     [SerializeField] float staminaCost;
@@ -71,6 +72,7 @@ public class Dashing : MonoBehaviour
 
     IEnumerator StartDash(Vector3 dashDirection)
     {
+        rb.constraints = RigidbodyConstraints.FreezePositionY;
         isDashing = true;
         rb.useGravity = false;
         rb.freezeRotation = true;
@@ -79,10 +81,11 @@ public class Dashing : MonoBehaviour
         EnableInvincibility(true);
         onDashing?.Invoke(-staminaCost);
         dashSFX.PlaySound(ref audioSource, 0, this.gameObject);
+
         while (elapsedTime < dashDuration && isDashing)
         {
             Vector3 newPosition = Vector3.MoveTowards(transform.position, endPosition, Time.deltaTime * (dashDistance / dashDuration));
-            rb.MovePosition(newPosition);
+            rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -94,6 +97,8 @@ public class Dashing : MonoBehaviour
         rb.useGravity = true;
         rb.freezeRotation = false;
         EnableInvincibility(false);
+        rb.constraints = RigidbodyConstraints.None;
+
     }
 
     void EnableInvincibility(bool _enabled)

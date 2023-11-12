@@ -10,10 +10,11 @@ public class HealthUp : Perk
     [SerializeField]
     private int AddHP;
 
-    public override void ApplyPlayerBuffs(Player player)
+    public override INeedUI ApplyPlayerBuffs(Player player)
     {
         float increaseAmount = player.playerStats.maxHealth * (HPScaling / 100f);
         player.playerStats.maxHealth += increaseAmount;
-        player.playerStats.health += increaseAmount;   
+        player.playerStats.health += increaseAmount;
+        return null;
     }
 }

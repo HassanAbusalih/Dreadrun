@@ -8,12 +8,13 @@ public class ScatterProjectiles : Perk
     [SerializeField] float projectileRange = 5f;
     [SerializeField] GameObject projectilePrefab;
 
-    public override void ApplyPlayerBuffs(Player player)
+    public override INeedUI ApplyPlayerBuffs(Player player)
     {
         player.gameObject.AddComponent<ScatterEffect>().Setup(projectilePrefab, projectileCount, projectileSpeed, projectileRange);
         if (player.playerWeapon != null)
         {
             player.playerWeapon.UpdateWeaponEffects();
         }
+        return null;
     }
 }

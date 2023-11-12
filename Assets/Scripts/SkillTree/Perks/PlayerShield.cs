@@ -12,6 +12,6 @@ public class PlayerShield : MonoBehaviour, IDamagable
     public void TakeDamage(float Amount)
     {
         shieldHP -= Amount;
-        //repush
+        shieldHP = Mathf.Max(shieldHP, 0f);
     }
 }
