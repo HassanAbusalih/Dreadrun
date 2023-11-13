@@ -65,11 +65,11 @@ public class PickablesSpawnManager : PickableBaseSpawning
             int _randomWeaponRarityNumber = Random.Range(0, 100);
 
             if (SpawnItemFromRarityTypes(weaponRarities.AllWeaponTypes, _randomWeaponRarityNumber,
-                LegendaryConsumablesProbability, ref weaponsSpawned, 2)) continue;
+                LegendaryWeaponsProbability, ref weaponsSpawned, 2)) continue;
             if (SpawnItemFromRarityTypes(weaponRarities.AllWeaponTypes, _randomWeaponRarityNumber,
-                RareConsumablesProbability, ref weaponsSpawned, 1)) continue;
+                RareWeaponsProbability, ref weaponsSpawned, 1)) continue;
             SpawnItemFromRarityTypes(weaponRarities.AllWeaponTypes, _randomWeaponRarityNumber,
-                CommonConsumablesProbability, ref weaponsSpawned, 0);
+                CommonWeaponsProbability, ref weaponsSpawned, 0);
         }
     }
 
@@ -163,7 +163,7 @@ public class PickablesSpawnManager : PickableBaseSpawning
         float _totalSpawnPoints = PickableSpawnPoints.Count;
         if (_totalItemsToSpawn > _totalSpawnPoints)
         {
-            Debug.LogError("There are not enough spawn points to spawn all the items, try reducing the minimum amounts of certain items");
+            //Debug.LogError("There are not enough spawn points to spawn all the items, try reducing the minimum amounts of certain items");
         }
     }
 }

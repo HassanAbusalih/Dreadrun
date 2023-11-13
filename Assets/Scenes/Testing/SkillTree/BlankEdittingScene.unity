@@ -3915,7 +3915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blankSprite: {fileID: 21300000, guid: d4846583bfeb63d4586b331aa5322cfd, type: 3}
-  customColor: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 0.6117647}
+  emptyWeaponColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!222 &1393980730816325559
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5353,7 +5353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blankSprite: {fileID: 21300000, guid: d4846583bfeb63d4586b331aa5322cfd, type: 3}
-  customColor: {r: 1, g: 1, b: 1, a: 0.31764707}
+  emptyWeaponColor: {r: 1, g: 1, b: 1, a: 0.5019608}
 --- !u!1 &6249945638648044445
 GameObject:
   m_ObjectHideFlags: 0
@@ -8331,16 +8331,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashForce: 45
-  dashDistance: 15
   dashDuration: 0.5
+  dashCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   staminaCost: 0
-  isDashing: 0
   dashColor: {r: 0.13264506, g: 0.2248548, b: 0.764151, a: 0.5529412}
   dodge: 32
-  ground:
-    serializedVersion: 2
-    m_Bits: 2048
   dashSFX: {fileID: 11400000, guid: 650607ad15d612c44bee73228ccaf994, type: 2}
+  isInvincible: 0
+  isDashing: 0
 --- !u!1 &7205057523804987018
 GameObject:
   m_ObjectHideFlags: 0
