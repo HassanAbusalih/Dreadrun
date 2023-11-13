@@ -1,35 +1,24 @@
-using UnityEngine;
+using System;
 
-[CreateAssetMenu(fileName = "Attack Artifact Object", menuName = "ArtifactsEffects/Attack Artifact")]
+[Serializable]
 public class AttackArtifact : Artifact
 {
-    [SerializeField] private float attackIncreasePerLevel;
+    // Cast the value of inherited settings variable to the correct settings type and assign it to a variable for easier use
+    AttackArtifactSettings ArtifactSettings => (AttackArtifactSettings)base.settings;
+    private float TotalAttackIncrease => level * ArtifactSettings.attackIncreasePerLevel;
 
-    private bool buffApplied;
+    bool buffapplied = false;
 
-    private float TotalAttackIncrease => level * attackIncreasePerLevel;
-
-    public override void InitializeArtifact()
+    public override void Initialize()
     {
-           buffApplied = false;
+        
     }
 
-    public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager manager)
+    public override void ApplyArtifactEffects()
     {
         foreach (Player player in manager.PlayersInGame)
         {
-            bool isPlayerInRange = (player.transform.position - artifactPosition).sqrMagnitude <= effectRange * effectRange;
-
-            if (isPlayerInRange && !buffApplied)
-            {
-                player.playerStats.attack += TotalAttackIncrease;
-                buffApplied = true;
-            }
-            else if (!isPlayerInRange && buffApplied)
-            {
-                player.playerStats.attack -= TotalAttackIncrease;
-                buffApplied = false;
-            }
+            ApplyBuff(player, TotalAttackIncrease, ref buffapplied, "attack");
         }
     }
 }

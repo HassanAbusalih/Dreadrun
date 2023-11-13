@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4996480287593095484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4996480287593095475}
+  - component: {fileID: 844223943840796202}
+  - component: {fileID: 1577162186}
+  m_Layer: 0
+  m_Name: Artifact holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4996480287593095475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4996480287593095484}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.522504, y: -0.399, z: -30.841322}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &844223943840796202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4996480287593095484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2758829527bcaa349afe1d68c0c21951, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useCustomEffectRange: 1
+  effectRange: 5
+  artifactSettings:
+  - {fileID: 11400000, guid: a1ca900b9078e7c41ba3cf85c488428e, type: 2}
+  - {fileID: 11400000, guid: 9082ceb42f214ad4b99452b1a7c1b6aa, type: 2}
+  - {fileID: 11400000, guid: 3ce397f2bf012be4389fc034b30b3ff9, type: 2}
+  - {fileID: 11400000, guid: a0939b991fd17a9469a6bf228959e374, type: 2}
+  minArtifactLevel: 1
+  maxArtifactLevel: 3
+--- !u!114 &1577162186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4996480287593095484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c3beed6f1d713f439d575fc4c1770a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: []
+  onWin:
+    m_PersistentCalls:
+      m_Calls: []
+  onLose:
+    m_PersistentCalls:
+      m_Calls: []
+  onPause:
+    m_PersistentCalls:
+      m_Calls: []
+  onResume:
+    m_PersistentCalls:
+      m_Calls: []
+  onPhaseChange:
+    m_PersistentCalls:
+      m_Calls: []
