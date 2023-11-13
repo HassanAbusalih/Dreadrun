@@ -10,7 +10,7 @@ public class AttackSpeed : Perk
     [SerializeField]
     private int AddAttackSpeed;
 
-    public override void ApplyPlayerBuffs(Player player)
+    public override INeedUI ApplyPlayerBuffs(Player player)
     {
         if (player.playerWeapon != null)
         {
@@ -23,7 +23,7 @@ public class AttackSpeed : Perk
         {
             player.playerWeapon.FireRate *= player.playerStats.attackSpeed;
         }
-
+        return null;
     }
 }
 

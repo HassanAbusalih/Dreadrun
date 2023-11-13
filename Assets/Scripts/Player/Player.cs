@@ -54,7 +54,6 @@ public class Player : MonoBehaviour, IDamagable
         playerStats.stamina = playerStats.maxStamina;
         InitializePlayerUI(healthBar, playerStats.maxHealth, playerStats.health);
         InitializePlayerUI(staminaBar, playerStats.maxStamina, playerStats.stamina);
-        currentWeaponID = 0;
     }
 
     void InitializePlayerUI(Slider playerUiBar, float MaxValue, float CurrentValue)
@@ -66,11 +65,14 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
         Vector3 movement = new Vector3(horizontal, 0, vertical);
         movement = movement.normalized * playerStats.speed;
+
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
+        //rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerStats.speed);
+
         PickUpUnequippedWeapon();
         DropCurrentWeapon();
     }

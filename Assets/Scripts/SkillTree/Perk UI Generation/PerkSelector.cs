@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -91,10 +88,8 @@ public class PerkSelector : MonoBehaviour
 
     public void OnClick(int perkIndexSelected)
     {
-        perkChoices[perkIndexSelected].perk.ApplyPlayerBuffs(player);
-
         perkUIcanvas.SetActive(false);
-        perkCollectorManager.AcquirePerk(perkChoices[perkIndexSelected].perk, ref perkPool);
+        perkCollectorManager.AcquirePerk(perkChoices[perkIndexSelected].perk);
     }
 
     public void ShowDescription(int index)

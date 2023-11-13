@@ -7,10 +7,12 @@ public class ShieldPerk : Perk
     [SerializeField] private float shieldCD;
     [SerializeField] float regenDelay = 1;
     [SerializeField] float regenDuration = 5;
-    public override void ApplyPlayerBuffs(Player player)
+    public override INeedUI ApplyPlayerBuffs(Player player)
     {
         GameObject newShield = Instantiate(shield, player.transform.position, player.transform.rotation);
-        player.gameObject.AddComponent<ShieldManager>().GimmieShield(newShield, shieldCD, regenDelay, regenDuration, player);
+        ShieldManager manager = player.gameObject.AddComponent<ShieldManager>();
+        manager.GimmieShield(newShield, shieldCD, regenDelay, regenDuration, player);
+        return manager;
     }
 
     public override float FetchCooldown()
