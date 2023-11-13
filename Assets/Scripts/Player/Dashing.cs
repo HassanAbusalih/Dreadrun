@@ -70,8 +70,7 @@ public class Dashing : MonoBehaviour
         DashMode(true);
         float elapsedTime = 0f;
         onDashing?.Invoke(-staminaCost);
-        dashSFX.PlaySound(ref audioSource, 0, gameObject);
-
+        dashSFX.PlaySound(0, AudioSourceType.Player);
         while (elapsedTime < dashDuration && isDashing)
         {
             float dashProgress = elapsedTime / dashDuration;

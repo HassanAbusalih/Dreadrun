@@ -41,12 +41,11 @@ public abstract class PlayerWeapon : WeaponBase
         Vector3 _weaponRotation = _weaponEquipPosition.rotation.eulerAngles + weaponRotationOffset;
         transform.rotation = Quaternion.Euler(_weaponRotation);
         equipped = true;
-
-        soundSO.PlaySound(ref audioSource, 0, this.gameObject);
-
+        weaponCollider.isTrigger = true;
         UpdateWeaponEffects();
         weaponPickedUpOrDropped?.Invoke(this);
         _iD = weaponID;
+        if (soundSO != null) soundSO.PlaySound(0, AudioSourceType.Weapons);
         if (weaponEquipText != null) weaponEquipText.SetActive(false);
     }
 
@@ -55,8 +54,9 @@ public abstract class PlayerWeapon : WeaponBase
         transform.SetParent(null);
         effects.Clear();
         equipped = false;
-        soundSO.PlaySound(ref audioSource, 1, this.gameObject);
+        weaponCollider.isTrigger = false;
         weaponPickedUpOrDropped?.Invoke(null);
+        if (soundSO != null) soundSO.PlaySound(1, AudioSourceType.Weapons);
         if (weaponEquipText != null) weaponEquipText.SetActive(true);
     }
 

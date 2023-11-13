@@ -20,9 +20,9 @@ public class Bow : PlayerWeapon
         if (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("shoot"))
         {
             chargeTime = Mathf.Min(chargeTime + Time.deltaTime, fireRate);
-            if (!hasPlayedWindUpSFX)
+            if (!hasPlayedWindUpSFX && soundSO != null)
             {
-                soundSO.PlaySound(ref audioSource, 3, this.gameObject);
+                soundSO.PlaySound(3, AudioSourceType.Weapons);
                 hasPlayedWindUpSFX = true;
             }
 
@@ -43,7 +43,10 @@ public class Bow : PlayerWeapon
         float currentSpeed = Mathf.Lerp(minSpeed, projectileRange, chargeTime / fireRate);
         GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + transform.forward, transform.rotation);
         projectile.GetComponent<Projectile>().Initialize(currentDamage, currentSpeed, currentRange, 8, effects);
-        soundSO.PlaySound(ref audioSource, 2, this.gameObject);
+        if (soundSO != null)
+        {
+            soundSO.PlaySound(2, AudioSourceType.Weapons);
+        }
     }
 
     void VisualFeedback()

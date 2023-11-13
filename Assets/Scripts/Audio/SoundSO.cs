@@ -7,25 +7,14 @@ public class SoundSO : ScriptableObject
     [SerializeField] AudioMixerGroup mixerGroup;
     public AudioClip[] audioClips;
 
-    private AudioSource Play(int index, AudioSource newSource = null, bool isLooping = false, bool setAsChild = true)
+    public void PlaySound(int index, AudioSourceType audioType, bool isLooping = false)
     {
-        AudioSource source = newSource;
-        if (source == null)
-        {
-            GameObject obj = new GameObject("Sound", typeof(AudioSource));
-            source = obj.GetComponent<AudioSource>();
-            source.outputAudioMixerGroup = mixerGroup;
-        }
-        source.playOnAwake = false;
-        source.loop = isLooping;
-        source.PlayOneShot(GetSound(index));
-        if (!setAsChild)
-        {
-            Destroy(source.gameObject, 1);
-        }
-        return source;
+        AudioManager.instance.Play(GetSound(index), audioType, isLooping, mixerGroup);
     }
-
+    public void StopSound(AudioSourceType audioType)
+    {
+        AudioManager.instance.Stop(audioType);
+    }
     public AudioClip GetSound(int index)
     {
         if (index < audioClips.Length)
@@ -38,19 +27,4 @@ public class SoundSO : ScriptableObject
         }
     }
 
-    public void PlaySound(ref AudioSource source, int index, GameObject gameObject, bool isLooping = false, bool setAsChild = true)
-    {
-        if (source == null)
-        {
-            source = Play(index, null, isLooping, setAsChild);
-            if (setAsChild)
-            {
-                source.gameObject.transform.parent = gameObject.transform;
-            }
-        }
-        else
-        {
-            source.PlayOneShot(GetSound(index));
-        }
-    }
 }

@@ -10,7 +10,7 @@ public class ExpOrb : MonoBehaviour
     public LayerMask layerMask;
     public ExperienceManager expmanager;
     [SerializeField] SoundSO expOrbPickUpSFX;
-    AudioSource audioSource;
+   
 
     private void Start()
     {
@@ -22,7 +22,10 @@ public class ExpOrb : MonoBehaviour
         if (other.TryGetComponent(out Player player))
         {
             expmanager.AddExperience(expAmount);
-            expOrbPickUpSFX.PlaySound(ref audioSource, 0, this.gameObject, false, false);
+            if (expOrbPickUpSFX != null)
+            {
+                expOrbPickUpSFX.PlaySound(0, AudioSourceType.Player);
+            }
             Destroy(this.gameObject);
         }
     }

@@ -31,7 +31,10 @@ public class Timer : MonoBehaviour
         {
             onTimerMet?.Invoke();
             timerStarts = false;
-            finishedTimerSFX.PlaySound(ref audioSource, 0, this.gameObject, false, false);
+            if (finishedTimerSFX != null)
+            {
+                finishedTimerSFX.PlaySound(0, AudioSourceType.Player);
+            }
             Destroy(gameObject);
         }
     }
