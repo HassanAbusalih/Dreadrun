@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageFeedback : MonoBehaviour
@@ -8,7 +6,7 @@ public class DamageFeedback : MonoBehaviour
     [SerializeField] Color takeDamageColor;
     [SerializeField] float takeDamageScale;
     [SerializeField] AnimationCurve damageCurve;
-    [SerializeField ]bool animateScale;
+    [SerializeField] bool animateScale;
 
     bool isTakingDamage;
     float elapsedTime;
@@ -19,7 +17,7 @@ public class DamageFeedback : MonoBehaviour
 
     private void OnEnable()
     {
-        IDamagable.onDamageTaken += enableTakeDamageEffects;
+        IDamagable.onDamageTaken += EnableTakeDamageEffects;
         startZScale = transform.localScale.z;
         TryGetComponent(out meshRenderer);
         if (meshRenderer == null) return;
@@ -28,10 +26,10 @@ public class DamageFeedback : MonoBehaviour
 
     private void OnDisable()
     {
-        IDamagable.onDamageTaken -= enableTakeDamageEffects;
+        IDamagable.onDamageTaken -= EnableTakeDamageEffects;
     }
 
-    void enableTakeDamageEffects(GameObject _damageable)
+    void EnableTakeDamageEffects(GameObject _damageable)
     {
         if (_damageable == gameObject)
         {
