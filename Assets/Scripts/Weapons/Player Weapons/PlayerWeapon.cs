@@ -15,8 +15,6 @@ public abstract class PlayerWeapon : WeaponBase
     [SerializeField] Vector3 weaponRotationOffset;
     [SerializeField] GameObject weaponEquipText;
     protected bool equipped;
-    [SerializeField] Collider weaponCollider;
-
 
     [field: SerializeField] public Sprite weaponIcon { get; private set; }
     [field: SerializeField] public string weaponDescription { get; private set; }
@@ -31,10 +29,9 @@ public abstract class PlayerWeapon : WeaponBase
         {
             if (_weaponCollider[i].isTrigger == false)
             {
-                weaponCollider = _weaponCollider[i];
+                _weaponCollider[i].isTrigger = true;
             }
         }
-
     }
 
     public void PickUpWeapon(Transform _weaponEquipPosition, ref int _iD)
@@ -44,9 +41,8 @@ public abstract class PlayerWeapon : WeaponBase
         Vector3 _weaponRotation = _weaponEquipPosition.rotation.eulerAngles + weaponRotationOffset;
         transform.rotation = Quaternion.Euler(_weaponRotation);
         equipped = true;
-        weaponCollider.isTrigger = true;
 
-        //soundSO.PlaySound(ref audioSource, 0, this.gameObject);
+        soundSO.PlaySound(ref audioSource, 0, this.gameObject);
 
         UpdateWeaponEffects();
         weaponPickedUpOrDropped?.Invoke(this);
@@ -59,8 +55,7 @@ public abstract class PlayerWeapon : WeaponBase
         transform.SetParent(null);
         effects.Clear();
         equipped = false;
-        weaponCollider.isTrigger = false;
-        //soundSO.PlaySound(ref audioSource, 1, this.gameObject);
+        soundSO.PlaySound(ref audioSource, 1, this.gameObject);
         weaponPickedUpOrDropped?.Invoke(null);
         if (weaponEquipText != null) weaponEquipText.SetActive(true);
     }

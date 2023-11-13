@@ -69,9 +69,7 @@ public class Player : MonoBehaviour, IDamagable
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 movement = new Vector3(horizontal, 0, vertical);
         movement = movement.normalized * playerStats.speed;
-
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
-        //rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerStats.speed);
 
         PickUpUnequippedWeapon();
         DropCurrentWeapon();
