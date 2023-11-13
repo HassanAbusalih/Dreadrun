@@ -25,10 +25,11 @@ public class Player : MonoBehaviour, IDamagable
     public PlayerWeapon playerWeapon;
     bool isWeaponPickedUp;
 
+    public static Action<GameObject> onDamageTaken;
     public Action OnPlayerDeath;
     public delegate bool takeDamage();
     public takeDamage canPLayerTakeDamage;
-
+   
     [SerializeField] SoundSO takeDamageSFX;
 
     private void OnEnable()
@@ -122,7 +123,7 @@ public class Player : MonoBehaviour, IDamagable
         bool _allowToTakeDamage = canPLayerTakeDamage?.Invoke() ?? true;
         if (_allowToTakeDamage) return;
         ChangeHealth(-amount);
-
+        IDamagable.onDamageTaken?.Invoke(gameObject);
     }
 
     public void ChangeHealth(float amount)

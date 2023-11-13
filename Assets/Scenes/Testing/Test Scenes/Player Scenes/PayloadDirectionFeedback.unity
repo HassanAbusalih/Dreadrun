@@ -424,12 +424,14 @@ MonoBehaviour:
   player: {fileID: 388600869}
   distanceToShow: 25
   offset: {x: 0, y: 0.2, z: 1.2}
-  loopingColor: {r: 1, g: 0.89839494, b: 0, a: 1}
+  loopingColor:
+    r: 1
+    g: 0.89839494
+    b: 0
+    a: 1
   scaleCurve:
-    serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
-      time: -0.021068573
+    - time: -0.021068573
       value: 0.0062408447
       inSlope: -0.8434894
       outSlope: -0.8434894
@@ -437,8 +439,7 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0.0550217
-    - serializedVersion: 3
-      time: 0.55983526
+    - time: 0.55983526
       value: 0.18573624
       inSlope: -Infinity
       outSlope: -Infinity
@@ -446,8 +447,7 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
+    - time: 1
       value: 1
       inSlope: -0.63212204
       outSlope: -0.63212204
@@ -461,6 +461,9 @@ MonoBehaviour:
   frequency: 10
   amplitude: 1
   distanceFromPayload: 41.509697
+  payload: {fileID: 0}
+  isShowing: 0
+  arrowSprite: {fileID: 0}
 --- !u!212 &780861033
 SpriteRenderer:
   m_ObjectHideFlags: 0

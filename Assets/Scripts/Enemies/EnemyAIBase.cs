@@ -41,6 +41,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
     public void TakeDamage(float Amount)
     {
         currentHealth -= Amount;
+        IDamagable.onDamageTaken?.Invoke(gameObject);
         if (currentHealth <= 0) { Destroy(gameObject); }
     }
 
