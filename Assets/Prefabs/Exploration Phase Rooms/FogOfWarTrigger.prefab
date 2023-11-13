@@ -75,10 +75,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fogBoxScale: {x: 30, y: 25.4}
   particleEmissionRate: 40
+  particleLifetime: 0
   fogColor: {r: 0, g: 0, b: 0, a: 1}
   delayToFadeOut: 1.5
   fadeOutDuration: 2
+  sizeLerpSpeed: 0
   destroyAfterFadeOut: 1
+  restartAgain: 0
 --- !u!1001 &8886281469070425060
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -161,6 +164,10 @@ PrefabInstance:
     - target: {fileID: 2078720436125858644, guid: fc0252bfbaad4ba4dbb04053ef66db66, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2078720436125858644, guid: fc0252bfbaad4ba4dbb04053ef66db66, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.0001
       objectReference: {fileID: 0}
     - target: {fileID: 2078720436125858644, guid: fc0252bfbaad4ba4dbb04053ef66db66, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
