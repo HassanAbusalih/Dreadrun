@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public class AttackSpeedArtifact : Artifact
@@ -11,14 +12,14 @@ public class AttackSpeedArtifact : Artifact
 
     public override void Initialize()
     {
-        
+     
     }
 
     public override void ApplyArtifactEffects()
     {
         foreach (Player player in manager.PlayersInGame)
         {
-            if (ApplyBuff(player, TotalAttackSpeedIncrease, ref buffapplied, "attackSpeed")) break;
+            ApplyBuff(player, TotalAttackSpeedIncrease, ref buffapplied, "attackSpeed");
         }
     }
 }

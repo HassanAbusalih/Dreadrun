@@ -24,7 +24,7 @@ public class PhaseChanger : MonoBehaviour
 
     private void Update()
     {
-        if (CheckIfAllPlayersAreInRange())
+        //if (CheckIfAllPlayersAreInRange())
         {
             insideTimer += Time.deltaTime;
 

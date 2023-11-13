@@ -23,7 +23,7 @@ public class RegenArtifact : Artifact
     {
         foreach (Player player in manager.PlayersInGame)
         {
-            if ((player.transform.position - manager.artifactPosition).sqrMagnitude <= manager.effectRange * manager.effectRange)
+            if ((player.transform.position - manager.transform.position).sqrMagnitude <= manager.effectRange * manager.effectRange)
             {
                 if (!regenCoroutines.ContainsKey(player))
                 {

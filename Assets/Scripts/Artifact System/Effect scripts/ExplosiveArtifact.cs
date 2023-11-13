@@ -47,7 +47,7 @@ public class ExplosiveArtifact : Artifact
 
             if (rb != null)
             {
-                rb.AddExplosionForce(TotalPushBackForce, manager.artifactPosition, ArtifactSettings.explosionRadius, 0, ForceMode.Impulse);
+                rb.AddExplosionForce(TotalPushBackForce, manager.transform.position, ArtifactSettings.explosionRadius, 0, ForceMode.Impulse);
                 ShockwaveEffect.Play();
             }
 

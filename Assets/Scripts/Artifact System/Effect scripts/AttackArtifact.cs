@@ -18,7 +18,7 @@ public class AttackArtifact : Artifact
     {
         foreach (Player player in manager.PlayersInGame)
         {
-            if (ApplyBuff(player, TotalAttackIncrease, ref buffapplied, "attack")) break;
+            ApplyBuff(player, TotalAttackIncrease, ref buffapplied, "attack");
         }
     }
 }
