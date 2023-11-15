@@ -6,17 +6,9 @@ using UnityEngine;
 public class UnlockedPerks : MonoBehaviour
 {
     public List<Perk> unlockedPerkpool;
-
-    public void SavePerks()
-    {
-        string jsonData = JsonUtility.ToJson(new PerkData(unlockedPerkpool));
-        File.WriteAllText("perks.json", jsonData);
-        Debug.Log("Perks saved to JSON.");
-    }
-
+    [SerializeField]
     void Start()
     {
-
         LoadPerks();
     }
 
@@ -31,6 +23,13 @@ public class UnlockedPerks : MonoBehaviour
     public void AddNewPerk(Perk newPerk)
     {
         unlockedPerkpool.Add(newPerk);
+    }
+
+    public void SavePerks()
+    {
+        string jsonData = JsonUtility.ToJson(new PerkData(unlockedPerkpool));
+        File.WriteAllText("perks.json", jsonData);
+        Debug.Log("Perks saved to JSON.");
     }
 
     private void LoadPerks()

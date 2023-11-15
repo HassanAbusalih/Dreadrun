@@ -15,15 +15,6 @@ public class PerkLootboxes : MonoBehaviour
         RemoveCommonPerks(unlockablePerkPool, unlocked.unlockedPerkpool);
     }
 
-    void RemoveCommonPerks(List<Perk> unlockable, List<Perk> unlocked)
-    {
-        unlockable.RemoveAll(poolA => unlocked.Contains(poolA));
-        if (unlockablePerkPool.Count == 0)
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
     void Update()
     {
         if (entered)
@@ -40,6 +31,14 @@ public class PerkLootboxes : MonoBehaviour
         }
     }
 
+    void RemoveCommonPerks(List<Perk> unlockable, List<Perk> unlocked)
+    {
+        unlockable.RemoveAll(poolA => unlocked.Contains(poolA));
+        if (unlockablePerkPool.Count == 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         entered = false;
