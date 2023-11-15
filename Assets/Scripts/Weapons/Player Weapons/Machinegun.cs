@@ -11,22 +11,23 @@ public class Machinegun : PlayerWeapon
     {
         if (!equipped) { return; }
         timeSinceLastShot += Time.deltaTime;
-        firingDuration += Time.deltaTime;
         if (Input.GetKey(KeyCode.Mouse0) || Input.GetButton("shoot"))
         {
-            Attack();
+            if (timeSinceLastShot >= fireRate)
+            {
+                Attack();
+                timeSinceLastShot = 0;
+            }
+            firingDuration += Time.deltaTime;
         }
         else
         {
             firingDuration = 0;
-            timeSinceLastShot = 0;
         }
     }
 
     public override void Attack()
     {
-        if (timeSinceLastShot < fireRate) return;
-        timeSinceLastShot = 0;
         float currentSpread = 0;
         if (firingDuration > rampDelay)
         {
@@ -37,6 +38,5 @@ public class Machinegun : PlayerWeapon
         GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + transform.forward, projectileRotation);
         projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8, effects);
         soundSO.PlaySound(2, AudioSourceType.Weapons);
-        
     }
 }

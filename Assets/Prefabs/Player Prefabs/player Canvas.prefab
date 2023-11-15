@@ -640,6 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c3beed6f1d713f439d575fc4c1770a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: []
   onWin:
     m_PersistentCalls:
       m_Calls:
@@ -700,6 +701,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onPhaseChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1792222216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,7 +1260,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 3304723531186817301}
   m_FillRect: {fileID: 3304723530363268898}
-  m_HandleRect: {fileID: 3304723531186817300}
+  m_HandleRect: {fileID: 3304723530363268898}
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
@@ -1416,7 +1420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.990566, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.5176471, g: 0.10980392, b: 0.2, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1831,7 +1835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9716981, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.5176471, g: 0.10980392, b: 0.2, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1882,7 +1886,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -46,6 +46,7 @@ public class DamageFeedback : MonoBehaviour
     void ShowTakeDamageEffects()
     {
         if (!isTakingDamage) return;
+        if (meshRenderer == null) return;  
         if (duration >= elapsedTime)
         {
             elapsedTime += Time.deltaTime;
