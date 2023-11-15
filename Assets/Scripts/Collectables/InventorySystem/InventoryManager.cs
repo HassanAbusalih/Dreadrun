@@ -50,10 +50,14 @@ public class InventoryManager : MonoBehaviour
             if (item != null)
             {
                 AddItem(item);
-                pickUpItemSFX.PlaySound(ref audioSource, 0, this.gameObject);
+                if (pickUpItemSFX != null)
+                {
+                    pickUpItemSFX.PlaySound(0, AudioSourceType.Player);
+                }
                 Destroy(other.gameObject);
             }
         }
+
     }
 
     public void AddItem(ItemBase item)
@@ -92,10 +96,13 @@ public class InventoryManager : MonoBehaviour
             if (item != null)
             {
                 item.UseOnSelf(player);
-                item.itemSound.PlaySound(ref audioSource, 0, this.gameObject);
                 inventory.inventoryList[slot] = null;
                 UpdateInventoryUISlot(slot, null);
                 slotCounter--;
+            }
+            if(item.itemSound != null)
+            {
+                item.itemSound.PlaySound(0, AudioSourceType.Player);
             }
         }
     }

@@ -15,7 +15,7 @@ public class Shotgun : PlayerWeapon
     {
         if (!equipped) { return; }
         timeSinceLastShot += Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Mouse0)|| Input.GetButtonDown("shoot"))
+        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetButtonDown("shoot"))
         {
             Attack();
 
@@ -37,6 +37,9 @@ public class Shotgun : PlayerWeapon
             GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + projectileLocation, projectileRotation);
             projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8, effects);
         }
-        soundSO.PlaySound(ref audioSource, 2, this.gameObject);
+        if (soundSO != null)
+        {
+            soundSO.PlaySound(2, AudioSourceType.Weapons);
+        }
     }
 }

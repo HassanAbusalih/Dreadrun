@@ -17,7 +17,7 @@ public class AttackSpeedPotion : ItemBase
     public override void UseOnSelf(Player player)
     {
         hasBuffedItem = true;
-        if (player.playerWeapon != null)
+        if (hasBuffedItem && player.playerWeapon != null)
         {
             defaultProjectileSpeed = player.playerWeapon.ProjectileSpeed;
             player.playerWeapon.ProjectileSpeed += increaseProjectileSpeed;

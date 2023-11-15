@@ -87,7 +87,10 @@ public class Grenade : MonoBehaviour
             }
         }
         Instantiate(explosionVFX, transform.position, transform.rotation);
-        explosionSFX.PlaySound(ref audioSource, 0, this.gameObject, false, false);
+        if (explosionSFX != null)
+        {
+            explosionSFX.PlaySound(0, AudioSourceType.Weapons);
+        }
         Destroy(gameObject);
     }
 
