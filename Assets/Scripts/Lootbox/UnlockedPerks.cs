@@ -7,7 +7,9 @@ public class UnlockedPerks : MonoBehaviour
 {
     public List<Perk> unlockedPerkpool;
     [SerializeField] PerkSelector selector;
-    void Start()
+    [SerializeField] bool debugMode;
+
+    void Awake()
     {
         selector = FindObjectOfType<PerkSelector>();
         LoadPerks();
@@ -16,7 +18,7 @@ public class UnlockedPerks : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U) && debugMode)
         {
             SavePerks();
         }
