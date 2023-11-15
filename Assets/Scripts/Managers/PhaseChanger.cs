@@ -59,8 +59,8 @@ public class PhaseChanger : MonoBehaviour
 
     public void ChangePhase()
     {
-        if (wall != null)
-            wall.SetActive(false);
+      /*  if (wall != null)
+            wall.SetActive(false);*/
 
         Destroy(this);
     }
