@@ -22,15 +22,6 @@ public class PerkLootboxes : MonoBehaviour
             OpenLootBox();
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<UnlockedPerks>())
-        {
-            entered = true;
-        }
-    }
-
     void RemoveCommonPerks(List<Perk> unlockable, List<Perk> unlocked)
     {
         unlockable.RemoveAll(poolA => unlocked.Contains(poolA));
@@ -39,6 +30,14 @@ public class PerkLootboxes : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<UnlockedPerks>())
+        {
+            entered = true;
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         entered = false;

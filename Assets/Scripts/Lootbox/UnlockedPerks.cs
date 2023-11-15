@@ -6,10 +6,12 @@ using UnityEngine;
 public class UnlockedPerks : MonoBehaviour
 {
     public List<Perk> unlockedPerkpool;
-    [SerializeField]
+    [SerializeField] PerkSelector selector;
     void Start()
     {
+        selector = FindObjectOfType<PerkSelector>();
         LoadPerks();
+        
     }
 
     void Update()
@@ -25,6 +27,14 @@ public class UnlockedPerks : MonoBehaviour
         unlockedPerkpool.Add(newPerk);
     }
 
+    void AddUnlockedPerks()
+    {
+        foreach (Perk unlockedPerk in unlockedPerkpool)
+        {
+            selector.AddToPool(unlockedPerk);
+        }
+    }
+
     public void SavePerks()
     {
         string jsonData = JsonUtility.ToJson(new PerkData(unlockedPerkpool));
@@ -38,8 +48,8 @@ public class UnlockedPerks : MonoBehaviour
         {
             string jsonData = File.ReadAllText("perks.json");
             PerkData perkData = JsonUtility.FromJson<PerkData>(jsonData);
-
             unlockedPerkpool = perkData.unlockedPerks;
+            AddUnlockedPerks();
             Debug.Log("Perks read to JSON.");
         }
     }
