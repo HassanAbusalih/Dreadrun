@@ -103,4 +103,10 @@ public class PerkSelector : MonoBehaviour
     {
         perkDescriptionPanel.SetActive(false);
     }
+
+    public void AddToPool(Perk newPerk)
+    {
+        perkPool.Add(newPerk);
+        Debug.Log("added");
+    }
 }

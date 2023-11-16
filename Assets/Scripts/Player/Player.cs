@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamagable
 {
-    public bool controllerEnabled;
     Rigidbody rb;
     Dashing playerDash;
     [Header("Player Input Settings")]
@@ -79,8 +78,9 @@ public class Player : MonoBehaviour, IDamagable
     private void PickUpUnequippedWeapon()
     {
         if (pickUpWeaponKey == KeyCode.None) pickUpWeaponKey = KeyCode.E;
+        if (controllerPickUp == KeyCode.None) controllerPickUp = KeyCode.JoystickButton3;
         if (playerWeapon == null) return;
-        if (Input.GetKeyDown(pickUpWeaponKey) && !isWeaponPickedUp)
+        if (Input.GetKeyDown(pickUpWeaponKey) || Input.GetKeyDown(controllerPickUp) && !isWeaponPickedUp)
         {
             ScaleOrDescaleWeapon(true);
             playerWeapon.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
@@ -91,8 +91,8 @@ public class Player : MonoBehaviour, IDamagable
     void DropCurrentWeapon()
     {
         if(dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
-        if (controllerDrop == KeyCode.None) controllerDrop = KeyCode.JoystickButton3;
-        if ((Input.GetKeyDown(dropWeaponKey)|| Input.GetKeyDown(controllerDrop)) && isWeaponPickedUp)
+        if (controllerDrop == KeyCode.None) controllerDrop = KeyCode.JoystickButton2;
+        if (Input.GetKeyDown(dropWeaponKey)|| Input.GetKeyDown(controllerDrop) && isWeaponPickedUp)
         {
             ScaleOrDescaleWeapon(false);
             playerWeapon.DropWeapon();
