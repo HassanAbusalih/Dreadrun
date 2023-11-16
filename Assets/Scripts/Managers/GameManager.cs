@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Windows;
 using UnityEngine.Events;
 using Input = UnityEngine.Input;
 

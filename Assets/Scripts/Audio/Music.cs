@@ -9,15 +9,15 @@ public class Music : MonoBehaviour
 
     private void Start()
     {
-        musicSFX.PlaySound(0, AudioSourceType.Environment);
+        musicSFX.PlaySound(0, AudioSourceType.Music);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Player player))
         {
-            musicSFX.StopSound(AudioSourceType.Environment);
-            musicSFX.PlaySound(musicPlaying, AudioSourceType.Environment);
+            musicSFX.StopSound(AudioSourceType.Music);
+            musicSFX.PlaySound(musicPlaying, AudioSourceType.Music);
             Destroy(this.gameObject);
         }
     }
