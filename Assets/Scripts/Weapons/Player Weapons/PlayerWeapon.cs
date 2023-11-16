@@ -14,6 +14,7 @@ public abstract class PlayerWeapon : WeaponBase
     [SerializeField] Vector3 weaponOffset;
     [SerializeField] Vector3 weaponRotationOffset;
     [SerializeField] GameObject weaponEquipText;
+    bool pickedUp;
     protected bool equipped;
 
     [field: SerializeField] public Sprite weaponIcon { get; private set; }
@@ -44,7 +45,11 @@ public abstract class PlayerWeapon : WeaponBase
         UpdateWeaponEffects();
         weaponPickedUpOrDropped?.Invoke(this);
         _iD = weaponID;
-        if (soundSO != null) soundSO.PlaySound(0, AudioSourceType.Weapons);
+        if (soundSO != null && !pickedUp)
+        {
+            soundSO.PlaySound(0, AudioSourceType.Weapons);
+            pickedUp = true;
+        }
         if (weaponEquipText != null) weaponEquipText.SetActive(false);
     }
 
@@ -54,7 +59,11 @@ public abstract class PlayerWeapon : WeaponBase
         effects.Clear();
         equipped = false;
         weaponPickedUpOrDropped?.Invoke(null);
-        if (soundSO != null) soundSO.PlaySound(1, AudioSourceType.Weapons);
+        if (soundSO != null && pickedUp)
+        {
+            soundSO.PlaySound(1, AudioSourceType.Weapons);
+            pickedUp = false;
+        }
         if (weaponEquipText != null) weaponEquipText.SetActive(true);
     }
 

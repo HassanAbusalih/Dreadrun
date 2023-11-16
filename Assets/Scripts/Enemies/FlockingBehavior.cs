@@ -6,6 +6,7 @@ public class FlockingBehavior : MonoBehaviour
     [SerializeField] float neighborRadius = 10f;
     [SerializeField] float separationDistance = 2f;
     [SerializeField] LayerMask flockLayer;
+    [SerializeField] LayerMask spawnerLayer;
     [SerializeField] float alignmentStrength = 1f;
     [SerializeField] float cohesionStrength = 1f;
     [SerializeField] float separationStrength = 1f;

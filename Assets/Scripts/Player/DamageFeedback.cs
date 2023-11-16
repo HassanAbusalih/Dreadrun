@@ -11,7 +11,7 @@ public class DamageFeedback : MonoBehaviour
     bool isTakingDamage;
     float elapsedTime;
     Color startColor;
-    MeshRenderer meshRenderer;
+    [SerializeField] MeshRenderer meshRenderer;
     float startZScale;
 
 
@@ -19,9 +19,12 @@ public class DamageFeedback : MonoBehaviour
     {
         IDamagable.onDamageTaken += EnableTakeDamageEffects;
         startZScale = transform.localScale.z;
-        TryGetComponent(out meshRenderer);
+        if (meshRenderer == null)
+        {
+            TryGetComponent(out meshRenderer);
+        }
         if (meshRenderer == null) return;
-        startColor = GetComponent<Renderer>().material.color;    
+        startColor = meshRenderer.material.color;
     }
 
     private void OnDisable()
@@ -46,7 +49,7 @@ public class DamageFeedback : MonoBehaviour
     void ShowTakeDamageEffects()
     {
         if (!isTakingDamage) return;
-        if (meshRenderer == null) return;  
+        if (meshRenderer == null) return;
         if (duration >= elapsedTime)
         {
             elapsedTime += Time.deltaTime;
