@@ -20,17 +20,18 @@ public abstract class PlayerWeapon : WeaponBase
     [field: SerializeField] public Sprite weaponIcon { get; private set; }
     [field: SerializeField] public string weaponDescription { get; private set; }
     public static Action<PlayerWeapon> weaponPickedUpOrDropped;
+    Collider[] weaponColliders;
 
 
     protected virtual void Start()
     {
 
-        Collider[] _weaponCollider = GetComponents<Collider>();
-        for (int i = 0; i < _weaponCollider.Length; i++)
+        weaponColliders = GetComponents<Collider>();
+        for (int i = 0; i < weaponColliders.Length; i++)
         {
-            if (_weaponCollider[i].isTrigger == false)
+            if (weaponColliders[i].isTrigger == false)
             {
-                _weaponCollider[i].isTrigger = true;
+                weaponColliders[i].isTrigger = true;
             }
         }
     }
@@ -44,6 +45,7 @@ public abstract class PlayerWeapon : WeaponBase
         equipped = true;
         UpdateWeaponEffects();
         weaponPickedUpOrDropped?.Invoke(this);
+        EnableWeaponColliders(false);
         _iD = weaponID;
         if (soundSO != null && !pickedUp)
         {
@@ -58,6 +60,7 @@ public abstract class PlayerWeapon : WeaponBase
         transform.SetParent(null);
         effects.Clear();
         equipped = false;
+        EnableWeaponColliders(true);
         weaponPickedUpOrDropped?.Invoke(null);
         if (soundSO != null && pickedUp)
         {
@@ -71,5 +74,14 @@ public abstract class PlayerWeapon : WeaponBase
     {
         effects.Clear();
         effects.AddRange(GetComponentsInParent<IProjectileEffect>());
+    }
+
+    void EnableWeaponColliders(bool enabled)
+    {
+        if(weaponColliders == null) return;
+        for (int i = 0; i<= weaponColliders.Length-1; i++)
+               {
+            weaponColliders[i].enabled = enabled;
+        }
     }
 }
