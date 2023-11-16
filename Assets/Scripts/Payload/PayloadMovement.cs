@@ -239,7 +239,7 @@ public class PayloadMovement : MonoBehaviour
         currentPath = FindObjectOfType<PayloadPath>();
         playersInGame = FindObjectsOfType<Player>() ?? null;
         payloadUI = FindObjectOfType<PayloadUI>() ?? null;
-        //GameManager.Instance.onPhaseChange.AddListener(EnableMovement);
+        GameManager.Instance.onPhaseChange.AddListener(EnableMovement);
         PayloadCheckpointSystem.Instance.onCheckpointActivate.AddListener(DisableMovement);
         PayloadCheckpointSystem.Instance.onCheckpointDeactivate.AddListener(EnableMovement);
     }
