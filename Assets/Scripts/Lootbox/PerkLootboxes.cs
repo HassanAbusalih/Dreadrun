@@ -11,7 +11,7 @@ public class PerkLootboxes : MonoBehaviour
     [SerializeField] bool entered;
     [Header("Perk UI")]
     [SerializeField] GameObject perkUIcanvas;
-    [SerializeField] PerkOptions[] perkChoices;
+    [SerializeField] List<PerkOptions> perkChoices;
     void Start()
     {
         unlocked = FindObjectOfType<UnlockedPerks>();
@@ -30,11 +30,21 @@ public class PerkLootboxes : MonoBehaviour
     {
         unlockable.RemoveAll(poolA => unlocked.Contains(poolA));
         Debug.Log("deleted");
+        UpdateOptions();
         if (unlockable.Count == 0)
         {
             Destroy(this.gameObject);
         }
     }
+
+    void UpdateOptions()
+    {
+        if (unlockablePerkPool.Count < perkChoices.Count)
+        {
+            perkChoices.RemoveAt(perkChoices.Count-1);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<UnlockedPerks>())
@@ -62,7 +72,7 @@ public class PerkLootboxes : MonoBehaviour
     {
         List<int> selectedIndexes = new List<int>();
 
-        for (int perkIndex = 0; perkIndex < perkChoices.Length; perkIndex++)
+        for (int perkIndex = 0; perkIndex < perkChoices.Count; perkIndex++)
         {
             int randomIndexNum;
             do
