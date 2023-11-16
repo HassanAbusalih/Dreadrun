@@ -23,7 +23,7 @@ public class PerkCollectorManager : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<Player>();
+        player = FindObjectOfType<Player>();
     }
     public bool AcquireablePerk(Perk perk)
     {

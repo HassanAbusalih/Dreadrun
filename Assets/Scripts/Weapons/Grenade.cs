@@ -67,25 +67,7 @@ public class Grenade : MonoBehaviour
 
     void Explode()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, ~layersToIgnore);
-        foreach (Collider nearbyObject in colliders)
-        {
-            if (nearbyObject.TryGetComponent(out Rigidbody rb))
-            {
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 0, ForceMode.Impulse);
-            }
-            if (nearbyObject.TryGetComponent(out IDamagable damagable))
-            {
-                damagable.TakeDamage(damage);
-                if (effects != null && !damagable.gameObject.TryGetComponent(out PayloadStats payload))
-                {
-                    foreach (IProjectileEffect effect in effects)
-                    {
-                        effect.ApplyEffect(damagable, damage, new List<IProjectileEffect>(effects));
-                    }
-                }
-            }
-        }
+        Explosion.Explode(transform, damage, explosionRadius, explosionForce, layersToIgnore, effects);
         Instantiate(explosionVFX, transform.position, transform.rotation);
         if (explosionSFX != null)
         {
