@@ -40,4 +40,10 @@ public class PayloadStats : MonoBehaviour, IDamagable
             GameManager.Instance.Lose();
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, payloadRange);
+    }
 }

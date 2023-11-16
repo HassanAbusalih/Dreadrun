@@ -1,33 +1,51 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Regen Artifact Object", menuName = "ArtifactsEffects/Regen Artifact")]
+[Serializable]
 public class RegenArtifact : Artifact
 {
-    [SerializeField] private float regenPerSecondPerLevel;
+    private Dictionary<Player, Coroutine> regenCoroutines = new Dictionary<Player, Coroutine>();
 
-    private float TotalHealthRegenPerSecond => level * regenPerSecondPerLevel;
-    private Coroutine regenRoutine = null;
+    // Cast the value of inherited settings variable to the correct settings type and assign it to a variable for easier use
+    RegenArtifactSettings ArtifactSettings => (RegenArtifactSettings)base.settings;
+    private float TotalHealthRegenPerSecond => level * ArtifactSettings.regenPerSecondPerLevel;
 
-    public override void InitializeArtifact()
+    bool buffapplied = false;
+
+    public override void Initialize()
     {
-        regenRoutine = null;
+        this.gameObject = ArtifactSettings.artifactPrefab;
     }
 
-    public override void ApplyArtifactBuffs(Vector3 artifactPosition, float effectRange, ArtifactManager manager)
+    public override void ApplyArtifactEffects()
     {
         foreach (Player player in manager.PlayersInGame)
         {
-            if ((player.transform.position - artifactPosition).sqrMagnitude <= effectRange * effectRange)
+            if ((player.transform.position - manager.transform.position).sqrMagnitude <= manager.effectRange * manager.effectRange)
             {
-                regenRoutine = manager.StartCoroutine(RegenHealth(player));
+                if (!regenCoroutines.ContainsKey(player))
+                {
+                    StartHealthRegen(player);
+                }
             }
-            else
+            else if (regenCoroutines.ContainsKey(player))
             {
-                if (regenRoutine != null)
-                    manager.StopCoroutine(regenRoutine);
+                StopHealthRegen(player);
             }
         }
+    }
+
+    void StopHealthRegen(Player player)
+    {
+        manager.StopCoroutine(regenCoroutines[player]);
+        regenCoroutines.Remove(player);
+    }
+
+    void StartHealthRegen(Player player)
+    {
+        regenCoroutines.Add(player, manager.StartCoroutine(RegenHealth(player)));
     }
 
     private IEnumerator RegenHealth(Player player)
