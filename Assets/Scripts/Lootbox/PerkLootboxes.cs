@@ -39,7 +39,6 @@ public class PerkLootboxes : MonoBehaviour
 
     void UpdateOptions()
     {
- 
         while (unlockablePerkPool.Count < perkChoices.Count)
         {
             perkChoices.RemoveAt(perkChoices.Count - 1);
@@ -103,5 +102,4 @@ public class PerkLootboxes : MonoBehaviour
         perkUIcanvas.SetActive(false);
         unlocked.AddNewPerk(perkChoices[perkIndexSelected].perk);
     }
-
 }

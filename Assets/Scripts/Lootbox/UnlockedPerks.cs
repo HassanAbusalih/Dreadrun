@@ -13,7 +13,7 @@ public class UnlockedPerks : MonoBehaviour
     {
         selector = FindObjectOfType<PerkSelector>();
         LoadPerks();
-        
+        AddUnlockedPerks();
     }
 
     void Update()
