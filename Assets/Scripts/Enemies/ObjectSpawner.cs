@@ -33,7 +33,7 @@ public class ObjectSpawner : MonoBehaviour
 
     void Update()
     {
-        if (payload != null && spawning == null && Vector3.Distance(transform.position, payload.position) <= activationRadius)
+        if (payload != null && spawning == null && ActivateSpawner())
         {
             spawning = StartCoroutine(Spawning());
         }
@@ -62,7 +62,14 @@ public class ObjectSpawner : MonoBehaviour
         if (spawnPosition != null) { position = spawnPosition.position; }
         Vector3 randomOffset = new(Random.Range(-spawnOffset.x, spawnOffset.x), 0, Random.Range(-spawnOffset.z, spawnOffset.z));
         GameObject newObject = Instantiate(prefabToSpawn, position + randomOffset, Quaternion.identity, transform);
-        if (newObject.TryGetComponent(out EnemyAIBase enemy)) { enemy.Initialize(payload, players); }
+        if (newObject.TryGetComponent(out EnemyAIBase enemy))
+        {
+            enemy.Initialize(payload, players);
+        }
+        else
+        {
+            Debug.Log("lalallalalala");
+        }
         spawnCount++;
     }
 
@@ -72,6 +79,22 @@ public class ObjectSpawner : MonoBehaviour
     {
         yield return Spawning();
         spawnCount = 0;
+    }
+
+    bool ActivateSpawner()
+    {
+        if (Vector3.Distance(transform.position, payload.position) <= activationRadius)
+        {
+            return true;
+        }
+        foreach (var player in players)
+        {
+            if (Vector3.Distance(transform.position, player.position) <= activationRadius)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 #if UNITY_EDITOR
@@ -98,7 +121,7 @@ public class ObjectSpawner : MonoBehaviour
         labelStyle.fontStyle = FontStyle.Normal;
         Handles.Label(transform.position + Vector3.up, gameObject.name, labelStyle);
     }
-    #endif
+#endif
 }
 
 #if UNITY_EDITOR
