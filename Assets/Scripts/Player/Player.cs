@@ -1,6 +1,4 @@
 using System;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +6,17 @@ public class Player : MonoBehaviour, IDamagable
 {
     Rigidbody rb;
     Dashing playerDash;
-    [Header("Player Input Settings")]
+    [Header("Player Input/Movement Settings")]
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
     [SerializeField] KeyCode dropWeaponKey = KeyCode.Q;
     [SerializeField] KeyCode controllerPickUp;
     [SerializeField] KeyCode controllerDrop;
+    [SerializeField] float maxSlopeAngle;
+    [SerializeField] float UpSlopeGravity;
+    [SerializeField] bool onSlope;
     public PlayerStats playerStats;
+
+    [Header("Player UI Settings")]
     [SerializeField] Slider healthBar;
     [SerializeField] Slider staminaBar;
 
@@ -30,6 +33,8 @@ public class Player : MonoBehaviour, IDamagable
     public takeDamage canPLayerTakeDamage;
    
     [SerializeField] SoundSO takeDamageSFX;
+
+    RaycastHit slopeHitt;
 
     private void OnEnable()
     {
@@ -65,14 +70,42 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 movement = new Vector3(horizontal, 0, vertical);
-        movement = movement.normalized * playerStats.speed;
-        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
-
+        onSlope = isPlayerOnSlope();
+        Vector3 moveDirection = GetMovementDirection();
+        rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
+        if(onSlope && rb.velocity.y<0 || rb.velocity.y>0) rb.velocity += Vector3.down * UpSlopeGravity;
         PickUpUnequippedWeapon();
         DropCurrentWeapon();
+    }
+
+    Vector3 GetMovementDirection()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 moveDirection = new Vector3(horizontal, 0, vertical);
+        if (isPlayerOnSlope())
+        {
+            Vector3 slopeDirection = GetSlopeDirection(moveDirection);
+            moveDirection = slopeDirection + moveDirection.normalized * playerStats.speed;
+        }
+        moveDirection = moveDirection.normalized * playerStats.speed;
+        return moveDirection;
+    }
+
+    bool isPlayerOnSlope()
+    {
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHitt, 30f))
+        {
+            float angle = Vector3.Angle(slopeHitt.normal, Vector3.up);
+            transform.rotation = Quaternion.FromToRotation(transform.up, slopeHitt.normal) * transform.rotation;
+            return angle > maxSlopeAngle && angle!=0;
+        }
+        return false;
+    }
+
+    Vector3 GetSlopeDirection(Vector3 _moveDirection)
+    {
+        return Vector3.ProjectOnPlane(_moveDirection, slopeHitt.normal);
     }
 
     private void PickUpUnequippedWeapon()

@@ -39474,16 +39474,36 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2051430026}
     - target: {fileID: 4350660472619407264, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: maxSlopeAngle
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350660472619407264, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: UpSlopeGravity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350660472619407264, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: playerStats.speed
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350660472619407265, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4350660472619407265, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: mouseSens
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 4350660472619407265, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: rotationSpeed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350660472619407266, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4350660472619407266, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: m_Constraints
-      value: 112
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5692323966559541926, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: m_Value
@@ -39589,7 +39609,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5638904052862843818, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
 --- !u!1001 &1309038964
 PrefabInstance:
