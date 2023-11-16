@@ -26,19 +26,8 @@ public class Landmine : Trap
 
     private void Explode()
     {
+        Explosion.Explode(transform, explosionDamage, explosionRadius, explosionForce);
         Instantiate(explosionVFX, transform.position, Quaternion.identity);
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
-        foreach (Collider nearbyObject in colliders)
-        {
-            if (nearbyObject.TryGetComponent(out Rigidbody rb))
-            {
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 0, ForceMode.Impulse);
-            }
-            if (nearbyObject.TryGetComponent(out IDamagable newDamagable))
-            {
-                newDamagable.TakeDamage(explosionDamage);
-            }
-        }
         if (explosionSFX != null) { explosionSFX.PlaySound(0, AudioSourceType.Environment); }
         Destroy(gameObject);
     }

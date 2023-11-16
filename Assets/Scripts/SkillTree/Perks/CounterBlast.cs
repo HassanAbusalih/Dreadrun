@@ -36,23 +36,8 @@ public class CounterBlast : MonoBehaviour, INeedUI
         explosionTimer = 0;
         OnCoolDown.Invoke();
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, ~layersToIgnore);
-        foreach (Collider nearbyObject in colliders)
-        {
-            if (nearbyObject.gameObject == gameObject)
-            {
-                continue;
-            }
-            if (nearbyObject.TryGetComponent(out Rigidbody rb))
-            {
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, 0, ForceMode.Impulse);
-            }
+        Explosion.Explode(transform, damage, explosionRadius, explosionForce, layersToIgnore);
 
-            if (nearbyObject.TryGetComponent(out IDamagable newDamagable))
-            {
-                newDamagable.TakeDamage(damage);
-            }
-        }
         Instantiate(vfx, transform.position, transform.rotation);
     }
     public void SetCounterBlast(float radius, float force, LayerMask layerMask, GameObject vfx, float cooldown)
