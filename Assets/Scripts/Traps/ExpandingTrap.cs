@@ -5,7 +5,6 @@ public class ExpandingTrap : Trap
     [SerializeField] float expansionTime = 3f;
     [SerializeField] float shrinkDelay = 10f;
     GameObject childVFX;
-    bool triggered = false;
 
     private void Start()
     {
@@ -21,7 +20,7 @@ public class ExpandingTrap : Trap
             {
                 triggered = true;
                 childVFX.transform.LeanScale(Vector3.one, expansionTime);
-                Invoke("Shrink", shrinkDelay);
+                Invoke(nameof(Shrink), shrinkDelay);
             }
         }
         else

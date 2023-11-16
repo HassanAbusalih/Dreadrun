@@ -7,6 +7,7 @@ public class DamageOverTime : MonoBehaviour
     [SerializeField] float minDamagePerSecond = 5f;
     [SerializeField] float maxDamagePerSecond = 10f;
     [SerializeField] int ticksToMaxDamage = 3;
+    List<GameObject> keysToUpdate = new();
     Dictionary<GameObject, (IDamagable damagable, float timer, int damageTicks)> damageableDictionary = new();
 
     private void Update()
@@ -16,7 +17,7 @@ public class DamageOverTime : MonoBehaviour
 
     protected void ApplyDamage(Dictionary<GameObject, (IDamagable damagable, float timer, int damageTicks)> damageableDictionary)
     {
-        List<GameObject> keysToUpdate = new(damageableDictionary.Keys);
+        keysToUpdate = new(damageableDictionary.Keys);
         foreach (GameObject target in keysToUpdate)
         {
             (IDamagable damagable, float timer, int damageTicks) = damageableDictionary[target];

@@ -5,6 +5,7 @@ public class Trap : MonoBehaviour
     [SerializeField] protected float trapDelay = 0.5f;
     protected int playerCount;
     protected float timer;
+    protected bool triggered;
 
     protected void OnTriggerEnter(Collider other)
     {

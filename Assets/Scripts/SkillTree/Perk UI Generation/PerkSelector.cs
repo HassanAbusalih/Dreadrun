@@ -5,7 +5,6 @@ using UnityEngine;
 public class PerkSelector : MonoBehaviour
 {
     public PlayerStats playerStats;
-    public Player player;
     public GameObject perkDescriptionPanel;
     public TextMeshProUGUI descriptionText;
 
@@ -26,9 +25,7 @@ public class PerkSelector : MonoBehaviour
         {
             perkUIcanvas.SetActive(false);
         }
-        //playerStats = player.playerStats;
         perkCollectorManager = FindObjectOfType<PerkCollectorManager>();
-        player = FindObjectOfType<Player>();
     }
 
     private void Update()
@@ -46,6 +43,7 @@ public class PerkSelector : MonoBehaviour
             }
         }
     }
+
     public void RandomPerkSelector()
     {
         perkUIcanvas.SetActive(true);
@@ -106,4 +104,3 @@ public class PerkSelector : MonoBehaviour
         perkDescriptionPanel.SetActive(false);
     }
 }
-
