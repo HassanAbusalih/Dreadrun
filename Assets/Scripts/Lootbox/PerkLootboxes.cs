@@ -39,9 +39,10 @@ public class PerkLootboxes : MonoBehaviour
 
     void UpdateOptions()
     {
-        if (unlockablePerkPool.Count < perkChoices.Count)
+ 
+        while (unlockablePerkPool.Count < perkChoices.Count)
         {
-            perkChoices.RemoveAt(perkChoices.Count-1);
+            perkChoices.RemoveAt(perkChoices.Count - 1);
         }
     }
 

@@ -572,6 +572,7 @@ GameObject:
   - component: {fileID: 3441135847535516512}
   - component: {fileID: 3441135847535516524}
   - component: {fileID: 3441135847535516522}
+  - component: {fileID: 223430850}
   m_Layer: 4
   m_Name: lootbox
   m_TagString: Wall
@@ -588,7 +589,7 @@ Transform:
   m_GameObject: {fileID: 3441135847535516513}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 3.19, y: 30.3, z: -31.7}
-  m_LocalScale: {x: 9.5603, y: 3.825, z: 1}
+  m_LocalScale: {x: 1.6534954, y: 1.2704738, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3441135847960803719}
@@ -657,8 +658,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7321147, y: 0.9999993, z: 9.4803705}
-  m_Center: {x: 0.02094222, y: 0, z: -0.1168046}
+  m_Size: {x: 4.455143, y: 0.9999992, z: 3.8266125}
+  m_Center: {x: 0.10655358, y: 0, z: -1.0164938}
 --- !u!114 &3441135847535516524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,9 +693,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cb2e4dc07b606004484738feaa7f60d4, type: 2}
   - {fileID: 11400000, guid: fe62a025937dfe849a54e0d66ee530aa, type: 2}
   - {fileID: 11400000, guid: ae2e6ea9d6c7e07428a00672c77a5f60, type: 2}
+  unlocked: {fileID: 0}
   opened: 0
   entered: 0
-  unlocked: {fileID: 0}
   perkUIcanvas: {fileID: 3441135847314970579}
   perkChoices:
   - perkButton: {fileID: 3441135848101959301}
@@ -709,6 +710,19 @@ MonoBehaviour:
     perkName: {fileID: 3441135847931739797}
     perkSprite: {fileID: 3441135848441775810}
     perk: {fileID: 0}
+--- !u!65 &223430850
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3441135847535516513}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3441135847824780693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,7 +1020,7 @@ RectTransform:
   m_GameObject: {fileID: 3441135847960803736}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -4.2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.6637, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3441135847535516523}
@@ -1113,7 +1127,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1142,7 +1156,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 9.384327, y: 0, z: 9.71008, w: 3.507656}
+  m_margin: {x: 9.111186, y: 0, z: 8.938238, w: 3.507656}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
