@@ -16,11 +16,27 @@ namespace Server
         protected Socket queueSocket;
 
         public static Action<string, Socket> ClientAdded;
+        public static Server Instance;
 
         [SerializeField] int maxIDRange;
 
 
         BasePacket serializedPackets;
+
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         protected virtual void Start()
         {
@@ -39,16 +55,14 @@ namespace Server
 
         private void Update()
         {
-            StartTheProcessOfServerToConnectAndSendData();
-        }
-
-
-        void StartTheProcessOfServerToConnectAndSendData()
-        {
             if (isCalled) { return; }
             isCalled = true;
 
-            TryToAcceptClient(queueSocket);
+            if (clients.Count < 3)
+            {
+                TryToAcceptClient(queueSocket);
+            }
+
             foreach (PlayerSocket playerSocket in clients)
             {
                 BasePacket packet = ReceiveData(playerSocket.socket);
@@ -60,6 +74,15 @@ namespace Server
                 {
                     case BasePacket.PacketType.Lobby:
                         break;
+                }
+                foreach(PlayerSocket player in clients)
+                {
+                    if(player == playerSocket)
+                    {
+                        continue;
+                    }
+                    SendData(packet, player.socket);
+
                 }
             }
             Invoke(nameof(CallAgain), tickRate);

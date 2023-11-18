@@ -19,6 +19,7 @@ namespace Client
         public static Client Instance;
 
         public Action ConnectedToServerEvent;
+        public Action<bool, string> OnLobbyUpdate;
 
         //127.0.0.1
         private void Awake()
@@ -97,6 +98,8 @@ namespace Client
                             networkComponent.ClientID = packet.gameObjectID;
                             break;
                         case BasePacket.PacketType.Lobby:
+                            LobbyPacket lobbyPacket = packet as LobbyPacket;
+                            OnLobbyUpdate?.Invoke(lobbyPacket.isReady, lobbyPacket.playerID);
                             break;
                         case BasePacket.PacketType.Destruction:
                             break;
@@ -129,7 +132,7 @@ namespace Client
             return null;
         }
 
-        void SendPacket(BasePacket basePacket)
+        public void SendPacket(BasePacket basePacket)
         {
             socket.Send(basePacket.Serialize());
         }

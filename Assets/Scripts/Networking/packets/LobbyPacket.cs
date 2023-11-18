@@ -3,19 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoolPacket : BasePacket
+public class LobbyPacket : BasePacket
 {
     public bool isReady;
+    public string playerID { get; private set; }
 
-    public BoolPacket(bool isReady, string gameObjectID) : base(PacketType.Lobby, gameObjectID)
+    public LobbyPacket(bool isReady, string gameObjectID, string playerID) : base(PacketType.Lobby, gameObjectID)
     {
         this.isReady = isReady;
+        this.playerID = playerID;
     }
 
     public override byte[] Serialize()
     {
         base.Serialize();
         binaryWriter.Write(isReady);
+        binaryWriter.Write(playerID);
         return writeMemoryStream.ToArray();
     }
 
@@ -23,6 +26,7 @@ public class BoolPacket : BasePacket
     {
         base.Deserialize(_dataToDeserialize);
         isReady = binaryReader.ReadBoolean();
+        playerID = binaryReader.ReadString();
         return this;
     }
 }
