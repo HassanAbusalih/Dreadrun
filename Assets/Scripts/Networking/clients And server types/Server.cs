@@ -74,8 +74,7 @@ namespace Server
                 switch (packet.packetType)
                 {
                     case BasePacket.PacketType.PlayerLobbyPacket:
-                        LobbyPacket lobbyPacket = packet as LobbyPacket;
-                        lobbyPacket.Deserialize(buffer);
+                        LobbyPacket lobbyPacket = new LobbyPacket().Deserialize(buffer);
                         OnServerLobbyUpdate?.Invoke(lobbyPacket.playerID, lobbyPacket.isReady);
                         break;
                 }

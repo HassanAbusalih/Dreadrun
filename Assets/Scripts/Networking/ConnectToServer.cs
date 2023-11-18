@@ -23,8 +23,16 @@ public class ConnectToServer : MonoBehaviour
 
     void LoadIntoGame()
     {
+       StartCoroutine(DelayToLoadScene());
+    }
+
+    IEnumerator DelayToLoadScene()
+    {
+        yield return new WaitUntil(() => Client.Client.Instance.networkComponent.ClientID != null);
         SceneManager.LoadScene(1);
-        Client.Client.Instance.SendPacket(new LobbyPacket(false, "", Client.Client.Instance.networkComponent.ClientID));
+        LobbyPacket lobbyPacket = new LobbyPacket(false, "", Client.Client.Instance.networkComponent.ClientID);
+
+        Client.Client.Instance.SendPacket(lobbyPacket);
         Debug.LogError("I'm joining the lobby!");
     }
 }

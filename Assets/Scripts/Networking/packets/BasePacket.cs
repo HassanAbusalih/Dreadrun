@@ -34,6 +34,7 @@ namespace NetworkingLibrary
             packetType = _packetType;
             this.gameObjectID = gameObjectID;
         }
+
         public virtual byte[] Serialize()
         {
             writeMemoryStream = new MemoryStream();
@@ -48,7 +49,7 @@ namespace NetworkingLibrary
             binaryReader = new BinaryReader(readMemoryStream);
             packetType = (PacketType)binaryReader.ReadInt32();
             gameObjectID = binaryReader.ReadString();
-            return new BasePacket();
+            return this;
         }
     }
 }
