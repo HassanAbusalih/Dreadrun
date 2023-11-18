@@ -9,7 +9,6 @@ namespace Client
 {
     public class Client : MonoBehaviour
     {
-        [SerializeField] string playerID;
         [SerializeField] float tickRate;
         [SerializeField] bool isCalled;
         bool isConnected;
@@ -95,7 +94,7 @@ namespace Client
                         case BasePacket.PacketType.Instantiation:
                             break;
                         case BasePacket.PacketType.ID:
-                            playerID = packet.gameObjectID;
+                            networkComponent.ClientID = packet.gameObjectID;
                             break;
                         case BasePacket.PacketType.Lobby:
                             break;
