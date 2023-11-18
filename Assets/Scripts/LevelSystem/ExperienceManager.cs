@@ -1,17 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class ExperienceManager : MonoBehaviour
 {
-   
-    
-    public delegate void ExperienceChangeHandler(int amount);
-    public event ExperienceChangeHandler OnExperienceChange;
+    [SerializeField] int maxExpToLevelUp, requiredExpToLevelUp;
+    [SerializeField] SoundSO levelUpSFX;
+    PerkSelector perkSelector;
+    int currentLevel;
+    int currentExp;
+    public static bool CollectExp { get; private set; } = true;
 
-
-    public void AddExperience(int amount)
+    void HandleExperience(int newExperience)
     {
-        OnExperienceChange?.Invoke(amount);
+        currentExp += newExperience;
+        if (currentExp >= maxExpToLevelUp)
+        {
+            LevelUp();
+            if (levelUpSFX != null)
+            {
+                levelUpSFX.PlaySound(0, AudioSourceType.Player);
+            }
+        }
+    }
+
+    void LevelUp()
+    {
+        perkSelector.RandomPerkSelector();
+        CollectExp = false;
+        currentLevel++;
+        currentExp = 0;
+        maxExpToLevelUp += requiredExpToLevelUp;
+        Debug.Log("You are now level " + currentLevel);
+    }
+
+    void AllowExpCollection() => CollectExp = true;
+
+    private void OnEnable()
+    {
+        ExpOrb.OnExpOrbCollected += HandleExperience;
+        PerkSelector.OnPerkSelection += AllowExpCollection;
+        perkSelector = FindObjectOfType<PerkSelector>();
+    }
+
+    private void OnDisable()
+    {
+        ExpOrb.OnExpOrbCollected -= HandleExperience;
+        PerkSelector.OnPerkSelection -= AllowExpCollection;
     }
 }
