@@ -197,7 +197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3441135846875967748
 RectTransform:
   m_ObjectHideFlags: 0
@@ -333,7 +333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3441135846992843035
 RectTransform:
   m_ObjectHideFlags: 0
@@ -573,6 +573,7 @@ GameObject:
   - component: {fileID: 3441135847535516524}
   - component: {fileID: 3441135847535516522}
   - component: {fileID: 223430850}
+  - component: {fileID: 647141661180014592}
   m_Layer: 4
   m_Name: lootbox
   m_TagString: Wall
@@ -691,12 +692,16 @@ MonoBehaviour:
   unlockablePerkPool:
   - {fileID: 11400000, guid: eb2e7722b74d52c498eab486f2f89861, type: 2}
   - {fileID: 11400000, guid: cb2e4dc07b606004484738feaa7f60d4, type: 2}
-  - {fileID: 11400000, guid: fe62a025937dfe849a54e0d66ee530aa, type: 2}
   - {fileID: 11400000, guid: ae2e6ea9d6c7e07428a00672c77a5f60, type: 2}
+  - {fileID: 11400000, guid: fe62a025937dfe849a54e0d66ee530aa, type: 2}
   unlocked: {fileID: 0}
   opened: 0
   entered: 0
-  perkUIcanvas: {fileID: 3441135847314970579}
+  perkUI:
+  - {fileID: 3441135846875967749}
+  - {fileID: 3441135848101959303}
+  - {fileID: 3441135846992843036}
+  - {fileID: 3441135848340066986}
   perkChoices:
   - perkButton: {fileID: 3441135848101959301}
     perkName: {fileID: 3441135847824780691}
@@ -711,6 +716,19 @@ MonoBehaviour:
     perkSprite: {fileID: 3441135848441775810}
     perk: {fileID: 0}
 --- !u!65 &223430850
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3441135847535516513}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &647141661180014592
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1183,7 +1201,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3441135848101959302
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1318,7 +1336,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3441135848340066985
 RectTransform:
   m_ObjectHideFlags: 0

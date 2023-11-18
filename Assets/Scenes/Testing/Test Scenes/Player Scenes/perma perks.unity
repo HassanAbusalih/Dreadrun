@@ -220,24 +220,6 @@ Transform:
   m_Father: {fileID: 1487103961}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &223430843 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3441135847535516513, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-  m_PrefabInstance: {fileID: 3441135847852162807}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &223430850
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223430843}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &484404690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -670,7 +652,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1487103961}
-  - component: {fileID: 1487103962}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -701,25 +682,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1487103962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487103960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 406f92fa9572a8e46aa0c83cb365b192, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  acquiredPerks: []
-  blank: {fileID: 0}
-  AbilityIcon: []
-  cooldownText: []
-  AbilityGreyout: []
-  AbilityVFX: []
-  abilityDescription: {fileID: 0}
 --- !u!1 &1580884335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,10 +1181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975550d8012451a4ca2d0f4fdd1698ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlockedPerkpool:
-  - {fileID: 11400000, guid: ae2e6ea9d6c7e07428a00672c77a5f60, type: 2}
-  - {fileID: 11400000, guid: fe62a025937dfe849a54e0d66ee530aa, type: 2}
-  - {fileID: 11400000, guid: cb2e4dc07b606004484738feaa7f60d4, type: 2}
+  unlockedPerkpool: []
   selector: {fileID: 0}
   debugMode: 1
 --- !u!1001 &3441135847852162807
@@ -1232,26 +1191,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3441135847535516512, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_Size.x
-      value: 4.455143
-      objectReference: {fileID: 0}
-    - target: {fileID: 3441135847535516512, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_Size.y
-      value: 0.9999992
-      objectReference: {fileID: 0}
-    - target: {fileID: 3441135847535516512, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_Size.z
-      value: 3.8266125
-      objectReference: {fileID: 0}
-    - target: {fileID: 3441135847535516512, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_Center.x
-      value: 0.10655358
-      objectReference: {fileID: 0}
-    - target: {fileID: 3441135847535516512, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_Center.z
-      value: -1.0164938
-      objectReference: {fileID: 0}
     - target: {fileID: 3441135847535516513, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
       propertyPath: m_Name
       value: lootbox
@@ -1259,14 +1198,6 @@ PrefabInstance:
     - target: {fileID: 3441135847535516523, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3441135847535516523, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.6534954
-      objectReference: {fileID: 0}
-    - target: {fileID: 3441135847535516523, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2704738
       objectReference: {fileID: 0}
     - target: {fileID: 3441135847535516523, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1307,22 +1238,6 @@ PrefabInstance:
     - target: {fileID: 3441135847535516523, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3441135847960803718, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_margin.x
-      value: 9.111186
-      objectReference: {fileID: 0}
-    - target: {fileID: 3441135847960803718, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_margin.z
-      value: 8.938238
-      objectReference: {fileID: 0}
-    - target: {fileID: 3441135847960803718, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3441135847960803719, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.6637
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eb72bb6e945d1547b9ead2fd1bad7ac, type: 3}
@@ -1404,7 +1319,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2595001739801383576, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4350660472619407264, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: controllerDrop
