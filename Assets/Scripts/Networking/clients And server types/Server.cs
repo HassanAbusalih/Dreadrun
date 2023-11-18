@@ -49,14 +49,14 @@ namespace Server
             isCalled = true;
 
             TryToAcceptClient(queueSocket);
-            List<PlayerPacket> packets = new List<PlayerPacket>();
             foreach (PlayerSocket playerSocket in clients)
             {
-                packets.Add(new PlayerPacket(ReceiveData(playerSocket.socket), playerSocket.playerID));
-            }
-            foreach (var packet in packets)
-            {
-                switch (packet.packet.packetType)
+                BasePacket packet = ReceiveData(playerSocket.socket);
+                if (packet == null)
+                {
+                    continue;
+                }
+                switch (packet.packetType)
                 {
                     case BasePacket.PacketType.Lobby:
                         break;
@@ -69,18 +69,18 @@ namespace Server
         {
             try
             {
-                Socket socket = _queueSocket.Accept();
-                if (socket != null)
-                {
-                    clients.Add(new PlayerSocket(socket));
+                Debug.LogError("IM IN THE TRY TO ACCEPT CLIENT BABY");
+                Socket newSocket = _queueSocket.Accept();
 
-                    string _clientID = GenerateUniqueClientID();
-                    clients[clients.Count - 1].playerID = _clientID;
-                    IDPacket idPacket = new IDPacket(_clientID);
-                    SendData(idPacket, clients[clients.Count - 1].socket);
+                Debug.LogError("MY FAMILY ACTUALLY ACCEPTED ME BUT MY GROUP DID NOT :(");
 
-                    Debug.LogError(_clientID);
-                }
+                PlayerSocket playerSocket = new PlayerSocket(newSocket);
+                playerSocket.playerID = GenerateUniqueClientID();
+
+                Debug.LogError("MY CLIENT ID " + playerSocket.playerID);
+
+                playerSocket.socket.Send(new IDPacket(playerSocket.playerID).Serialize());
+                clients.Add(playerSocket);
             }
             catch (SocketException e)
             {
@@ -104,7 +104,7 @@ namespace Server
             return null;
         }
 
-        private void SendData(BasePacket packet, Socket socket)
+        public void SendData(BasePacket packet, Socket socket)
         {
             if (isCalled) { return; }
             isCalled = true;
@@ -112,7 +112,6 @@ namespace Server
             socket.Send(serializedPacket);
             Invoke(nameof(CallAgain), tickRate);
         }
-
 
         void CallAgain()
         {

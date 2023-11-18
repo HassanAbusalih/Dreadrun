@@ -44,7 +44,7 @@ public class FodderEnemy : EnemyAIBase
         Sequencer withinShootingRangeSeq = new(shootingRange, moveToTarget, attackInterval);
         Sequencer farSeq = new(farRange, moveToTarget);
 
-        topNode = new Selector(new Node[] { retreatSeq, strafeSeq, withinShootingRangeSeq, farSeq});
+        topNode = new Selector(new Node[] { retreatSeq, strafeSeq, withinShootingRangeSeq, farSeq });
     }
 
     void Update()
@@ -88,11 +88,14 @@ public class FodderEnemy : EnemyAIBase
 
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
         Handles.color = new Color(0, 0, 1, 0.2f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, retreatRange);
         Handles.color = new Color(0.5f, 0, 0.5f, 0.1f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, strafeRange);
         Handles.color = new Color(1, 0, 0, 0.05f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, shootingRange);
+#endif
     }
+
 }

@@ -12,15 +12,14 @@ namespace NetworkingLibrary
         {
             position = Vector3.zero;
         }
-        public PositionPacket(Vector3 _position) : base(PacketType.Position)
+        public PositionPacket(Vector3 _position, string gameObjectID) : base(PacketType.Position, gameObjectID)
         {
             position = _position;
         }
 
         public override byte[] Serialize()
         {
-            SerializePacketType();
-
+            base.Serialize();
             binaryWriter.Write(position.x);
             binaryWriter.Write(position.y);
             binaryWriter.Write(position.z);
@@ -30,7 +29,7 @@ namespace NetworkingLibrary
 
         public override BasePacket Deserialize(byte[] dataToDeserialize)
         {
-            DeserializePacketType(dataToDeserialize);
+            base.Deserialize(dataToDeserialize);
 
             float x = binaryReader.ReadSingle();
             float y = binaryReader.ReadSingle();

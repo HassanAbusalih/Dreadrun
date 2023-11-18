@@ -9,6 +9,7 @@ namespace Client
 {
     public class Client : MonoBehaviour
     {
+        [SerializeField] string playerID;
         [SerializeField] float tickRate;
         [SerializeField] bool isCalled;
         bool isConnected;
@@ -51,12 +52,13 @@ namespace Client
                 SocketType.Stream,
                 ProtocolType.Tcp);
 
-                Debug.Log("Client is trying to connect to server");
+                Debug.LogError("Client is trying to connect to server");
                 socket.Connect(new IPEndPoint(IPAddress.Parse(_ipAddress), 3000));
                 socket.Blocking = false;
                 isConnected = true;
 
                 if (isConnected) ConnectedToServerEvent?.Invoke();
+                Debug.LogError("client says idk");
                 TryGetComponent(out networkComponent);
             }
             catch (SocketException e)
@@ -77,7 +79,32 @@ namespace Client
 
             try
             {
-                ReceiveData();
+                BasePacket packet = ReceiveData();
+                if (packet != null)
+                {
+                    switch (packet.packetType)
+                    {
+                        case BasePacket.PacketType.unknown:
+                            break;
+                        case BasePacket.PacketType.none:
+                            break;
+                        case BasePacket.PacketType.Position:
+                            break;
+                        case BasePacket.PacketType.Rotation:
+                            break;
+                        case BasePacket.PacketType.Instantiation:
+                            break;
+                        case BasePacket.PacketType.ID:
+                            playerID = packet.gameObjectID;
+                            break;
+                        case BasePacket.PacketType.Lobby:
+                            break;
+                        case BasePacket.PacketType.Destruction:
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
             catch (SocketException e)
             {
@@ -92,11 +119,15 @@ namespace Client
 
         BasePacket ReceiveData()
         {
-            byte[] buffer = new byte[socket.Available];
-            socket.Receive(buffer);
-            BasePacket basePacket = new BasePacket();
-            basePacket.Deserialize(buffer);
-            return basePacket;
+            if (socket.Available > 0)
+            {
+                byte[] buffer = new byte[socket.Available];
+                socket.Receive(buffer);
+                BasePacket packet = new BasePacket();
+                packet.Deserialize(buffer);
+                return packet;
+            }
+            return null;
         }
 
         void SendPacket(BasePacket basePacket)

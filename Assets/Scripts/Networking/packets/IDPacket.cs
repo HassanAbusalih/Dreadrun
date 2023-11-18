@@ -6,30 +6,26 @@ using UnityEngine;
 
 public class IDPacket : BasePacket
 {
-    public string ID;
-
 
     public IDPacket()
     {
-        ID = "";
+
     }
-    public IDPacket(string _id)
-        : base(PacketType.ID)
+    public IDPacket(string ownershipID)
+        : base(PacketType.ID, ownershipID)
     {
-        ID = _id;
+
     }
 
     public override byte[] Serialize()
     {
-        SerializePacketType();
-        binaryWriter.Write(ID);
+        base.Serialize();
         return writeMemoryStream.ToArray();
     }
 
     public override BasePacket Deserialize(byte[] dataToDeserialize)
     {
-        DeserializePacketType(dataToDeserialize);
-        ID = binaryReader.ReadString();
+        base.Deserialize(dataToDeserialize);
         return this;
     }
 }

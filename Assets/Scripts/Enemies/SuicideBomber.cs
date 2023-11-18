@@ -79,9 +79,11 @@ public class SuicideBomber : EnemyAIBase
 
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
         Handles.color = new Color(0, 0, 1, 0.2f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, attackRange);
         Handles.color = new Color(1, 0, 0, 0.1f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, detectionRange);
+#endif
     }
 }

@@ -7,21 +7,21 @@ public class BoolPacket : BasePacket
 {
     public bool isReady;
 
-    public BoolPacket(bool isReady) : base(PacketType.Lobby)
+    public BoolPacket(bool isReady, string gameObjectID) : base(PacketType.Lobby, gameObjectID)
     {
         this.isReady = isReady;
     }
 
     public override byte[] Serialize()
     {
-        SerializePacketType();
+        base.Serialize();
         binaryWriter.Write(isReady);
         return writeMemoryStream.ToArray();
     }
 
     public override BasePacket Deserialize(byte[] _dataToDeserialize)
     {
-        DeserializePacketType(_dataToDeserialize);
+        base.Deserialize(_dataToDeserialize);
         isReady = binaryReader.ReadBoolean();
         return this;
     }

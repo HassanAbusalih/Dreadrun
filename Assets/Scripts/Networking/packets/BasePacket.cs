@@ -4,6 +4,7 @@ namespace NetworkingLibrary
 {
     public class BasePacket
     {
+        public string gameObjectID;
         public enum PacketType
         {
             unknown = -1,
@@ -12,7 +13,8 @@ namespace NetworkingLibrary
             Rotation,
             Instantiation,
             ID,
-            Lobby
+            Lobby,
+            Destruction
         }
 
         public PacketType packetType { get; private set; }
@@ -26,35 +28,26 @@ namespace NetworkingLibrary
         {
             packetType = PacketType.none;
         }
-        public BasePacket(PacketType _packetType)
+        public BasePacket(PacketType _packetType, string gameObjectID)
         {
             packetType = _packetType;
-        }
-
-        protected void SerializePacketType()
-        {
-            writeMemoryStream = new MemoryStream();
-            binaryWriter = new BinaryWriter(writeMemoryStream);
-
-            binaryWriter.Write((int)packetType);
+            this.gameObjectID = gameObjectID;
         }
         public virtual byte[] Serialize()
         {
-            byte[] data = new byte[0];
-            return data;
+            writeMemoryStream = new MemoryStream();
+            binaryWriter = new BinaryWriter(writeMemoryStream);
+            binaryWriter.Write((int)packetType);
+            binaryWriter.Write(gameObjectID);
+            return writeMemoryStream.ToArray();
         }
         public virtual BasePacket Deserialize(byte[] dataToDeserialize)
         {
-            return new BasePacket();
-        }
-
-        public BasePacket DeserializePacketType(byte[] _dataToDeserialize)
-        {
-            readMemoryStream = new MemoryStream(_dataToDeserialize);
+            readMemoryStream = new MemoryStream(dataToDeserialize);
             binaryReader = new BinaryReader(readMemoryStream);
-
             packetType = (PacketType)binaryReader.ReadInt32();
-            return this;
+            gameObjectID = binaryReader.ReadString();
+            return new BasePacket();
         }
     }
 }

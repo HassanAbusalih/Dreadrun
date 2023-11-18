@@ -59,13 +59,13 @@ public class Speedster : EnemyAIBase
 
         if (distanceTravelled >= distanceToTravelBeforeShooting)
         {
-            if (stopAndShoot == null) 
-            { 
-                stopAndShoot = StartCoroutine(StopAndShoot(player)); 
+            if (stopAndShoot == null)
+            {
+                stopAndShoot = StartCoroutine(StopAndShoot(player));
             }
-            else 
-            { 
-                rb.velocity = new(0, rb.velocity.y, 0); 
+            else
+            {
+                rb.velocity = new(0, rb.velocity.y, 0);
             }
             return;
         }
@@ -104,9 +104,11 @@ public class Speedster : EnemyAIBase
 
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
         Handles.color = new Color(0, 0, 1, 0.2f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, retreatRange);
         Handles.color = new Color(1, 0, 0, 0.1f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, shootingRange);
+#endif
     }
 }

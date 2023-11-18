@@ -17,8 +17,8 @@ public class InstantiationPacket : BasePacket
         rotation = Quaternion.identity;
     }
 
-    public InstantiationPacket(string _prefabName, Vector3 _position, Quaternion _rotation)
-        : base(PacketType.Instantiation)
+    public InstantiationPacket(string _prefabName, Vector3 _position, Quaternion _rotation, string gameObjectID)
+        : base(PacketType.Instantiation, gameObjectID)
     {
         prefabName = _prefabName;
         position = _position;
@@ -27,7 +27,7 @@ public class InstantiationPacket : BasePacket
 
     public override byte[] Serialize()
     {
-        SerializePacketType();
+        base.Serialize();
 
         binaryWriter.Write(prefabName);
 
@@ -45,7 +45,7 @@ public class InstantiationPacket : BasePacket
 
     public override BasePacket Deserialize(byte[] dataToDeserialize)
     {
-        DeserializePacketType(dataToDeserialize);
+        base.Deserialize(dataToDeserialize);
 
         prefabName = binaryReader.ReadString();
         position = new Vector3(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
