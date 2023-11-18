@@ -13,7 +13,8 @@ namespace NetworkingLibrary
             Rotation,
             Instantiation,
             ID,
-            Lobby,
+            PlayerLobbyPacket,
+            ServerLobbyPacket,
             Destruction
         }
 

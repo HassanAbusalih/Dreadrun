@@ -6,8 +6,9 @@ using Server;
 public class LobbyManager : MonoBehaviour
 {
     LobbyPacket lobbyPacket;
-    Dictionary <string,Image> idToImage = new Dictionary<string,Image>();
+    Dictionary<string,Image> idToImage = new Dictionary<string,Image>();
     [SerializeField] Image[] images;
+    int index;
 
     private void OnEnable()
     {
@@ -19,23 +20,41 @@ public class LobbyManager : MonoBehaviour
         Client.Client.Instance.OnLobbyUpdate -= UpdateImage;
     }
 
+    private void Start()
+    {
+        lobbyPacket = new LobbyPacket(false, "", Client.Client.Instance.networkComponent.ClientID);
+    }
+
     public void OnButtonClick()
     {
         lobbyPacket.isReady = !lobbyPacket.isReady;
+        //UpdateImage(lobbyPacket.isReady, index);
         Client.Client.Instance.SendPacket(lobbyPacket);
+        Debug.LogError($"My ready status is now {lobbyPacket.isReady}!");
     }
 
-    private void UpdateImage( bool isReady, string id )
+    private void UpdateImage(List<string> playerIDs, List<bool> playerStatuses)
     {
-        if(idToImage.ContainsKey(id))
+        for (int i = 0; i < playerIDs.Count; i++)
         {
-            idToImage[id].color = idToImage[id].color == Color.red ? Color.green : Color.red;//if red make it green and vice versa
-        }
-        else
-        {
-            idToImage.Add(id, images[idToImage.Count - 1]);
-            idToImage[id].color= Color.green;
+            if (idToImage.ContainsKey(playerIDs[i]))
+            {
+                Debug.LogError($"Client {playerIDs[i]}'s is now {playerStatuses[i]}!");
+                idToImage[playerIDs[i]].color = playerStatuses[i] ? Color.green : Color.red; //if red make it green and vice versa
+            }
+            else
+            {
+                idToImage.Add(playerIDs[i], images[i]);
+                if (playerIDs[i] == Client.Client.Instance.networkComponent.ClientID)
+                {
+                    index = i;
+                }
+            }
         }
     }
 
+    void UpdateImage(bool isReady, int index)
+    {
+        images[index].color = isReady ? Color.green : Color.red;
+    }
 }

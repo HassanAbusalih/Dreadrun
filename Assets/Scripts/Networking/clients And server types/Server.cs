@@ -16,10 +16,11 @@ namespace Server
         protected Socket queueSocket;
 
         public static Action<string, Socket> ClientAdded;
+        public Action<string, bool> OnServerLobbyUpdate;
+
         public static Server Instance;
 
         [SerializeField] int maxIDRange;
-
 
         BasePacket serializedPackets;
 
@@ -65,14 +66,17 @@ namespace Server
 
             foreach (PlayerSocket playerSocket in clients)
             {
-                BasePacket packet = ReceiveData(playerSocket.socket);
+                (BasePacket packet, byte[] buffer) = ReceiveData(playerSocket.socket);
                 if (packet == null)
                 {
                     continue;
                 }
                 switch (packet.packetType)
                 {
-                    case BasePacket.PacketType.Lobby:
+                    case BasePacket.PacketType.PlayerLobbyPacket:
+                        LobbyPacket lobbyPacket = packet as LobbyPacket;
+                        lobbyPacket.Deserialize(buffer);
+                        OnServerLobbyUpdate?.Invoke(lobbyPacket.playerID, lobbyPacket.isReady);
                         break;
                 }
                 foreach(PlayerSocket player in clients)
@@ -92,15 +96,15 @@ namespace Server
         {
             try
             {
-                Debug.LogError("IM IN THE TRY TO ACCEPT CLIENT BABY");
+                //Debug.LogError("IM IN THE TRY TO ACCEPT CLIENT BABY");
                 Socket newSocket = _queueSocket.Accept();
 
-                Debug.LogError("MY FAMILY ACTUALLY ACCEPTED ME BUT MY GROUP DID NOT :(");
+                //Debug.LogError("MY FAMILY ACTUALLY ACCEPTED ME BUT MY GROUP DID NOT :(");
 
                 PlayerSocket playerSocket = new PlayerSocket(newSocket);
                 playerSocket.playerID = GenerateUniqueClientID();
 
-                Debug.LogError("MY CLIENT ID " + playerSocket.playerID);
+                //Debug.LogError("MY CLIENT ID " + playerSocket.playerID);
 
                 playerSocket.socket.Send(new IDPacket(playerSocket.playerID).Serialize());
                 clients.Add(playerSocket);
@@ -114,7 +118,7 @@ namespace Server
             }
         }
 
-        private BasePacket ReceiveData(Socket socket)
+        private (BasePacket, byte[]) ReceiveData(Socket socket)
         {
             if (socket.Available > 0)
             {
@@ -122,9 +126,9 @@ namespace Server
                 socket.Receive(buffer);
                 BasePacket packet = new BasePacket();
                 packet.Deserialize(buffer);
-                return packet;
+                return (packet, buffer);
             }
-            return null;
+            return (null, null);
         }
 
         public void SendData(BasePacket packet, Socket socket)
@@ -145,8 +149,16 @@ namespace Server
         string GenerateUniqueClientID()
         {
             Guid guid = Guid.NewGuid();
-            Debug.Log("Generated ID: " + guid.ToString());
+            //Debug.Log("Generated ID: " + guid.ToString());
             return guid.ToString();
+        }
+
+        public void SendToAllClients(BasePacket packet)
+        {
+            foreach (var client in clients)
+            {
+                SendData(packet, client.socket);
+            }
         }
     }
 }

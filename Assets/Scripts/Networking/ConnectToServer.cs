@@ -24,5 +24,7 @@ public class ConnectToServer : MonoBehaviour
     void LoadIntoGame()
     {
         SceneManager.LoadScene(1);
+        Client.Client.Instance.SendPacket(new LobbyPacket(false, "", Client.Client.Instance.networkComponent.ClientID));
+        Debug.LogError("I'm joining the lobby!");
     }
 }

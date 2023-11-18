@@ -4,6 +4,7 @@ using System.Net;
 using NetworkingLibrary;
 using UnityEngine;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Client
 {
@@ -19,7 +20,7 @@ namespace Client
         public static Client Instance;
 
         public Action ConnectedToServerEvent;
-        public Action<bool, string> OnLobbyUpdate;
+        public Action<List<string>, List<bool>> OnLobbyUpdate;
 
         //127.0.0.1
         private void Awake()
@@ -34,8 +35,9 @@ namespace Client
             {
                 Destroy(gameObject);
             }
-        }
 
+            TryGetComponent(out networkComponent);
+        }
 
         protected virtual void Start()
         {
@@ -79,7 +81,7 @@ namespace Client
 
             try
             {
-                BasePacket packet = ReceiveData();
+                (BasePacket packet, byte[] buffer) = ReceiveData(socket);
                 if (packet != null)
                 {
                     switch (packet.packetType)
@@ -97,9 +99,10 @@ namespace Client
                         case BasePacket.PacketType.ID:
                             networkComponent.ClientID = packet.gameObjectID;
                             break;
-                        case BasePacket.PacketType.Lobby:
-                            LobbyPacket lobbyPacket = packet as LobbyPacket;
-                            OnLobbyUpdate?.Invoke(lobbyPacket.isReady, lobbyPacket.playerID);
+                        case BasePacket.PacketType.ServerLobbyPacket:
+                            LobbyStatusPacket lobbyStatusPacket = packet as LobbyStatusPacket;
+                            lobbyStatusPacket.Deserialize(buffer);
+                            OnLobbyUpdate?.Invoke(lobbyStatusPacket.playerIDs, lobbyStatusPacket.playerStatuses);
                             break;
                         case BasePacket.PacketType.Destruction:
                             break;
@@ -119,7 +122,7 @@ namespace Client
         }
 
 
-        BasePacket ReceiveData()
+        private (BasePacket, byte[]) ReceiveData(Socket socket)
         {
             if (socket.Available > 0)
             {
@@ -127,9 +130,9 @@ namespace Client
                 socket.Receive(buffer);
                 BasePacket packet = new BasePacket();
                 packet.Deserialize(buffer);
-                return packet;
+                return (packet, buffer);
             }
-            return null;
+            return (null, null);
         }
 
         public void SendPacket(BasePacket basePacket)
