@@ -15,6 +15,7 @@ namespace NetworkingLibrary
             ID,
             PlayerLobbyPacket,
             ServerLobbyPacket,
+            ScenePacket,
             Destruction
         }
 
@@ -29,7 +30,7 @@ namespace NetworkingLibrary
         {
             packetType = PacketType.none;
         }
-        public BasePacket(PacketType _packetType, string gameObjectID)
+        public BasePacket(PacketType _packetType, string gameObjectID = "")
         {
             packetType = _packetType;
             this.gameObjectID = gameObjectID;

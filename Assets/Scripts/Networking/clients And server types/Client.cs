@@ -5,6 +5,7 @@ using NetworkingLibrary;
 using UnityEngine;
 using System.Text;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace Client
 {
@@ -103,6 +104,11 @@ namespace Client
                             LobbyStatusPacket lobbyStatusPacket = new LobbyStatusPacket().Deserialize(buffer);
                             Debug.LogError("Server Lobby Packet Received! Player count is: " + lobbyStatusPacket.playerIDs.Count);
                             OnLobbyUpdate?.Invoke(lobbyStatusPacket.playerIDs, lobbyStatusPacket.playerStatuses);
+                            break;
+                        case BasePacket.PacketType.ScenePacket:
+                            ScenePacket scenePacket = new ScenePacket().Deserialize(buffer);
+                            Debug.LogError("Scene Packet Received! Scene name is: " + scenePacket.sceneName);
+                            SceneManager.LoadScene(scenePacket.sceneName);
                             break;
                         case BasePacket.PacketType.Destruction:
                             break;

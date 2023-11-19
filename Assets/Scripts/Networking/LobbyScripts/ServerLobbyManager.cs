@@ -4,6 +4,8 @@ using UnityEngine;
 public class ServerLobbyManager : MonoBehaviour
 {
     LobbyStatusPacket statusPacket;
+    ScenePacket scenePacket;
+    [SerializeField] string sceneName;
     public List<bool> playerStatuses = new();
     public List<string> playerIDs = new();
 
@@ -28,6 +30,22 @@ public class ServerLobbyManager : MonoBehaviour
         }
         statusPacket = new LobbyStatusPacket(playerStatuses, playerIDs);
         Server.Server.Instance.SendToAllClients(statusPacket.Serialize());
+        ChangeScene();
+    }
+
+    void ChangeScene()
+    {
+        if(playerStatuses.Count < 3) return;
+        for (int i = 0; i < playerStatuses.Count; i++)
+        {
+            if (!playerStatuses[i])
+            {
+                Debug.LogError("Not all players are ready!");
+                return;
+            }
+        }
+        scenePacket = new ScenePacket(sceneName);
+        Server.Server.Instance.SendToAllClients(scenePacket.Serialize());
     }
 
     private void OnEnable()

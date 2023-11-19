@@ -32,6 +32,10 @@ public class ConnectToServer : MonoBehaviour
             yield return null;
         }
         SceneManager.LoadScene(1);
+        while (SceneManager.GetActiveScene().buildIndex != 1)
+        {
+            yield return null;
+        }
         string clientID = Client.Client.Instance.networkComponent.ClientID;
         LobbyPacket lobbyPacket = new LobbyPacket(false, "", clientID);
         Debug.LogError($"My client ID is {clientID}");
