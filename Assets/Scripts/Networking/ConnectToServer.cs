@@ -11,13 +11,13 @@ public class ConnectToServer : MonoBehaviour
 
     private void OnEnable()
     {
-        connectButton.onClick.AddListener(()=> Client.Client.Instance.ConnectToServer(ipAddressInput.text));
-        Client.Client.Instance.ConnectedToServerEvent += LoadIntoGame;
+        connectButton.onClick.AddListener(()=> ClientLibrary.Client.Instance.ConnectToServer(ipAddressInput.text));
+        ClientLibrary.Client.Instance.ConnectedToServerEvent += LoadIntoGame;
     }
 
     private void OnDestroy()
     {
-        Client.Client.Instance.ConnectedToServerEvent -= LoadIntoGame;
+        ClientLibrary.Client.Instance.ConnectedToServerEvent -= LoadIntoGame;
     }
 
     void LoadIntoGame()
@@ -27,19 +27,14 @@ public class ConnectToServer : MonoBehaviour
 
     IEnumerator DelayToLoadScene()
     {
-        while (Client.Client.Instance.networkComponent.ClientID == "" || Client.Client.Instance.networkComponent.ClientID == "0")
+        while (ClientLibrary.Client.Instance.networkComponent.ClientID == "" || ClientLibrary.Client.Instance.networkComponent.ClientID == "0")
         {
             yield return null;
         }
         SceneManager.LoadScene(1);
-        while (SceneManager.GetActiveScene().buildIndex != 1)
+        while (ClientLibrary.Client.Instance.OnLobbyUpdate == null)
         {
             yield return null;
         }
-        string clientID = Client.Client.Instance.networkComponent.ClientID;
-        LobbyPacket lobbyPacket = new LobbyPacket(false, "", clientID);
-        Debug.LogError($"My client ID is {clientID}");
-        Client.Client.Instance.SendPacket(lobbyPacket.Serialize());
-        Debug.LogError("I'm joining the lobby!");
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-namespace Client
+namespace ClientLibrary
 {
     public class Client : MonoBehaviour
     {

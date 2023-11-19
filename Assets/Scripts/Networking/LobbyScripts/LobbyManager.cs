@@ -8,28 +8,32 @@ public class LobbyManager : MonoBehaviour
     LobbyPacket lobbyPacket;
     Dictionary<string,Image> idToImage = new Dictionary<string,Image>();
     [SerializeField] Image[] images;
-    int index;
 
     private void OnEnable()
     {
-        Client.Client.Instance.OnLobbyUpdate += UpdateImage;
+        ClientLibrary.Client.Instance.OnLobbyUpdate += UpdateImage;
     }
 
     private void OnDisable()
     {
-        Client.Client.Instance.OnLobbyUpdate -= UpdateImage;
+        ClientLibrary.Client.Instance.OnLobbyUpdate -= UpdateImage;
     }
 
     private void Start()
     {
-        lobbyPacket = new LobbyPacket(false, "", Client.Client.Instance.networkComponent.ClientID);
+        string clientID = ClientLibrary.Client.Instance.networkComponent.ClientID;
+        lobbyPacket = new LobbyPacket(false, "", clientID);
+        Debug.LogError($"My client ID is {clientID}");
+        ClientLibrary.Client.Instance.SendPacket(lobbyPacket.Serialize());
+        Debug.LogError("I'm joining the lobby!");
     }
+
 
     public void OnButtonClick()
     {
         lobbyPacket.isReady = !lobbyPacket.isReady;
         //UpdateImage(lobbyPacket.isReady, index);
-        Client.Client.Instance.SendPacket(lobbyPacket.Serialize());
+        ClientLibrary.Client.Instance.SendPacket(lobbyPacket.Serialize());
         Debug.LogError($"My ready status is now {lobbyPacket.isReady}!");
     }
 
@@ -45,10 +49,7 @@ public class LobbyManager : MonoBehaviour
             else
             {
                 idToImage.Add(playerIDs[i], images[i]);
-                if (playerIDs[i] == Client.Client.Instance.networkComponent.ClientID)
-                {
-                    index = i;
-                }
+               
             }
         }
     }
