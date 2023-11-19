@@ -15,18 +15,19 @@ public class ServerLobbyManager : MonoBehaviour
             {
                 if (playerIDs[i] == clientID)
                 {
+                    Debug.LogError($"Updating Player {i + 1} to {isReady}");
                     playerStatuses[i] = isReady;
                 }
             }
         }
         else
         {
-            Debug.LogError("New client in Lobby!");
             playerIDs.Add(clientID);
             playerStatuses.Add(isReady);
+            Debug.LogError("New client in Lobby! They are player " + playerIDs.Count);
         }
         statusPacket = new LobbyStatusPacket(playerStatuses, playerIDs);
-        Server.Server.Instance.SendToAllClients(statusPacket);
+        Server.Server.Instance.SendToAllClients(statusPacket.Serialize());
     }
 
     private void OnEnable()
@@ -38,5 +39,4 @@ public class ServerLobbyManager : MonoBehaviour
     {
         Server.Server.Instance.OnServerLobbyUpdate -= UpdateLobbyStatus;
     }
-
 }

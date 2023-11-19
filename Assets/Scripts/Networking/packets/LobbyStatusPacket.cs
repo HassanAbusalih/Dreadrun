@@ -17,7 +17,8 @@ public class LobbyStatusPacket : BasePacket
     public new byte[] Serialize()
     {
         base.Serialize();
-        for (int i = 0; i < 2; i++)
+        binaryWriter.Write(playerStatuses.Count);
+        for (int i = 0; i < playerStatuses.Count; i++)
         {
             binaryWriter.Write(playerStatuses[i]);
             binaryWriter.Write(playerIDs[i]);
@@ -28,10 +29,11 @@ public class LobbyStatusPacket : BasePacket
     public new LobbyStatusPacket Deserialize(byte[] _dataToDeserialize)
     {
         base.Deserialize(_dataToDeserialize);
-        for (int i = 0; i < 2; i++)
+        int count = binaryReader.ReadInt32();
+        for (int i = 0; i < count; i++)
         {
-            playerStatuses[i] = binaryReader.ReadBoolean();
-            playerIDs[i] = binaryReader.ReadString();
+            playerStatuses.Add(binaryReader.ReadBoolean());
+            playerIDs.Add(binaryReader.ReadString());
         }
         return this;
     }

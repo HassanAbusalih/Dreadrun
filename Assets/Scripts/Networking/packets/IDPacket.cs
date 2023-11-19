@@ -1,12 +1,7 @@
 using NetworkingLibrary;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
 
 public class IDPacket : BasePacket
 {
-
     public IDPacket()
     {
 
@@ -17,13 +12,13 @@ public class IDPacket : BasePacket
 
     }
 
-    public override byte[] Serialize()
+    public new byte[] Serialize()
     {
         base.Serialize();
         return writeMemoryStream.ToArray();
     }
 
-    public override BasePacket Deserialize(byte[] dataToDeserialize)
+    public new IDPacket Deserialize(byte[] dataToDeserialize)
     {
         base.Deserialize(dataToDeserialize);
         return this;

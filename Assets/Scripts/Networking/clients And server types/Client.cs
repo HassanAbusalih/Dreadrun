@@ -60,7 +60,7 @@ namespace Client
                 isConnected = true;
 
                 if (isConnected) ConnectedToServerEvent?.Invoke();
-                Debug.LogError("client says idk");
+                Debug.LogError("Client connected!");
                 TryGetComponent(out networkComponent);
             }
             catch (SocketException e)
@@ -100,8 +100,8 @@ namespace Client
                             networkComponent.ClientID = packet.gameObjectID;
                             break;
                         case BasePacket.PacketType.ServerLobbyPacket:
-                            LobbyStatusPacket lobbyStatusPacket = packet as LobbyStatusPacket;
-                            lobbyStatusPacket.Deserialize(buffer);
+                            LobbyStatusPacket lobbyStatusPacket = new LobbyStatusPacket().Deserialize(buffer);
+                            Debug.LogError("Server Lobby Packet Received! Player count is: " + lobbyStatusPacket.playerIDs.Count);
                             OnLobbyUpdate?.Invoke(lobbyStatusPacket.playerIDs, lobbyStatusPacket.playerStatuses);
                             break;
                         case BasePacket.PacketType.Destruction:
@@ -128,18 +128,16 @@ namespace Client
             {
                 byte[] buffer = new byte[socket.Available];
                 socket.Receive(buffer);
-                BasePacket packet = new BasePacket();
-                packet.Deserialize(buffer);
+                BasePacket packet = new BasePacket().Deserialize(buffer);
                 return (packet, buffer);
             }
             return (null, null);
         }
 
-        public void SendPacket(BasePacket basePacket)
+        public void SendPacket(byte[] buffer)
         {
-            socket.Send(basePacket.Serialize());
+            socket.Send(buffer);
         }
-
 
         void CallAgain()
         {

@@ -17,7 +17,7 @@ namespace NetworkingLibrary
             position = _position;
         }
 
-        public override byte[] Serialize()
+        public new byte[] Serialize()
         {
             base.Serialize();
             binaryWriter.Write(position.x);
@@ -27,7 +27,7 @@ namespace NetworkingLibrary
             return writeMemoryStream.ToArray();
         }
 
-        public override BasePacket Deserialize(byte[] dataToDeserialize)
+        public new PositionPacket Deserialize(byte[] dataToDeserialize)
         {
             base.Deserialize(dataToDeserialize);
 

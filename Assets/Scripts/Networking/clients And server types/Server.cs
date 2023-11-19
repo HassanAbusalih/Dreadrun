@@ -78,15 +78,6 @@ namespace Server
                         OnServerLobbyUpdate?.Invoke(lobbyPacket.playerID, lobbyPacket.isReady);
                         break;
                 }
-                foreach(PlayerSocket player in clients)
-                {
-                    if(player == playerSocket)
-                    {
-                        continue;
-                    }
-                    SendData(packet, player.socket);
-
-                }
             }
             Invoke(nameof(CallAgain), tickRate);
         }
@@ -95,17 +86,15 @@ namespace Server
         {
             try
             {
-                //Debug.LogError("IM IN THE TRY TO ACCEPT CLIENT BABY");
                 Socket newSocket = _queueSocket.Accept();
-
-                //Debug.LogError("MY FAMILY ACTUALLY ACCEPTED ME BUT MY GROUP DID NOT :(");
 
                 PlayerSocket playerSocket = new PlayerSocket(newSocket);
                 playerSocket.playerID = GenerateUniqueClientID();
 
-                //Debug.LogError("MY CLIENT ID " + playerSocket.playerID);
-
-                playerSocket.socket.Send(new IDPacket(playerSocket.playerID).Serialize());
+                Debug.LogError("NEW CLIENT ID IS " + playerSocket.playerID);
+                IDPacket packet = new IDPacket(playerSocket.playerID);
+                
+                playerSocket.socket.Send(packet.Serialize());
                 clients.Add(playerSocket);
             }
             catch (SocketException e)
@@ -123,19 +112,17 @@ namespace Server
             {
                 byte[] buffer = new byte[socket.Available];
                 socket.Receive(buffer);
-                BasePacket packet = new BasePacket();
-                packet.Deserialize(buffer);
+                BasePacket packet = new BasePacket().Deserialize(buffer);
                 return (packet, buffer);
             }
             return (null, null);
         }
 
-        public void SendData(BasePacket packet, Socket socket)
+        public void SendData(byte[] buffer, Socket socket)
         {
             if (isCalled) { return; }
             isCalled = true;
-            byte[] serializedPacket = packet.Serialize();
-            socket.Send(serializedPacket);
+            socket.Send(buffer);
             Invoke(nameof(CallAgain), tickRate);
         }
 
@@ -152,11 +139,11 @@ namespace Server
             return guid.ToString();
         }
 
-        public void SendToAllClients(BasePacket packet)
+        public void SendToAllClients(byte[] buffer)
         {
             foreach (var client in clients)
             {
-                SendData(packet, client.socket);
+                client.socket.Send(buffer);
             }
         }
     }

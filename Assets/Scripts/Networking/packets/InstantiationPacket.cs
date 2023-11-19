@@ -1,7 +1,4 @@
 using NetworkingLibrary;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InstantiationPacket : BasePacket
@@ -25,7 +22,7 @@ public class InstantiationPacket : BasePacket
         rotation = _rotation;
     }
 
-    public override byte[] Serialize()
+    public new byte[] Serialize()
     {
         base.Serialize();
 
@@ -43,7 +40,7 @@ public class InstantiationPacket : BasePacket
         return writeMemoryStream.ToArray();
     }
 
-    public override BasePacket Deserialize(byte[] dataToDeserialize)
+    public new InstantiationPacket Deserialize(byte[] dataToDeserialize)
     {
         base.Deserialize(dataToDeserialize);
 

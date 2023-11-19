@@ -17,6 +17,6 @@ public class ClientIDTextDisplayer : MonoBehaviour
     private void Update()
     {
        // if(networkComponent.ClientID != 0)
-        clientIDText.text = "Client ID: " + networkComponent.ClientID.ToString();
+        //clientIDText.text = "Client ID: " + networkComponent.ClientID.ToString();
     }
 }

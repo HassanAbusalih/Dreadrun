@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,11 +27,15 @@ public class ConnectToServer : MonoBehaviour
 
     IEnumerator DelayToLoadScene()
     {
-        yield return new WaitUntil(() => Client.Client.Instance.networkComponent.ClientID != null);
+        while (Client.Client.Instance.networkComponent.ClientID == "" || Client.Client.Instance.networkComponent.ClientID == "0")
+        {
+            yield return null;
+        }
         SceneManager.LoadScene(1);
-        LobbyPacket lobbyPacket = new LobbyPacket(false, "", Client.Client.Instance.networkComponent.ClientID);
-
-        Client.Client.Instance.SendPacket(lobbyPacket);
+        string clientID = Client.Client.Instance.networkComponent.ClientID;
+        LobbyPacket lobbyPacket = new LobbyPacket(false, "", clientID);
+        Debug.LogError($"My client ID is {clientID}");
+        Client.Client.Instance.SendPacket(lobbyPacket.Serialize());
         Debug.LogError("I'm joining the lobby!");
     }
 }

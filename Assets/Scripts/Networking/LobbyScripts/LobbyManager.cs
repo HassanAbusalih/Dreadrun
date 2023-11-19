@@ -29,7 +29,7 @@ public class LobbyManager : MonoBehaviour
     {
         lobbyPacket.isReady = !lobbyPacket.isReady;
         //UpdateImage(lobbyPacket.isReady, index);
-        Client.Client.Instance.SendPacket(lobbyPacket);
+        Client.Client.Instance.SendPacket(lobbyPacket.Serialize());
         Debug.LogError($"My ready status is now {lobbyPacket.isReady}!");
     }
 
@@ -39,7 +39,7 @@ public class LobbyManager : MonoBehaviour
         {
             if (idToImage.ContainsKey(playerIDs[i]))
             {
-                Debug.LogError($"Client {playerIDs[i]}'s is now {playerStatuses[i]}!");
+                Debug.LogError($"Player {i + 1} is now {playerStatuses[i]}!");
                 idToImage[playerIDs[i]].color = playerStatuses[i] ? Color.green : Color.red; //if red make it green and vice versa
             }
             else

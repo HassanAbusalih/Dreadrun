@@ -35,7 +35,7 @@ namespace NetworkingLibrary
             this.gameObjectID = gameObjectID;
         }
 
-        public virtual byte[] Serialize()
+        public byte[] Serialize()
         {
             writeMemoryStream = new MemoryStream();
             binaryWriter = new BinaryWriter(writeMemoryStream);
@@ -43,7 +43,7 @@ namespace NetworkingLibrary
             binaryWriter.Write(gameObjectID);
             return writeMemoryStream.ToArray();
         }
-        public virtual BasePacket Deserialize(byte[] dataToDeserialize)
+        public BasePacket Deserialize(byte[] dataToDeserialize)
         {
             readMemoryStream = new MemoryStream(dataToDeserialize);
             binaryReader = new BinaryReader(readMemoryStream);
