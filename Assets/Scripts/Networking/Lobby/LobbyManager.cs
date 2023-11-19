@@ -23,18 +23,17 @@ public class LobbyManager : MonoBehaviour
     {
         string clientID = ClientLibrary.Client.Instance.networkComponent.ClientID;
         lobbyPacket = new LobbyPacket(false, "", clientID);
-        Debug.LogError($"My client ID is {clientID}");
+        //Debug.LogError($"My client ID is {clientID}");
         ClientLibrary.Client.Instance.SendPacket(lobbyPacket.Serialize());
         Debug.LogError("I'm joining the lobby!");
     }
-
 
     public void OnButtonClick()
     {
         lobbyPacket.isReady = !lobbyPacket.isReady;
         //UpdateImage(lobbyPacket.isReady, index);
         ClientLibrary.Client.Instance.SendPacket(lobbyPacket.Serialize());
-        Debug.LogError($"My ready status is now {lobbyPacket.isReady}!");
+        //Debug.LogError($"My ready status is now {lobbyPacket.isReady}!");
     }
 
     private void UpdateImage(List<string> playerIDs, List<bool> playerStatuses)
@@ -49,13 +48,8 @@ public class LobbyManager : MonoBehaviour
             else
             {
                 idToImage.Add(playerIDs[i], images[i]);
-               
+                idToImage[playerIDs[i]].color = playerStatuses[i] ? Color.green : Color.red;
             }
         }
-    }
-
-    void UpdateImage(bool isReady, int index)
-    {
-        images[index].color = isReady ? Color.green : Color.red;
     }
 }

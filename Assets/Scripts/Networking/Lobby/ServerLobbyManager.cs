@@ -29,13 +29,13 @@ public class ServerLobbyManager : MonoBehaviour
             Debug.LogError("New client in Lobby! They are player " + playerIDs.Count);
         }
         statusPacket = new LobbyStatusPacket(playerStatuses, playerIDs);
-        Server.Server.Instance.SendToAllClients(statusPacket.Serialize());
         ChangeScene();
+        Server.Server.Instance.SendToAllClients(statusPacket.Serialize());
     }
 
     void ChangeScene()
     {
-        if(playerStatuses.Count < 3) return;
+        //if(playerStatuses.Count < 3) return;
         for (int i = 0; i < playerStatuses.Count; i++)
         {
             if (!playerStatuses[i])
@@ -44,8 +44,8 @@ public class ServerLobbyManager : MonoBehaviour
                 return;
             }
         }
-        scenePacket = new ScenePacket(sceneName);
         Debug.LogError("Run you goddamn donkey");
+        scenePacket = new ScenePacket(sceneName);
         Server.Server.Instance.SendToAllClients(scenePacket.Serialize());
     }
 

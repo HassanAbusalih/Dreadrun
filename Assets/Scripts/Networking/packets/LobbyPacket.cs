@@ -21,7 +21,7 @@ public class LobbyPacket : BasePacket
         base.Serialize();
         binaryWriter.Write(isReady);
         binaryWriter.Write(playerID);
-        Debug.LogError($"LobbyPacket serialized! Client ID is {playerID} and status is {isReady}");
+        //Debug.LogError($"LobbyPacket serialized! Client ID is {playerID} and status is {isReady}");
         return writeMemoryStream.ToArray();
     }
 
@@ -30,7 +30,7 @@ public class LobbyPacket : BasePacket
         base.Deserialize(_dataToDeserialize);
         isReady = binaryReader.ReadBoolean();
         playerID = binaryReader.ReadString();
-        Debug.LogError($"LobbyPacket deserialized! Client ID is {playerID} and status is {isReady}");
+        //Debug.LogError($"LobbyPacket deserialized! Client ID is {playerID} and status is {isReady}");
         return this;
     }
 }

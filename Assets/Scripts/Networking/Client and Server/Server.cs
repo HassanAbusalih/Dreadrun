@@ -53,8 +53,6 @@ namespace Server
             queueSocket.Listen(10);
         }
 
-
-
         private void Update()
         {
             if (isCalled) { return; }
@@ -153,5 +151,4 @@ namespace Server
             queueSocket.Close();
         }
     }
-
 }
