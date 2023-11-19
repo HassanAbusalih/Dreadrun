@@ -41,6 +41,7 @@ namespace Server
 
         protected virtual void Start()
         {
+            IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Any, 30);
             isCalled = false;
             queueSocket = new Socket(
             AddressFamily.InterNetwork,
@@ -48,7 +49,7 @@ namespace Server
             ProtocolType.Tcp);
 
             queueSocket.Blocking = false;
-            queueSocket.Bind(new IPEndPoint(IPAddress.Any, 3000));
+            queueSocket.Bind(ipEndPoint);
             queueSocket.Listen(10);
         }
 
@@ -93,7 +94,7 @@ namespace Server
 
                 Debug.LogError("NEW CLIENT ID IS " + playerSocket.playerID);
                 IDPacket packet = new IDPacket(playerSocket.playerID);
-                
+
                 playerSocket.socket.Send(packet.Serialize());
                 clients.Add(playerSocket);
             }
@@ -146,5 +147,11 @@ namespace Server
                 client.socket.Send(buffer);
             }
         }
+
+        private void OnDisable()
+        {
+            queueSocket.Close();
+        }
     }
+
 }

@@ -11,7 +11,7 @@ public class ConnectToServer : MonoBehaviour
 
     private void OnEnable()
     {
-        connectButton.onClick.AddListener(()=> ClientLibrary.Client.Instance.ConnectToServer(ipAddressInput.text));
+        connectButton.onClick.AddListener(()=> ClientLibrary.Client.Instance.ConnectToServer("127.0.0.1"));
         ClientLibrary.Client.Instance.ConnectedToServerEvent += LoadIntoGame;
     }
 

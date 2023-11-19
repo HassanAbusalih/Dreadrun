@@ -56,7 +56,7 @@ namespace ClientLibrary
                 ProtocolType.Tcp);
 
                 Debug.LogError("Client is trying to connect to server");
-                socket.Connect(new IPEndPoint(IPAddress.Parse(_ipAddress), 3000));
+                socket.Connect(new IPEndPoint(IPAddress.Parse(_ipAddress), 30));
                 socket.Blocking = false;
                 isConnected = true;
 
@@ -148,6 +148,11 @@ namespace ClientLibrary
         void CallAgain()
         {
             isCalled = false;
+        }
+
+        private void OnDisable()
+        {
+            socket?.Dispose();
         }
     }
 }
