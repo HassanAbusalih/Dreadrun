@@ -45,6 +45,7 @@ public class ServerLobbyManager : MonoBehaviour
             }
         }
         scenePacket = new ScenePacket(sceneName);
+        Debug.LogError("Run you goddamn donkey");
         Server.Server.Instance.SendToAllClients(scenePacket.Serialize());
     }
 

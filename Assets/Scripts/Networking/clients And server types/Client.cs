@@ -107,8 +107,8 @@ namespace ClientLibrary
                             break;
                         case BasePacket.PacketType.ScenePacket:
                             ScenePacket scenePacket = new ScenePacket().Deserialize(buffer);
-                            Debug.LogError("Scene Packet Received! Scene name is: " + scenePacket.sceneName);
                             SceneManager.LoadScene(scenePacket.sceneName);
+                            Debug.LogError("Scene Packet Received! Scene name is: " + scenePacket.sceneName);
                             break;
                         case BasePacket.PacketType.Destruction:
                             break;
