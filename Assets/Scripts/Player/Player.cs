@@ -6,19 +6,26 @@ public class Player : MonoBehaviour, IDamagable
 {
     Rigidbody rb;
     Dashing playerDash;
-    [Header("Player Input/Movement Settings")]
+    [Header("Player Input Settings")]
+    [SerializeField] KeyCode sprintKey;
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
     [SerializeField] KeyCode dropWeaponKey = KeyCode.Q;
     [SerializeField] KeyCode controllerPickUp;
     [SerializeField] KeyCode controllerDrop;
+
+    [Header("Player slope info/Settings")]
     [SerializeField] float maxSlopeAngle;
     [SerializeField] float UpSlopeGravity;
     [SerializeField] bool onSlope;
+
+    [Header("Player Stats & Movement Settings")]
+    [SerializeField] float slowDownMultiplier;
+    [SerializeField] AnimationCurve slowDownCurve;
     public PlayerStats playerStats;
 
     [Header("Player UI Settings")]
-    [SerializeField] Slider healthBar;
-    [SerializeField] Slider staminaBar;
+    [SerializeField] Image healthBar;
+    [SerializeField] Image staminaBar;
 
     [Header("EquippedWeaponInfo")]
     [SerializeField] Transform weaponEquipPosition;
@@ -27,11 +34,12 @@ public class Player : MonoBehaviour, IDamagable
     public PlayerWeapon playerWeapon;
     bool isWeaponPickedUp;
 
+    // Player Events
     public static Action<GameObject> onDamageTaken;
     public Action OnPlayerDeath;
     public delegate bool takeDamage();
     public takeDamage canPLayerTakeDamage;
-   
+
     [SerializeField] SoundSO takeDamageSFX;
 
     RaycastHit slopeHitt;
@@ -54,6 +62,7 @@ public class Player : MonoBehaviour, IDamagable
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerStats.defaultSpeed = playerStats.speed;
         weaponIDsSO.InitializeWeaponIDsDictionary();
         playerStats.health = playerStats.maxHealth;
         playerStats.stamina = playerStats.maxStamina;
@@ -61,52 +70,57 @@ public class Player : MonoBehaviour, IDamagable
         InitializePlayerUI(staminaBar, playerStats.maxStamina, playerStats.stamina);
     }
 
-    void InitializePlayerUI(Slider playerUiBar, float MaxValue, float CurrentValue)
+    void InitializePlayerUI(Image playerUiBar, float MaxValue, float CurrentValue)
     {
         if (playerUiBar == null) return;
-        playerUiBar.maxValue = MaxValue;
-        playerUiBar.value = CurrentValue;
+        playerUiBar.fillAmount = CurrentValue / MaxValue;
     }
 
     private void Update()
     {
-        onSlope = isPlayerOnSlope();
-        Vector3 moveDirection = GetMovementDirection();
-        rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
-        if(onSlope && rb.velocity.y<0 || rb.velocity.y>0) rb.velocity += Vector3.down * UpSlopeGravity;
         PickUpUnequippedWeapon();
         DropCurrentWeapon();
     }
 
-    Vector3 GetMovementDirection()
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
+    void MovePlayer()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 moveDirection = new Vector3(horizontal, 0, vertical);
-        if (isPlayerOnSlope())
-        {
-            Vector3 slopeDirection = GetSlopeDirection(moveDirection);
-            moveDirection = slopeDirection + moveDirection.normalized * playerStats.speed;
-        }
-        moveDirection = moveDirection.normalized * playerStats.speed;
-        return moveDirection;
+        Vector3 normalizedDirection = new Vector3(horizontal, 0, vertical).normalized;
+        Vector3 slopeDirection = isPlayerOnSlope(normalizedDirection).Item1;
+        onSlope = isPlayerOnSlope(normalizedDirection).Item2;
+        Vector3 moveVelocity = (slopeDirection + normalizedDirection) * playerStats.speed;
+
+        if (onSlope && rb.velocity.y < 0 || rb.velocity.y > 0)
+        { rb.velocity += Vector3.down * UpSlopeGravity; }
+
+        rb.velocity += moveVelocity;
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerStats.speed);
+
+        if (horizontal != 0 && vertical != 0) return;
+        float slowDownLerpValue = slowDownCurve.Evaluate(Time.fixedDeltaTime * slowDownMultiplier);
+        rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero,slowDownLerpValue);
+
     }
 
-    bool isPlayerOnSlope()
+    (Vector3, bool) isPlayerOnSlope(Vector3 _moveDirection)
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHitt, 30f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHitt, 30f))
         {
             float angle = Vector3.Angle(slopeHitt.normal, Vector3.up);
             transform.rotation = Quaternion.FromToRotation(transform.up, slopeHitt.normal) * transform.rotation;
-            return angle > maxSlopeAngle && angle!=0;
+            bool isOnSlope = angle > maxSlopeAngle && angle != 0;
+            Vector3 slopeDirection = Vector3.ProjectOnPlane(_moveDirection, slopeHitt.normal);
+            return (slopeDirection, isOnSlope);
         }
-        return false;
+        return (Vector3.zero, false);
     }
 
-    Vector3 GetSlopeDirection(Vector3 _moveDirection)
-    {
-        return Vector3.ProjectOnPlane(_moveDirection, slopeHitt.normal);
-    }
 
     private void PickUpUnequippedWeapon()
     {
@@ -123,9 +137,9 @@ public class Player : MonoBehaviour, IDamagable
 
     void DropCurrentWeapon()
     {
-        if(dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
+        if (dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
         if (controllerDrop == KeyCode.None) controllerDrop = KeyCode.JoystickButton2;
-        if (Input.GetKeyDown(dropWeaponKey)|| Input.GetKeyDown(controllerDrop) && isWeaponPickedUp)
+        if (Input.GetKeyDown(dropWeaponKey) || Input.GetKeyDown(controllerDrop) && isWeaponPickedUp)
         {
             ScaleOrDescaleWeapon(false);
             playerWeapon.DropWeapon();
@@ -177,10 +191,10 @@ public class Player : MonoBehaviour, IDamagable
         UpdatePlayerUI(staminaBar, playerStats.stamina);
     }
 
-    void UpdatePlayerUI(Slider playerUiBar, float CurrentValue)
+    void UpdatePlayerUI(Image playerUiBar, float CurrentValue)
     {
         if (playerUiBar == null) return;
-        playerUiBar.value = CurrentValue;
+        playerUiBar.fillAmount = CurrentValue / playerStats.maxHealth;
     }
 
     float GetPlayerStamina()
