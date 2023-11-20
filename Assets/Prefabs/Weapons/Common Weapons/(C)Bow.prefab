@@ -51,8 +51,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.865482, y: 0.81, z: 8.478629}
-  m_Center: {x: 0.027013022, y: 0.24, z: 3.1201658}
+  m_Size: {x: 12.59382, y: 4.016691, z: 9.271288}
+  m_Center: {x: 0.08452882, y: -0.049259875, z: 3.0969422}
 --- !u!65 &404554902418598276
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -78,10 +78,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e543133ada5616c43a243dfcf39d8fed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 1
+  fireRate: 0.5
   damageModifier: 20
   projectileRange: 50
-  projectileSpeed: 10
+  projectileSpeed: 15
   spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
   soundSO: {fileID: 11400000, guid: edcf898b4b2e9874ba05c4cc7c667fac, type: 2}
@@ -92,9 +92,12 @@ MonoBehaviour:
   weaponEquipText: {fileID: 1542810004159222196}
   <weaponIcon>k__BackingField: {fileID: 21300000, guid: 6dd225d76b2cdbe49958329293f8b942, type: 3}
   <weaponDescription>k__BackingField: Charge to shoot stronger arrows
+  homingRange: 10
+  homingStrength: 400
   minDamageModifier: 1
   minRange: 3
-  minSpeed: 3
+  minSpeed: 5
+  maxProjectiles: 3
   chargeIndicator: {fileID: 6737797975797298180}
   minColor: {r: 1, g: 0.93979645, b: 0, a: 1}
   maxColor: {r: 1, g: 0, b: 0, a: 1}
