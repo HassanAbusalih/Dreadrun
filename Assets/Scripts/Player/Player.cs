@@ -86,7 +86,7 @@ public class Player : MonoBehaviour, IDamagable
         UpdatePlayerUI(staminaBar, playerStats.stamina, playerStats.maxStamina);
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         MovePlayer();
     }
@@ -100,11 +100,13 @@ public class Player : MonoBehaviour, IDamagable
         onSlope = isPlayerOnSlope(normalizedDirection).Item2;
         Vector3 moveVelocity = (slopeDirection + normalizedDirection) * playerStats.speed;
 
-        rb.velocity += -transform.up * UpSlopeGravity;
+        if( normalizedDirection.magnitude!=0)
+        rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
+        if( normalizedDirection.magnitude == 0 && !onSlope && rb.velocity.y<=0)
+        rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
 
         rb.velocity += moveVelocity;
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerStats.speed);
-        rb.useGravity = !onSlope;
 
         if (horizontal != 0 && vertical != 0) return;
         float slowDownLerpValue = slowDownCurve.Evaluate(Time.fixedDeltaTime * slowDownMultiplier);

@@ -60,7 +60,7 @@ public class Dashing : MonoBehaviour
         {
             float currentStamina = canPlayerDash?.Invoke() ?? 0f;
             if (currentStamina <= 0) return;
-            Vector3 dashDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
+            Vector3 dashDirection = (new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"))).normalized;
             StartCoroutine(StartDash(dashDirection));
         }
     }
@@ -74,7 +74,7 @@ public class Dashing : MonoBehaviour
         while (elapsedTime < dashDuration && isDashing)
         {
             float dashProgress = elapsedTime / dashDuration;
-            Vector3 _dashForce = Vector3.Lerp(Vector3.zero, dashDirection * dashForce, dashCurve.Evaluate(dashProgress));
+            Vector3 _dashForce = Vector3.Lerp(Vector3.zero, dashDirection* dashForce, dashCurve.Evaluate(dashProgress));
             rb.AddForce(_dashForce, ForceMode.Impulse);
             elapsedTime += Time.deltaTime;
             yield return null;
