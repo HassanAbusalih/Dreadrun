@@ -21,6 +21,7 @@ public class Player : MonoBehaviour, IDamagable
     [Header("Player Stats & Movement Settings")]
     [SerializeField] float slowDownMultiplier;
     [SerializeField] AnimationCurve slowDownCurve;
+    [SerializeField][Range(0, 2)] float staminaRecoverySpeed;
     public PlayerStats playerStats;
 
     [Header("Player UI Settings")]
@@ -81,6 +82,8 @@ public class Player : MonoBehaviour, IDamagable
     {
         PickUpUnequippedWeapon();
         DropCurrentWeapon();
+        playerStats.stamina = Mathf.Lerp(playerStats.stamina, playerStats.maxStamina, Time.deltaTime * staminaRecoverySpeed);
+        UpdatePlayerUI(staminaBar, playerStats.stamina, playerStats.maxStamina);
     }
 
     private void FixedUpdate()
@@ -97,15 +100,15 @@ public class Player : MonoBehaviour, IDamagable
         onSlope = isPlayerOnSlope(normalizedDirection).Item2;
         Vector3 moveVelocity = (slopeDirection + normalizedDirection) * playerStats.speed;
 
-        if (onSlope && rb.velocity.y < 0 || rb.velocity.y > 0)
-        { rb.velocity += Vector3.down * UpSlopeGravity; }
+        rb.velocity += -transform.up * UpSlopeGravity;
 
         rb.velocity += moveVelocity;
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerStats.speed);
+        rb.useGravity = !onSlope;
 
         if (horizontal != 0 && vertical != 0) return;
         float slowDownLerpValue = slowDownCurve.Evaluate(Time.fixedDeltaTime * slowDownMultiplier);
-        rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero,slowDownLerpValue);
+        rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, slowDownLerpValue);
 
     }
 
@@ -171,7 +174,7 @@ public class Player : MonoBehaviour, IDamagable
         bool _allowToTakeDamage = canPLayerTakeDamage?.Invoke() ?? true;
         if (_allowToTakeDamage) return;
 
-        if (Time.time - timeSinceSFX > sfxCooldown && takeDamageSFX != null) 
+        if (Time.time - timeSinceSFX > sfxCooldown && takeDamageSFX != null)
         {
             takeDamageSFX.PlaySound(0, AudioSourceType.Player);
             timeSinceSFX = Time.time;
@@ -184,7 +187,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         playerStats.health += amount;
         playerStats.health = Mathf.Clamp(playerStats.health, 0, playerStats.maxHealth);
-        UpdatePlayerUI(healthBar, playerStats.health);
+        UpdatePlayerUI(healthBar, playerStats.health, playerStats.maxHealth);
         if (playerStats.health <= 0)
         {
             OnPlayerDeath?.Invoke();
@@ -194,14 +197,13 @@ public class Player : MonoBehaviour, IDamagable
     void ChangeStamina(float amount)
     {
         playerStats.stamina += amount;
-        playerStats.stamina = Mathf.Clamp(playerStats.stamina, 0, playerStats.maxStamina);
-        UpdatePlayerUI(staminaBar, playerStats.stamina);
+        UpdatePlayerUI(staminaBar, playerStats.stamina, playerStats.maxStamina);
     }
 
-    void UpdatePlayerUI(Image playerUiBar, float CurrentValue)
+    void UpdatePlayerUI(Image playerUiBar, float CurrentValue, float maxValue)
     {
         if (playerUiBar == null) return;
-        playerUiBar.fillAmount = CurrentValue / playerStats.maxHealth;
+        playerUiBar.fillAmount = CurrentValue / maxValue;
     }
 
     float GetPlayerStamina()

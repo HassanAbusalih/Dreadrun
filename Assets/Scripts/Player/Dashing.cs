@@ -84,8 +84,6 @@ public class Dashing : MonoBehaviour
     private void DashMode(bool _enabled)
     {
         isDashing = _enabled;
-        rb.useGravity = !_enabled;
-        rb.constraints = _enabled ? RigidbodyConstraints.None : RigidbodyConstraints.None;
         rb.freezeRotation = _enabled;
         EnableInvincibility(_enabled);
         

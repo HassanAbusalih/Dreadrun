@@ -81,6 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b75c703f4c55ec4bae6e4fef9e46497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxExpToLevelUp: 0
+  requiredExpToLevelUp: 0
+  levelUpSFX: {fileID: 0}
 --- !u!1 &1236785749689792148
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,41 +346,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  sprintSpeed: 70
-  sprintMultiplier: 3
-  sprintCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 5.015196
-      outSlope: 5.015196
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.07490636
-    - serializedVersion: 3
-      time: 0.2982004
-      value: 0.94880456
-      inSlope: 0.63802075
-      outSlope: 0.63802075
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.3563136
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.99765015
-      value: 0.99046326
-      inSlope: 1.6433413
-      outSlope: 1.6433413
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.19093108
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   playerStats:
     health: 0
     maxHealth: 100
@@ -388,13 +356,13 @@ MonoBehaviour:
     Range: 1
     Spread: 1
     speed: 30
-    defaultSpeed: 0
   healthBar: {fileID: 6248476664982006873}
   staminaBar: {fileID: 3104004089992840484}
   weaponEquipPosition: {fileID: 8117153054145766768}
   weaponIDsSO: {fileID: 11400000, guid: f035bc046c8350b4f8f8a93b58d9f72c, type: 2}
   playerWeapon: {fileID: 0}
   takeDamageSFX: {fileID: 11400000, guid: 3b8518f4fca09724d993cf4dbdca0f1b, type: 2}
+  sfxCooldown: 1
 --- !u!114 &4350660472619407265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b41121c7b2d1b4eb52c093d57090ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 200
+  rotationSpeed: 10
   controllerEnabled: 0
 --- !u!114 &5531912465785331505
 MonoBehaviour:
@@ -490,13 +458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61fd29f1338258f40af416362af81be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentExp: 0
-  maxExpToLevelUp: 50
-  currentLevel: 0
-  expAmountToLevelUp: 50
-  perkSelector: {fileID: 4423540878030522066}
-  expmanager: {fileID: 851680745961679646}
-  levelUpSFX: {fileID: 11400000, guid: 40ea079c75b8e8f42b5069a3548ed6dc, type: 2}
 --- !u!114 &5531912465785331506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -869,11 +830,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7892626732478468184, guid: 18fa3fa0c3d50ea4fb6f561780668556, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.999998
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7892626732478468184, guid: 18fa3fa0c3d50ea4fb6f561780668556, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.14999962
+      value: -0.15002441
       objectReference: {fileID: 0}
     - target: {fileID: 7892626732478468184, guid: 18fa3fa0c3d50ea4fb6f561780668556, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1247,6 +1208,14 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 107282262380937534, guid: 39f86b821ef2145468a5e423ebeadf8b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 147
+      objectReference: {fileID: 0}
+    - target: {fileID: 107282262380937534, guid: 39f86b821ef2145468a5e423ebeadf8b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 43.708862
+      objectReference: {fileID: 0}
     - target: {fileID: 107282262380937535, guid: 39f86b821ef2145468a5e423ebeadf8b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1279,6 +1248,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4423540878030522066}
+    - target: {fileID: 1230524964416311715, guid: 39f86b821ef2145468a5e423ebeadf8b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00012207031
+      objectReference: {fileID: 0}
     - target: {fileID: 7917600650184828314, guid: 39f86b821ef2145468a5e423ebeadf8b, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 81.84918
@@ -1610,6 +1583,10 @@ PrefabInstance:
     - target: {fileID: 8268336394128312798, guid: fe6bb82ca63511643996dc6daee9b754, type: 3}
       propertyPath: m_Name
       value: Inventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 8268336394575417474, guid: fe6bb82ca63511643996dc6daee9b754, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8268336394595865526, guid: fe6bb82ca63511643996dc6daee9b754, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target

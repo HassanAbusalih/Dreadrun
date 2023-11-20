@@ -17,7 +17,6 @@ public class SpeedPotion : ItemBase
         hasBuffedItem = true;
         defaultSpeed = player.playerStats.speed;
         player.playerStats.speed = speedIncrease;
-        player.playerStats.defaultSpeed = speedIncrease;
         Debug.Log("Speed increased");
         GetTimer();
         playerRef = player;
@@ -33,7 +32,6 @@ public class SpeedPotion : ItemBase
     private void ResetSpeed()
     {
         playerRef.playerStats.speed = defaultSpeed;
-        playerRef.playerStats.defaultSpeed = defaultSpeed;
         hasBuffedItem = false;
         Debug.Log("Speed back to normal");
     }
