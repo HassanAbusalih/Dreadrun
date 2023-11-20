@@ -30,7 +30,6 @@ public class PerkLootboxes : MonoBehaviour
     void RemoveCommonPerks(List<Perk> unlockable, List<Perk> unlocked)
     {
         unlockable.RemoveAll(poolA => unlocked.Contains(poolA));
-        Debug.Log("deleted from the unlockable perk pool");
         UpdateOptions();
         if (unlockable.Count == 0)
         {
