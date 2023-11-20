@@ -64,7 +64,6 @@ public class Player : MonoBehaviour, IDamagable
     {
         timeSinceSFX = Time.time;
         rb = GetComponent<Rigidbody>();
-        playerStats.defaultSpeed = playerStats.speed;
         weaponIDsSO.InitializeWeaponIDsDictionary();
         playerStats.health = playerStats.maxHealth;
         playerStats.stamina = playerStats.maxStamina;
@@ -170,12 +169,13 @@ public class Player : MonoBehaviour, IDamagable
             counterBlast.Explode(amount * 0.5f);
         }
         bool _allowToTakeDamage = canPLayerTakeDamage?.Invoke() ?? true;
+        if (_allowToTakeDamage) return;
+
         if (Time.time - timeSinceSFX > sfxCooldown && takeDamageSFX != null) 
         {
             takeDamageSFX.PlaySound(0, AudioSourceType.Player);
             timeSinceSFX = Time.time;
         }
-        if (_allowToTakeDamage) return;
         ChangeHealth(-amount);
         IDamagable.onDamageTaken?.Invoke(gameObject);
     }
