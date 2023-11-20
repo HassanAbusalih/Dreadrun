@@ -41,7 +41,8 @@ public class Player : MonoBehaviour, IDamagable
     public takeDamage canPLayerTakeDamage;
 
     [SerializeField] SoundSO takeDamageSFX;
-
+    [SerializeField] float sfxCooldown = 1f;
+    float timeSinceSFX;
     RaycastHit slopeHitt;
 
     private void OnEnable()
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Start()
     {
+        timeSinceSFX = Time.time;
         rb = GetComponent<Rigidbody>();
         playerStats.defaultSpeed = playerStats.speed;
         weaponIDsSO.InitializeWeaponIDsDictionary();
@@ -168,6 +170,11 @@ public class Player : MonoBehaviour, IDamagable
             counterBlast.Explode(amount * 0.5f);
         }
         bool _allowToTakeDamage = canPLayerTakeDamage?.Invoke() ?? true;
+        if (Time.time - timeSinceSFX > sfxCooldown && takeDamageSFX != null) 
+        {
+            takeDamageSFX.PlaySound(0, AudioSourceType.Player);
+            timeSinceSFX = Time.time;
+        }
         if (_allowToTakeDamage) return;
         ChangeHealth(-amount);
         IDamagable.onDamageTaken?.Invoke(gameObject);

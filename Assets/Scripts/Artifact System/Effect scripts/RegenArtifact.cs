@@ -12,8 +12,6 @@ public class RegenArtifact : Artifact
     RegenArtifactSettings ArtifactSettings => (RegenArtifactSettings)base.settings;
     private float TotalHealthRegenPerSecond => level * ArtifactSettings.regenPerSecondPerLevel;
 
-    bool buffapplied = false;
-
     public override void Initialize()
     {
         this.gameObject = ArtifactSettings.artifactPrefab;

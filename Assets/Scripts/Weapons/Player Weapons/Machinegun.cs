@@ -22,7 +22,8 @@ public class Machinegun : PlayerWeapon
         }
         else
         {
-            firingDuration = 0;
+            firingDuration -= Time.deltaTime;
+            if (firingDuration < 0 ) { firingDuration = 0; }
         }
     }
 

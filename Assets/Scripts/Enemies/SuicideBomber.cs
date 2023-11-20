@@ -6,10 +6,10 @@ public class SuicideBomber : EnemyAIBase
     [SerializeField] float detectionRange = 10;
     [SerializeField] float attackRange = 2.0f;
     [SerializeField] float attackCooldown = 1.5f;
-    [SerializeField] float dashSpeedModifier = 5f;
-    [SerializeField] float chargeSpeedModifier = 0.5f;
-    [SerializeField] float chargeTime = 1f;
-    [SerializeField] float dashTime = 0.2f;
+    //[SerializeField] float dashSpeedModifier = 5f;
+    //[SerializeField] float chargeSpeedModifier = 0.5f;
+    //[SerializeField] float chargeTime = 1f;
+    //[SerializeField] float dashTime = 0.2f;
     float lastAttackTime;
     Coroutine chargeAndAttack;
     LayerMask mask;

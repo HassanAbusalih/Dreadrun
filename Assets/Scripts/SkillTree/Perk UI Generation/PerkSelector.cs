@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class PerkSelector : MonoBehaviour
     [SerializeField] bool debugMode;
 
     private PerkCollectorManager perkCollectorManager;
+
+    public static Action OnPerkSelection;
 
     void Start()
     {
@@ -88,6 +91,7 @@ public class PerkSelector : MonoBehaviour
     {
         perkUIcanvas.SetActive(false);
         perkCollectorManager.AcquirePerk(perkChoices[perkIndexSelected].perk);
+        OnPerkSelection?.Invoke();
     }
 
     public void ShowDescription(int index)
