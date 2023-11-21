@@ -47,7 +47,6 @@ public class Bow : PlayerWeapon
         int projectilesToSpawn = Mathf.RoundToInt(Mathf.Lerp(1, maxProjectiles, chargeTime / fireRate));
         float rotationAmount = spreadAngle / (projectilesToSpawn - 1);
         float startAngle = -spreadAngle / 2;
-        Debug.Log(currentSpeed);
         for (int i = 0; i < projectilesToSpawn; i++)
         {
             float rotation = projectilesToSpawn > 1 ? startAngle + i * rotationAmount : 0;

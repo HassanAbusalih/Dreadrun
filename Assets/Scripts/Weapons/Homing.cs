@@ -2,27 +2,67 @@ using UnityEngine;
 
 public class Homing : MonoBehaviour
 {
-    float rotationSpeed;
+    float homingStrength;
     float homingRange;
-    EnemyAIBase[] enemies;
-    EnemyAIBase target;
+    bool enemyHoming = false;
+    EnemyAIBase enemyTarget;
+    Player playerTarget;
 
-    void Start()
+    public void Initialize(float homingStrength, float homingRange, bool enemyHoming = false)
     {
-        enemies = FindObjectsOfType<EnemyAIBase>();
+        this.homingStrength = homingStrength;
+        this.homingRange = homingRange;
+        this.enemyHoming = enemyHoming;
+    }
+
+    private void Start()
+    {
+        if(enemyHoming)
+        {
+            Player[] players = FindObjectsOfType<Player>();
+            float closestDistance = Mathf.Infinity;
+            Player closest = null;
+            foreach(Player player in players)
+            {
+                float distance = Vector3.Distance(transform.position, player.transform.position);
+                if (distance < closestDistance && distance <= homingRange)
+                {
+                    closest = player;
+                    closestDistance = distance;
+                }
+            }
+            playerTarget = closest;
+        }
     }
 
     void FixedUpdate()
     {
-        if (target == null)
+        if (!enemyHoming)
         {
-            target = FindClosestEnemy();
+            HomeOnEnemy();
         }
-        if (target != null)
+        else
         {
-            Vector3 directionToEnemy = target.transform.position - transform.position;
+            if (playerTarget != null)
+            {
+                Vector3 directionToEnemy = playerTarget.transform.position - transform.position;
+                Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, homingStrength * Time.deltaTime);
+            }
+        }
+    }
+
+    private void HomeOnEnemy()
+    {
+        if (enemyTarget == null)
+        {
+            enemyTarget = FindClosestEnemy();
+        }
+        if (enemyTarget != null)
+        {
+            Vector3 directionToEnemy = enemyTarget.transform.position - transform.position;
             Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, homingStrength * Time.deltaTime);
         }
     }
 
@@ -30,7 +70,8 @@ public class Homing : MonoBehaviour
     {
         EnemyAIBase closest = null;
         float closestDistance = Mathf.Infinity;
-        foreach (EnemyAIBase enemy in enemies)
+        if (EnemyPool.Instance == null) { return null; }
+        foreach (EnemyAIBase enemy in EnemyPool.Instance.Enemies)
         {
             if (enemy == null) { continue; }
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
@@ -41,11 +82,5 @@ public class Homing : MonoBehaviour
             }
         }
         return closest;
-    }
-
-    public void Initialize(float rotationSpeed, float homingRange)
-    {
-        this.rotationSpeed = rotationSpeed;
-        this.homingRange = homingRange;
     }
 }

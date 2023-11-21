@@ -23,12 +23,23 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
         timeSinceSFX = Time.time;
         currentHealth = maxHealth;
         gameObject.layer = 7;
+        
         weapon = GetComponent<WeaponBase>();
         rb = GetComponent<Rigidbody>();
         flockingBehavior = GetComponent<FlockingBehavior>();
+        
         if (players.Length == 0)
         {
             GetPlayers();
+        }
+
+        if (EnemyPool.Instance == null)
+        {
+            Debug.LogError("Enemy Pool not found!");
+        }
+        else
+        {
+            EnemyPool.Instance.Add(this);
         }
     }
 
@@ -121,6 +132,14 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
         {
             movementSpeed /= slowModifier;
             slowed = false;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (EnemyPool.Instance != null)
+        {
+            EnemyPool.Instance.Remove(this);
         }
     }
 }

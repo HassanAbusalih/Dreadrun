@@ -99,6 +99,7 @@ public class Speedster : EnemyAIBase
     {
         Vector3 toTarget = (target.position - transform.position).normalized;
         transform.rotation = Quaternion.LookRotation(toTarget, Vector3.up);
+        weapon.Attack();
         yield return new WaitForSeconds(shotCooldown / 2);
         transform.rotation = Quaternion.LookRotation(toTarget, Vector3.up);
         weapon.Attack();

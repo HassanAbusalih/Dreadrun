@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4111603669367186241}
   - component: {fileID: 4111603669367186254}
   - component: {fileID: 4111603669367186255}
-  - component: {fileID: 4111603669367186252}
   - component: {fileID: 4111603669367186243}
   - component: {fileID: 7588967935163124265}
+  - component: {fileID: 5092584085328661112}
   - component: {fileID: 6254002394925430329}
   m_Layer: 7
   m_Name: Speedster
@@ -102,26 +102,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4111603669367186252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4111603669367186250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7ee6acdfd4d83e4e86b4a9a160feed3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireRate: 2
-  damageModifier: 7
-  projectileRange: 15
-  projectileSpeed: 9
-  spreadAngle: 30
-  projectilePrefab: {fileID: 1332995557446588027, guid: c43aab9cdb8fd944ca09da012ab929a8, type: 3}
-  soundSO: {fileID: 0}
-  projectileCount: 1
 --- !u!54 &4111603669367186243
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -152,10 +132,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   movementSpeed: 15
+  enemySounds: {fileID: 0}
+  sfxCooldown: 1
   shootingRange: 15
   retreatRange: 5
   shotCooldown: 1
-  distanceToTravelBeforeShooting: 60
+  distanceToTravelBeforeShooting: 20
+--- !u!114 &5092584085328661112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4111603669367186250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bbc7da217121d4294c5690ceb94531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 2
+  damageModifier: 7
+  projectileRange: 15
+  projectileSpeed: 9
+  spreadAngle: 30
+  projectilePrefab: {fileID: 1332995557446588027, guid: c43aab9cdb8fd944ca09da012ab929a8, type: 3}
+  soundSO: {fileID: 0}
+  homingStrength: 250
+  homingRange: 10
 --- !u!114 &6254002394925430329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,3 +226,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animateScale: 1
+  meshRenderer: {fileID: 0}
