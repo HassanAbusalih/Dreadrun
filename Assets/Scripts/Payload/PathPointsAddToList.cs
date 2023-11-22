@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathPointsAddToList : MonoBehaviour
+public static class PathPointsAddToList
 {
-    public void AddChildrenToPathPointsList(Transform pathPointParent, List<Transform> pathPoints)
+    public static void AddChildrenToPathPointsList(Transform pathPointParent, List<Transform> pathPoints)
     {
         if (pathPointParent == null) { return; }
         foreach (Transform child in pathPointParent)
