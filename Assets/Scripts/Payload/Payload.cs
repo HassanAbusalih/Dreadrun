@@ -17,7 +17,7 @@ public class Payload : MonoBehaviour, IDamagable
 
     [Header("Path Points transforms")]
     public Transform grandparentTransform;
-    public List<Transform> pathPointsParent = new List<Transform>();
+    public List<Transform> pathPointsParent { get; private set; } = new List<Transform>();
     public List<Transform> pathPointsList = new List<Transform>();
     int currentPathIndex;
     int currentParentIndex = 0;
