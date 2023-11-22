@@ -9,6 +9,7 @@ public class Payload : MonoBehaviour, IDamagable
 {
     [Header("Stats")]
     [SerializeField] float speed;
+    [SerializeField] float rotationSpeed;
     [SerializeField] float maxSpeed;
     [SerializeField] float health;
     [Header("Events")]
@@ -23,6 +24,8 @@ public class Payload : MonoBehaviour, IDamagable
     int currentParentIndex = 0;
 
     [SerializeField] bool followPath;
+    [SerializeField] float slowdownRange = 10;
+    [SerializeField] [Range(0.1f , 0.9f)] float slowSpeed = 0.5f;
 
     private void OnValidate()
     {
@@ -34,11 +37,18 @@ public class Payload : MonoBehaviour, IDamagable
     {
         if (followPath)
         {
+            float currentSpeed = speed;
+            if (EnemiesInRange())
+            {
+                currentSpeed *= slowSpeed;
+            }
             if (currentPathIndex < pathPointsList.Count)
             {
                 Transform targetPoint = pathPointsList[currentPathIndex];
-                transform.position = Vector3.MoveTowards(transform.position, targetPoint.position, speed * Time.deltaTime);
-                transform.LookAt(targetPoint);
+                transform.position = Vector3.MoveTowards(transform.position, targetPoint.position, currentSpeed * Time.deltaTime);
+                Vector3 directionToPoint = targetPoint.transform.position - transform.position;
+                Quaternion targetRotation = Quaternion.LookRotation(directionToPoint);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
                 if (Vector3.Distance(transform.position, targetPoint.position) < 0.1f)
                 {
                     currentPathIndex++;
@@ -63,7 +73,25 @@ public class Payload : MonoBehaviour, IDamagable
     {
        children.Clear();
        PathPointsAddToList.AddChildrenToPathPointsList(parent, children);
-       followPath = true;
+       
+    }
+
+    bool EnemiesInRange()
+    {
+        if(EnemyPool.Instance == null)
+        {
+            return false ;
+        }
+
+        foreach(var enemy in EnemyPool.Instance.Enemies)
+        {
+            if (enemy == null) continue;
+            if(Vector3.Distance(transform.position, enemy.transform.position) < slowdownRange)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void TakeDamage(float amount)
@@ -83,6 +111,12 @@ public class Payload : MonoBehaviour, IDamagable
     public void StopFollowingPath()
     {
         followPath = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, slowdownRange);
     }
 
 }
