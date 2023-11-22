@@ -9,6 +9,7 @@ public class Speedster : EnemyAIBase
     [SerializeField] float shotCooldown = 1f;
     [SerializeField] float distanceToTravelBeforeShooting = 10f;
     Vector3 positionAroundTarget = Vector3.zero;
+    Vector3 lastPos;
     float distanceTravelled;
     Node topNode;
     Coroutine stopAndShoot;
@@ -77,7 +78,11 @@ public class Speedster : EnemyAIBase
         Vector3 toTarget = (targetPos - transform.position).normalized * movementSpeed;
         transform.rotation = Quaternion.LookRotation(player.position - transform.position, Vector3.up);
         rb.velocity = new(toTarget.x, rb.velocity.y, toTarget.z);
-        distanceTravelled += rb.velocity.magnitude * Time.deltaTime;
+        if (lastPos != Vector3.zero)
+        {
+            distanceTravelled += Vector3.Distance(transform.position, lastPos);
+        }
+        lastPos = transform.position;
     }
 
     void GeneratePosition()
@@ -94,6 +99,7 @@ public class Speedster : EnemyAIBase
     {
         Vector3 toTarget = (target.position - transform.position).normalized;
         transform.rotation = Quaternion.LookRotation(toTarget, Vector3.up);
+        weapon.Attack();
         yield return new WaitForSeconds(shotCooldown / 2);
         transform.rotation = Quaternion.LookRotation(toTarget, Vector3.up);
         weapon.Attack();

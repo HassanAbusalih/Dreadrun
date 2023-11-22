@@ -1,44 +1,68 @@
 using UnityEditor;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class SuicideBomber : EnemyAIBase
 {
-    [SerializeField] float detectionRange = 10;
-    [SerializeField] float attackRange = 2.0f;
-    [SerializeField] float attackCooldown = 1.5f;
+    [SerializeField] float explosionDamage = 10f;
+    [SerializeField] float explosionRadius = 5f;
+    [SerializeField] float explosionForce = 700f;
     [SerializeField] float dashSpeedModifier = 5f;
-    [SerializeField] float chargeSpeedModifier = 0.5f;
-    [SerializeField] float chargeTime = 1f;
-    [SerializeField] float dashTime = 0.2f;
-    float lastAttackTime;
-    Coroutine chargeAndAttack;
+    [SerializeField] float dashRange = 5f;
+    [SerializeField] float explodeRange = 2f;
+    [SerializeField] GameObject explosionVFX;
+    bool dashing = false;
     LayerMask mask;
+    Material material;
+    Color originalColor;
 
     private void Start()
     {
-        lastAttackTime -= attackCooldown;
-        mask = ~(LayerMask.GetMask("Enemy Projectile"));
+        material = GetComponent<MeshRenderer>().material;
+        originalColor = material.color;
+        mask = LayerMask.GetMask("Enemy");
     }
 
     private void Update()
     {
-        Transform closestPlayer = GetClosestPlayer();
-        if (closestPlayer == null || !LineOfSight(closestPlayer) || Time.time <= attackCooldown + lastAttackTime)
+        if (payload == null)
+        {
+            target = GetClosestPlayer();
+        }
+        else
+        {
+            target = payload;
+        }
+        if (target == null)
         {
             rb.velocity = new(0f, rb.velocity.y, 0f);
             return;
         }
-    }
 
-    bool LineOfSight(Transform target)
-    {
-        RaycastHit hit;
-        Vector3 directionToTarget = target.position - transform.position;
-        if (Physics.Raycast(transform.position, directionToTarget, out hit, detectionRange, mask))
+        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+        if (!dashing && distanceToTarget <= dashRange && distanceToTarget > explodeRange)
         {
-            return hit.transform == target;
+            dashing = true;
         }
-        return false;
+
+        if (dashing)
+        {
+            Move(target, movementSpeed * dashSpeedModifier);
+            float lerp = Mathf.Clamp01((dashRange - distanceToTarget) / (dashRange - explodeRange));
+            material.color = Color.Lerp(originalColor, Color.red, lerp);
+        }
+        else
+        {
+            Move(target, movementSpeed);
+        }
+
+        if (distanceToTarget <= explodeRange)
+        {
+            Explosion.Explode(transform, explosionDamage, explosionRadius, explosionForce, mask);
+            Instantiate(explosionVFX, transform.position, Quaternion.identity);
+            enemySounds.PlaySound(1, AudioSourceType.Enemy);
+            Destroy(gameObject);
+        }
     }
 
     public override void Move(Transform target, float movementSpeed)
@@ -50,38 +74,13 @@ public class SuicideBomber : EnemyAIBase
         rb.velocity = new(moveDirection.x, rb.velocity.y, moveDirection.z);
     }
 
-    void StopAttack()
-    {
-        if (chargeAndAttack != null)
-        {
-            StopCoroutine(chargeAndAttack);
-            chargeAndAttack = null;
-        }
-        lastAttackTime = Time.time;
-    }
-
-    private void OnDisable()
-    {
-        if (weapon != null)
-        {
-            (weapon as MeleeFodderWeapon).hit -= StopAttack;
-        }
-    }
-
-    private void OnEnable()
-    {
-        weapon = GetComponentInChildren<MeleeFodderWeapon>();
-        if (weapon != null)
-        {
-            (weapon as MeleeFodderWeapon).hit += StopAttack;
-        }
-    }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = new Color(0, 0, 1, 0.2f);
-        Handles.DrawSolidDisc(transform.position, Vector3.up, attackRange);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, explodeRange);
         Handles.color = new Color(1, 0, 0, 0.1f);
-        Handles.DrawSolidDisc(transform.position, Vector3.up, detectionRange);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, dashRange);
     }
+#endif
 }

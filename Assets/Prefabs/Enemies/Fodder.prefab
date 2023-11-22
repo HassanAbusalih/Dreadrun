@@ -137,6 +137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   movementSpeed: 17
+  enemySounds: {fileID: 0}
+  sfxCooldown: 1
   shootingRange: 30
   strafeRange: 20
   retreatRange: 9.87
@@ -176,6 +178,9 @@ MonoBehaviour:
   flockLayer:
     serializedVersion: 2
     m_Bits: 128
+  spawnerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   alignmentStrength: 1
   cohesionStrength: 1
   separationStrength: 1
@@ -247,3 +252,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animateScale: 1
+  meshRenderer: {fileID: 0}

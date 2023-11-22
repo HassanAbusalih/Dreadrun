@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -8,9 +9,11 @@ public class Projectile : MonoBehaviour
     float speed;
     float range;
     Rigidbody rb;
-    Vector3 initialPos;
+    Vector3 lastPos;
+    float distanceTravelled = 0;
     List<IProjectileEffect> effects;
     [SerializeField] int layerToIgnore;
+    [SerializeField] GameObject impactVFX;
 
     public void Initialize(float damage, float speed, float range, int layer, List<IProjectileEffect> effects)
     {
@@ -20,7 +23,7 @@ public class Projectile : MonoBehaviour
         this.range = range;
         gameObject.layer = layer;
         this.effects = new List<IProjectileEffect>(effects);
-        initialPos = transform.position;
+        lastPos = transform.position;
     }
 
     public void Initialize(float damage, float speed, float range, int layer)
@@ -30,13 +33,15 @@ public class Projectile : MonoBehaviour
         this.speed = speed;
         this.range = range;
         gameObject.layer = layer;
-        initialPos = transform.position;
+        lastPos = transform.position;
     }
 
     public void FixedUpdate()
     {
-        rb.velocity = transform.forward * speed * 100 * Time.deltaTime;
-        if (Vector3.Distance(transform.position, initialPos) > range) { Destroy(gameObject); }
+        rb.velocity = 100 * speed * Time.deltaTime * transform.forward;
+        distanceTravelled += Vector3.Distance(transform.position, lastPos);
+        lastPos = transform.position;
+        if (distanceTravelled > range) { Destroy(gameObject); }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,6 +58,17 @@ public class Projectile : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            foreach (var effect in effects)
+            {
+                if (effect.ApplyOnCollision)
+                {
+                    effect.ApplyEffect(transform, damage, new List<IProjectileEffect>(effects));
+                }
+            }
+        }
+        if (impactVFX != null) { Instantiate(impactVFX, transform.position, Quaternion.identity); }
         Destroy(gameObject);
     }
 }
