@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -54,6 +55,16 @@ public class Projectile : MonoBehaviour
                 foreach (IProjectileEffect effect in effects)
                 {
                     effect.ApplyEffect(damagable, damage, new List<IProjectileEffect>(effects));
+                }
+            }
+        }
+        else
+        {
+            foreach (var effect in effects)
+            {
+                if (effect.ApplyOnCollision)
+                {
+                    effect.ApplyEffect(transform, damage, new List<IProjectileEffect>(effects));
                 }
             }
         }

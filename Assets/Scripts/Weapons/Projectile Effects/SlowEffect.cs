@@ -9,6 +9,7 @@ public class SlowEffect : MonoBehaviour, IProjectileEffect
     float slowDuration;
     GameObject slowVFX;
 
+    public bool ApplyOnCollision { get; } = false;
     public void Initialize(float slowModifier, float slowDuration, GameObject slowVFX)
     { 
         this.slowModifier = slowModifier; 
@@ -40,5 +41,10 @@ public class SlowEffect : MonoBehaviour, IProjectileEffect
             }
         }
         else { yield return null;}
+    }
+
+    public void ApplyEffect(Transform transform, float damage, List<IProjectileEffect> effects)
+    {
+        throw new NotImplementedException();
     }
 }
