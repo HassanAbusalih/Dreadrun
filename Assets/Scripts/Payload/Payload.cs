@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,15 +24,10 @@ public class Payload : MonoBehaviour, IDamagable
 
     [SerializeField] bool followPath;
 
-
     private void OnValidate()
     {
         AddToList(grandparentTransform, pathPointsParent);
         AddToList(pathPointsParent[0], pathPointsList);
-    }
-    void Start()
-    {
-        
     }
 
     void FixedUpdate()
@@ -52,10 +48,15 @@ public class Payload : MonoBehaviour, IDamagable
             {
                 followPath = false;
                 currentParentIndex++;
+                currentPathIndex = 0;
+                if (currentParentIndex >= pathPointsParent.Count)
+                {
+
+                    return;
+                }
                 AddToList(pathPointsParent[currentParentIndex],pathPointsList);
             }
         }
-
     }
 
     void AddToList(Transform parent, List<Transform> children)
