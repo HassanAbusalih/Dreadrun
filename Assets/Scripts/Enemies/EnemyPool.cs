@@ -12,10 +12,17 @@ public class EnemyPool : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            foreach(var enemy in FindObjectsOfType<EnemyAIBase>())
+            {
+                if(!Enemies.Contains(enemy))
+                {
+                    Enemies.Add(enemy);
+                }
+            }
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
     }
 

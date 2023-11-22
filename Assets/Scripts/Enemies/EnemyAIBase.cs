@@ -33,11 +33,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
             GetPlayers();
         }
 
-        if (EnemyPool.Instance == null)
-        {
-            Debug.LogError("Enemy Pool not found!");
-        }
-        else
+        if (EnemyPool.Instance != null)
         {
             EnemyPool.Instance.Add(this);
         }
