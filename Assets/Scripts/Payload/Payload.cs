@@ -30,7 +30,7 @@ public class Payload : MonoBehaviour, IDamagable
     private void OnValidate()
     {
         AddToList(grandparentTransform, pathPointsParent);
-        AddToList(pathPointsParent[0], pathPointsList);
+        AddToList(pathPointsParent[currentParentIndex], pathPointsList);
     }
 
     void FixedUpdate()
@@ -59,10 +59,9 @@ public class Payload : MonoBehaviour, IDamagable
                 followPath = false;
                 currentParentIndex++;
                 currentPathIndex = 0;
-                if (currentParentIndex >= pathPointsParent.Count)
+                if(currentParentIndex> pathPointsParent.Count)
                 {
-
-                    return;
+                    GameManager.Instance.Win();
                 }
                 AddToList(pathPointsParent[currentParentIndex],pathPointsList);
             }
