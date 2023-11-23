@@ -54,12 +54,13 @@ MonoBehaviour:
   speed: 0
   maxSpeed: 5
   rotationSpeed: 100
+  maxhealth: 100
   health: 100
   healAmount: 0.5
   healingInterval: 0
   followPath: 0
-  slowdownRange: 10
-  slowSpeed: 0.5
+  slowdownRange: 25
+  slowSpeed: 0.323
   visualEffects: {fileID: 8071978845548354707}
   grandparentTransform: {fileID: 0}
   pathPointsParent: []
@@ -87,7 +88,6 @@ MonoBehaviour:
   healthBar: {fileID: 2660152141317779438}
   distanceBar: {fileID: 0}
   objectRenderer: {fileID: 2220466864515255453}
-  maxDistance: 10
 --- !u!135 &2220466863588858153
 SphereCollider:
   m_ObjectHideFlags: 0
