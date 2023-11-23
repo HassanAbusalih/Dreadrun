@@ -7,9 +7,11 @@ public class Payload : MonoBehaviour , IDamagable
 
     [Header("Stats")]
     [SerializeField] float speed;
+    float currentSpeed;
     [SerializeField] float maxSpeed = 5f;
     [SerializeField] float rotationSpeed = 100f;
-    [SerializeField] float health = 100f;
+    [SerializeField] public float maxhealth = 100f;
+    public float health = 100f;
     [SerializeField] float healAmount = 0.5f;
     [SerializeField] float healingInterval;
     [SerializeField] bool followPath = false;
@@ -40,13 +42,14 @@ public class Payload : MonoBehaviour , IDamagable
         feedback = GetComponent<PayloadFeedback>();
         visualEffects.SetActive(false);
         speed = maxSpeed;
+        health = maxhealth;
     }
 
     void FixedUpdate()
     {
         if (followPath)
         {
-            float currentSpeed = speed;
+            currentSpeed = speed;
             if (EnemiesInRange())
             {
                 currentSpeed *= slowSpeed;
@@ -108,7 +111,7 @@ public class Payload : MonoBehaviour , IDamagable
     public void TakeDamage(float amount)
     {
         health--;
-        feedback.UpdateHealth(health);
+        //feedback.UpdateHealth(health);
         if (health < 0)
         {
             GameManager.Instance.Lose();

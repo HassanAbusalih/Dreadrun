@@ -11,18 +11,19 @@ public class PayloadFeedback : MonoBehaviour
     Color stopColor = Color.red;
     Color moderateColor = Color.yellow;
     Color fastColor = Color.green;
-
-    public float maxDistance = 10f;
+    Payload payload;
 
     private void Start()
     {
         objectRenderer.material.color = stopColor;
+        payload = FindObjectOfType<Payload>();
     }
 
    
     private void Update()
     {
         LookAtCamera(healthUI);
+        UpdateHealth();
     }
 
     public void ChangeColor(float speed , float maxSpeed)
@@ -42,9 +43,9 @@ public class PayloadFeedback : MonoBehaviour
         objectRenderer.material.color = color;
     }
 
-    public void UpdateHealth(float health)
+    public void UpdateHealth()
     {
-        healthBar.fillAmount = health;
+        healthBar.fillAmount = payload.health/ payload.maxhealth;
     }
 
     private void LookAtCamera(GameObject gameObject)
