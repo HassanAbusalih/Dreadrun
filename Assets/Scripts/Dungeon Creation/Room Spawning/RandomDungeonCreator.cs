@@ -75,7 +75,7 @@ public class RandomDungeonCreator : MonoBehaviour
     {
         _roomToSpawn = _prefabList[_index];
         _roomSpawnPosition = _spawnPoints[_randomSpawnPointIndex].position;
-        _roomSpawnPosition.y = _spawnPoints[_randomSpawnPointIndex].root.position.y;
+        _roomSpawnPosition.y = _spawnPoints[_randomSpawnPointIndex].position.y;
         _roomRotation = _spawnPoints[_randomSpawnPointIndex].rotation;
     }
 
