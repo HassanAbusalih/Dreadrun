@@ -29,19 +29,14 @@ public class PlayerRotater : MonoBehaviour
 
     void ControllerRotation()
     {
-        float rightStickX = Input.GetAxis("RightStickX");
-        float rightStickY = Input.GetAxis("RightStickY");
+        float horizontalInput = Input.GetAxis("RightStickX");
+        float verticalInput = Input.GetAxis("RightStickY");
+        Vector3 inputDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
-        // Calculate the input vector
-        Vector3 inputVector = new Vector3(rightStickX, rightStickY, 0);
-
-        // Rotate the player based on input
-        if (inputVector != Vector3.zero)
+        if (inputDirection != Vector3.zero)
         {
-            float targetAngle = Mathf.Atan2(inputVector.x, inputVector.y) * Mathf.Rad2Deg;
-            Vector3 currentEulerAngles = transform.eulerAngles;
-            currentEulerAngles.y = Mathf.MoveTowardsAngle(currentEulerAngles.y, targetAngle, rotationSpeed * Time.deltaTime);
-            transform.eulerAngles = currentEulerAngles;
+            Quaternion toRotation = Quaternion.LookRotation(inputDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed);
         }
     }
 

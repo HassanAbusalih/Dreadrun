@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class PerkLootboxes : MonoBehaviour
 {
-    [SerializeField] List<Perk> unlockablePerkPool;
     [SerializeField] UnlockedPerks unlocked;
-    [SerializeField] bool opened;
-    [SerializeField] bool entered;
-    [Header("Perk UI")]
-    [SerializeField] GameObject perkUIcanvas;
+    [SerializeField] List<Perk> unlockablePerkPool;
+    bool opened;
+    bool entered;
+    [SerializeField] List<GameObject> perkUI;
     [SerializeField] List<PerkOptions> perkChoices;
+
     void Start()
     {
         unlocked = FindObjectOfType<UnlockedPerks>();
         RemoveCommonPerks(unlockablePerkPool, unlocked.unlockedPerkpool);
-        perkUIcanvas.SetActive(false);
+        DeactivateUI();
     }
 
     void Update()
@@ -26,10 +26,10 @@ public class PerkLootboxes : MonoBehaviour
             OpenLootBox();
         }
     }
+
     void RemoveCommonPerks(List<Perk> unlockable, List<Perk> unlocked)
     {
         unlockable.RemoveAll(poolA => unlocked.Contains(poolA));
-        Debug.Log("deleted");
         UpdateOptions();
         if (unlockable.Count == 0)
         {
@@ -37,11 +37,13 @@ public class PerkLootboxes : MonoBehaviour
         }
     }
 
+
     void UpdateOptions()
     {
         while (unlockablePerkPool.Count < perkChoices.Count)
         {
             perkChoices.RemoveAt(perkChoices.Count - 1);
+            perkUI.RemoveAt(perkUI.Count - 1);
         }
     }
 
@@ -63,12 +65,12 @@ public class PerkLootboxes : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && !opened)
         {
             RandomPerkSelector();
-            perkUIcanvas.SetActive(true);
+            ActivateUI();
             opened = true;
         }
     }
 
-    public void RandomPerkSelector()
+    void RandomPerkSelector()
     {
         List<int> selectedIndexes = new List<int>();
 
@@ -87,7 +89,7 @@ public class PerkLootboxes : MonoBehaviour
         DisplayPerkDetails();
     }
 
-    public void DisplayPerkDetails()
+    void DisplayPerkDetails()
     {
         foreach (var choice in perkChoices)
         {
@@ -99,7 +101,24 @@ public class PerkLootboxes : MonoBehaviour
 
     public void OnClick(int perkIndexSelected)
     {
-        perkUIcanvas.SetActive(false);
+        DeactivateUI();
         unlocked.AddNewPerk(perkChoices[perkIndexSelected].perk);
     }
+
+    void DeactivateUI()
+    {
+        foreach(GameObject obj in perkUI)
+        {
+            obj.SetActive(false);
+        }
+    }
+
+    void ActivateUI()
+    {
+        foreach (GameObject obj in perkUI)
+        {
+            obj.SetActive(true);
+        }
+    }
+
 }

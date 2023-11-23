@@ -1,34 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
 public class ExpOrb : MonoBehaviour
 {
+    public static event Action<int> OnExpOrbCollected;
     [SerializeField] int expAmount;
     public int ExpAmount => expAmount;
-    public LayerMask layerMask;
-    public ExperienceManager expmanager;
+    [SerializeField] LayerMask layerMask;
     [SerializeField] SoundSO expOrbPickUpSFX;
-   
-
-    private void Start()
-    {
-        expmanager = FindObjectOfType<ExperienceManager>();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Player player))
+        if (ExperienceManager.CollectExp && other.TryGetComponent(out Player _))
         {
-            expmanager.AddExperience(expAmount);
+            OnExpOrbCollected?.Invoke(expAmount);
             if (expOrbPickUpSFX != null)
             {
                 expOrbPickUpSFX.PlaySound(0, AudioSourceType.Player);
             }
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
-
-
 }

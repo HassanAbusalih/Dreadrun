@@ -16,7 +16,7 @@ public class GameWinner : MonoBehaviour
         {
             playerInside = true;
         }
-        if (other.TryGetComponent(out PayloadMovement payload))
+        if (other.TryGetComponent(out Payload payload))
         {
             payloadInside = true;
         }
@@ -29,7 +29,7 @@ public class GameWinner : MonoBehaviour
             playerInside = false;
             insideTimer = 0f;
         }
-        if (other.TryGetComponent(out PayloadMovement payload))
+        if (other.TryGetComponent(out Payload payload))
         {
             payloadInside = false;
             insideTimer = 0f;

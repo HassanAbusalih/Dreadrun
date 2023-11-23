@@ -21,7 +21,7 @@ public class ObjectSpawner : MonoBehaviour
     void Start()
     {
         if (spawnPosition == null) { spawnPosition = transform; }
-        payload = FindObjectOfType<PayloadMovement>()?.transform;
+        payload = FindObjectOfType<Payload>()?.transform;
         Player[] players = FindObjectsOfType<Player>();
         this.players = new Transform[players.Length];
         for (int i = 0; i < players.Length; i++)

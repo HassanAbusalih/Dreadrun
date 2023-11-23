@@ -5,7 +5,7 @@ public class Machinegun : PlayerWeapon
     [Header("Machinegun Properties")]
     [SerializeField] float rampTime = 5;
     [SerializeField] float rampDelay = 0.5f;
-    float firingDuration;
+    [SerializeField] float firingDuration;
 
     void Update()
     {
@@ -22,8 +22,9 @@ public class Machinegun : PlayerWeapon
         }
         else
         {
-            firingDuration = 0;
+            firingDuration -= 2 * Time.deltaTime;
         }
+        firingDuration = Mathf.Clamp(firingDuration, 0, rampTime + rampDelay);
     }
 
     public override void Attack()

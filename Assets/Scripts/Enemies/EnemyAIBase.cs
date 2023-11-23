@@ -4,6 +4,9 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
 {
     [SerializeField] float maxHealth = 5;
     [SerializeField] protected float movementSpeed = 3f;
+    [SerializeField] protected SoundSO enemySounds;
+    [SerializeField] float sfxCooldown = 1f;
+    float timeSinceSFX;
     protected WeaponBase weapon;
     protected Transform payload;
     protected Transform[] players = new Transform[0];
@@ -17,14 +20,22 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
 
     void Awake()
     {
+        timeSinceSFX = Time.time;
         currentHealth = maxHealth;
         gameObject.layer = 7;
+        
         weapon = GetComponent<WeaponBase>();
         rb = GetComponent<Rigidbody>();
         flockingBehavior = GetComponent<FlockingBehavior>();
+        
         if (players.Length == 0)
         {
             GetPlayers();
+        }
+
+        if (EnemyPool.Instance != null)
+        {
+            EnemyPool.Instance.Add(this);
         }
     }
 
@@ -42,6 +53,11 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
     {
         currentHealth -= Amount;
         IDamagable.onDamageTaken?.Invoke(gameObject);
+        if (Time.time - timeSinceSFX > sfxCooldown && enemySounds != null)
+        {
+            enemySounds.PlaySound(0, AudioSourceType.Enemy);
+            timeSinceSFX = Time.time;
+        }
         if (currentHealth <= 0) { Destroy(gameObject); }
     }
 
@@ -112,6 +128,14 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
         {
             movementSpeed /= slowModifier;
             slowed = false;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (EnemyPool.Instance != null)
+        {
+            EnemyPool.Instance.Remove(this);
         }
     }
 }

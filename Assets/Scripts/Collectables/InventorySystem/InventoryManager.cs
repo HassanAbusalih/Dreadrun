@@ -87,7 +87,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    void UseItem(int slot)
+    public void UseItem(int slot)
     {
         if (slot >= 0 && slot < inventory.inventoryList.Length)
         {

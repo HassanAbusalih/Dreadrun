@@ -11,6 +11,8 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
     GameObject targetGameObject;
     private GameObject poisonedVFX;
 
+    public bool ApplyOnCollision { get; } = false;
+
     public void ApplyEffect(IDamagable damagable, float damage, List<IProjectileEffect> projectileEffects)
     {
         target = damagable;
@@ -49,5 +51,10 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
     public void FetchVFX(GameObject vfx)
     {
         poisonedVFX = vfx;
+    }
+
+    public void ApplyEffect(Transform transform, float damage, List<IProjectileEffect> effects)
+    {
+        throw new NotImplementedException();
     }
 }
