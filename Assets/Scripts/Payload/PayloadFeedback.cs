@@ -23,7 +23,6 @@ public class PayloadFeedback : MonoBehaviour
     private void Update()
     {
         LookAtCamera(healthUI);
-        UpdateHealth();
     }
 
     public void ChangeColor(float speed , float maxSpeed)
@@ -43,9 +42,9 @@ public class PayloadFeedback : MonoBehaviour
         objectRenderer.material.color = color;
     }
 
-    public void UpdateHealth()
+    public void UpdateHealth(float health, float maxHealth)
     {
-        healthBar.fillAmount = payload.health/ payload.maxhealth;
+        healthBar.fillAmount = health / maxHealth;
     }
 
     private void LookAtCamera(GameObject gameObject)

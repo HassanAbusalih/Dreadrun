@@ -1,47 +1,44 @@
+using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class Payload : MonoBehaviour , IDamagable
 {
-
-    [Header("Stats")]
-    [SerializeField] float speed;
+    float health;
     float currentSpeed;
-    [SerializeField] float maxSpeed = 5f;
+    [Header("Stats")]
+    [SerializeField] float maxhealth = 500f;
+    [SerializeField] float speed = 5f;
     [SerializeField] float rotationSpeed = 100f;
-    [SerializeField] public float maxhealth = 100f;
-    public float health = 100f;
     [SerializeField] float healAmount = 0.5f;
-    [SerializeField] float healingInterval;
+    [SerializeField] float healingInterval = 5f;
     [SerializeField] bool followPath = false;
-    [SerializeField] float slowdownRange = 10;
+    [SerializeField] float interactionRange = 10f;
     [SerializeField][Range(0.1f, 0.9f)] float slowSpeed = 0.5f;
-    private float timer = 0.0f;
 
     [SerializeField] GameObject visualEffects;
 
     [Header("Path Points transforms")]
-    public Transform grandparentTransform;
-    public List<Transform> pathPointsParent = new List<Transform>();
-    public List<Transform> pathPointsList = new List<Transform>();
+    [SerializeField] Transform grandParentTransform;
+    public List<Transform> pathPointsParent = new();
+    public List<Transform> pathPointsList = new();
     int currentPathIndex;
     int currentParentIndex = 0;
-    Player player;
+    Player[] players;
     PayloadFeedback feedback;
 
     private void OnValidate()
     {
-        AddToList(grandparentTransform, pathPointsParent);
+        AddToList(grandParentTransform, pathPointsParent);
         AddToList(pathPointsParent[currentParentIndex], pathPointsList);
     }
 
     void Start()
     {
-        player = FindObjectOfType<Player>();
+        players = FindObjectsOfType<Player>();
+        StartCoroutine(HealOnTimer());
         feedback = GetComponent<PayloadFeedback>();
         visualEffects.SetActive(false);
-        speed = maxSpeed;
         health = maxhealth;
     }
 
@@ -53,7 +50,7 @@ public class Payload : MonoBehaviour , IDamagable
             if (EnemiesInRange())
             {
                 currentSpeed *= slowSpeed;
-                feedback.ChangeColor(currentSpeed, maxSpeed);
+                feedback.ChangeColor(currentSpeed, speed);
             }
             if (currentPathIndex < pathPointsList.Count)
             {
@@ -85,9 +82,9 @@ public class Payload : MonoBehaviour , IDamagable
 
     void AddToList(Transform parent, List<Transform> children)
     {
+        if (parent == null) { return; }
         children.Clear();
         PathPointsAddToList.AddChildrenToPathPointsList(parent, children);
-
     }
 
     bool EnemiesInRange()
@@ -100,7 +97,7 @@ public class Payload : MonoBehaviour , IDamagable
         foreach (var enemy in EnemyPool.Instance.Enemies)
         {
             if (enemy == null) continue;
-            if (Vector3.Distance(transform.position, enemy.transform.position) < slowdownRange)
+            if (Vector3.Distance(transform.position, enemy.transform.position) < interactionRange)
             {
                 return true;
             }
@@ -111,7 +108,7 @@ public class Payload : MonoBehaviour , IDamagable
     public void TakeDamage(float amount)
     {
         health--;
-        //feedback.UpdateHealth(health);
+        feedback.UpdateHealth(health, maxhealth);
         if (health < 0)
         {
             GameManager.Instance.Lose();
@@ -135,55 +132,28 @@ public class Payload : MonoBehaviour , IDamagable
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, slowdownRange);
+        Gizmos.DrawWireSphere(transform.position, interactionRange);
     }
 
-    private void OnTriggerStay(Collider other)
+    IEnumerator HealOnTimer()
     {
-        if (other.GetComponent<Player>())
+        while (true)
         {
-            StartHealthing();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<Player>())
-        {
-            StopHealing();
-        }
-    }
-
-    private void StartHealthing()
-    {
-        timer = 0.0f;
-        InvokeRepeating("IncreaseHealth", timer, healingInterval);
-    }
-
-    private void StopHealing()
-    {
-        CancelInvoke("IncreaseHealth");
-    }
-
-    private void IncreaseHealth()
-    {
-        player.ChangeHealth(healAmount);
-    }
-}
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(Payload))]
-public class PayloadEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        Payload pathPoints = (Payload)target;
-
-        if (GUILayout.Button("Update Path Points List"))
-        {
-            PathPointsAddToList.AddChildrenToPathPointsList(pathPoints.pathPointsParent[0], pathPoints.pathPointsList);
+            if (followPath)
+            {
+                yield return new WaitForSeconds(healingInterval);
+                foreach (var player in players)
+                {
+                    if (Vector3.Distance(transform.position, player.transform.position) < interactionRange)
+                    {
+                        player.ChangeHealth(healAmount);
+                    }
+                }
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
 }
-#endif

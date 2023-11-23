@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2220466863588858152}
-  - component: {fileID: 2220466863588858156}
   - component: {fileID: 2220466863588858155}
   - component: {fileID: 2220466863588858153}
   - component: {fileID: 2220466863588858154}
+  - component: {fileID: 2220466865266914170}
   m_Layer: 0
   m_Name: payload
   m_TagString: Untagged
@@ -39,39 +39,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2220466863588858156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2220466863588858166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eda7bb7bc837e674cb16872990742893, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  maxSpeed: 5
-  rotationSpeed: 100
-  maxhealth: 100
-  health: 100
-  healAmount: 0.5
-  healingInterval: 0
-  followPath: 0
-  slowdownRange: 25
-  slowSpeed: 0.323
-  visualEffects: {fileID: 8071978845548354707}
-  grandparentTransform: {fileID: 0}
-  pathPointsParent: []
-  pathPointsList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &2220466863588858155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +81,28 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.170886, y: 2.9781685, z: 9.886608}
   m_Center: {x: 0.042505264, y: -0.27742577, z: -1.4959507}
+--- !u!114 &2220466865266914170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220466863588858166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f06ab5cabfde3146b4e8de2e6afe21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxhealth: 500
+  speed: 5
+  rotationSpeed: 100
+  healAmount: 5
+  healingInterval: 5
+  followPath: 0
+  interactionRange: 10
+  slowSpeed: 0.5
+  visualEffects: {fileID: 7986504087968017091, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
+  grandParentTransform: {fileID: 0}
 --- !u!1 &2220466864515255450
 GameObject:
   m_ObjectHideFlags: 0
