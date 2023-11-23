@@ -30,7 +30,10 @@ public class Payload : MonoBehaviour , IDamagable
     private void OnValidate()
     {
         AddToList(grandParentTransform, pathPointsParent);
-        AddToList(pathPointsParent[currentParentIndex], pathPointsList);
+        if (pathPointsParent.Count > 0)
+        {
+            AddToList(pathPointsParent[currentParentIndex], pathPointsList);
+        }
     }
 
     void Start()
@@ -77,7 +80,6 @@ public class Payload : MonoBehaviour , IDamagable
                 AddToList(pathPointsParent[currentParentIndex], pathPointsList);
             }
         }
-
     }
 
     void AddToList(Transform parent, List<Transform> children)
@@ -119,12 +121,10 @@ public class Payload : MonoBehaviour , IDamagable
     {
         followPath = true;
         feedback.SetColor(Color.green);
-        visualEffects.SetActive(true);
     }
 
     public void StopFollowingPath()
     {
-        visualEffects.SetActive(false);
         feedback.SetColor(Color.red);
         followPath = false;
     }
@@ -146,14 +146,24 @@ public class Payload : MonoBehaviour , IDamagable
                 {
                     if (Vector3.Distance(transform.position, player.transform.position) < interactionRange)
                     {
+                        if (visualEffects.activeSelf == false)
+                        {
+                            visualEffects.SetActive(true);
+                        }
                         player.ChangeHealth(healAmount);
                     }
                 }
+                if (visualEffects.activeSelf == true)
+                {
+                    Invoke(nameof(DisableVFX), 2f);
+                }
             }
-            else
-            {
-                yield return null;
-            }
+            yield return null;
         }
+    }
+
+    void DisableVFX()
+    {
+        visualEffects.SetActive(false);
     }
 }

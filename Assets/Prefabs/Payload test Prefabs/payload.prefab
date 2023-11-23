@@ -100,9 +100,20 @@ MonoBehaviour:
   healingInterval: 5
   followPath: 0
   interactionRange: 10
-  slowSpeed: 0.5
-  visualEffects: {fileID: 7986504087968017091, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
+  slowSpeed: 0.3
+  visualEffects: {fileID: 8071978845548354707}
   grandParentTransform: {fileID: 0}
+  pathPointsParent:
+  - {fileID: 0}
+  - {fileID: 0}
+  pathPointsList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &2220466864515255450
 GameObject:
   m_ObjectHideFlags: 0
@@ -6569,14 +6580,14 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 11.009391
-          outSlope: 11.009391
+          inSlope: 0
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.118643984
+          outWeight: 0
         - serializedVersion: 3
-          time: 0.11044568
+          time: 1
           value: 1
           inSlope: 0
           outSlope: 0
@@ -6717,7 +6728,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    separateAxes: 1
+    separateAxes: 0
   RotationModule:
     enabled: 0
     x:
@@ -15292,7 +15303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8167581413372792102
 Transform:
   m_ObjectHideFlags: 0
@@ -15395,7 +15406,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -15564,7 +15575,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 8
+      scalar: 10
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -16322,14 +16333,14 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 11.009391
-          outSlope: 11.009391
+          inSlope: 0
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.118643984
+          outWeight: 0
         - serializedVersion: 3
-          time: 0.11044568
+          time: 1
           value: 1
           inSlope: 0
           outSlope: 0
@@ -20176,7 +20187,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8244411125891667407}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

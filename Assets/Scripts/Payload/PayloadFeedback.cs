@@ -11,12 +11,10 @@ public class PayloadFeedback : MonoBehaviour
     Color stopColor = Color.red;
     Color moderateColor = Color.yellow;
     Color fastColor = Color.green;
-    Payload payload;
 
     private void Start()
     {
         objectRenderer.material.color = stopColor;
-        payload = FindObjectOfType<Payload>();
     }
 
    
