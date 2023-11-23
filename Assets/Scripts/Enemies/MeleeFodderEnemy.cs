@@ -109,7 +109,7 @@ public class MeleeFodderEnemy : EnemyAIBase
             (weapon as MeleeFodderWeapon).hit += StopAttack;
         }
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = new Color(0, 0, 1, 0.2f);
@@ -117,4 +117,5 @@ public class MeleeFodderEnemy : EnemyAIBase
         Handles.color = new Color(1, 0, 0, 0.1f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, detectionRange);
     }
+#endif
 }

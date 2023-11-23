@@ -107,7 +107,7 @@ public class Speedster : EnemyAIBase
         distanceTravelled = 0;
         stopAndShoot = null;
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = new Color(0, 0, 1, 0.2f);
@@ -115,4 +115,5 @@ public class Speedster : EnemyAIBase
         Handles.color = new Color(1, 0, 0, 0.1f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, shootingRange);
     }
+#endif
 }

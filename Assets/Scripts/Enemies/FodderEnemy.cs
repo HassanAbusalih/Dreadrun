@@ -85,7 +85,7 @@ public class FodderEnemy : EnemyAIBase
         strafeStartTime = Time.time;
         clockwiseStrafe = (Random.value > 0.5f);
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = new Color(0, 0, 1, 0.2f);
@@ -95,4 +95,5 @@ public class FodderEnemy : EnemyAIBase
         Handles.color = new Color(1, 0, 0, 0.05f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, shootingRange);
     }
+#endif
 }
