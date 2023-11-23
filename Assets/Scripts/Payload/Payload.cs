@@ -1,36 +1,45 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class Payload : MonoBehaviour, IDamagable
+public class Payload : MonoBehaviour , IDamagable
 {
+
     [Header("Stats")]
     [SerializeField] float speed;
-    [SerializeField] float rotationSpeed;
-    [SerializeField] float maxSpeed;
-    [SerializeField] float health;
-    [Header("Events")]
-    public UnityEvent stopPayload;
-    public UnityEvent StartPayload;
+    [SerializeField] float maxSpeed = 5f;
+    [SerializeField] float rotationSpeed = 100f;
+    [SerializeField] float health = 100f;
+    [SerializeField] float healAmount = 0.5f;
+    [SerializeField] float healingInterval;
+    [SerializeField] bool followPath = false;
+    [SerializeField] float slowdownRange = 10;
+    [SerializeField][Range(0.1f, 0.9f)] float slowSpeed = 0.5f;
+    private float timer = 0.0f;
+
+    [SerializeField] GameObject visualEffects;
 
     [Header("Path Points transforms")]
     public Transform grandparentTransform;
-    public List<Transform> pathPointsParent { get; private set; } = new List<Transform>();
+    public List<Transform> pathPointsParent = new List<Transform>();
     public List<Transform> pathPointsList = new List<Transform>();
     int currentPathIndex;
     int currentParentIndex = 0;
-
-    [SerializeField] bool followPath;
-    [SerializeField] float slowdownRange = 10;
-    [SerializeField] [Range(0.1f , 0.9f)] float slowSpeed = 0.5f;
+    Player player;
+    PayloadFeedback feedback;
 
     private void OnValidate()
     {
         AddToList(grandparentTransform, pathPointsParent);
         AddToList(pathPointsParent[currentParentIndex], pathPointsList);
+    }
+
+    void Start()
+    {
+        player = FindObjectOfType<Player>();
+        feedback = GetComponent<PayloadFeedback>();
+        visualEffects.SetActive(false);
+        speed = maxSpeed;
     }
 
     void FixedUpdate()
@@ -41,6 +50,7 @@ public class Payload : MonoBehaviour, IDamagable
             if (EnemiesInRange())
             {
                 currentSpeed *= slowSpeed;
+                feedback.ChangeColor(currentSpeed, maxSpeed);
             }
             if (currentPathIndex < pathPointsList.Count)
             {
@@ -56,36 +66,38 @@ public class Payload : MonoBehaviour, IDamagable
             }
             else
             {
-                followPath = false;
+                StopFollowingPath();
                 currentParentIndex++;
                 currentPathIndex = 0;
-                if(currentParentIndex> pathPointsParent.Count)
+                if (currentParentIndex > pathPointsParent.Count - 1)
                 {
                     GameManager.Instance.Win();
+                    return;
                 }
-                AddToList(pathPointsParent[currentParentIndex],pathPointsList);
+                AddToList(pathPointsParent[currentParentIndex], pathPointsList);
             }
         }
+
     }
 
     void AddToList(Transform parent, List<Transform> children)
     {
-       children.Clear();
-       PathPointsAddToList.AddChildrenToPathPointsList(parent, children);
-       
+        children.Clear();
+        PathPointsAddToList.AddChildrenToPathPointsList(parent, children);
+
     }
 
     bool EnemiesInRange()
     {
-        if(EnemyPool.Instance == null)
+        if (EnemyPool.Instance == null)
         {
-            return false ;
+            return false;
         }
 
-        foreach(var enemy in EnemyPool.Instance.Enemies)
+        foreach (var enemy in EnemyPool.Instance.Enemies)
         {
             if (enemy == null) continue;
-            if(Vector3.Distance(transform.position, enemy.transform.position) < slowdownRange)
+            if (Vector3.Distance(transform.position, enemy.transform.position) < slowdownRange)
             {
                 return true;
             }
@@ -96,6 +108,7 @@ public class Payload : MonoBehaviour, IDamagable
     public void TakeDamage(float amount)
     {
         health--;
+        feedback.UpdateHealth(health);
         if (health < 0)
         {
             GameManager.Instance.Lose();
@@ -105,19 +118,54 @@ public class Payload : MonoBehaviour, IDamagable
     public void StartFollowingPath()
     {
         followPath = true;
+        feedback.SetColor(Color.green);
+        visualEffects.SetActive(true);
     }
 
     public void StopFollowingPath()
     {
+        visualEffects.SetActive(false);
+        feedback.SetColor(Color.red);
         followPath = false;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, slowdownRange);
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<Player>())
+        {
+            StartHealthing();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<Player>())
+        {
+            StopHealing();
+        }
+    }
+
+    private void StartHealthing()
+    {
+        timer = 0.0f;
+        InvokeRepeating("IncreaseHealth", timer, healingInterval);
+    }
+
+    private void StopHealing()
+    {
+        CancelInvoke("IncreaseHealth");
+    }
+
+    private void IncreaseHealth()
+    {
+        player.ChangeHealth(healAmount);
+    }
 }
 
 #if UNITY_EDITOR
