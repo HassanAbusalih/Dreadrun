@@ -7,7 +7,7 @@ public class PayloadFeedback : MonoBehaviour
     [SerializeField] GameObject healthUI;
     [SerializeField] Image healthBar;
     [SerializeField] Image distanceBar;
-    [SerializeField] Renderer objectRenderer; 
+    [SerializeField] Renderer objectRenderer;
     Color stopColor = Color.red;
     Color moderateColor = Color.yellow;
     Color fastColor = Color.green;
@@ -17,13 +17,13 @@ public class PayloadFeedback : MonoBehaviour
         objectRenderer.material.color = stopColor;
     }
 
-   
+
     private void Update()
     {
         LookAtCamera(healthUI);
     }
 
-    public void ChangeColor(float speed , float maxSpeed)
+    public void ChangeColor(float speed, float maxSpeed)
     {
         float normalizedSpeed = Mathf.Clamp01(speed / maxSpeed);
         Color lerpedColor = Color.Lerp(stopColor, moderateColor, normalizedSpeed);
@@ -47,6 +47,8 @@ public class PayloadFeedback : MonoBehaviour
 
     private void LookAtCamera(GameObject gameObject)
     {
-        gameObject.transform.LookAt(gameObject.transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        Vector3 lookPos = Camera.main.transform.position - gameObject.transform.position;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        gameObject.transform.rotation = rotation;
     }
 }
