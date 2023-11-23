@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 324c6fd3c103e0f418eb4b98c46bf63c, type: 3}
-  m_Name: HotReloadSettingsObject
+  m_Script: {fileID: 11500000, guid: 1fb6e60229bc6634a9cfa25200388792, type: 3}
+  m_Name: Defense
   m_EditorClassIdentifier: 
-  IncludeInBuild: 1
-  AllowAndroidAppToMakeHttpRequests: 1
-  PromptsPrefab: {fileID: 4967086677379066170, guid: 0dc8d7047b14c44b7970c5d35665dbe1, type: 3}
+  name: Defense
+  icon: {fileID: 21300000, guid: 80f0fd1c1978b984399c0f8afd5ba79c, type: 3}
+  description: Reduces damage taken.
+  unique: 0
+  defenseIncrement: 5

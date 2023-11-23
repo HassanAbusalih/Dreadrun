@@ -169,6 +169,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void TakeDamage(float amount)
     {
+        amount = (100 / (100 + playerStats.defense)) * amount;
         if (TryGetComponent(out CounterBlast counterBlast))
         {
             counterBlast.Explode(amount * 0.5f);

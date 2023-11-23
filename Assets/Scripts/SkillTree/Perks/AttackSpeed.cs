@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "PlayerPerks/AttackSpeed")]
@@ -7,8 +5,6 @@ public class AttackSpeed : Perk
 {
     [SerializeField]
     private float attackSpeedScaling = 20f;
-    [SerializeField]
-    private int AddAttackSpeed;
 
     public override INeedUI ApplyPlayerBuffs(Player player)
     {
@@ -26,4 +22,3 @@ public class AttackSpeed : Perk
         return null;
     }
 }
-
