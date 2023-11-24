@@ -5,7 +5,7 @@ using UnityEngine;
 public class Payload : MonoBehaviour , IDamagable
 {
     float health;
-    float currentSpeed;
+    
     [Header("Stats")]
     [SerializeField] float maxhealth = 500f;
     [SerializeField] float speed = 5f;
@@ -49,10 +49,11 @@ public class Payload : MonoBehaviour , IDamagable
     {
         if (followPath)
         {
-            currentSpeed = speed;
+           float currentSpeed = speed;
             if (EnemiesInRange())
             {
                 currentSpeed *= slowSpeed;
+                
                 feedback.ChangeColor(currentSpeed, speed);
             }
             if (currentPathIndex < pathPointsList.Count)
