@@ -94,12 +94,14 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _EnvironmentReflections: 1
+    - _FoamNoiseScale: 40
     - _Gloss: 0.39
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Normal_Strength: 0.25
+    - _NoiseScale: 30
+    - _Normal_Strength: 0.03
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -117,14 +119,20 @@ Material:
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 1
+    - _foam_Offset: 0.5
+    - _transparency: 5
     m_Colors:
-    - _BaseColor: {r: 0.15550016, g: 0.306893, b: 0.4528302, a: 1}
+    - _BaseColor: {r: 0.10729794, g: 0.37957937, b: 0.41509432, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RippleColor: {r: 0.25973654, g: 0.6739464, b: 0.7169812, a: 1}
+    - _Noise_Distortion: {r: 0.25, g: 0.5, b: 0, a: 0}
+    - _NormalOffsetSpeed: {r: 0.01, g: 0.02, b: 0, a: 0}
+    - _NormalSpeed: {r: 0.03, g: 0.02, b: 0, a: 0}
+    - _RippleColor: {r: 0.2697, g: 0.6896126, b: 0.6759569, a: 1}
     - _RippleDistortion: {r: 1.31, g: 3, b: 0, a: 0}
+    - _RippleOffsetSpeed: {r: 0.01, g: 0.02, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0.12061229, g: 0.8301887, b: 0.6613734, a: 1}
+    - _SpecularColor: {r: 0.12680666, g: 0.49056602, b: 0.40326378, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1726596256371193491
 MonoBehaviour:
