@@ -7,11 +7,10 @@ public class Player : MonoBehaviour, IDamagable
     Rigidbody rb;
     Dashing playerDash;
     [Header("Player Input Settings")]
-    [SerializeField] KeyCode sprintKey;
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
-    [SerializeField] KeyCode dropWeaponKey = KeyCode.Q;
     [SerializeField] KeyCode controllerPickUp;
-    [SerializeField] KeyCode controllerDrop;
+    [SerializeField] float durationToDropWeapon = 1.5f;
+
 
     [Header("Player slope info/Settings")]
     [SerializeField] float maxSlopeAngle;
@@ -44,6 +43,7 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] SoundSO takeDamageSFX;
     [SerializeField] float sfxCooldown = 1f;
     float timeSinceSFX;
+    float timer;
     RaycastHit slopeHitt;
 
     private void OnEnable()
@@ -143,15 +143,15 @@ public class Player : MonoBehaviour, IDamagable
 
     void DropCurrentWeapon()
     {
-        if (dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
-        if (controllerDrop == KeyCode.None) controllerDrop = KeyCode.JoystickButton2;
-        if (Input.GetKeyDown(dropWeaponKey) || Input.GetKeyDown(controllerDrop) && isWeaponPickedUp)
+        if (Input.GetKey(pickUpWeaponKey) || Input.GetKey(pickUpWeaponKey) && isWeaponPickedUp)
         {
+            if (timer < durationToDropWeapon) { timer += Time.deltaTime; return; }
             ScaleOrDescaleWeapon(false);
             playerWeapon.DropWeapon();
             isWeaponPickedUp = false;
             currentWeaponID = 0;
             playerWeapon = null;
+            timer = 0;
         }
     }
 
