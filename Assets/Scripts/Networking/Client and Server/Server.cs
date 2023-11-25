@@ -17,6 +17,7 @@ namespace Server
 
         public static Action<string, Socket> ClientAdded;
         public Action<string, bool> OnServerLobbyUpdate;
+        public Action<bool> UpdatePlayerSceneStatus;
 
         public static Server Instance;
 
@@ -76,6 +77,11 @@ namespace Server
                         LobbyPacket lobbyPacket = new LobbyPacket().Deserialize(buffer);
                         OnServerLobbyUpdate?.Invoke(lobbyPacket.playerID, lobbyPacket.isReady);
                         break;
+                    case BasePacket.PacketType.PlayerInMainScenePacket:
+                        PlayerInMainScenePacket playerInMainScenePacket = new PlayerInMainScenePacket().Deserialize(buffer);
+                        UpdatePlayerSceneStatus?.Invoke(playerInMainScenePacket.inMainScene);
+                        Debug.LogError("Players in main scene packet received");
+                        break;
                 }
             }
             Invoke(nameof(CallAgain), tickRate);
@@ -90,7 +96,7 @@ namespace Server
                 PlayerSocket playerSocket = new PlayerSocket(newSocket);
                 playerSocket.playerID = GenerateUniqueClientID();
 
-                Debug.LogError("NEW CLIENT ID IS " + playerSocket.playerID);
+               // Debug.LogError("NEW CLIENT ID IS " + playerSocket.playerID);
                 IDPacket packet = new IDPacket(playerSocket.playerID);
 
                 playerSocket.socket.Send(packet.Serialize());

@@ -35,7 +35,7 @@ public class ServerLobbyManager : MonoBehaviour
 
     void ChangeScene()
     {
-        //if(playerStatuses.Count < 3) return;
+        if(playerStatuses.Count < 3) return;
         for (int i = 0; i < playerStatuses.Count; i++)
         {
             if (!playerStatuses[i])

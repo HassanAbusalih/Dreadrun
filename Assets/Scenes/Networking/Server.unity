@@ -604,6 +604,7 @@ GameObject:
   - component: {fileID: 1532039831}
   - component: {fileID: 1532039833}
   - component: {fileID: 1532039834}
+  - component: {fileID: 1532039835}
   m_Layer: 0
   m_Name: server
   m_TagString: Untagged
@@ -664,9 +665,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36728657f6bc2804382e8142aa656887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Instantiation
+  sceneName: MainScene
   playerStatuses: 
   playerIDs: []
+--- !u!114 &1532039835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532039830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6496dda5f96e74ebad6e7dc61bc54c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playersInMainScene: 000000
 --- !u!1 &1602355807
 GameObject:
   m_ObjectHideFlags: 0

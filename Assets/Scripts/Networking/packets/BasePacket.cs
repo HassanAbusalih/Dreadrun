@@ -16,6 +16,7 @@ namespace NetworkingLibrary
             PlayerLobbyPacket,
             ServerLobbyPacket,
             ScenePacket,
+            PlayerInMainScenePacket,
             Destruction
         }
 

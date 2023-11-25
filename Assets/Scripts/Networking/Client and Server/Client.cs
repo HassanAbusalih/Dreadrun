@@ -22,6 +22,8 @@ namespace ClientLibrary
         public Action ConnectedToServerEvent;
         public Action<List<string>, List<bool>> OnLobbyUpdate;
 
+        [SerializeField] string mainScene;
+
         private void Awake()
         {
             if (Instance == null)
@@ -46,13 +48,13 @@ namespace ClientLibrary
                 SocketType.Stream,
                 ProtocolType.Tcp);
 
-                Debug.LogError("Client is trying to connect to server");
+                //Debug.LogError("Client is trying to connect to server");
                 socket.Connect(new IPEndPoint(IPAddress.Parse(_ipAddress), 30));
                 socket.Blocking = false;
                 isConnected = true;
 
                 if (isConnected) ConnectedToServerEvent?.Invoke();
-                Debug.LogError("Client connected!");
+                //Debug.LogError("Client connected!");
                 TryGetComponent(out networkComponent);
                 StartCoroutine(Tick());
             }
@@ -70,7 +72,7 @@ namespace ClientLibrary
                 {
                     if (socket.Available > 0)
                     {
-                        byte[]  buffer = new byte[socket.Available];
+                        byte[] buffer = new byte[socket.Available];
                         socket.Receive(buffer);
                         BasePacket packet = new BasePacket().Deserialize(buffer);
                         if (packet != null)
@@ -108,6 +110,13 @@ namespace ClientLibrary
                     Debug.LogError("Scene Packet Received! Scene name is: ");
                     ScenePacket scenePacket = new ScenePacket().Deserialize(buffer);
                     SceneManager.LoadScene(scenePacket.sceneName);
+                    if (scenePacket.sceneName == mainScene)
+                    {
+                        PlayerInMainScenePacket playerInMainScene = new PlayerInMainScenePacket(true);
+
+                        SendPacket(playerInMainScene.Serialize());
+                        Debug.LogError("Players in main scene packet is sent");
+                    }
                     break;
 
                 case BasePacket.PacketType.ID:
