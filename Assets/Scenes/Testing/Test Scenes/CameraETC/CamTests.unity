@@ -16442,7 +16442,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507446749}
   m_LocalRotation: {x: 0.48911646, y: -0, z: -0, w: 0.87221855}
-  m_LocalPosition: {x: 0, y: -9.601111, z: -1.2522796}
+  m_LocalPosition: {x: 0, y: -9.601112, z: -1.2522802}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -32635,14 +32635,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955369574}
-  m_LocalRotation: {x: 0.11320323, y: 0, z: 0, w: 0.9935719}
-  m_LocalPosition: {x: 442.76175, y: 49.81, z: -806.03}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalRotation: {x: -0.48911646, y: -0, z: -0, w: 0.87221855}
+  m_LocalPosition: {x: 0, y: 6.075756, z: -7.5388823}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 507446751}
-  m_Father: {fileID: 0}
-  m_RootOrder: 32
+  m_Father: {fileID: 1622571206}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 13, y: 0, z: 0}
 --- !u!1001 &957758573
 PrefabInstance:
@@ -57352,7 +57352,8 @@ Transform:
   m_LocalPosition: {x: 442.76175, y: 36.2, z: -811.1}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 955369576}
   m_Father: {fileID: 0}
   m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -74335,11 +74336,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df69244d340cce74294bd80c2fa7e37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprintKey: 304
   pickUpWeaponKey: 101
-  dropWeaponKey: 113
   controllerPickUp: 0
-  controllerDrop: 0
+  durationToDropWeapon: 1.5
   maxSlopeAngle: 5
   UpSlopeGravity: 500
   onSlope: 0
