@@ -14,7 +14,7 @@ public class InstantiationPacket : BasePacket
         rotation = Quaternion.identity;
     }
 
-    public InstantiationPacket(string _prefabName, Vector3 _position, Quaternion _rotation, string gameObjectID)
+    public InstantiationPacket(string _prefabName, Vector3 _position, Quaternion _rotation, string gameObjectID = "")
         : base(PacketType.Instantiation, gameObjectID)
     {
         prefabName = _prefabName;

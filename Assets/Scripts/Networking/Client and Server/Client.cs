@@ -123,6 +123,16 @@ namespace ClientLibrary
                     networkComponent.ClientID = packet.gameObjectID;
                     break;
 
+                case BasePacket.PacketType.Instantiation:
+                    InstantiationPacket instantiationPacket = new InstantiationPacket().Deserialize(buffer);
+                    Debug.LogError("Player Spawned");
+                    GameObject objectToSpawn = Instantiate(Resources.Load(instantiationPacket.prefabName) as GameObject, 
+                        instantiationPacket.position, 
+                        instantiationPacket.rotation);
+                    SendPacket(instantiationPacket.Serialize());
+                   Debug.LogError("Sending Spawned player back to server");
+                    break;
+
                 case BasePacket.PacketType.ServerLobbyPacket:
                     LobbyStatusPacket lobbyStatusPacket = new LobbyStatusPacket().Deserialize(buffer);
                     //Debug.LogError("Server Lobby Packet Received! Player count is: " + lobbyStatusPacket.playerIDs.Count);

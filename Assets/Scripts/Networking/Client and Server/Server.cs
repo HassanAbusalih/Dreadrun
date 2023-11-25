@@ -82,6 +82,12 @@ namespace Server
                         UpdatePlayerSceneStatus?.Invoke(playerInMainScenePacket.inMainScene);
                         Debug.LogError("Players in main scene packet received");
                         break;
+                    case BasePacket.PacketType.Instantiation:
+                        InstantiationPacket instantiationPacket = new InstantiationPacket().Deserialize(buffer);
+                        playerSocket.socket.Send(instantiationPacket.Serialize());
+                        Debug.LogError("SPAWNING OTHER PLAYERS!!!!!!!!!!!!!!!!!");
+                        break;
+
                 }
             }
             Invoke(nameof(CallAgain), tickRate);
@@ -96,7 +102,7 @@ namespace Server
                 PlayerSocket playerSocket = new PlayerSocket(newSocket);
                 playerSocket.playerID = GenerateUniqueClientID();
 
-               // Debug.LogError("NEW CLIENT ID IS " + playerSocket.playerID);
+                // Debug.LogError("NEW CLIENT ID IS " + playerSocket.playerID);
                 IDPacket packet = new IDPacket(playerSocket.playerID);
 
                 playerSocket.socket.Send(packet.Serialize());
@@ -135,7 +141,6 @@ namespace Server
         {
             isCalled = false;
         }
-
 
         string GenerateUniqueClientID()
         {
