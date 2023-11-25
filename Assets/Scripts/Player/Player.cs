@@ -33,6 +33,7 @@ public class Player : MonoBehaviour, IDamagable
     int currentWeaponID;
     public PlayerWeapon playerWeapon;
     bool isWeaponPickedUp;
+    bool isPickUpMode;
 
     // Player Events
     public static Action<GameObject> onDamageTaken;
@@ -80,8 +81,9 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        PickUpUnequippedWeapon();
         DropCurrentWeapon();
+        PickUpUnequippedWeapon();
+        
         playerStats.stamina = Mathf.Lerp(playerStats.stamina, playerStats.maxStamina, Time.deltaTime * staminaRecoverySpeed);
         UpdatePlayerUI(staminaBar, playerStats.stamina, playerStats.maxStamina);
     }
@@ -132,12 +134,18 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (pickUpWeaponKey == KeyCode.None) pickUpWeaponKey = KeyCode.E;
         if (controllerPickUp == KeyCode.None) controllerPickUp = KeyCode.JoystickButton3;
-        if (playerWeapon == null) return;
-        if (Input.GetKeyDown(pickUpWeaponKey) || Input.GetKeyDown(controllerPickUp) && !isWeaponPickedUp)
+        
+        if (Input.GetKeyDown(pickUpWeaponKey) || Input.GetKeyDown(controllerPickUp))
         {
+            if (playerWeapon == null || isWeaponPickedUp) return;
             ScaleOrDescaleWeapon(true);
             playerWeapon.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
             isWeaponPickedUp = true;
+            isPickUpMode = true;
+        }
+        else if(Input.GetKeyUp(pickUpWeaponKey) || Input.GetKeyUp(controllerPickUp) && isWeaponPickedUp)
+        {
+           isPickUpMode = false;
         }
     }
 
@@ -145,6 +153,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (Input.GetKey(pickUpWeaponKey) || Input.GetKey(pickUpWeaponKey) && isWeaponPickedUp)
         {
+            if(!isWeaponPickedUp || isPickUpMode) return;
             if (timer < durationToDropWeapon) { timer += Time.deltaTime; return; }
             ScaleOrDescaleWeapon(false);
             playerWeapon.DropWeapon();
@@ -153,6 +162,7 @@ public class Player : MonoBehaviour, IDamagable
             playerWeapon = null;
             timer = 0;
         }
+        else timer = 0;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -164,7 +174,10 @@ public class Player : MonoBehaviour, IDamagable
     private void OnTriggerExit(Collider other)
     {
         if (isWeaponPickedUp) return;
-        playerWeapon = null;
+        if (other.TryGetComponent(out PlayerWeapon unequippedWeapon))
+        {
+            if(playerWeapon == unequippedWeapon) playerWeapon = null;
+        }
     }
 
     public void TakeDamage(float amount)
