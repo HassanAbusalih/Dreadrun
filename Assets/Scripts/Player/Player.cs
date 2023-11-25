@@ -106,6 +106,7 @@ public class Player : MonoBehaviour, IDamagable
         rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
         if( normalizedDirection.magnitude == 0 && !onSlope && rb.velocity.y<=0)
         rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
+        rb.useGravity = !onSlope;
 
         rb.velocity += moveVelocity;
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerStats.speed);
@@ -151,7 +152,7 @@ public class Player : MonoBehaviour, IDamagable
 
     void DropCurrentWeapon()
     {
-        if (Input.GetKey(pickUpWeaponKey) || Input.GetKey(pickUpWeaponKey) && isWeaponPickedUp)
+        if (Input.GetKey(pickUpWeaponKey) || Input.GetKey(controllerPickUp) && isWeaponPickedUp)
         {
             if(!isWeaponPickedUp || isPickUpMode) return;
             if (timer < durationToDropWeapon) { timer += Time.deltaTime; return; }

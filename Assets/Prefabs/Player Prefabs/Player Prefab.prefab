@@ -807,13 +807,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df69244d340cce74294bd80c2fa7e37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprintKey: 304
   pickUpWeaponKey: 101
-  dropWeaponKey: 113
-  controllerPickUp: 0
-  controllerDrop: 0
+  controllerPickUp: 332
+  durationToDropWeapon: 1.5
   maxSlopeAngle: 10
-  UpSlopeGravity: 500
+  UpSlopeGravity: 300
   onSlope: 0
   slowDownMultiplier: 10
   slowDownCurve:
@@ -1854,11 +1852,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7892626732478468184, guid: 18fa3fa0c3d50ea4fb6f561780668556, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15
+      value: 14.999998
       objectReference: {fileID: 0}
     - target: {fileID: 7892626732478468184, guid: 18fa3fa0c3d50ea4fb6f561780668556, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.15002441
+      value: -0.14999962
       objectReference: {fileID: 0}
     - target: {fileID: 7892626732478468184, guid: 18fa3fa0c3d50ea4fb6f561780668556, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1890,7 +1888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7892626732478468185, guid: 18fa3fa0c3d50ea4fb6f561780668556, type: 3}
       propertyPath: field of view
-      value: 60
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7892626732478468189, guid: 18fa3fa0c3d50ea4fb6f561780668556, type: 3}
       propertyPath: m_UpdateMethod
