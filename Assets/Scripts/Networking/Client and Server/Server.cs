@@ -4,14 +4,14 @@ using System.Net;
 using UnityEngine;
 using NetworkingLibrary;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Server
 {
     public class Server : MonoBehaviour
     {
         [SerializeField] float tickRate;
-        protected bool isCalled;
-        protected List<PlayerSocket> clients = new List<PlayerSocket>();
+        protected List<PlayerSocket> clients = new();
 
         protected Socket queueSocket;
 
@@ -22,9 +22,6 @@ namespace Server
         public static Server Instance;
 
         [SerializeField] int maxIDRange;
-
-        BasePacket serializedPackets;
-
 
         private void Awake()
         {
@@ -43,7 +40,6 @@ namespace Server
         protected virtual void Start()
         {
             IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Any, 30);
-            isCalled = false;
             queueSocket = new Socket(
             AddressFamily.InterNetwork,
             SocketType.Stream,
@@ -52,45 +48,61 @@ namespace Server
             queueSocket.Blocking = false;
             queueSocket.Bind(ipEndPoint);
             queueSocket.Listen(10);
+
+            StartCoroutine(Tick());
         }
 
-        private void Update()
+        IEnumerator Tick()
         {
-            if (isCalled) { return; }
-            isCalled = true;
-
-            if (clients.Count < 3)
+            while (true)
             {
-                TryToAcceptClient(queueSocket);
-            }
+                if (clients.Count < 3)
+                {
+                    TryToAcceptClient(queueSocket);
+                }
 
-            foreach (PlayerSocket playerSocket in clients)
+                foreach (PlayerSocket playerSocket in clients)
+                {
+                    if (playerSocket.socket.Available > 0)
+                    {
+                        byte[] buffer = new byte[playerSocket.socket.Available];
+                        playerSocket.socket.Receive(buffer);
+                        int index = 0;
+                        while (index < buffer.Length)
+                        {
+                            BasePacket packet = new BasePacket().Deserialize(buffer, index);
+                            if (packet != null)
+                            {
+                                SwitchCaseHell(playerSocket, buffer, packet, index);
+                                index += packet.packetSize;
+                            }
+                        }
+                    }
+                }
+                yield return new WaitForSeconds(tickRate);
+            }
+        }
+
+        private void SwitchCaseHell(PlayerSocket playerSocket, byte[] buffer, BasePacket packet, int index)
+        {
+            switch (packet.packetType)
             {
-                (BasePacket packet, byte[] buffer) = ReceiveData(playerSocket.socket);
-                if (packet == null)
-                {
-                    continue;
-                }
-                switch (packet.packetType)
-                {
-                    case BasePacket.PacketType.PlayerLobbyPacket:
-                        LobbyPacket lobbyPacket = new LobbyPacket().Deserialize(buffer);
-                        OnServerLobbyUpdate?.Invoke(lobbyPacket.playerID, lobbyPacket.isReady);
-                        break;
-                    case BasePacket.PacketType.PlayerInMainScenePacket:
-                        PlayerInMainScenePacket playerInMainScenePacket = new PlayerInMainScenePacket().Deserialize(buffer);
-                        UpdatePlayerSceneStatus?.Invoke(playerInMainScenePacket.inMainScene);
-                        Debug.LogError("Players in main scene packet received");
-                        break;
-                    case BasePacket.PacketType.Instantiation:
-                        InstantiationPacket instantiationPacket = new InstantiationPacket().Deserialize(buffer);
-                        playerSocket.socket.Send(instantiationPacket.Serialize());
-                        Debug.LogError("SPAWNING OTHER PLAYERS!!!!!!!!!!!!!!!!!");
-                        break;
+                case BasePacket.PacketType.PlayerLobbyPacket:
+                    LobbyPacket lobbyPacket = new LobbyPacket().Deserialize(buffer, index);
+                    OnServerLobbyUpdate?.Invoke(lobbyPacket.playerID, lobbyPacket.isReady);
+                    break;
+                case BasePacket.PacketType.PlayerInMainScenePacket:
+                    PlayerInMainScenePacket playerInMainScenePacket = new PlayerInMainScenePacket().Deserialize(buffer, index);
+                    UpdatePlayerSceneStatus?.Invoke(playerInMainScenePacket.inMainScene);
+                    Debug.LogError("Players in main scene packet received");
+                    break;
+                case BasePacket.PacketType.Instantiation:
+                    InstantiationPacket instantiationPacket = new InstantiationPacket().Deserialize(buffer, index);
+                    playerSocket.socket.Send(instantiationPacket.Serialize());
+                    Debug.LogError("SPAWNING OTHER PLAYERS!!!!!!!!!!!!!!!!!");
+                    break;
 
-                }
             }
-            Invoke(nameof(CallAgain), tickRate);
         }
 
         private void TryToAcceptClient(Socket _queueSocket)
@@ -102,7 +114,6 @@ namespace Server
                 PlayerSocket playerSocket = new PlayerSocket(newSocket);
                 playerSocket.playerID = GenerateUniqueClientID();
 
-                // Debug.LogError("NEW CLIENT ID IS " + playerSocket.playerID);
                 IDPacket packet = new IDPacket(playerSocket.playerID);
 
                 playerSocket.socket.Send(packet.Serialize());
@@ -117,35 +128,14 @@ namespace Server
             }
         }
 
-        private (BasePacket, byte[]) ReceiveData(Socket socket)
-        {
-            if (socket.Available > 0)
-            {
-                byte[] buffer = new byte[socket.Available];
-                socket.Receive(buffer);
-                BasePacket packet = new BasePacket().Deserialize(buffer);
-                return (packet, buffer);
-            }
-            return (null, null);
-        }
-
         public void SendData(byte[] buffer, Socket socket)
         {
-            if (isCalled) { return; }
-            isCalled = true;
             socket.Send(buffer);
-            Invoke(nameof(CallAgain), tickRate);
-        }
-
-        void CallAgain()
-        {
-            isCalled = false;
         }
 
         string GenerateUniqueClientID()
         {
             Guid guid = Guid.NewGuid();
-            //Debug.Log("Generated ID: " + guid.ToString());
             return guid.ToString();
         }
 

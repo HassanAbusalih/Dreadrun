@@ -19,12 +19,13 @@ public class PlayerInMainScenePacket : BasePacket
     {
         base.Serialize();
         binaryWriter.Write(inMainScene);
+        FinishSerialization();
         return writeMemoryStream.ToArray();
     }
 
-    public new PlayerInMainScenePacket Deserialize(byte[] _dataToDeserialize)
+    public new PlayerInMainScenePacket Deserialize(byte[] _dataToDeserialize, int index)
     {
-        base.Deserialize(_dataToDeserialize);
+        base.Deserialize(_dataToDeserialize, index);
         inMainScene = binaryReader.ReadBoolean();
         return this;
     }

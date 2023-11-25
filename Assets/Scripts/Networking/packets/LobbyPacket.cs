@@ -21,16 +21,16 @@ public class LobbyPacket : BasePacket
         base.Serialize();
         binaryWriter.Write(isReady);
         binaryWriter.Write(playerID);
-        //Debug.LogError($"LobbyPacket serialized! Client ID is {playerID} and status is {isReady}");
+        FinishSerialization();
         return writeMemoryStream.ToArray();
     }
 
-    public new LobbyPacket Deserialize(byte[] _dataToDeserialize)
+    public new LobbyPacket Deserialize(byte[] _dataToDeserialize, int index)
     {
-        base.Deserialize(_dataToDeserialize);
+        base.Deserialize(_dataToDeserialize, index);
         isReady = binaryReader.ReadBoolean();
         playerID = binaryReader.ReadString();
-        //Debug.LogError($"LobbyPacket deserialized! Client ID is {playerID} and status is {isReady}");
+
         return this;
     }
 }

@@ -36,13 +36,14 @@ public class InstantiationPacket : BasePacket
         binaryWriter.Write(rotation.y);
         binaryWriter.Write(rotation.z);
         binaryWriter.Write(rotation.w);
-
+        
+        FinishSerialization();
         return writeMemoryStream.ToArray();
     }
 
-    public new InstantiationPacket Deserialize(byte[] dataToDeserialize)
+    public new InstantiationPacket Deserialize(byte[] dataToDeserialize, int index)
     {
-        base.Deserialize(dataToDeserialize);
+        base.Deserialize(dataToDeserialize, index);
 
         prefabName = binaryReader.ReadString();
         position = new Vector3(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());

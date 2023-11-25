@@ -23,13 +23,13 @@ namespace NetworkingLibrary
             binaryWriter.Write(position.x);
             binaryWriter.Write(position.y);
             binaryWriter.Write(position.z);
-
+            FinishSerialization();
             return writeMemoryStream.ToArray();
         }
 
-        public new PositionPacket Deserialize(byte[] dataToDeserialize)
+        public new PositionPacket Deserialize(byte[] dataToDeserialize, int index)
         {
-            base.Deserialize(dataToDeserialize);
+            base.Deserialize(dataToDeserialize, index);
 
             float x = binaryReader.ReadSingle();
             float y = binaryReader.ReadSingle();

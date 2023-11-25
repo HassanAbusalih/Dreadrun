@@ -68,16 +68,22 @@ namespace ClientLibrary
         {
             while (true)
             {
+                SendPacket(new IDPacket(networkComponent.ClientID).Serialize());
                 try
                 {
                     if (socket.Available > 0)
                     {
                         byte[] buffer = new byte[socket.Available];
                         socket.Receive(buffer);
-                        BasePacket packet = new BasePacket().Deserialize(buffer);
-                        if (packet != null)
+                        int index = 0;
+                        while (index < buffer.Length)
                         {
-                            SwitchCaseHell(packet, buffer);
+                            BasePacket packet = new BasePacket().Deserialize(buffer, index);
+                            if (packet != null)
+                            {
+                                SwitchCaseHell(packet, buffer, index);
+                                index += packet.packetSize;
+                            }
                         }
                     }
                 }
@@ -102,13 +108,13 @@ namespace ClientLibrary
             socket?.Dispose();
         }
 
-        private void SwitchCaseHell(BasePacket packet, byte[] buffer)
+        private void SwitchCaseHell(BasePacket packet, byte[] buffer, int index)
         {
             switch (packet.packetType)
             {
                 case BasePacket.PacketType.ScenePacket:
                     Debug.LogError("Scene Packet Received! Scene name is: ");
-                    ScenePacket scenePacket = new ScenePacket().Deserialize(buffer);
+                    ScenePacket scenePacket = new ScenePacket().Deserialize(buffer, index);
                     SceneManager.LoadScene(scenePacket.sceneName);
                     if (scenePacket.sceneName == mainScene)
                     {
@@ -124,7 +130,7 @@ namespace ClientLibrary
                     break;
 
                 case BasePacket.PacketType.Instantiation:
-                    InstantiationPacket instantiationPacket = new InstantiationPacket().Deserialize(buffer);
+                    InstantiationPacket instantiationPacket = new InstantiationPacket().Deserialize(buffer, index);
                     Debug.LogError("Player Spawned");
                     GameObject objectToSpawn = Instantiate(Resources.Load(instantiationPacket.prefabName) as GameObject, 
                         instantiationPacket.position, 
@@ -134,7 +140,7 @@ namespace ClientLibrary
                     break;
 
                 case BasePacket.PacketType.ServerLobbyPacket:
-                    LobbyStatusPacket lobbyStatusPacket = new LobbyStatusPacket().Deserialize(buffer);
+                    LobbyStatusPacket lobbyStatusPacket = new LobbyStatusPacket().Deserialize(buffer, index);
                     //Debug.LogError("Server Lobby Packet Received! Player count is: " + lobbyStatusPacket.playerIDs.Count);
                     OnLobbyUpdate?.Invoke(lobbyStatusPacket.playerIDs, lobbyStatusPacket.playerStatuses);
                     break;

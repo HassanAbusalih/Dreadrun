@@ -29,8 +29,8 @@ public class ServerLobbyManager : MonoBehaviour
             Debug.LogError("New client in Lobby! They are player " + playerIDs.Count);
         }
         statusPacket = new LobbyStatusPacket(playerStatuses, playerIDs);
-        ChangeScene();
         Server.Server.Instance.SendToAllClients(statusPacket.Serialize());
+        ChangeScene();
     }
 
     void ChangeScene()

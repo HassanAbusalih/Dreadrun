@@ -23,12 +23,13 @@ public class LobbyStatusPacket : BasePacket
             binaryWriter.Write(playerStatuses[i]);
             binaryWriter.Write(playerIDs[i]);
         }
+        FinishSerialization();
         return writeMemoryStream.ToArray();
     }
 
-    public new LobbyStatusPacket Deserialize(byte[] _dataToDeserialize)
+    public new LobbyStatusPacket Deserialize(byte[] _dataToDeserialize, int index)
     {
-        base.Deserialize(_dataToDeserialize);
+        base.Deserialize(_dataToDeserialize, index);
         int count = binaryReader.ReadInt32();
         for (int i = 0; i < count; i++)
         {

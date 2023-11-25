@@ -15,12 +15,13 @@ public class IDPacket : BasePacket
     public new byte[] Serialize()
     {
         base.Serialize();
+        FinishSerialization();
         return writeMemoryStream.ToArray();
     }
 
-    public new IDPacket Deserialize(byte[] dataToDeserialize)
+    public new IDPacket Deserialize(byte[] dataToDeserialize, int index)
     {
-        base.Deserialize(dataToDeserialize);
+        base.Deserialize(dataToDeserialize, index);
         return this;
     }
 }

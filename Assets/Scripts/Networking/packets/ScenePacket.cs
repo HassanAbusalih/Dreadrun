@@ -16,12 +16,13 @@ public class ScenePacket : BasePacket
     {
         base.Serialize();
         binaryWriter.Write(sceneName);
+        FinishSerialization();
         return writeMemoryStream.ToArray();
     }
 
-    public new ScenePacket Deserialize(byte[] _dataToDeserialize)
+    public new ScenePacket Deserialize(byte[] _dataToDeserialize, int index)
     {
-        base.Deserialize(_dataToDeserialize);
+        base.Deserialize(_dataToDeserialize, index);
         sceneName = binaryReader.ReadString();
         return this;
     }
