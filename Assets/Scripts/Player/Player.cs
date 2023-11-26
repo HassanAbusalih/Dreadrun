@@ -1,4 +1,7 @@
+using ClientLibrary;
+using NetworkingLibrary;
 using System;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +9,7 @@ public class Player : MonoBehaviour, IDamagable
 {
     Rigidbody rb;
     Dashing playerDash;
+    [SerializeField] NetworkComponent networkComponent;
     [Header("Player Input/Movement Settings")]
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
     [SerializeField] KeyCode dropWeaponKey = KeyCode.Q;
@@ -73,9 +77,17 @@ public class Player : MonoBehaviour, IDamagable
         onSlope = isPlayerOnSlope();
         Vector3 moveDirection = GetMovementDirection();
         rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
+        SendPositionPacket(transform.position);
         if(onSlope && rb.velocity.y<0 || rb.velocity.y>0) rb.velocity += Vector3.down * UpSlopeGravity;
         PickUpUnequippedWeapon();
         DropCurrentWeapon();
+    }
+
+
+    void  SendPositionPacket(Vector3 PlayerPosition)
+    {
+        PositionPacket positionPacket = new PositionPacket(PlayerPosition,networkComponent.GameObjectId);
+        Client.Instance.SendPacket(positionPacket.Serialize());
     }
 
     Vector3 GetMovementDirection()

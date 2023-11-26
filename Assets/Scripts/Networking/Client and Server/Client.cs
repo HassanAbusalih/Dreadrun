@@ -16,6 +16,7 @@ namespace ClientLibrary
 
         protected Socket socket;
         public NetworkComponent networkComponent;
+        public static List<NetworkComponent> allNetworkObjects = new List<NetworkComponent>();
 
         public static Client Instance;
 
@@ -135,6 +136,8 @@ namespace ClientLibrary
                     GameObject objectToSpawn = Instantiate(Resources.Load(instantiationPacket.prefabName) as GameObject, 
                         instantiationPacket.position, 
                         instantiationPacket.rotation);
+                    objectToSpawn.GetComponent<NetworkComponent>().SetIDs(instantiationPacket.OwnershipID, instantiationPacket.gameObjectID);
+                    allNetworkObjects.Add(objectToSpawn.GetComponent<NetworkComponent>());
                    Debug.LogError("Sending Spawned player back to server");
                     break;
 
@@ -143,7 +146,27 @@ namespace ClientLibrary
                     //Debug.LogError("Server Lobby Packet Received! Player count is: " + lobbyStatusPacket.playerIDs.Count);
                     OnLobbyUpdate?.Invoke(lobbyStatusPacket.playerIDs, lobbyStatusPacket.playerStatuses);
                     break;
+                case BasePacket.PacketType.Position:
+                    PositionPacket positionPacket = new PositionPacket().Deserialize(buffer, index);
+                    PlayerNetworkComponent component = FindNetworkComponent(positionPacket.gameObjectID) as PlayerNetworkComponent;
+                    if (component != null)
+                    {
+                        component.SetTargetPosition(positionPacket.position);
+                    }
+                    break;
             }
+        }
+
+        NetworkComponent FindNetworkComponent(string gameObjectId)
+        {
+            foreach (NetworkComponent networkComponent in allNetworkObjects)
+            {
+                if (gameObjectId == networkComponent.GameObjectId)
+                {
+                    return networkComponent;
+                }
+            }
+            return null;
         }
     }
 }

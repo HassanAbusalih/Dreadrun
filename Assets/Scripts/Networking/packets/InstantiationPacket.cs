@@ -39,6 +39,7 @@ public class InstantiationPacket : BasePacket
         binaryWriter.Write(rotation.y);
         binaryWriter.Write(rotation.z);
         binaryWriter.Write(rotation.w);
+        binaryWriter.Write(OwnershipID);
         
         FinishSerialization();
         return writeMemoryStream.ToArray();
@@ -51,6 +52,7 @@ public class InstantiationPacket : BasePacket
         prefabName = binaryReader.ReadString();
         position = new Vector3(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
         rotation = new Quaternion(binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle(), binaryReader.ReadSingle());
+        OwnershipID = binaryReader.ReadString();
 
         return this;
     }

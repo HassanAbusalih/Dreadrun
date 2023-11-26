@@ -12,6 +12,7 @@ namespace Server
     {
         [SerializeField] float tickRate;
         protected List<PlayerSocket> clients = new();
+        protected List<string> clientGameObjectIDs = new();
 
         protected Socket queueSocket;
 
@@ -79,6 +80,8 @@ namespace Server
                         }
                     }
                 }
+
+
                 yield return new WaitForSeconds(tickRate);
             }
         }
@@ -101,7 +104,10 @@ namespace Server
                     playerSocket.socket.Send(instantiationPacket.Serialize());
                     Debug.LogError("SPAWNING OTHER PLAYERS!!!!!!!!!!!!!!!!!");
                     break;
-
+                case BasePacket.PacketType.Position:
+                    PositionPacket positionPacket = new PositionPacket().Deserialize(buffer, index);
+                    SendToAllClientsExcept(positionPacket.Serialize(), playerSocket.socket);
+                    break;
             }
         }
 
@@ -162,7 +168,7 @@ namespace Server
         public void SpawnPlayerObjects(string realPrefab, string fakePrefab, int index)
         {
             string gameObjectID = GenerateUniqueClientID();
-            InstantiationPacket realInstantiationPacket = new InstantiationPacket(realPrefab, Vector3.zero, Quaternion.identity,gameObjectID,clients[index].playerID);
+            InstantiationPacket realInstantiationPacket = new InstantiationPacket(realPrefab, Vector3.zero, Quaternion.identity, gameObjectID, clients[index].playerID);
             InstantiationPacket fakeInstantiationPacket = new InstantiationPacket(fakePrefab, Vector3.zero, Quaternion.identity, gameObjectID, clients[index].playerID);
 
             foreach (var client in clients)
@@ -170,6 +176,7 @@ namespace Server
                 if (client.playerID == clients[index].playerID)
                 {
                     SendData(realInstantiationPacket.Serialize(), client.socket);
+                    clientGameObjectIDs.Add(gameObjectID);
                 }
                 else
                 {
@@ -178,7 +185,10 @@ namespace Server
             }
         }
 
-      
+        public void SendPosition(Vector3 position)
+        {
+          
+        }
 
         private void OnDisable()
         {
