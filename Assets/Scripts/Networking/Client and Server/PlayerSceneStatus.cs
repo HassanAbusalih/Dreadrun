@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerSceneStatus : MonoBehaviour
 {
     [SerializeField] bool[] playersInMainScene = new bool[3];
-    [SerializeField] string prefabName;
+    [SerializeField] string realPlayer;
+    [SerializeField] string fakePlayer;
     int index;
 
     private void OnEnable()
@@ -31,10 +32,9 @@ public class PlayerSceneStatus : MonoBehaviour
 
     void SpawnPlayers()
     {
-        Vector3 playerSpawnPosition = new Vector3(2, 4, 5);
-
-        InstantiationPacket packet = new InstantiationPacket(prefabName, playerSpawnPosition, Quaternion.identity);
-        Server.Server.Instance.SendToAllClients(packet.Serialize());
-        Debug.LogError("Prefab is sent to all clients");
+        for (int i = 0; i < playersInMainScene.Length; i++)
+        {
+            Server.Server.Instance.SpawnPlayerObjects(realPlayer, fakePlayer, i);
+        }
     }
 }

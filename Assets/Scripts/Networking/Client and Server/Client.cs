@@ -135,7 +135,6 @@ namespace ClientLibrary
                     GameObject objectToSpawn = Instantiate(Resources.Load(instantiationPacket.prefabName) as GameObject, 
                         instantiationPacket.position, 
                         instantiationPacket.rotation);
-                    SendPacket(instantiationPacket.Serialize());
                    Debug.LogError("Sending Spawned player back to server");
                     break;
 

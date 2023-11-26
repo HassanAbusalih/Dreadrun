@@ -147,6 +147,39 @@ namespace Server
             }
         }
 
+
+        public void SendToAllClientsExcept(byte[] buffer, Socket socket)
+        {
+            foreach (var client in clients)
+            {
+                if (client.socket != socket)
+                {
+                    client.socket.Send(buffer);
+                }
+            }
+        }
+
+        public void SpawnPlayerObjects(string realPrefab, string fakePrefab, int index)
+        {
+            string gameObjectID = GenerateUniqueClientID();
+            InstantiationPacket realInstantiationPacket = new InstantiationPacket(realPrefab, Vector3.zero, Quaternion.identity,gameObjectID,clients[index].playerID);
+            InstantiationPacket fakeInstantiationPacket = new InstantiationPacket(fakePrefab, Vector3.zero, Quaternion.identity, gameObjectID, clients[index].playerID);
+
+            foreach (var client in clients)
+            {
+                if (client.playerID == clients[index].playerID)
+                {
+                    SendData(realInstantiationPacket.Serialize(), client.socket);
+                }
+                else
+                {
+                    SendData(fakeInstantiationPacket.Serialize(), client.socket);
+                }
+            }
+        }
+
+      
+
         private void OnDisable()
         {
             queueSocket.Close();

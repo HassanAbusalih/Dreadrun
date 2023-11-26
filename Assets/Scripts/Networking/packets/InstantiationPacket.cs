@@ -6,6 +6,7 @@ public class InstantiationPacket : BasePacket
     public string prefabName;
     public Vector3 position;
     public Quaternion rotation;
+    public string OwnershipID;
 
     public InstantiationPacket()
     {
@@ -14,12 +15,14 @@ public class InstantiationPacket : BasePacket
         rotation = Quaternion.identity;
     }
 
-    public InstantiationPacket(string _prefabName, Vector3 _position, Quaternion _rotation, string gameObjectID = "")
+    public InstantiationPacket(string _prefabName, Vector3 _position, Quaternion _rotation, string gameObjectID = "", string ownershipID ="")
         : base(PacketType.Instantiation, gameObjectID)
     {
         prefabName = _prefabName;
         position = _position;
         rotation = _rotation;
+        OwnershipID = ownershipID;
+
     }
 
     public new byte[] Serialize()
