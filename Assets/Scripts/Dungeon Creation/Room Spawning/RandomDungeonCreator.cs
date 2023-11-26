@@ -9,14 +9,14 @@ public class RandomDungeonCreator : MonoBehaviour
 
     public static List<Transform> smallRoomSpawnPoints = new List<Transform>();
     [Header("Small Rooms Spawn Settings")]
-    [SerializeField] int smallRoomsToSpawn;
-    [SerializeField] int establishedSmallRoom;
+    [SerializeField] int minSmallRoomsToSpawn;
+    [SerializeField] int maxSmallRoomsToSpawn;
     [SerializeField] GameObject[] smallRoomPrefabs;
 
     public static List<Transform> bigRoomSpawnPoints = new List<Transform>();
     [Header("Big Rooms Spawn Settings")]
-    [SerializeField] int bigRoomsToSpawn;
-    [SerializeField] int establishedBigRoom;
+    [SerializeField] int minBigRoomsToSpawn;
+    [SerializeField] int maxBigRoomsToSpawn;
     [SerializeField] GameObject[] bigRoomPrefabs;
 
     [Header("Debug Stats")]
@@ -26,31 +26,33 @@ public class RandomDungeonCreator : MonoBehaviour
     [SerializeField] bool destroySpawnPointParentOnSpawn;
 
 
-
+    private void Awake()
+    {
+        smallRoomSpawnPoints.Clear();
+        bigRoomSpawnPoints.Clear();
+    }
 
     private void Start()
     {
-        bigRoomSpawnPoints.RemoveAll(item => item == null);
-        smallRoomSpawnPoints.RemoveAll(item => item == null);
-
         StartRandomRoomSpawningProcess();
     }
 
     void StartRandomRoomSpawningProcess()
     {
-        SpawnRooms(ref bigRoomsSpawned, bigRoomsToSpawn, ref bigRoomSpawnPoints, bigRoomPrefabs, establishedBigRoom);
-        SpawnRooms(ref smallRoomsSpawned, smallRoomsToSpawn, ref smallRoomSpawnPoints, smallRoomPrefabs, establishedSmallRoom);
+        SpawnRooms(ref bigRoomsSpawned,minBigRoomsToSpawn, maxBigRoomsToSpawn, ref bigRoomSpawnPoints, bigRoomPrefabs);
+        SpawnRooms(ref smallRoomsSpawned,minSmallRoomsToSpawn, maxSmallRoomsToSpawn, ref smallRoomSpawnPoints, smallRoomPrefabs);
     }
 
-    private void SpawnRooms(ref int roomsSpawned, int _roomsToSpawn, ref List<Transform> _spawnPoints, GameObject[] _prefabList, int roomsToSkip)
+    private void SpawnRooms(ref int roomsSpawned,int minRoomsToSpawn, int maxRoomsToSpawn, ref List<Transform> _spawnPoints, GameObject[] _prefabList)
     {
         int roomToSpawnIndex = 0;
-        for (roomsSpawned = 0; roomsSpawned < _roomsToSpawn; roomsSpawned++)
+        int roomsToSpawn = UnityEngine.Random.Range(minRoomsToSpawn, maxRoomsToSpawn);
+        for (roomsSpawned = 0; roomsSpawned < roomsToSpawn; roomsSpawned++)
         {
             if (_spawnPoints.Count == 0) { Debug.LogError("Not enough spawn points to spawn rooms"); return; }
 
             int _randomSpawnPointIndex = UnityEngine.Random.Range(0, _spawnPoints.Count);
-            ResetRoomPrefabsToSpawnIndex(ref roomToSpawnIndex, roomsToSkip, _prefabList);
+            roomToSpawnIndex = UnityEngine.Random.Range(0, _prefabList.Length);
 
             GetRoomSpawnData(_prefabList, _spawnPoints, roomToSpawnIndex, _randomSpawnPointIndex, out GameObject _roomToSpawn,
                                                 out Vector3 _roomSpawnPosition, out Quaternion _roomRotation);
@@ -59,16 +61,6 @@ public class RandomDungeonCreator : MonoBehaviour
             DestroyAndRemoveSpawnPoint(_randomSpawnPointIndex, ref _spawnPoints);
             roomToSpawnIndex++;
         }
-    }
-
-    int ResetRoomPrefabsToSpawnIndex(ref int _currentRoomToSpawnIndex, int roomsToSkip, GameObject[] roomPrefabList)
-    {
-        if (_currentRoomToSpawnIndex == roomPrefabList.Length)
-        {
-            _currentRoomToSpawnIndex = 0 + roomsToSkip;
-            return _currentRoomToSpawnIndex;
-        }
-        else { return _currentRoomToSpawnIndex; }
     }
 
     void GetRoomSpawnData(GameObject[] _prefabList, List<Transform> _spawnPoints, int _index, int _randomSpawnPointIndex, out GameObject _roomToSpawn, out Vector3 _roomSpawnPosition, out Quaternion _roomRotation)
