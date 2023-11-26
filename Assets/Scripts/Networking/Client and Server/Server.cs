@@ -10,7 +10,8 @@ namespace Server
 {
     public class Server : MonoBehaviour
     {
-        [SerializeField] float tickRate;
+        [SerializeField] float ticksPerSecond = 30;
+        float tickRate;
         protected List<PlayerSocket> clients = new();
         protected List<string> clientGameObjectIDs = new();
 
@@ -36,6 +37,7 @@ namespace Server
             {
                 Destroy(gameObject);
             }
+            tickRate = 1 / ticksPerSecond;
         }
 
         protected virtual void Start()
@@ -80,8 +82,6 @@ namespace Server
                         }
                     }
                 }
-
-
                 yield return new WaitForSeconds(tickRate);
             }
         }
@@ -98,11 +98,6 @@ namespace Server
                     PlayerInMainScenePacket playerInMainScenePacket = new PlayerInMainScenePacket().Deserialize(buffer, index);
                     UpdatePlayerSceneStatus?.Invoke(playerInMainScenePacket.inMainScene);
                     Debug.LogError("Players in main scene packet received");
-                    break;
-                case BasePacket.PacketType.Instantiation:
-                    InstantiationPacket instantiationPacket = new InstantiationPacket().Deserialize(buffer, index);
-                    playerSocket.socket.Send(instantiationPacket.Serialize());
-                    Debug.LogError("SPAWNING OTHER PLAYERS!!!!!!!!!!!!!!!!!");
                     break;
                 case BasePacket.PacketType.Position:
                     PositionPacket positionPacket = new PositionPacket().Deserialize(buffer, index);
@@ -153,7 +148,6 @@ namespace Server
             }
         }
 
-
         public void SendToAllClientsExcept(byte[] buffer, Socket socket)
         {
             foreach (var client in clients)
@@ -183,11 +177,6 @@ namespace Server
                     SendData(fakeInstantiationPacket.Serialize(), client.socket);
                 }
             }
-        }
-
-        public void SendPosition(Vector3 position)
-        {
-          
         }
 
         private void OnDisable()

@@ -11,7 +11,8 @@ namespace ClientLibrary
 {
     public class Client : MonoBehaviour
     {
-        [SerializeField] float tickRate;
+        [SerializeField] float ticksPerSecond = 30;
+        float tickRate;
         bool isConnected;
 
         protected Socket socket;
@@ -36,7 +37,7 @@ namespace ClientLibrary
             {
                 Destroy(gameObject);
             }
-
+            tickRate = 1 / ticksPerSecond;
             TryGetComponent(out networkComponent);
         }
 
@@ -151,7 +152,7 @@ namespace ClientLibrary
                     PlayerNetworkComponent component = FindNetworkComponent(positionPacket.gameObjectID) as PlayerNetworkComponent;
                     if (component != null)
                     {
-                        component.SetTargetPosition(positionPacket.position);
+                        component.SetTargetPosition(positionPacket.position, positionPacket.rotation, tickRate);
                     }
                     break;
             }

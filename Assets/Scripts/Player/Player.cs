@@ -77,16 +77,16 @@ public class Player : MonoBehaviour, IDamagable
         onSlope = isPlayerOnSlope();
         Vector3 moveDirection = GetMovementDirection();
         rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
-        SendPositionPacket(transform.position);
+        SendPositionPacket(transform.position, transform.rotation);
         if(onSlope && rb.velocity.y<0 || rb.velocity.y>0) rb.velocity += Vector3.down * UpSlopeGravity;
         PickUpUnequippedWeapon();
         DropCurrentWeapon();
     }
 
 
-    void  SendPositionPacket(Vector3 PlayerPosition)
+    void  SendPositionPacket(Vector3 playerPosition, Quaternion playerRotation)
     {
-        PositionPacket positionPacket = new PositionPacket(PlayerPosition,networkComponent.GameObjectId);
+        PositionPacket positionPacket = new PositionPacket(playerPosition, playerRotation, networkComponent.GameObjectId);
         Client.Instance.SendPacket(positionPacket.Serialize());
     }
 

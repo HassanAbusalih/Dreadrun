@@ -3,15 +3,11 @@ using UnityEngine;
 public class PlayerNetworkComponent: NetworkComponent
 {
     Vector3 targetPosition;
-   public void SetTargetPosition(Vector3 position)
+    Quaternion targetRotation;
+
+   public void SetTargetPosition(Vector3 position, Quaternion rotation, float tickRate)
    {
-      targetPosition = position;
+        transform.LeanMove(position, tickRate);
+        transform.LeanRotate(rotation.eulerAngles, tickRate);
    }
-
-
-    private void Update()
-    {
-        if(targetPosition == Vector3.zero) return;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 10);
-    }
 }
