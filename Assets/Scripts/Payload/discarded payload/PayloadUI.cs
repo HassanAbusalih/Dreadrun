@@ -3,7 +3,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class PayloadUI : MonoBehaviour
-{
+{/*
     [Header("Health Bar Settings")]
     [SerializeField] private GameObject healthUI;
     [SerializeField] private Image healthBar;
@@ -145,5 +145,5 @@ public class PayloadUI : MonoBehaviour
     void EnablePayloadUI()
     {
         gameObject.SetActive(true);
-    }
+    }*/
 }

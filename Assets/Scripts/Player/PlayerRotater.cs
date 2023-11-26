@@ -44,30 +44,41 @@ public class PlayerRotater : MonoBehaviour
     {
         Vector3 mouseScreenPosition = Input.mousePosition;
 
-        // Create a ray from the camera to the mouse position
-        Ray ray = Camera.main.ScreenPointToRay(mouseScreenPosition);
-        mouseHorizontal += Input.GetAxis("Mouse X") * Time.deltaTime;
-        Vector3 mouseDirection = new Vector3(0, mouseHorizontal * rotationSpeed, 0);
-        transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, mouseDirection.y, transform.rotation.z));
+        // Calculate the distance from the mouse position to the center of the screen
+        float mouseDistanceFromCenter = Vector3.Distance(mouseScreenPosition, new Vector3(Screen.width / 2, Screen.height / 2));
 
-        // Create a plane at the player's height, assuming 'up' is your ground plane normal
-        Plane groundPlane = new Plane(Vector3.up, transform.position);
+        // Set a threshold for the offset (adjust this value according to your preference)
+        float offsetThreshold = 135f;
 
-        float rayDistance;
-        if (groundPlane.Raycast(ray, out rayDistance))
+        if (mouseDistanceFromCenter > offsetThreshold)
         {
-            // Find the point in the world where the mouse is pointing, at the player's height
-            Vector3 point = ray.GetPoint(rayDistance);
+            // Only rotate if the mouse is beyond the offset threshold from the center
 
-            // Calculate the direction vector from the player to this point
-            Vector3 direction = (point - transform.position).normalized;
+            // Create a ray from the camera to the mouse position
+            Ray ray = Camera.main.ScreenPointToRay(mouseScreenPosition);
 
-            // Adjust the direction to be in the horizontal plane
-            direction.y = 0;
+            mouseHorizontal += Input.GetAxis("Mouse X") * Time.deltaTime;
+            Vector3 mouseDirection = new Vector3(0, mouseHorizontal * rotationSpeed, 0);
+            transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, mouseDirection.y, transform.rotation.z));
 
-            // Assign this direction to the player's transform.forward
-            transform.forward = direction;
+            // Create a plane at the player's height, assuming 'up' is your ground plane normal
+            Plane groundPlane = new Plane(Vector3.up, transform.position);
+
+            float rayDistance;
+            if (groundPlane.Raycast(ray, out rayDistance))
+            {
+                // Find the point in the world where the mouse is pointing, at the player's height
+                Vector3 point = ray.GetPoint(rayDistance);
+
+                // Calculate the direction vector from the player to this point
+                Vector3 direction = (point - transform.position).normalized;
+
+                // Adjust the direction to be in the horizontal plane
+                direction.y = 0;
+
+                // Assign this direction to the player's transform.forward
+                transform.forward = direction;
+            }
         }
-
     }
 }
