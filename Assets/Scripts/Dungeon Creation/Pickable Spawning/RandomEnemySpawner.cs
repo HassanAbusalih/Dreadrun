@@ -54,7 +54,7 @@ public class RandomEnemySpawner : PickableBaseSpawning
             float randomNumber = Random.Range(0, 100f);
             if (randomNumber > _enemyToSpawn.probabilityToSpawn) { continue; }
 
-            bool _isAbleToSpawn = SpawnAPickableAtRandomSpawnPoint(_enemyToSpawn.enemyPrefab, EnemySpawnPoints);
+            bool _isAbleToSpawn = SpawnObjectAtRandomSpawnPoint(_enemyToSpawn.enemyPrefab, EnemySpawnPoints);
             if (!_isAbleToSpawn) return;
             enemiesSpawned++;
         }
@@ -62,7 +62,6 @@ public class RandomEnemySpawner : PickableBaseSpawning
 
     private void OnValidate()
     {
-        ShowErrorWhenCantSpawnAllEnemies();
         AddChildrenToSpawnPointsList(SpawnPointsParent,EnemySpawnPoints);
         if(!spawnEnemiesNormally)
         pickablesSpawnManager = FindObjectOfType<PickablesSpawnManager>();
@@ -80,13 +79,6 @@ public class RandomEnemySpawner : PickableBaseSpawning
         pickablesSpawnManager.OnAllItemsSpawned -= SpawnEnemiesBasedOnLootPoints;
     }
 
-    void ShowErrorWhenCantSpawnAllEnemies()
-    {
-        float _totalPossibleEnemiesToSpawn = maxAmountOfEnemiesToSpawn;
-        float _totalSpawnPoints = EnemySpawnPoints.Count;
-        if (_totalPossibleEnemiesToSpawn < _totalSpawnPoints) return;
-        //Debug.LogError("There are not enough spawn points to spawn all the ENEMIES, try reducing the minimum amounts of certain items");
-    }
 }
 #if UNITY_EDITOR
 [CustomEditor(typeof(RandomEnemySpawner))]
