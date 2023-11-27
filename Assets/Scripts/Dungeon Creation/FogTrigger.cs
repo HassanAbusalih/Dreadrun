@@ -13,12 +13,13 @@ public class FogTrigger : MonoBehaviour
 
     [Header("Fog Trigger Settings")]
     [SerializeField] float delayToFadeOut;
-    [SerializeField] float fadeOutDuration;
-    [SerializeField] float sizeLerpSpeed;
     [SerializeField] bool destroyAfterFadeOut;
 
-    [Header("Debug")]
-    [SerializeField] bool restartAgain;
+    [Header("DONT CHANGE")]
+    [SerializeField] float fadeOutDuration;
+    [SerializeField] float sizeLerpSpeed;
+   
+
 
     ParticleSystem fog;
     ParticleSystemRenderer fogRenderer;
@@ -44,7 +45,7 @@ public class FogTrigger : MonoBehaviour
         var fogParticleEmission = fog.emission;
         fogParticleEmission.rateOverTime = particleEmissionRate;
 
-        boxCollider.size = new Vector3(fogBoxScale.x, 1, fogBoxScale.y);
+        boxCollider.size = new Vector3(fogBoxScale.x, 5, fogBoxScale.y);
         var fogParticleShape = fog.shape;
         fogParticleShape.scale = new Vector3(fogBoxScale.x, fogBoxScale.y, 0);
 
@@ -92,31 +93,6 @@ public class FogTrigger : MonoBehaviour
             return;
         }
         DestroyAfterFadingOut();
-    }
-
-    void ResetFog()
-    {
-        if (restartAgain)
-        {
-            elapsedTime = 0;
-
-            var fogParticleEmission = fog.emission;
-            fogParticleEmission.rateOverTime = particleEmissionRate;
-
-            boxCollider.size = new Vector3(fogBoxScale.x, 1, fogBoxScale.y);
-            var fogParticleShape = fog.shape;
-            fogParticleShape.scale = new Vector3(fogBoxScale.x, fogBoxScale.y, 0);
-
-            var lifeTime = fog.main;
-            lifeTime.startLifetime = particleLifetime;
-
-            var fogMain = fog.main;
-            fogMain.startColor = fogColor;
-
-            fogRenderer.maxParticleSize = 1;
-
-            fog.Play();
-        }
     }
 
     void DestroyAfterFadingOut()
