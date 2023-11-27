@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 public class Player : MonoBehaviour, IDamagable
 {
     Rigidbody rb;
     Dashing playerDash;
+    CinemachineImpulseSource impulseSource;
     [Header("Player Input Settings")]
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
     [SerializeField] KeyCode controllerPickUp;
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour, IDamagable
     [Header("EquippedWeaponInfo")]
     [SerializeField] Transform weaponEquipPosition;
     [SerializeField] WeaponIDs weaponIDsSO;
+
     int currentWeaponID;
     public PlayerWeapon playerWeapon;
     bool isWeaponPickedUp;
@@ -71,6 +74,7 @@ public class Player : MonoBehaviour, IDamagable
         playerStats.stamina = playerStats.maxStamina;
         InitializePlayerUI(healthBar, playerStats.maxHealth, playerStats.health);
         InitializePlayerUI(staminaBar, playerStats.maxStamina, playerStats.stamina);
+        TryGetComponent(out impulseSource);
     }
 
     void InitializePlayerUI(Image playerUiBar, float MaxValue, float CurrentValue)
@@ -198,6 +202,7 @@ public class Player : MonoBehaviour, IDamagable
         }
         ChangeHealth(-amount);
         IDamagable.onDamageTaken?.Invoke(gameObject);
+        if(impulseSource!=null)impulseSource.GenerateImpulse();
     }
 
     public void ChangeHealth(float amount)

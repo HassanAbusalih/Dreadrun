@@ -39,5 +39,6 @@ public class Machinegun : PlayerWeapon
         GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + transform.forward, projectileRotation);
         projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8, effects);
         soundSO.PlaySound(2, AudioSourceType.Weapons);
+        if (impulseSource != null) impulseSource.GenerateImpulse();
     }
 }

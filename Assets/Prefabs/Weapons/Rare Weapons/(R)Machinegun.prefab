@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 241369036515898189}
   - component: {fileID: 50286907829157061}
   - component: {fileID: 3044182877529312590}
+  - component: {fileID: 4890231624232150897}
   m_Layer: 0
   m_Name: (R)Machinegun
   m_TagString: Untagged
@@ -83,18 +84,17 @@ MonoBehaviour:
   projectileSpeed: 8
   spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
-  audioSource: {fileID: 0}
+  soundSO: {fileID: 0}
   BulletSpawnPoint: {fileID: 7430902626472441684}
   weaponID: 2
   weaponOffset: {x: 0, y: 0, z: 0}
   weaponRotationOffset: {x: 0, y: 0, z: 0}
-  pickUpSoundAudioSource: {fileID: 0}
   weaponEquipText: {fileID: 769593211139889826}
-  weaponCollider: {fileID: 0}
   <weaponIcon>k__BackingField: {fileID: 21300000, guid: 8366955ca9e3978438633b2a87b17563, type: 3}
   <weaponDescription>k__BackingField: IT GOES BRRRRRRRR!
   rampTime: 2
   rampDelay: 0.5
+  firingDuration: 0
 --- !u!114 &3044182877529312590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +112,59 @@ MonoBehaviour:
   - {fileID: 8259513877893555978}
   DelayDuration: 0
   fadeDuration: 0.25
+--- !u!114 &4890231624232150897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50286907829157118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &769593211139889826
 GameObject:
   m_ObjectHideFlags: 0
