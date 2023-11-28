@@ -112,6 +112,7 @@ public class Payload : MonoBehaviour , IDamagable
     {
         health--;
         feedback.UpdateHealth(health, maxhealth);
+        IDamagable.onDamageTaken?.Invoke(gameObject);
         if (health < 0)
         {
             GameManager.Instance.Lose();

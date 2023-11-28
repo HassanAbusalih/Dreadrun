@@ -1530,6 +1530,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8a4682624197020408e11cc429047ab1, type: 3}
   m_PrefabInstance: {fileID: 24619608}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &33738577 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1104769122317296159, guid: 8cbfe77f83cc9434782df374b588f2a0, type: 3}
+  m_PrefabInstance: {fileID: 878024777}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &45860548 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 54864551ebfcae54abc79fb50e4148be, type: 3}
@@ -9341,11 +9346,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3281221220450194303, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 160.96233
+      value: 54.036476
       objectReference: {fileID: 0}
     - target: {fileID: 3281221220450194303, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00020578838
+      value: -0.00017885042
       objectReference: {fileID: 0}
     - target: {fileID: 4350660472619407276, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -30971,6 +30976,79 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cbfe77f83cc9434782df374b588f2a0, type: 3}
+--- !u!1 &878024778 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2220466863588858166, guid: 8cbfe77f83cc9434782df374b588f2a0, type: 3}
+  m_PrefabInstance: {fileID: 878024777}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &878024779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878024778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fa7369eda9cd341a9688c8495d7469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.25
+  takeDamageColor: {r: 1, g: 0, b: 0, a: 0.6117647}
+  takeDamageScale: 0.8
+  damageCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0023422241
+      value: 0
+      inSlope: -3.3851333
+      outSlope: -3.3851333
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.21448955
+    - serializedVersion: 3
+      time: 0.25721422
+      value: 0.35429525
+      inSlope: 0.071027726
+      outSlope: 0.071027726
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.4978643
+    - serializedVersion: 3
+      time: 0.45761544
+      value: 0.04029861
+      inSlope: -0.9064895
+      outSlope: -0.9064895
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.12421032
+    - serializedVersion: 3
+      time: 0.7537107
+      value: 0.8382908
+      inSlope: 4.0030613
+      outSlope: 4.0030613
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.23005293
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -1.8451961
+      outSlope: -1.8451961
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16917959
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animateScale: 1
+  meshRenderer: {fileID: 33738577}
 --- !u!1 &880972149
 GameObject:
   m_ObjectHideFlags: 0
