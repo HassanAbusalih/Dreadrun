@@ -14,6 +14,7 @@ public class InstaRespawnHazard : MonoBehaviour
             if (playerRespawn != null)
             {
                 playerRespawn.Respawn();
+                //repush
             }
         }
     }
