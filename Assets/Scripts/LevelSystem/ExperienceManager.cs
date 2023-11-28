@@ -3,17 +3,21 @@ using UnityEngine;
 
 public class ExperienceManager : MonoBehaviour
 {
-    [SerializeField] int maxExpToLevelUp, requiredExpToLevelUp;
+    [SerializeField] int expThresholdIncrease, expToLevelUp;
     [SerializeField] SoundSO levelUpSFX;
     PerkSelector perkSelector;
     int currentLevel;
     int currentExp;
     public static bool CollectExp { get; private set; } = true;
 
+    private void Awake()
+    {
+        CollectExp = true;
+    }
     void HandleExperience(int newExperience)
     {
         currentExp += newExperience;
-        if (currentExp >= maxExpToLevelUp)
+        if (currentExp >= expThresholdIncrease)
         {
             LevelUp();
             if (levelUpSFX != null)
@@ -29,7 +33,7 @@ public class ExperienceManager : MonoBehaviour
         CollectExp = false;
         currentLevel++;
         currentExp = 0;
-        maxExpToLevelUp += requiredExpToLevelUp;
+        expThresholdIncrease += expToLevelUp;
         Debug.Log("You are now level " + currentLevel);
     }
 
