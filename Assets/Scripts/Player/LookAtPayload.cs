@@ -26,8 +26,8 @@ public class LookAtPayload : MonoBehaviour
     SpriteRenderer arrowSprite;
 
     bool isShowing = false;
-    bool runOnce;
-    bool overriddenByInput = false;
+    bool overriddenToShow = false;
+    bool runOnce = false;
 
 
 
@@ -61,18 +61,17 @@ public class LookAtPayload : MonoBehaviour
         distanceFromPayload = _distanceFromPayload;
 
         isShowing = _distanceFromPayload > distanceToShow ? true : false;
-        bool showArrowDynamically = isShowing && !runOnce;
 
-        if(showArrowDynamically) EnablePayloadArrow(true);
-        if(!isShowing && !overriddenByInput) EnablePayloadArrow(false);
+        if(isShowing && !runOnce) {EnablePayloadArrow(isShowing); runOnce = true;}
+        if (!overriddenToShow && !isShowing) { EnablePayloadArrow(isShowing); runOnce = false; }
 
         if(Input.GetKeyDown(toggleKey))
         {
-            overriddenByInput = !overriddenByInput;
             EnablePayloadArrow(!arrowSprite.enabled);
+            overriddenToShow = arrowSprite.enabled;  
         }
 
-        if (isShowing || overriddenByInput)
+        if (isShowing || overriddenToShow)
         {
             DirectSpriteToPayload();
             animateArrow();
@@ -82,8 +81,6 @@ public class LookAtPayload : MonoBehaviour
 
     void EnablePayloadArrow(bool _enabled)
     {
-        // allows arrow to be shown dynamically
-        runOnce = isShowing ? true : false; 
         arrowSprite.enabled = _enabled;
     }
 
