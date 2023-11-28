@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Diagnostics.Contracts;
 using UnityEngine;
+using Cinemachine;
 
 public class Dashing : MonoBehaviour
 {
@@ -24,6 +25,11 @@ public class Dashing : MonoBehaviour
     [Header("Debug Info")]
     [SerializeField] bool isInvincible = false;
     [SerializeField] bool isDashing;
+
+    [Header("Cinamachine Cameras")]
+    [SerializeField] CinemachineVirtualCamera playerCamera;
+    [SerializeField] CinemachineVirtualCamera dashCamera;
+
 
     public Action<float> onDashing;
     public delegate float canDash();
@@ -86,13 +92,22 @@ public class Dashing : MonoBehaviour
         isDashing = _enabled;
         rb.freezeRotation = _enabled;
         EnableInvincibility(_enabled);
-        
+        SwitchCameras(_enabled);
     }
 
     void EnableInvincibility(bool _enabled)
     {
         isInvincible = _enabled;
         GetComponent<Renderer>().material.color = _enabled ? dashColor : defaultColor;
+    }
+
+    void SwitchCameras(bool _enabled)
+    {
+        if(playerCamera == null || dashCamera == null) return;
+        int playerCamePriority = _enabled ? 0 : 1;
+        int dashCamPriority = _enabled ? 1 : 0;
+        playerCamera.Priority = playerCamePriority;
+        dashCamera.Priority = dashCamPriority;
     }
 
     bool GetPlayerInvincibility()
