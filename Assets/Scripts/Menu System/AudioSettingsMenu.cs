@@ -9,6 +9,8 @@ public class AudioSettingsMenu : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider ambianceVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
+    [SerializeField] GameObject Return;
+    [SerializeField] GameObject mainSettings;
 
     private AudioSettingsData audioSettingsData;
     private AudioManager audioManager;
@@ -97,6 +99,12 @@ public class AudioSettingsMenu : MonoBehaviour
             ambianceVolumeSlider.value = audioSettingsData.ambianceVolume;
             sfxVolumeSlider.value = audioSettingsData.sfxVolume;
         }
+    }
+
+    public void ExitAudioSettings()
+    {
+        Return.SetActive(false);
+        mainSettings.SetActive(true);
     }
 }
 

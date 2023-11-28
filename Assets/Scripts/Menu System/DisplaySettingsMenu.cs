@@ -7,19 +7,25 @@ public class DisplaySettingsMenu : MonoBehaviour
 {
     [SerializeField] Dropdown fullscreenDropdown;
     [SerializeField] Dropdown qualityDropdown;
+    [SerializeField] GameObject Return;
 
     private void Start()
     {
-        fullscreenDropdown.onValueChanged.AddListener(delegate { OnFullscreenDropdownChange(); });
+        /*fullscreenDropdown.onValueChanged.AddListener(delegate { OnFullscreenDropdownChange(); });
         qualityDropdown.onValueChanged.AddListener(delegate { OnQualityDropdownChange(); });
 
-        LoadDisplaySettings();
+        LoadDisplaySettings();*/
     }
 
     public void OnBackButtonPressed()
     {
         SaveDisplaySettings();
         gameObject.SetActive(false);
+    }
+
+    public void ExitDisplaySettings()
+    {
+        Return.SetActive(false);
     }
 
     private void OnFullscreenDropdownChange()
