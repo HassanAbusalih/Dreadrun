@@ -13,7 +13,7 @@ public class Payload : MonoBehaviour , IDamagable
     [SerializeField] float healAmount = 0.5f;
     [SerializeField] float healingInterval = 5f;
     [SerializeField] bool followPath = false;
-    [SerializeField] float interactionRange = 10f;
+    public  float interactionRange { get; private set; }
     [SerializeField][Range(0.1f, 0.9f)] float slowSpeed = 0.5f;
 
     [SerializeField] GameObject visualEffects;

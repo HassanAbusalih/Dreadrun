@@ -10,6 +10,7 @@ public class LookAtPayload : MonoBehaviour
     [Header("Look At Settings")]
     [SerializeField] float distanceToShow;
     [SerializeField] Vector3 offset;
+    [SerializeField] KeyCode toggleKey;
 
     [Header("Animation Settings")]
     [SerializeField] Color loopingColor;
@@ -21,9 +22,13 @@ public class LookAtPayload : MonoBehaviour
     [Header("Debug")]
     [SerializeField] float distanceFromPayload;
 
-    PayloadStats payload;
-    bool isShowing = false;
+    Payload payload;
     SpriteRenderer arrowSprite;
+
+    bool isShowing = false;
+    bool runOnce;
+    bool overriddenByInput = false;
+
 
 
     private void OnValidate()
@@ -33,17 +38,19 @@ public class LookAtPayload : MonoBehaviour
 
     void Start()
     {
-        payload = FindObjectOfType<PayloadStats>();
+        payload = FindObjectOfType<Payload>();
         arrowSprite = GetComponent<SpriteRenderer>();
 
         if (payload != null)
         {
-            distanceToShow += payload.payloadRange;
+            distanceToShow += payload.interactionRange;
         }
         if (arrowSprite != null)
         {
             arrowSprite.enabled = false;
         }
+
+        if (toggleKey == KeyCode.None) toggleKey = KeyCode.Q; 
     }
 
     void Update()
@@ -53,23 +60,31 @@ public class LookAtPayload : MonoBehaviour
         float _distanceFromPayload = Vector3.Distance(player.position, payload.transform.position);
         distanceFromPayload = _distanceFromPayload;
 
-        if (_distanceFromPayload > distanceToShow)
+        isShowing = _distanceFromPayload > distanceToShow ? true : false;
+        bool showArrowDynamically = isShowing && !runOnce;
+
+        if(showArrowDynamically) EnablePayloadArrow(true);
+        if(!isShowing && !overriddenByInput) EnablePayloadArrow(false);
+
+        if(Input.GetKeyDown(toggleKey))
         {
-            isShowing = true;
-            arrowSprite.enabled = true;
-        }
-        else if (_distanceFromPayload <= payload.payloadRange)
-        {
-            if (!isShowing) return;
-            isShowing = false;
-            arrowSprite.enabled = false;
+            overriddenByInput = !overriddenByInput;
+            EnablePayloadArrow(!arrowSprite.enabled);
         }
 
-        if (isShowing)
+        if (isShowing || overriddenByInput)
         {
             DirectSpriteToPayload();
             animateArrow();
         }
+    }
+
+
+    void EnablePayloadArrow(bool _enabled)
+    {
+        // allows arrow to be shown dynamically
+        runOnce = isShowing ? true : false; 
+        arrowSprite.enabled = _enabled;
     }
 
     void DirectSpriteToPayload()
