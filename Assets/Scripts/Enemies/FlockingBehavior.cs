@@ -24,12 +24,12 @@ public class FlockingBehavior : MonoBehaviour
     List<Transform> GetNeighbors()
     {
         var neighbors = new List<Transform>();
-        Collider[] nearbyColliders = Physics.OverlapSphere(transform.position, neighborRadius, flockLayer);
-        foreach (Collider collider in nearbyColliders)
+        if (EnemyPool.Instance == null) { return neighbors; }
+        foreach (var enemy in EnemyPool.Instance.Enemies)
         {
-            if (collider.transform != transform)
+            if (enemy.transform != transform && Vector3.Distance(transform.position, enemy.transform.position) < neighborRadius)
             {
-                neighbors.Add(collider.transform);
+                neighbors.Add(enemy.transform);
             }
         }
         return neighbors;

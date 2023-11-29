@@ -43,7 +43,7 @@ public class LookAtPayload : MonoBehaviour
 
         if (payload != null)
         {
-            distanceToShow += payload.interactionRange;
+            distanceToShow += payload.InteractionRange;
         }
         if (arrowSprite != null)
         {

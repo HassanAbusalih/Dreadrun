@@ -13,7 +13,8 @@ public class Payload : MonoBehaviour , IDamagable
     [SerializeField] float healAmount = 0.5f;
     [SerializeField] float healingInterval = 5f;
     [SerializeField] bool followPath = false;
-    public  float interactionRange { get; private set; }
+    [SerializeField] float interactionRange = 10f;
+    public float InteractionRange { get => interactionRange; }
     [SerializeField][Range(0.1f, 0.9f)] float slowSpeed = 0.5f;
 
     [SerializeField] GameObject visualEffects;
@@ -94,13 +95,14 @@ public class Payload : MonoBehaviour , IDamagable
     {
         if (EnemyPool.Instance == null)
         {
+            Debug.Log("No enemy pool found!");
             return false;
         }
 
         foreach (var enemy in EnemyPool.Instance.Enemies)
         {
             if (enemy == null) continue;
-            if (Vector3.Distance(transform.position, enemy.transform.position) < interactionRange)
+            if (Vector3.Distance(transform.position, enemy.transform.position) < InteractionRange)
             {
                 return true;
             }
@@ -134,7 +136,7 @@ public class Payload : MonoBehaviour , IDamagable
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, interactionRange);
+        Gizmos.DrawWireSphere(transform.position, InteractionRange);
     }
 
     IEnumerator HealOnTimer()
@@ -146,7 +148,7 @@ public class Payload : MonoBehaviour , IDamagable
                 yield return new WaitForSeconds(healingInterval);
                 foreach (var player in players)
                 {
-                    if (Vector3.Distance(transform.position, player.transform.position) < interactionRange)
+                    if (Vector3.Distance(transform.position, player.transform.position) < InteractionRange)
                     {
                         if (visualEffects.activeSelf == false)
                         {
