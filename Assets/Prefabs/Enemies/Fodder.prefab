@@ -100,10 +100,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.6765931
+  m_Height: 3.5173995
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.03993098, y: 0.7586991, z: 0}
 --- !u!114 &5791127613756451099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,10 +117,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 2
-  damageModifier: 2
+  damageModifier: 2.3
   projectileRange: 20
   projectileSpeed: 5
-  spreadAngle: 10
+  spreadAngle: 25
   projectilePrefab: {fileID: 1332995557446588027, guid: c43aab9cdb8fd944ca09da012ab929a8, type: 3}
   soundSO: {fileID: 0}
   projectileCount: 17
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b1cb007168beb4e83efdfd6dddbd84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
+  maxHealth: 40
   movementSpeed: 17
   enemySounds: {fileID: 0}
   sfxCooldown: 1

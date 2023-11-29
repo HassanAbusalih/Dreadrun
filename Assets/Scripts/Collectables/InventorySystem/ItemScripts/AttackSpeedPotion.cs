@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class AttackSpeedPotion : ItemBase
 {
-    [SerializeField] float increaseProjectileSpeed;
-    float defaultProjectileSpeed;
+    [SerializeField] float increaseWeaponDamage;
+    float defaultWeaponDamage;
 
     [SerializeField] float duration;
     float timer = 0f;
@@ -19,9 +19,8 @@ public class AttackSpeedPotion : ItemBase
         hasBuffedItem = true;
         if (hasBuffedItem && player.playerWeapon != null)
         {
-            defaultProjectileSpeed = player.playerWeapon.ProjectileSpeed;
-            player.playerWeapon.ProjectileSpeed += increaseProjectileSpeed;
-            Debug.Log("Increased Projectile speed");
+            defaultWeaponDamage = player.playerWeapon.DamageModifier;
+            player.playerWeapon.DamageModifier += increaseWeaponDamage;
             GetTimer();
             playerRef = player;
         }
@@ -36,7 +35,7 @@ public class AttackSpeedPotion : ItemBase
 
     void ResetProjectileSpeed()
     {
-        playerRef.playerWeapon.ProjectileSpeed = defaultProjectileSpeed;
+        playerRef.playerWeapon.DamageModifier = defaultWeaponDamage;
         hasBuffedItem = false;
     }
 
