@@ -62,8 +62,11 @@ public class Payload : MonoBehaviour , IDamagable
                 Transform targetPoint = pathPointsList[currentPathIndex];
                 transform.position = Vector3.MoveTowards(transform.position, targetPoint.position, currentSpeed * Time.deltaTime);
                 Vector3 directionToPoint = targetPoint.transform.position - transform.position;
-                Quaternion targetRotation = Quaternion.LookRotation(directionToPoint);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                if (directionToPoint != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(directionToPoint);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
                 if (Vector3.Distance(transform.position, targetPoint.position) < 0.1f)
                 {
                     currentPathIndex++;
