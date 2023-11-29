@@ -49,6 +49,6 @@ public class PayloadFeedback : MonoBehaviour
     {
         Vector3 lookPos = Camera.main.transform.position - gameObject.transform.position;
         Quaternion rotation = Quaternion.LookRotation(lookPos);
-        gameObject.transform.rotation = rotation;
+       // gameObject.transform.rotation = rotation;
     }
 }

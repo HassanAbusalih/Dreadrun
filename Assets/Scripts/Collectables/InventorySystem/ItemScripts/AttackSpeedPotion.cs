@@ -19,8 +19,8 @@ public class AttackSpeedPotion : ItemBase
         hasBuffedItem = true;
         if (hasBuffedItem && player.playerWeapon != null)
         {
-            defaultWeaponDamage = player.playerWeapon.DamageModifier;
-            player.playerWeapon.DamageModifier += increaseWeaponDamage;
+            defaultWeaponDamage += player.playerStats.attack;
+            player.playerStats.attack += increaseWeaponDamage;
             GetTimer();
             playerRef = player;
         }
@@ -35,7 +35,7 @@ public class AttackSpeedPotion : ItemBase
 
     void ResetProjectileSpeed()
     {
-        playerRef.playerWeapon.DamageModifier = defaultWeaponDamage;
+        playerRef.playerStats.attack = defaultWeaponDamage;
         hasBuffedItem = false;
     }
 
