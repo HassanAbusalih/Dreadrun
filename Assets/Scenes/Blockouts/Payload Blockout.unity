@@ -260,7 +260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1120472868554901375, guid: dd1f3d2f2ed62c24da43f2ea03c0762e, type: 3}
       propertyPath: maxSpawnCount
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd1f3d2f2ed62c24da43f2ea03c0762e, type: 3}
@@ -569,7 +569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8667111008321786190, guid: a9a88ca5625b07640ad45a1e70d8d134, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -69.7
+      value: -73.19
       objectReference: {fileID: 0}
     - target: {fileID: 8667111008321786190, guid: a9a88ca5625b07640ad45a1e70d8d134, type: 3}
       propertyPath: m_LocalPosition.y
@@ -577,7 +577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8667111008321786190, guid: a9a88ca5625b07640ad45a1e70d8d134, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -115.5
+      value: -113.95
       objectReference: {fileID: 0}
     - target: {fileID: 8667111008321786190, guid: a9a88ca5625b07640ad45a1e70d8d134, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1038,15 +1038,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8667111008321786190, guid: a9a88ca5625b07640ad45a1e70d8d134, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -74
+      value: -91.48
       objectReference: {fileID: 0}
     - target: {fileID: 8667111008321786190, guid: a9a88ca5625b07640ad45a1e70d8d134, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.17
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 8667111008321786190, guid: a9a88ca5625b07640ad45a1e70d8d134, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -141.2
+      value: -132.59
       objectReference: {fileID: 0}
     - target: {fileID: 8667111008321786190, guid: a9a88ca5625b07640ad45a1e70d8d134, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14147,17 +14147,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 1153378731}
   m_VersionIndex: 23690
   m_IsSelectable: 1
-  m_SelectedFaces: 10010000
-  m_SelectedEdges:
-  - a: 1090
-    b: 1091
-  - a: 1092
-    b: 1090
-  - a: 1091
-    b: 1093
-  - a: 1093
-    b: 1092
-  m_SelectedVertices: 42040000430400004404000045040000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!4 &712257301
 Transform:
   m_ObjectHideFlags: 0
@@ -18967,6 +18959,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4483013856840784354, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: projectileSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -19009,6 +19005,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4793277041577332396, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793277041577332397, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4793277041577332399, guid: 6bf32afd15ef074428a2469aed0438e1, type: 3}
