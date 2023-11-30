@@ -40,6 +40,7 @@ public class Player : MonoBehaviour, IDamagable
 
     // Player Events
     public static Action<GameObject> onDamageTaken;
+    public Action<float,bool> WeaponDropFeedback;
     public Action OnPlayerDeath;
     public delegate bool takeDamage();
     public takeDamage canPLayerTakeDamage;
@@ -159,7 +160,9 @@ public class Player : MonoBehaviour, IDamagable
         if (Input.GetKey(pickUpWeaponKey) || Input.GetKey(controllerPickUp) && isWeaponPickedUp)
         {
             if(!isWeaponPickedUp || isPickUpMode) return;
-            if (timer < durationToDropWeapon) { timer += Time.deltaTime; return; }
+            if (timer < durationToDropWeapon)
+            { timer += Time.deltaTime; WeaponDropFeedback?.Invoke(durationToDropWeapon, true); return; }
+           
             ScaleOrDescaleWeapon(false);
             playerWeapon.DropWeapon();
             isWeaponPickedUp = false;
@@ -167,7 +170,7 @@ public class Player : MonoBehaviour, IDamagable
             playerWeapon = null;
             timer = 0;
         }
-        else timer = 0;
+        else {timer = 0; WeaponDropFeedback?.Invoke(durationToDropWeapon,false);}
     }
 
     private void OnTriggerEnter(Collider other)
