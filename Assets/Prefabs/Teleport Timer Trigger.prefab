@@ -48,12 +48,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportDestination: {fileID: 6247177127526335705}
-  secondsToTeleport: 10
+  secondsToTeleport: 6
   timerText: {fileID: 6247177127665641814}
   teleportEffect: {fileID: 5924062750601947478, guid: 1bb509f582a3e384880b900a40b48541, type: 3}
-  timeRemainingToShowEffect: 5
+  timeToShowEffect: 5
   blackScreen: {fileID: 6247177127815169877}
-  fadeTime: 1
+  fadeStartTime: 1.5
+  fadeInTime: 0.5
+  fadeOutTime: 2
 --- !u!65 &6247177127041480628
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -369,7 +371,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 741
   m_TargetDisplay: 0
 --- !u!114 &6247177128520703404
 MonoBehaviour:

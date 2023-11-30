@@ -11,14 +11,19 @@ public class Teleport : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] GameObject teleportEffect;
     [SerializeField] float timeToShowEffect = 5f;
-    //[SerializeField] Image blackScreen;
-    //[SerializeField] float fadeTime = 1f;
+    [SerializeField] Image blackScreen;
+    [SerializeField] float fadeStartTime = 2f;
+    [SerializeField] float fadeInTime = 0.5f;
+    [SerializeField] float fadeOutTime = 1f;
+    bool triggered = false;
     GameObject effectInstance;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Player player))
         {
+            if (triggered) return;
+            triggered = true;
             StartCoroutine(TeleportPlayer(player));
         }
     }
@@ -32,6 +37,7 @@ public class Teleport : MonoBehaviour
         player.transform.position = teleportDestination.position;
         timerText.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
+        yield return Fade(0f, fadeOutTime);
         Destroy(effectInstance);
     }
 
@@ -46,10 +52,14 @@ public class Teleport : MonoBehaviour
             {
                 effectInstance.SetActive(true);
             }
+            if (timer <= fadeStartTime)
+            {
+                StartCoroutine(Fade(1f, fadeInTime));
+            }
             yield return null;
         }
     }
-    /*
+
     IEnumerator Fade(float target, float time)
     {
         float timer = 0f;
@@ -61,5 +71,6 @@ public class Teleport : MonoBehaviour
             blackScreen.color = new(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, current);
             yield return null;
         }
-    }*/
+        blackScreen.color = new(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, target);
+    }
 }
