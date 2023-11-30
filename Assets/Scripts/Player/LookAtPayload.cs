@@ -24,12 +24,31 @@ public class LookAtPayload : MonoBehaviour
 
     Payload payload;
     SpriteRenderer arrowSprite;
+    Teleport teleport;
 
     bool isShowing = false;
     bool overriddenToShow = false;
     bool runOnce = false;
+    [SerializeField]bool arrowState = false;
 
 
+    private void OnEnable()
+    {
+        teleport = FindObjectOfType<Teleport>();
+        if (teleport != null)
+        {
+            teleport.OnTimerOver += ChangeArrowState;
+            arrowState = false;
+        }
+    }
+
+    void OnDisable()
+    {
+        if (teleport != null)
+        {
+            teleport.OnTimerOver -= ChangeArrowState;
+        }
+    }
 
     private void OnValidate()
     {
@@ -55,6 +74,7 @@ public class LookAtPayload : MonoBehaviour
 
     void Update()
     {
+        if (!arrowState) return;
         if (payload == null || arrowSprite == null || player == null) return;
 
         float _distanceFromPayload = Vector3.Distance(player.position, payload.transform.position);
@@ -78,6 +98,11 @@ public class LookAtPayload : MonoBehaviour
         }
     }
 
+
+    void ChangeArrowState()
+    {
+        arrowState = true;
+    }
 
     void EnablePayloadArrow(bool _enabled)
     {

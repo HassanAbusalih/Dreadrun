@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -10,10 +11,40 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject mainMenu;
     [SerializeField] string GameScene;
+    [SerializeField] string tutorialScene;
+    [SerializeField] bool hasCompletedTutorial = false;
+
+    private void Start()
+    {
+        LoadDataFromJson();
+    }
+
+    private void LoadDataFromJson()
+    {
+        string filePath = "interactionData.json";
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            InteractData data = JsonUtility.FromJson<InteractData>(json);
+            hasCompletedTutorial = data.tutorialstate;
+        }
+        else
+        {
+            Debug.LogWarning("No saved data file found.");
+        }
+    }
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(GameScene);
+        if (hasCompletedTutorial)
+        {
+            SceneManager.LoadScene(GameScene);
+        }
+        else
+        {
+            SceneManager.LoadScene(tutorialScene);
+        }
+        
     }
 
     public void OpenSettingsMenu()
