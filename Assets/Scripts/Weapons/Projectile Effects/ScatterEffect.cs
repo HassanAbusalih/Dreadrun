@@ -6,7 +6,8 @@ public class ScatterEffect : MonoBehaviour, IProjectileEffect
 {
     int projectileCount = 4;
     float projectileSpeed = 5f;
-    float projectileRange = 5f; 
+    float projectileRange = 5f;
+    float damagePercentage = 0.5f;
     GameObject projectilePrefab;
 
     public bool ApplyOnCollision { get; } = true;
@@ -22,7 +23,7 @@ public class ScatterEffect : MonoBehaviour, IProjectileEffect
     public void ApplyEffect(IDamagable damagable, float damage, List<IProjectileEffect> projectileEffects)
     {
         projectileEffects.RemoveAll((effect) => EffectsToRemove().Contains(effect.GetType()));
-        Scatter(damagable.gameObject.transform, damage, projectileEffects);
+        Scatter(damagable.gameObject.transform, damage * damagePercentage, projectileEffects);
     }
 
     public void ApplyEffect(Transform point, float damage, List<IProjectileEffect> projectileEffects)
