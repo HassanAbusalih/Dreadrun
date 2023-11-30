@@ -26,11 +26,26 @@ public class PayloadFeedback : MonoBehaviour
     public void ChangeColor(float speed, float maxSpeed)
     {
         float normalizedSpeed = Mathf.Clamp01(speed / maxSpeed);
-        Color lerpedColor = Color.Lerp(stopColor, moderateColor, normalizedSpeed);
-        lerpedColor = Color.Lerp(lerpedColor, fastColor, normalizedSpeed);
+        Color payloadColor = new();
+        if (normalizedSpeed == 1)
+        {
+            payloadColor = fastColor;
+        }
+        else if (normalizedSpeed > 0 && normalizedSpeed < 1)
+        {
+            payloadColor = moderateColor;
+        }
+        else
+        {
+            payloadColor = stopColor;
+        }
+        //Color lerpedColor = Color.Lerp(stopColor, moderateColor, normalizedSpeed);
+        //lerpedColor = Color.Lerp(lerpedColor, fastColor, normalizedSpeed);
+
         if (objectRenderer != null)
         {
-            objectRenderer.material.color = lerpedColor;
+            objectRenderer.material.color = payloadColor;
+            //objectRenderer.material.color = lerpedColor;
         }
 
     }
@@ -49,6 +64,6 @@ public class PayloadFeedback : MonoBehaviour
     {
         Vector3 lookPos = Camera.main.transform.position - gameObject.transform.position;
         Quaternion rotation = Quaternion.LookRotation(lookPos);
-       // gameObject.transform.rotation = rotation;
+        // gameObject.transform.rotation = rotation;
     }
 }
