@@ -12902,8 +12902,16 @@ PrefabInstance:
       value: -0.0001788504
       objectReference: {fileID: 0}
     - target: {fileID: 4350660472619407264, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: playerStats.defense
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350660472619407264, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: durationToDropWeapon
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350660472619407264, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: playerStats.maxHealth
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4350660472619407265, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: deadZone
@@ -25777,7 +25785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa70ebed7cf5f846b904435068c8cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: MainGame
+  nextSceneName: Main Game
   interactKey: 101
 --- !u!1 &2108724720
 GameObject:
