@@ -1536,12 +1536,12 @@ MonoBehaviour:
   weaponEquipText: {fileID: 1482761402026850526}
   <weaponIcon>k__BackingField: {fileID: 21300000, guid: 6dd225d76b2cdbe49958329293f8b942, type: 3}
   <weaponDescription>k__BackingField: Charge to shoot stronger arrows
-  homingRange: 5
-  homingStrength: 250
-  minDamageModifier: 1
-  minRange: 3
-  minSpeed: 3
-  maxProjectiles: 3
+  homingRange: 10
+  homingStrength: 400
+  minDamageModifier: 3
+  minRange: 4
+  minSpeed: 4
+  maxProjectiles: 8
   chargeIndicator: {fileID: 6664075836252118382}
   minColor: {r: 1, g: 0.93979645, b: 0, a: 1}
   maxColor: {r: 1, g: 0, b: 0, a: 1}
@@ -1576,7 +1576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
     m_ImpulseChannel: 1
-    m_ImpulseShape: 2
+    m_ImpulseShape: 4
     m_CustomImpulseShape:
       serializedVersion: 2
       m_Curve: []
@@ -1614,7 +1614,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0, y: -1, z: 0}
+  m_DefaultVelocity: {x: 0, y: -0.05, z: 0}
 --- !u!1 &7841144965636941920
 GameObject:
   m_ObjectHideFlags: 0
