@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Drawing;
 using TMPro;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class Teleport : MonoBehaviour
     [SerializeField] float fadeOutTime = 1f;
     bool triggered = false;
     GameObject effectInstance;
+    public Action OnTimerOver;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -39,6 +41,7 @@ public class Teleport : MonoBehaviour
         yield return new WaitForSeconds(1f);
         yield return Fade(0f, fadeOutTime);
         Destroy(effectInstance);
+        OnTimerOver?.Invoke();
     }
 
     IEnumerator Timer()
