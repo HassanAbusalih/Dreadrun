@@ -81,6 +81,7 @@ public class MeleeFodderEnemy : EnemyAIBase
 
         lastAttackTime = Time.time;
         chargeAndAttack = null;
+        rb.velocity = Vector3.zero;
     }
 
     void StopAttack()
@@ -89,6 +90,7 @@ public class MeleeFodderEnemy : EnemyAIBase
         {
             StopCoroutine(chargeAndAttack);
             chargeAndAttack = null;
+            rb.velocity = Vector3.zero;
         }
         lastAttackTime = Time.time;
     }

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Payload : MonoBehaviour , IDamagable
+public class Payload : MonoBehaviour, IDamagable
 {
     float health;
-    
+
     [Header("Stats")]
     [SerializeField] float maxhealth = 500f;
     [SerializeField] float speed = 5f;
@@ -18,7 +18,6 @@ public class Payload : MonoBehaviour , IDamagable
     [SerializeField][Range(0.1f, 0.9f)] float slowSpeed = 0.5f;
 
     [SerializeField] GameObject visualEffects;
-
     [Header("Path Points transforms")]
     [SerializeField] Transform grandParentTransform;
     public List<Transform> pathPointsParent = new();
@@ -50,11 +49,11 @@ public class Payload : MonoBehaviour , IDamagable
     {
         if (followPath)
         {
-           float currentSpeed = speed;
+            float currentSpeed = speed;
             if (EnemiesInRange())
             {
                 currentSpeed *= slowSpeed;
-                
+
                 feedback.ChangeColor(currentSpeed, speed);
             }
             if (currentPathIndex < pathPointsList.Count)
