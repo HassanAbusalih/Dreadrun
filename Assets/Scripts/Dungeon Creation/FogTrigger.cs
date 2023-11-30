@@ -30,12 +30,18 @@ public class FogTrigger : MonoBehaviour
 
     void Start()
     {
+        Initialize();
         delayToDestroy = fadeOutDuration + 4f;
         fog.time = 0.01f;
         fog.Play();
     }
 
     private void OnValidate()
+    {
+        Initialize();
+    }
+
+    void Initialize()
     {
         fog = GetComponentInChildren<ParticleSystem>();
         boxCollider = GetComponent<BoxCollider>();
