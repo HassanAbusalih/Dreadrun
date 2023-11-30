@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 1
   damageModifier: 2.3
-  projectileRange: 20
+  projectileRange: 35
   projectileSpeed: 7
   spreadAngle: 25
   projectilePrefab: {fileID: 1332995557446588027, guid: c43aab9cdb8fd944ca09da012ab929a8, type: 3}
@@ -136,15 +136,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b1cb007168beb4e83efdfd6dddbd84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 120
-  movementSpeed: 17
+  maxHealth: 100
+  movementSpeed: 20
   enemySounds: {fileID: 0}
   sfxCooldown: 1
   shootingRange: 30
   strafeRange: 20
   retreatRange: 9.87
   delayBetweenShots: 1
-  percentageVariant: 0.3
+  percentageVariant: 0.407
   strafePercent: 1
   flockPercent: 0.2
 --- !u!54 &5791127613756451092
@@ -186,7 +186,7 @@ MonoBehaviour:
   alignmentStrength: 1
   cohesionStrength: 1
   separationStrength: 4
-  maxSteerPercentage: 2
+  maxSteerPercentage: 3
 --- !u!114 &9219094104909967887
 MonoBehaviour:
   m_ObjectHideFlags: 0
