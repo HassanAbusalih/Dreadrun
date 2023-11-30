@@ -16,9 +16,7 @@ public static class Explosion
             if (nearbyObject.TryGetComponent(out Projectile _) || nearbyObject.TryGetComponent(out Grenade _)) { continue; }
             if (nearbyObject.TryGetComponent(out Rigidbody rb))
             {
-                Vector3 explosionDirection = (nearbyObject.transform.position - origin.position).normalized;
-                explosionDirection.y = 0;
-                rb.AddForce(explosionDirection * explosionForce, ForceMode.Impulse);
+                ApplyForces(rb, rb.transform.position, origin.position, explosionRadius, explosionForce, 2f, 0.01f);
             }
         }
     }
@@ -43,9 +41,7 @@ public static class Explosion
             if (nearbyObject.TryGetComponent(out Projectile _) || nearbyObject.TryGetComponent(out Grenade _)) { continue; }
             if (nearbyObject.TryGetComponent(out Rigidbody rb))
             {
-                Vector3 explosionDirection = (nearbyObject.transform.position - origin.position).normalized;
-                explosionDirection.y = 0;
-                rb.AddForce(explosionDirection * explosionForce, ForceMode.Impulse);
+                ApplyForces(rb, rb.transform.position, origin.position, explosionRadius, explosionForce, 2f, 0.01f);
             }
         }
     }
@@ -69,9 +65,7 @@ public static class Explosion
             if (nearbyObject.TryGetComponent(out Projectile _) || nearbyObject.TryGetComponent(out Grenade _)) { continue; }
             if (nearbyObject.TryGetComponent(out Rigidbody rb))
             {
-                Vector3 explosionDirection = (nearbyObject.transform.position - point).normalized;
-                explosionDirection.y = 0;
-                rb.AddForce(explosionDirection * explosionForce, ForceMode.Impulse);
+                ApplyForces(rb, rb.transform.position, point, explosionRadius, explosionForce, 2f, 0.01f);
             }
         }
     }
@@ -89,9 +83,7 @@ public static class Explosion
             if (nearbyObject.TryGetComponent(out Projectile _) || nearbyObject.TryGetComponent(out Grenade _)) { continue; }
             if (nearbyObject.TryGetComponent(out Rigidbody rb))
             {
-                Vector3 explosionDirection = (nearbyObject.transform.position - origin.position).normalized;
-                explosionDirection.y = 0;
-                rb.AddForce(explosionDirection * explosionForce, ForceMode.Impulse);
+                ApplyForces(rb, rb.transform.position, origin.position, explosionRadius, explosionForce, 2f, 0.01f);
             }
         }
     }
@@ -109,10 +101,23 @@ public static class Explosion
             if (nearbyObject.TryGetComponent(out Projectile _) || nearbyObject.TryGetComponent(out Grenade _)) { continue; }
             if (nearbyObject.TryGetComponent(out Rigidbody rb))
             {
-                Vector3 explosionDirection = (nearbyObject.transform.position - origin.position).normalized;
-                explosionDirection.y = 0;
-                rb.AddForce(explosionDirection * explosionForce, forceMode);
+                ApplyForces(rb, rb.transform.position, origin.position, explosionRadius, explosionForce, 2f, 0.01f);
             }
         }
+    }
+
+    public static void ApplyForces(Rigidbody rb, Vector3 rbPosition, Vector3 explosionOrigin, float explosionRadius, float explosionForce, float additionalExplosionForce, float forceMultiplier)
+    {
+        Vector3 knockbackDirection = (rbPosition - explosionOrigin).normalized;
+        knockbackDirection.y = 0.2f;
+
+        Vector3 biasedKnockbackDirection = knockbackDirection + Vector3.up * 0.9f;
+
+        float smoothing = 0.5f;
+        Vector3 targetVelocity = Vector3.Lerp(rb.velocity, biasedKnockbackDirection * explosionForce, smoothing);
+        rb.velocity = targetVelocity;
+
+        rb.AddExplosionForce(additionalExplosionForce, explosionOrigin, explosionRadius);
+        rb.AddForce(biasedKnockbackDirection * explosionForce * forceMultiplier, ForceMode.Impulse);
     }
 }
