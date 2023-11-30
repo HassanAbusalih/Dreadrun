@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class Explosion
@@ -108,16 +109,37 @@ public static class Explosion
 
     public static void ApplyForces(Rigidbody rb, Vector3 rbPosition, Vector3 explosionOrigin, float explosionRadius, float explosionForce, float additionalExplosionForce, float forceMultiplier)
     {
-        Vector3 knockbackDirection = (rbPosition - explosionOrigin).normalized;
-        knockbackDirection.y = 0.2f;
+        if (CoroutineWorkHorse.instance == null)
+        {
+            (new GameObject("CoroutineWorkHorse")).AddComponent<CoroutineWorkHorse>();
+        }
+        CoroutineWorkHorse.instance.StartWork(ApplyForce(rb, rbPosition, explosionOrigin, explosionRadius, explosionForce, additionalExplosionForce, forceMultiplier));
+    }
 
-        Vector3 biasedKnockbackDirection = knockbackDirection + Vector3.up * 0.9f;
+    static IEnumerator ApplyForce(Rigidbody rb, Vector3 rbPosition, Vector3 explosionOrigin, float explosionRadius, float explosionForce, float additionalExplosionForce, float forceMultiplier)
+    {
+        float timer = 0;
+        while (timer < 0.1f && rb != null)
+        {
+            timer += Time.deltaTime;
+            rb.AddForce(rbPosition - explosionOrigin * explosionForce * Time.deltaTime, ForceMode.Force);
+            rb.velocity = new(rb.velocity.x, 0, rb.velocity.z);
+            yield return null;
+        }
+    }
+}
 
-        float smoothing = 0.5f;
-        Vector3 targetVelocity = Vector3.Lerp(rb.velocity, biasedKnockbackDirection * explosionForce, smoothing);
-        rb.velocity = targetVelocity;
+public class CoroutineWorkHorse : MonoBehaviour
+{
+    public static CoroutineWorkHorse instance;
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(this);
+    }
 
-        rb.AddExplosionForce(additionalExplosionForce, explosionOrigin, explosionRadius);
-        rb.AddForce(biasedKnockbackDirection * explosionForce * forceMultiplier, ForceMode.Impulse);
+    public void StartWork(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
     }
 }
