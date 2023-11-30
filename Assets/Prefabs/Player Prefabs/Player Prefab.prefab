@@ -359,8 +359,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487981830050385651}
-  m_LocalRotation: {x: 0.5847487, y: 0.0002481169, z: -0.00017885042, w: 0.81121445}
-  m_LocalPosition: {x: -471.5866, y: 54.036476, z: 839.25775}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -442.76175, y: -49.81, z: 806.03}
   m_LocalScale: {x: 1.5000001, y: 1.4999999, z: 1.4999999}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -392,9 +392,9 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 65
+  field of view: 40
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -692,8 +692,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2640865487898591576}
-  m_LocalRotation: {x: 0.5847487, y: 0.0002481169, z: -0.00017885042, w: 0.81121445}
-  m_LocalPosition: {x: -471.5866, y: 54.036476, z: 839.25775}
+  m_LocalRotation: {x: 0.5847487, y: 0.0002481169, z: -0.0001788504, w: 0.81121445}
+  m_LocalPosition: {x: -471.5866, y: 54.03647, z: 839.25775}
   m_LocalScale: {x: 1.5000002, y: 1.4999998, z: 1.4999999}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1088,8 +1088,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3281221220450194272}
-  m_LocalRotation: {x: 0.5847487, y: 0.0002481169, z: -0.00017885042, w: 0.81121445}
-  m_LocalPosition: {x: -471.5866, y: 54.036476, z: 839.25775}
+  m_LocalRotation: {x: 0.5847487, y: 0.0002481169, z: -0.0001788504, w: 0.81121445}
+  m_LocalPosition: {x: -471.5866, y: 54.03647, z: 839.25775}
   m_LocalScale: {x: 1.5000002, y: 1.4999998, z: 1.4999999}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1553,6 +1553,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 24.89
   controllerEnabled: 0
+  deadZone: 50
 --- !u!114 &5531912465785331505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1757,17 +1758,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
-    m_ImpulseChannel: 1
+    m_ImpulseChannel: -1
     m_ImpulseShape: 0
     m_CustomImpulseShape:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: -0.101280585
+        outSlope: -0.101280585
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.53947276
+      - serializedVersion: 3
+        time: 0.20393749
+        value: 1.2879786
+        inSlope: 0.17543887
+        outSlope: 0.17543887
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.49496168
+        outWeight: 0.24199626
+      - serializedVersion: 3
+        time: 0.6046374
+        value: 0.17368948
+        inSlope: 0.045235317
+        outSlope: 0.045235317
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.5737302
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: -1.3993012
+        outSlope: -1.3993012
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.2956137
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    m_ImpulseDuration: 0.2
-    m_ImpulseType: 0
-    m_DissipationRate: 0.25
+    m_ImpulseDuration: 0.12
+    m_ImpulseType: 2
+    m_DissipationRate: 0.9
     m_RawSignal: {fileID: 0}
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
@@ -1794,9 +1831,9 @@ MonoBehaviour:
     m_ImpactRadius: 100
     m_DirectionMode: 0
     m_DissipationMode: 2
-    m_DissipationDistance: 100
-    m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0, y: -1, z: 0}
+    m_DissipationDistance: 50
+    m_PropagationSpeed: 320
+  m_DefaultVelocity: {x: 0.25, y: 0.5, z: 0.25}
 --- !u!95 &17628112449638701
 Animator:
   serializedVersion: 5

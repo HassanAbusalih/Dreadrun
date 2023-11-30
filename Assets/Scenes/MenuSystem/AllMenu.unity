@@ -6561,7 +6561,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 1437987685}
   mainMenu: {fileID: 682369043}
-  GameScene: Payload Layout
+  GameScene: MainGame
+  tutorialScene: Tutorial room
+  hasCompletedTutorial: 0
 --- !u!1 &685502851
 GameObject:
   m_ObjectHideFlags: 0
@@ -11425,6 +11427,8 @@ MonoBehaviour:
   settingsMenu: {fileID: 1094329998}
   mainMenu: {fileID: 0}
   GameScene: 
+  tutorialScene: 
+  hasCompletedTutorial: 0
 --- !u!1001 &1097150580
 PrefabInstance:
   m_ObjectHideFlags: 0
