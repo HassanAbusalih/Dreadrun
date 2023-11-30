@@ -5,15 +5,10 @@ using UnityEngine;
 
 public class PlayerRotater : MonoBehaviour
 {
-    private Rigidbody rb;
     [SerializeField] float rotationSpeed;
     [SerializeField] bool controllerEnabled;
-    private Vector3 inputVector;
+    [SerializeField] float deadZone = 50f;
     float mouseHorizontal;
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
 
     void Update()
     {
@@ -47,10 +42,7 @@ public class PlayerRotater : MonoBehaviour
         // Calculate the distance from the mouse position to the center of the screen
         float mouseDistanceFromCenter = Vector3.Distance(mouseScreenPosition, new Vector3(Screen.width / 2, Screen.height / 2));
 
-        // Set a threshold for the offset (adjust this value according to your preference)
-        float offsetThreshold = 135f;
-
-        if (mouseDistanceFromCenter > offsetThreshold)
+        if (mouseDistanceFromCenter > deadZone)
         {
             // Only rotate if the mouse is beyond the offset threshold from the center
 

@@ -71,7 +71,8 @@ public class Speedster : EnemyAIBase
             return;
         }
         Vector3 targetPos = player.position + positionAroundTarget;
-        if (Vector3.Distance(targetPos, transform.position) < 1f)
+        Vector3 adjustedargetPos = new(targetPos.x, transform.position.y, targetPos.z);
+        if (Vector3.Distance(adjustedargetPos, transform.position) < 1f)
         {
             GeneratePosition();
         }
