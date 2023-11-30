@@ -408,6 +408,7 @@ GameObject:
   - component: {fileID: 3237868634320123479}
   - component: {fileID: 1873999082101002130}
   - component: {fileID: 7577617672211074472}
+  - component: {fileID: 4633421039238894849}
   m_Layer: 0
   m_Name: (C)Grenade Launcher
   m_TagString: Untagged
@@ -474,9 +475,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 1
-  damageModifier: 5
+  damageModifier: 40
   projectileRange: 15
-  projectileSpeed: 12
+  projectileSpeed: 8
   spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 0b53ec8e121e72f43a40f849be1cc247, type: 3}
   soundSO: {fileID: 11400000, guid: 01a076e3bcdbe9a4889f9fd61cb18e1e, type: 2}
@@ -485,7 +486,6 @@ MonoBehaviour:
   weaponOffset: {x: 0, y: 0, z: 0}
   weaponRotationOffset: {x: 0, y: 0, z: 0}
   weaponEquipText: {fileID: 434639461031808662}
-  weaponCollider: {fileID: 0}
   <weaponIcon>k__BackingField: {fileID: 21300000, guid: c075e4f264781bb49af4f317dab3f7bc, type: 3}
   <weaponDescription>k__BackingField: When charged and released it goes BOOM!
   minRange: 2.5
@@ -511,6 +511,59 @@ MonoBehaviour:
   - {fileID: 1701077089217129363}
   DelayDuration: 0
   fadeDuration: 0.3
+--- !u!114 &4633421039238894849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2277369173519994104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &5555178775937615726
 GameObject:
   m_ObjectHideFlags: 0

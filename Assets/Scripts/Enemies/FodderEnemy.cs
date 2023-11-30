@@ -8,6 +8,8 @@ public class FodderEnemy : EnemyAIBase
     [SerializeField] float strafeRange = 5.0f;
     [SerializeField] float retreatRange = 3.0f;
     [SerializeField] float delayBetweenShots = 1f;
+    [Range(0, 1)]
+    [SerializeField] float percentageVariant = 0.3f;
     float strafeStartTime;
     float strafeLength;
     bool clockwiseStrafe;
@@ -23,7 +25,7 @@ public class FodderEnemy : EnemyAIBase
         }
         MoveToTarget moveToTarget = new(this, GetClosestPlayer, movementSpeed);
         MoveToTarget retreat = new(this, GetClosestPlayer, -movementSpeed);
-        AttackInterval attackInterval = new(this, delayBetweenShots);
+        AttackInterval attackInterval = new(this, delayBetweenShots, percentageVariant);
         SpecializedMovement specializedMovement = new(this, GetClosestPlayer);
 
         TargetRangeCheck retreatRange = new(this, GetClosestPlayer, 0, this.retreatRange);
@@ -44,7 +46,7 @@ public class FodderEnemy : EnemyAIBase
         Sequencer withinShootingRangeSeq = new(shootingRange, moveToTarget, attackInterval);
         Sequencer farSeq = new(farRange, moveToTarget);
 
-        topNode = new Selector(new Node[] { retreatSeq, strafeSeq, withinShootingRangeSeq, farSeq});
+        topNode = new Selector(new Node[] { retreatSeq, strafeSeq, withinShootingRangeSeq, farSeq });
     }
 
     void Update()

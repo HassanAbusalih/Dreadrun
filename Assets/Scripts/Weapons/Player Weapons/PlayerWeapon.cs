@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using Cinemachine;
 
 public abstract class PlayerWeapon : WeaponBase
 {
@@ -21,12 +22,14 @@ public abstract class PlayerWeapon : WeaponBase
     [field: SerializeField] public string weaponDescription { get; private set; }
     public static Action<PlayerWeapon> weaponPickedUpOrDropped;
     Collider[] weaponColliders;
+    protected CinemachineImpulseSource impulseSource;
 
 
     protected virtual void Start()
     {
 
         weaponColliders = GetComponents<Collider>();
+        TryGetComponent(out impulseSource);
         for (int i = 0; i < weaponColliders.Length; i++)
         {
             if (weaponColliders[i].isTrigger == false)

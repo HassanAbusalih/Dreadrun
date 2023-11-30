@@ -41,5 +41,6 @@ public class Shotgun : PlayerWeapon
         {
             soundSO.PlaySound(2, AudioSourceType.Weapons);
         }
+        if (impulseSource != null) impulseSource.GenerateImpulse();
     }
 }

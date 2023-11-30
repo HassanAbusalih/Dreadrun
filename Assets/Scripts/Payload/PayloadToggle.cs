@@ -7,6 +7,8 @@ public class PayloadToggle : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] Payload payload;
     [SerializeField] float range = 10f;
+    [SerializeField] GameObject gateWall;
+    [SerializeField] GameObject musicStart;
 
     void Start()
     {
@@ -19,14 +21,18 @@ public class PayloadToggle : MonoBehaviour
         if (player == null) return;
         if (Vector3.Distance(transform.position, player.transform.position) < range)
         {
-            if(Input.GetKey(KeyCode.F))
+            if (Input.GetKey(KeyCode.F))
             {
                 payload.StartFollowingPath();
                 gameObject.SetActive(false);
+                Destroy(gateWall);
             }
         }
     }
-
+    private void OnDisable()
+    {
+        musicStart.SetActive(true);
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

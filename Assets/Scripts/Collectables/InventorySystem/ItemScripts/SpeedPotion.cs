@@ -16,7 +16,7 @@ public class SpeedPotion : ItemBase
     {
         hasBuffedItem = true;
         defaultSpeed = player.playerStats.speed;
-        player.playerStats.speed = speedIncrease;
+        player.playerStats.speed += speedIncrease;
         Debug.Log("Speed increased");
         GetTimer();
         playerRef = player;

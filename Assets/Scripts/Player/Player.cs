@@ -1,17 +1,18 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 public class Player : MonoBehaviour, IDamagable
 {
     Rigidbody rb;
     Dashing playerDash;
+    CinemachineImpulseSource impulseSource;
     [Header("Player Input Settings")]
-    [SerializeField] KeyCode sprintKey;
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
-    [SerializeField] KeyCode dropWeaponKey = KeyCode.Q;
     [SerializeField] KeyCode controllerPickUp;
-    [SerializeField] KeyCode controllerDrop;
+    [SerializeField] float durationToDropWeapon = 1.5f;
+
 
     [Header("Player slope info/Settings")]
     [SerializeField] float maxSlopeAngle;
@@ -31,9 +32,11 @@ public class Player : MonoBehaviour, IDamagable
     [Header("EquippedWeaponInfo")]
     [SerializeField] Transform weaponEquipPosition;
     [SerializeField] WeaponIDs weaponIDsSO;
+
     int currentWeaponID;
     public PlayerWeapon playerWeapon;
     bool isWeaponPickedUp;
+    bool isPickUpMode;
 
     // Player Events
     public static Action<GameObject> onDamageTaken;
@@ -44,6 +47,7 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] SoundSO takeDamageSFX;
     [SerializeField] float sfxCooldown = 1f;
     float timeSinceSFX;
+    float timer;
     RaycastHit slopeHitt;
 
     private void OnEnable()
@@ -70,6 +74,7 @@ public class Player : MonoBehaviour, IDamagable
         playerStats.stamina = playerStats.maxStamina;
         InitializePlayerUI(healthBar, playerStats.maxHealth, playerStats.health);
         InitializePlayerUI(staminaBar, playerStats.maxStamina, playerStats.stamina);
+        TryGetComponent(out impulseSource);
     }
 
     void InitializePlayerUI(Image playerUiBar, float MaxValue, float CurrentValue)
@@ -80,8 +85,9 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        PickUpUnequippedWeapon();
         DropCurrentWeapon();
+        PickUpUnequippedWeapon();
+        
         playerStats.stamina = Mathf.Lerp(playerStats.stamina, playerStats.maxStamina, Time.deltaTime * staminaRecoverySpeed);
         UpdatePlayerUI(staminaBar, playerStats.stamina, playerStats.maxStamina);
     }
@@ -104,6 +110,7 @@ public class Player : MonoBehaviour, IDamagable
         rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
         if( normalizedDirection.magnitude == 0 && !onSlope && rb.velocity.y<=0)
         rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
+        rb.useGravity = !onSlope;
 
         rb.velocity += moveVelocity;
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerStats.speed);
@@ -132,27 +139,35 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (pickUpWeaponKey == KeyCode.None) pickUpWeaponKey = KeyCode.E;
         if (controllerPickUp == KeyCode.None) controllerPickUp = KeyCode.JoystickButton3;
-        if (playerWeapon == null) return;
-        if (Input.GetKeyDown(pickUpWeaponKey) || Input.GetKeyDown(controllerPickUp) && !isWeaponPickedUp)
+        
+        if (Input.GetKeyDown(pickUpWeaponKey) || Input.GetKeyDown(controllerPickUp))
         {
+            if (playerWeapon == null || isWeaponPickedUp) return;
             ScaleOrDescaleWeapon(true);
             playerWeapon.PickUpWeapon(weaponEquipPosition, ref currentWeaponID);
             isWeaponPickedUp = true;
+            isPickUpMode = true;
+        }
+        else if(Input.GetKeyUp(pickUpWeaponKey) || Input.GetKeyUp(controllerPickUp) && isWeaponPickedUp)
+        {
+           isPickUpMode = false;
         }
     }
 
     void DropCurrentWeapon()
     {
-        if (dropWeaponKey == KeyCode.None) dropWeaponKey = KeyCode.Q;
-        if (controllerDrop == KeyCode.None) controllerDrop = KeyCode.JoystickButton2;
-        if (Input.GetKeyDown(dropWeaponKey) || Input.GetKeyDown(controllerDrop) && isWeaponPickedUp)
+        if (Input.GetKey(pickUpWeaponKey) || Input.GetKey(controllerPickUp) && isWeaponPickedUp)
         {
+            if(!isWeaponPickedUp || isPickUpMode) return;
+            if (timer < durationToDropWeapon) { timer += Time.deltaTime; return; }
             ScaleOrDescaleWeapon(false);
             playerWeapon.DropWeapon();
             isWeaponPickedUp = false;
             currentWeaponID = 0;
             playerWeapon = null;
+            timer = 0;
         }
+        else timer = 0;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -164,7 +179,10 @@ public class Player : MonoBehaviour, IDamagable
     private void OnTriggerExit(Collider other)
     {
         if (isWeaponPickedUp) return;
-        playerWeapon = null;
+        if (other.TryGetComponent(out PlayerWeapon unequippedWeapon))
+        {
+            if(playerWeapon == unequippedWeapon) playerWeapon = null;
+        }
     }
 
     public void TakeDamage(float amount)
@@ -184,6 +202,7 @@ public class Player : MonoBehaviour, IDamagable
         }
         ChangeHealth(-amount);
         IDamagable.onDamageTaken?.Invoke(gameObject);
+        if(impulseSource!=null)impulseSource.GenerateImpulse();
     }
 
     public void ChangeHealth(float amount)

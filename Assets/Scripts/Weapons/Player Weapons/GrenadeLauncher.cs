@@ -52,6 +52,7 @@ public class GrenadeLauncher : PlayerWeapon
         }
         GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + transform.forward, transform.rotation);
         projectile.GetComponent<Grenade>().Initialize(target, currentSpeed, damageModifier, 8, effects);
+        if (impulseSource != null) impulseSource.GenerateImpulse();
         if (soundSO != null)
         {
             soundSO.PlaySound(2, AudioSourceType.Weapons);

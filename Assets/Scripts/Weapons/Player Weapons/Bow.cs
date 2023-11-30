@@ -36,6 +36,7 @@ public class Bow : PlayerWeapon
             chargeTime = 0;
             hasPlayedWindUpSFX = false;
         }
+
         VisualFeedback();
     }
 
@@ -60,6 +61,7 @@ public class Bow : PlayerWeapon
         {
             soundSO.PlaySound(2, AudioSourceType.Weapons);
         }
+        if (impulseSource != null) impulseSource.GenerateImpulse();
     }
 
     void VisualFeedback()

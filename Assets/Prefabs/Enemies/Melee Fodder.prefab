@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609250780}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.416, z: 0.928}
-  m_LocalScale: {x: 0.56749, y: 0.44556, z: 1.4143}
+  m_LocalPosition: {x: 0, y: -0.04, z: 0.928}
+  m_LocalScale: {x: 0.56749, y: 0.9, z: 1.4143}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5791127613756451095}
@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 5791127613756451092}
   - component: {fileID: 7136765785968525618}
   - component: {fileID: 1446976966950350011}
+  - component: {fileID: 8610076454974898655}
   m_Layer: 7
   m_Name: Melee Fodder
   m_TagString: Untagged
@@ -165,7 +166,7 @@ Transform:
   m_GameObject: {fileID: 5791127613756451101}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.39, y: 1, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7825902509400930469}
@@ -191,10 +192,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 1.2479501
+  m_Height: 9.32717
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.028817495, y: 4.157769, z: 0.0739975}
 --- !u!54 &5791127613756451092
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -203,7 +204,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5791127613756451101}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -223,16 +224,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4e141f5ae87354cbf830de177fa033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  movementSpeed: 20
+  maxHealth: 140
+  movementSpeed: 25
   enemySounds: {fileID: 0}
   sfxCooldown: 1
-  detectionRange: 50
-  attackRange: 20.7
+  detectionRange: 72.7
+  attackRange: 20
   attackCooldown: 2
-  dashSpeedModifier: 20
-  chargeSpeedModifier: 0.3
-  chargeTime: 2
+  dashSpeedModifier: 3
+  chargeSpeedModifier: 0.6
+  chargeTime: 1
   dashTime: 1
 --- !u!114 &1446976966950350011
 MonoBehaviour:
@@ -302,6 +303,59 @@ MonoBehaviour:
     m_RotationOrder: 4
   animateScale: 1
   meshRenderer: {fileID: 9014396183608693795}
+--- !u!114 &8610076454974898655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5791127613756451101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1001 &7715098970121527118
 PrefabInstance:
   m_ObjectHideFlags: 0

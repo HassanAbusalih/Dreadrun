@@ -35,9 +35,10 @@ public class Machinegun : PlayerWeapon
             currentSpread = Mathf.Lerp(0, spreadAngle, (firingDuration - rampDelay) / rampTime);
         }
         float randomAngle = Random.Range(-currentSpread, currentSpread);
-        Quaternion projectileRotation = Quaternion.Euler(0, transform.eulerAngles.y + randomAngle, 0);
-        GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + transform.forward, projectileRotation);
+        Quaternion projectileRotation = Quaternion.Euler(projectilePrefab.transform.eulerAngles.x, transform.eulerAngles.y + randomAngle, 0);
+        GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position, projectileRotation);
         projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8, effects);
-        soundSO.PlaySound(2, AudioSourceType.Weapons);
+        if (soundSO != null) soundSO.PlaySound(2, AudioSourceType.Weapons);
+        if (impulseSource != null) impulseSource.GenerateImpulse();
     }
 }

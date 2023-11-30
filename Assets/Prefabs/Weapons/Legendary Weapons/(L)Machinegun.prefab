@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 739064006749153950}
   - component: {fileID: 696521638275179798}
   - component: {fileID: 2533047339727688861}
+  - component: {fileID: -3760626422876245063}
   m_Layer: 0
   m_Name: (L)Machinegun
   m_TagString: Untagged
@@ -296,23 +297,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 0.1
-  damageModifier: 1
-  projectileRange: 20
-  projectileSpeed: 8
-  spreadAngle: 30
+  damageModifier: 30
+  projectileRange: 30
+  projectileSpeed: 15.93
+  spreadAngle: 16.05
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
-  audioSource: {fileID: 0}
+  soundSO: {fileID: 11400000, guid: 41ffd65cc88899940b44897ccadf20ea, type: 2}
   BulletSpawnPoint: {fileID: 7928573405302468231}
   weaponID: 2
   weaponOffset: {x: 0, y: 0, z: 0}
   weaponRotationOffset: {x: 0, y: 0, z: 0}
-  pickUpSoundAudioSource: {fileID: 0}
   weaponEquipText: {fileID: 267412098274427761}
-  weaponCollider: {fileID: 0}
   <weaponIcon>k__BackingField: {fileID: 21300000, guid: 8366955ca9e3978438633b2a87b17563, type: 3}
   <weaponDescription>k__BackingField: IT GOES BRRRRRRRR!
-  rampTime: 2
+  rampTime: 5
   rampDelay: 0.5
+  firingDuration: 0
 --- !u!114 &2533047339727688861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +330,59 @@ MonoBehaviour:
   - {fileID: 8901255864199986905}
   DelayDuration: 0
   fadeDuration: 0.25
+--- !u!114 &-3760626422876245063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696521638275179821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -0.2, z: 0}
 --- !u!1 &5037198042714869584
 GameObject:
   m_ObjectHideFlags: 0

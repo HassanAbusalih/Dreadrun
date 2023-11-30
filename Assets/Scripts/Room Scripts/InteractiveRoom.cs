@@ -16,6 +16,7 @@ public class InteractiveRoom : MonoBehaviour
     private bool isPlayerInside = false;
 
     [SerializeField]
+    [Range(0f, 1f)]
     float loseChance;
 
     public Image barFill;

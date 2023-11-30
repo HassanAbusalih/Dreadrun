@@ -14,7 +14,7 @@ public class PickableBaseSpawning : MonoBehaviour
         }
         _spawnPoints.RemoveAll(item => item == null);
     }
-    protected bool SpawnAPickableAtRandomSpawnPoint(GameObject _pickableToSpawn,List<Transform> _spawnPoints)
+    protected bool SpawnObjectAtRandomSpawnPoint(GameObject _pickableToSpawn,List<Transform> _spawnPoints)
     {
         // if there are no spawn points left, then return (this is to avoid index out of range error)
         if (_spawnPoints.Count == 0)

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Payload : MonoBehaviour , IDamagable
+public class Payload : MonoBehaviour, IDamagable
 {
     float health;
-    
+
     [Header("Stats")]
     [SerializeField] float maxhealth = 500f;
     [SerializeField] float speed = 5f;
@@ -14,10 +14,10 @@ public class Payload : MonoBehaviour , IDamagable
     [SerializeField] float healingInterval = 5f;
     [SerializeField] bool followPath = false;
     [SerializeField] float interactionRange = 10f;
+    public float InteractionRange { get => interactionRange; }
     [SerializeField][Range(0.1f, 0.9f)] float slowSpeed = 0.5f;
 
     [SerializeField] GameObject visualEffects;
-
     [Header("Path Points transforms")]
     [SerializeField] Transform grandParentTransform;
     public List<Transform> pathPointsParent = new();
@@ -49,11 +49,11 @@ public class Payload : MonoBehaviour , IDamagable
     {
         if (followPath)
         {
-           float currentSpeed = speed;
+            float currentSpeed = speed;
             if (EnemiesInRange())
             {
                 currentSpeed *= slowSpeed;
-                
+
                 feedback.ChangeColor(currentSpeed, speed);
             }
             if (currentPathIndex < pathPointsList.Count)
@@ -61,8 +61,11 @@ public class Payload : MonoBehaviour , IDamagable
                 Transform targetPoint = pathPointsList[currentPathIndex];
                 transform.position = Vector3.MoveTowards(transform.position, targetPoint.position, currentSpeed * Time.deltaTime);
                 Vector3 directionToPoint = targetPoint.transform.position - transform.position;
-                Quaternion targetRotation = Quaternion.LookRotation(directionToPoint);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                if (directionToPoint != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(directionToPoint);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
                 if (Vector3.Distance(transform.position, targetPoint.position) < 0.1f)
                 {
                     currentPathIndex++;
@@ -94,13 +97,14 @@ public class Payload : MonoBehaviour , IDamagable
     {
         if (EnemyPool.Instance == null)
         {
+            Debug.Log("No enemy pool found!");
             return false;
         }
 
         foreach (var enemy in EnemyPool.Instance.Enemies)
         {
             if (enemy == null) continue;
-            if (Vector3.Distance(transform.position, enemy.transform.position) < interactionRange)
+            if (Vector3.Distance(transform.position, enemy.transform.position) < InteractionRange)
             {
                 return true;
             }
@@ -112,6 +116,7 @@ public class Payload : MonoBehaviour , IDamagable
     {
         health--;
         feedback.UpdateHealth(health, maxhealth);
+        IDamagable.onDamageTaken?.Invoke(gameObject);
         if (health < 0)
         {
             GameManager.Instance.Lose();
@@ -133,7 +138,7 @@ public class Payload : MonoBehaviour , IDamagable
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, interactionRange);
+        Gizmos.DrawWireSphere(transform.position, InteractionRange);
     }
 
     IEnumerator HealOnTimer()
@@ -145,7 +150,7 @@ public class Payload : MonoBehaviour , IDamagable
                 yield return new WaitForSeconds(healingInterval);
                 foreach (var player in players)
                 {
-                    if (Vector3.Distance(transform.position, player.transform.position) < interactionRange)
+                    if (Vector3.Distance(transform.position, player.transform.position) < InteractionRange)
                     {
                         if (visualEffects.activeSelf == false)
                         {

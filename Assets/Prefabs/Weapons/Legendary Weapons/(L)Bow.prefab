@@ -1456,6 +1456,7 @@ GameObject:
   - component: {fileID: 317431959752114414}
   - component: {fileID: 8362560650638026284}
   - component: {fileID: 6696886413756522069}
+  - component: {fileID: 243721134841462130}
   m_Layer: 0
   m_Name: (L)Bow
   m_TagString: Untagged
@@ -1522,24 +1523,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 1
-  damageModifier: 10
-  projectileRange: 15
-  projectileSpeed: 10
+  damageModifier: 25
+  projectileRange: 40
+  projectileSpeed: 15
   spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: 270afbd6bc821da47b39858b199e8090, type: 3}
-  audioSource: {fileID: 0}
+  soundSO: {fileID: 11400000, guid: edcf898b4b2e9874ba05c4cc7c667fac, type: 2}
   BulletSpawnPoint: {fileID: 4211844606621581046}
   weaponID: 1
   weaponOffset: {x: 0, y: 0, z: 0}
   weaponRotationOffset: {x: 0, y: 0, z: 0}
-  pickUpSoundAudioSource: {fileID: 0}
   weaponEquipText: {fileID: 1482761402026850526}
-  weaponCollider: {fileID: 0}
   <weaponIcon>k__BackingField: {fileID: 21300000, guid: 6dd225d76b2cdbe49958329293f8b942, type: 3}
   <weaponDescription>k__BackingField: Charge to shoot stronger arrows
-  minDamageModifier: 1
-  minRange: 3
-  minSpeed: 3
+  homingRange: 10
+  homingStrength: 400
+  minDamageModifier: 3
+  minRange: 4
+  minSpeed: 4
+  maxProjectiles: 6
   chargeIndicator: {fileID: 6664075836252118382}
   minColor: {r: 1, g: 0.93979645, b: 0, a: 1}
   maxColor: {r: 1, g: 0, b: 0, a: 1}
@@ -1560,6 +1562,59 @@ MonoBehaviour:
   - {fileID: 459410804354394317}
   DelayDuration: 0
   fadeDuration: 0.25
+--- !u!114 &243721134841462130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7272805918634142103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 4
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -0.05, z: 0}
 --- !u!1 &7841144965636941920
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Cinemachine;
 
 public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
 {
@@ -15,6 +16,8 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
     protected bool retreating;
     protected FlockingBehavior flockingBehavior;
     float currentHealth;
+    CinemachineImpulseSource impulseSource;
+
 
     public bool slowed { get; set; }
 
@@ -23,11 +26,11 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
         timeSinceSFX = Time.time;
         currentHealth = maxHealth;
         gameObject.layer = 7;
-        
+
         weapon = GetComponent<WeaponBase>();
         rb = GetComponent<Rigidbody>();
         flockingBehavior = GetComponent<FlockingBehavior>();
-        
+
         if (players.Length == 0)
         {
             GetPlayers();
@@ -37,6 +40,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
         {
             EnemyPool.Instance.Add(this);
         }
+        TryGetComponent(out impulseSource);
     }
 
     protected void GetPlayers()
@@ -53,12 +57,17 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
     {
         currentHealth -= Amount;
         IDamagable.onDamageTaken?.Invoke(gameObject);
+
         if (Time.time - timeSinceSFX > sfxCooldown && enemySounds != null)
         {
             enemySounds.PlaySound(0, AudioSourceType.Enemy);
             timeSinceSFX = Time.time;
         }
-        if (currentHealth <= 0) { Destroy(gameObject); }
+        if (currentHealth <= 0)
+        {
+            if(impulseSource!=null)impulseSource.GenerateImpulse();
+            Destroy(gameObject);
+        }
     }
 
     public void Initialize(Transform payload, Transform[] players)
@@ -69,7 +78,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
 
     protected virtual Transform GetClosestPlayer()
     {
-        if (players.Length == 0) {  return null; }
+        if (players.Length == 0) { return null; }
         Transform closestPlayer = null;
         float closestDistance = float.MaxValue;
         foreach (Transform player in players)

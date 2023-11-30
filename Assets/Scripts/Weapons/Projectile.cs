@@ -58,7 +58,7 @@ public class Projectile : MonoBehaviour
                 }
             }
         }
-        else if(effects != null && effects.Count > 0) 
+        else if (effects != null && effects.Count > 0)
         {
             foreach (var effect in effects)
             {

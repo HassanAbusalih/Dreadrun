@@ -75,20 +75,22 @@ public class MeleeFodderEnemy : EnemyAIBase
         (weapon as MeleeFodderWeapon).Attack(dashTime);
         while (Time.time < startTime + dashTime)
         {
-            Move(player, dashSpeedModifier);
+            Move(player, movementSpeed * dashSpeedModifier);
             yield return null;
         }
 
         lastAttackTime = Time.time;
         chargeAndAttack = null;
+        rb.velocity = Vector3.zero;
     }
 
     void StopAttack()
     {
-        if (chargeAndAttack != null) 
+        if (chargeAndAttack != null)
         {
             StopCoroutine(chargeAndAttack);
             chargeAndAttack = null;
+            rb.velocity = Vector3.zero;
         }
         lastAttackTime = Time.time;
     }
