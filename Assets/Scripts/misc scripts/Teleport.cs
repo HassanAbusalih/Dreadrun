@@ -47,7 +47,7 @@ public class Teleport : MonoBehaviour
         while (timer > 0)
         {
             timer -= Time.deltaTime;
-            timerText.text = "Exploration Time: " + Mathf.RoundToInt(timer);
+            timerText.text = "Time: " + Mathf.RoundToInt(timer);
             if (timer <= timeToShowEffect && !effectInstance.activeSelf)
             {
                 effectInstance.SetActive(true);
