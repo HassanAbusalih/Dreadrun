@@ -23,7 +23,7 @@ public class InteractiveRoom : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerInside && Input.GetKey(KeyCode.E))
+        if (isPlayerInside && Input.GetKey(KeyCode.F))
         {
             pressTime += Time.deltaTime;
             barFill.fillAmount = pressTime / toggleTime;
