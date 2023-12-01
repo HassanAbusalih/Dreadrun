@@ -36,7 +36,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        if (hasCompletedTutorial)
+        if (hasCompletedTutorial == true)
         {
             SceneManager.LoadScene(GameScene);
         }
