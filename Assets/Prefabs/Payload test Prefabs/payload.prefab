@@ -100,6 +100,7 @@ MonoBehaviour:
   healAmount: 5
   healingInterval: 5
   followPath: 0
+  interactionRange: 10
   slowSpeed: 0.3
   visualEffects: {fileID: 8071978845548354707}
   grandParentTransform: {fileID: 0}
@@ -181,6 +182,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animateScale: 1
+  pauseTimeDuration: 0
+  canPauseTime: 0
   meshRenderer: {fileID: 1104769122317296159}
 --- !u!1 &2220466864515255450
 GameObject:
@@ -5828,7 +5831,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.8679245, g: 0.73765916, b: 0.26610893, a: 1}
+      maxColor: {r: 0.08706104, g: 0.4056604, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -15371,7 +15374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8167581413372792102
 Transform:
   m_ObjectHideFlags: 0
@@ -15581,7 +15584,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.9704701, b: 0.3443396, a: 1}
+      maxColor: {r: 0, g: 0.3490566, b: 0.014631103, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
