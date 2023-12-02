@@ -1576,15 +1576,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
     m_ImpulseChannel: 1
-    m_ImpulseShape: 2
+    m_ImpulseShape: 0
     m_CustomImpulseShape:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 3.3932946
+        outSlope: 3.3932946
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.06320224
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1.479632
+        outSlope: 1.479632
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.05898887
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    m_ImpulseDuration: 0.1
-    m_ImpulseType: 2
+    m_ImpulseDuration: 0.15
+    m_ImpulseType: 0
     m_DissipationRate: 0.25
     m_RawSignal: {fileID: 0}
     m_AmplitudeGain: 1
@@ -1614,7 +1632,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0, y: -0.05, z: 0}
+  m_DefaultVelocity: {x: 0, y: -0.0175, z: 0}
 --- !u!1 &7841144965636941920
 GameObject:
   m_ObjectHideFlags: 0

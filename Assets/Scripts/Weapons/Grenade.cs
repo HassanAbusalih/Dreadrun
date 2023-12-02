@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Grenade : MonoBehaviour
 {
@@ -69,6 +70,10 @@ public class Grenade : MonoBehaviour
     {
         Explosion.Explode(transform, damage, explosionRadius, explosionForce, layersToIgnore, effects);
         Instantiate(explosionVFX, transform.position, transform.rotation);
+        if(TryGetComponent(out CinemachineImpulseSource shake))
+        {
+            shake.GenerateImpulse();
+        }
         if (explosionSFX != null)
         {
             explosionSFX.PlaySound(0, AudioSourceType.Weapons);
