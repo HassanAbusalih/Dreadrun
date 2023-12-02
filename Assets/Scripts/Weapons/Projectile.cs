@@ -41,7 +41,11 @@ public class Projectile : MonoBehaviour
         rb.velocity = 100 * speed * Time.deltaTime * transform.forward;
         distanceTravelled += Vector3.Distance(transform.position, lastPos);
         lastPos = transform.position;
-        if (distanceTravelled > range) { Destroy(gameObject); }
+        if (distanceTravelled > range)
+        {
+            if (impactVFX != null) { Instantiate(impactVFX, transform.position, Quaternion.identity); }
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

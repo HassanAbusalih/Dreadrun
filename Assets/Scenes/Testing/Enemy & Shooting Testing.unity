@@ -1109,23 +1109,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1491126926 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3438871385543359872, guid: f3990bf153491e7469dd6749ff621748, type: 3}
-  m_PrefabInstance: {fileID: 1838643053}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1491126931
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491126926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1505324908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1623,22 +1606,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1644959449}
-    - target: {fileID: 3438871385543359885, guid: f3990bf153491e7469dd6749ff621748, type: 3}
-      propertyPath: m_XDamping
-      value: 0.11
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438871385543359885, guid: f3990bf153491e7469dd6749ff621748, type: 3}
-      propertyPath: m_YDamping
-      value: 0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438871385543359885, guid: f3990bf153491e7469dd6749ff621748, type: 3}
-      propertyPath: m_ZDamping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438871385543359885, guid: f3990bf153491e7469dd6749ff621748, type: 3}
-      propertyPath: m_RollDamping
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5227594074343222305, guid: f3990bf153491e7469dd6749ff621748, type: 3}
       propertyPath: field of view
       value: 75
@@ -1723,8 +1690,7 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.00017885042
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3438871385543359882, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3990bf153491e7469dd6749ff621748, type: 3}
 --- !u!1 &1849333045
 GameObject:
