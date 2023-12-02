@@ -126,7 +126,7 @@ namespace Server
 
                 PlayerSocket playerSocket = new PlayerSocket(newSocket);
                 playerSocket.playerID = GenerateUniqueClientID();
-                bool isHost = clients.Count > 0;
+                bool isHost = clients.Count == 0;
                 IDPacket packet = new IDPacket(playerSocket.playerID, isHost);
 
                 playerSocket.socket.Send(packet.Serialize());
