@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class DamageFeedback : MonoBehaviour
 {
+    [Header("Color Animation Settings")]
     [SerializeField] float duration;
     [SerializeField] Color takeDamageColor;
+    [Header("scale Animation  Settings")]
     [SerializeField] float takeDamageScale;
     [SerializeField] AnimationCurve damageCurve;
     [SerializeField] bool animateScale;
@@ -13,12 +15,14 @@ public class DamageFeedback : MonoBehaviour
     Color startColor;
     [SerializeField] MeshRenderer meshRenderer;
     float startZScale;
+    float startScaleX;
 
 
     private void OnEnable()
     {
         IDamagable.onDamageTaken += EnableTakeDamageEffects;
         startZScale = transform.localScale.z;
+        startScaleX = transform.localScale.x;
         if (meshRenderer == null)
         {
             TryGetComponent(out meshRenderer);
@@ -58,10 +62,14 @@ public class DamageFeedback : MonoBehaviour
             meshRenderer.material.color = Color.Lerp(takeDamageColor, startColor, _lerpValue);
 
             if (!animateScale) return;
-            float _localscaleZ = transform.localScale.z;
-            _localscaleZ = Mathf.Lerp(takeDamageScale, startZScale, _lerpValue);
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, _localscaleZ);
+            float _localScaleZ = transform.localScale.z;
+            float _localScaleX = transform.localScale.x;
+
+            _localScaleZ = Mathf.Lerp(takeDamageScale, startZScale, _lerpValue);
+            _localScaleX = Mathf.Lerp(takeDamageScale, startZScale, _lerpValue);
+            transform.localScale = new Vector3(_localScaleX, transform.localScale.y, _localScaleZ);
         }
         else { isTakingDamage = false; }
     }
+
 }

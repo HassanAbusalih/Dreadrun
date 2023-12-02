@@ -821,6 +821,76 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &982660221 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4350660472619407276, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+  m_PrefabInstance: {fileID: 8328046058266735582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1229552892
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2111597916701207227, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 982660221}
+    - target: {fileID: 5227594074343222305, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: field of view
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 456.22177
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 90.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1068.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641255334150209839, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_Name
+      value: Camera Prefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f3990bf153491e7469dd6749ff621748, type: 3}
 --- !u!1001 &1448197781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1524,6 +1594,22 @@ PrefabInstance:
     - target: {fileID: 1487981830050385644, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5531912465785331505, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: dashColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5531912465785331505, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: dashColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5531912465785331505, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: dashColor.g
+      value: 0.7668997
+      objectReference: {fileID: 0}
+    - target: {fileID: 5531912465785331505, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
+      propertyPath: dashColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8117153053641499622, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: m_RootOrder

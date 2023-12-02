@@ -9,7 +9,7 @@ public class Dashing : MonoBehaviour
     Rigidbody rb;
     Player player;
     Color defaultColor;
-
+    [SerializeField] MeshRenderer meshRenderer;
     [Header("Dashing Settings")]
     [SerializeField] float dashForce;
     [SerializeField] float dashDuration;
@@ -30,7 +30,6 @@ public class Dashing : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera playerCamera;
     [SerializeField] CinemachineVirtualCamera dashCamera;
 
-
     public Action<float> onDashing;
     public delegate float canDash();
     public canDash canPlayerDash;
@@ -46,7 +45,8 @@ public class Dashing : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        defaultColor = GetComponent<Renderer>().material.color;
+        if (meshRenderer != null)
+            defaultColor = meshRenderer.material.color;
     }
 
     private void Update()
@@ -62,7 +62,7 @@ public class Dashing : MonoBehaviour
 
     private void DashOnInput()
     {
-        if ((Input.GetKeyDown(dodge) || Input.GetKeyDown(KeyCode.JoystickButton0))  && !isDashing)
+        if ((Input.GetKeyDown(dodge) || Input.GetKeyDown(KeyCode.JoystickButton0)) && !isDashing)
         {
             float currentStamina = canPlayerDash?.Invoke() ?? 0f;
             if (currentStamina <= 0) return;
@@ -80,7 +80,7 @@ public class Dashing : MonoBehaviour
         while (elapsedTime < dashDuration && isDashing)
         {
             float dashProgress = elapsedTime / dashDuration;
-            Vector3 _dashForce = Vector3.Lerp(Vector3.zero, dashDirection* dashForce, dashCurve.Evaluate(dashProgress));
+            Vector3 _dashForce = Vector3.Lerp(Vector3.zero, dashDirection * dashForce, dashCurve.Evaluate(dashProgress));
             rb.AddForce(_dashForce, ForceMode.Impulse);
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -98,12 +98,13 @@ public class Dashing : MonoBehaviour
     void EnableInvincibility(bool _enabled)
     {
         isInvincible = _enabled;
-        GetComponent<Renderer>().material.color = _enabled ? dashColor : defaultColor;
+        if (meshRenderer != null)
+        meshRenderer.material.color = _enabled ? dashColor : defaultColor;
     }
 
     void SwitchCameras(bool _enabled)
     {
-        if(playerCamera == null || dashCamera == null) return;
+        if (playerCamera == null || dashCamera == null) return;
         int playerCamePriority = _enabled ? 0 : 1;
         int dashCamPriority = _enabled ? 1 : 0;
         playerCamera.Priority = playerCamePriority;
