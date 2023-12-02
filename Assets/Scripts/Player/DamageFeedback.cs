@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DamageFeedback : MonoBehaviour
@@ -10,12 +11,17 @@ public class DamageFeedback : MonoBehaviour
     [SerializeField] AnimationCurve damageCurve;
     [SerializeField] bool animateScale;
 
+    [Header("PauseTime settings")]
+    [SerializeField] float pauseTimeDuration;
+    [SerializeField] bool canPauseTime;
+
     bool isTakingDamage;
     float elapsedTime;
     Color startColor;
     [SerializeField] MeshRenderer meshRenderer;
     float startZScale;
     float startScaleX;
+
 
 
     private void OnEnable()
@@ -42,6 +48,7 @@ public class DamageFeedback : MonoBehaviour
         {
             elapsedTime = 0;
             isTakingDamage = true;
+            StartCoroutine(PauseTimeFeedback());
         }
     }
 
@@ -70,6 +77,13 @@ public class DamageFeedback : MonoBehaviour
             transform.localScale = new Vector3(_localScaleX, transform.localScale.y, _localScaleZ);
         }
         else { isTakingDamage = false; }
+    }
+
+    IEnumerator PauseTimeFeedback()
+    {
+        Time.timeScale = canPauseTime ? 0 : 1;
+        yield return new WaitForSecondsRealtime(pauseTimeDuration);
+        Time.timeScale = 1;
     }
 
 }
