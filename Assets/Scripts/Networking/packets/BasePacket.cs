@@ -17,7 +17,8 @@ namespace NetworkingLibrary
             ServerLobbyPacket,
             ScenePacket,
             PlayerInMainScenePacket,
-            Destruction
+            Destruction,
+            WeaponID
         }
 
         public PacketType packetType { get; private set; }

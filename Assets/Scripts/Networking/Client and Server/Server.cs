@@ -94,14 +94,26 @@ namespace Server
                     LobbyPacket lobbyPacket = new LobbyPacket().Deserialize(buffer, index);
                     OnServerLobbyUpdate?.Invoke(lobbyPacket.playerID, lobbyPacket.isReady);
                     break;
+
                 case BasePacket.PacketType.PlayerInMainScenePacket:
                     PlayerInMainScenePacket playerInMainScenePacket = new PlayerInMainScenePacket().Deserialize(buffer, index);
                     UpdatePlayerSceneStatus?.Invoke(playerInMainScenePacket.inMainScene);
                     Debug.LogError("Players in main scene packet received");
                     break;
+
                 case BasePacket.PacketType.Position:
                     PositionPacket positionPacket = new PositionPacket().Deserialize(buffer, index);
                     SendToAllClientsExcept(positionPacket.Serialize(), playerSocket.socket);
+                    break;
+
+                case BasePacket.PacketType.WeaponID:
+                    if(playerSocket != clients[0]) { return; }
+                    WeaponIDPacket wID = new WeaponIDPacket().Deserialize(buffer, index);
+                    SendToAllClientsExcept(wID.Serialize(), playerSocket.socket);
+                    break;
+                case BasePacket.PacketType.Instantiation:
+                    InstantiationPacket _instantiationPacket = new InstantiationPacket().Deserialize(buffer, index);
+                    SendToAllClients(_instantiationPacket.Serialize());
                     break;
             }
         }
@@ -114,8 +126,8 @@ namespace Server
 
                 PlayerSocket playerSocket = new PlayerSocket(newSocket);
                 playerSocket.playerID = GenerateUniqueClientID();
-
-                IDPacket packet = new IDPacket(playerSocket.playerID);
+                bool isHost = clients.Count > 0;
+                IDPacket packet = new IDPacket(playerSocket.playerID, isHost);
 
                 playerSocket.socket.Send(packet.Serialize());
                 clients.Add(playerSocket);

@@ -15,6 +15,8 @@ namespace ClientLibrary
         float tickRate;
         bool isConnected;
 
+        public bool isHost { get; private set; }
+
         protected Socket socket;
         public NetworkComponent networkComponent;
         public static List<NetworkComponent> allNetworkObjects = new List<NetworkComponent>();
@@ -70,7 +72,6 @@ namespace ClientLibrary
         {
             while (true)
             {
-                SendPacket(new IDPacket(networkComponent.ClientID).Serialize());
                 try
                 {
                     if (socket.Available > 0)
@@ -115,38 +116,36 @@ namespace ClientLibrary
             switch (packet.packetType)
             {
                 case BasePacket.PacketType.ScenePacket:
-                    Debug.LogError("Scene Packet Received! Scene name is: ");
                     ScenePacket scenePacket = new ScenePacket().Deserialize(buffer, index);
                     SceneManager.LoadScene(scenePacket.sceneName);
                     if (scenePacket.sceneName == mainScene)
                     {
                         PlayerInMainScenePacket playerInMainScene = new PlayerInMainScenePacket(true);
-
                         SendPacket(playerInMainScene.Serialize());
-                        Debug.LogError("Players in main scene packet is sent");
                     }
                     break;
 
                 case BasePacket.PacketType.ID:
+                    IDPacket _idPacket = new IDPacket().Deserialize(buffer, index); 
+                    isHost = _idPacket.isHost;
                     networkComponent.ClientID = packet.gameObjectID;
                     break;
 
                 case BasePacket.PacketType.Instantiation:
                     InstantiationPacket instantiationPacket = new InstantiationPacket().Deserialize(buffer, index);
-                    Debug.LogError("Player Spawned");
                     GameObject objectToSpawn = Instantiate(Resources.Load(instantiationPacket.prefabName) as GameObject, 
                         instantiationPacket.position, 
                         instantiationPacket.rotation);
+
                     objectToSpawn.GetComponent<NetworkComponent>().SetIDs(instantiationPacket.OwnershipID, instantiationPacket.gameObjectID);
                     allNetworkObjects.Add(objectToSpawn.GetComponent<NetworkComponent>());
-                   Debug.LogError("Sending Spawned player back to server");
                     break;
 
                 case BasePacket.PacketType.ServerLobbyPacket:
                     LobbyStatusPacket lobbyStatusPacket = new LobbyStatusPacket().Deserialize(buffer, index);
-                    //Debug.LogError("Server Lobby Packet Received! Player count is: " + lobbyStatusPacket.playerIDs.Count);
                     OnLobbyUpdate?.Invoke(lobbyStatusPacket.playerIDs, lobbyStatusPacket.playerStatuses);
                     break;
+
                 case BasePacket.PacketType.Position:
                     PositionPacket positionPacket = new PositionPacket().Deserialize(buffer, index);
                     PlayerNetworkComponent component = FindNetworkComponent(positionPacket.gameObjectID) as PlayerNetworkComponent;
@@ -154,7 +153,7 @@ namespace ClientLibrary
                     {
                         component.SetTargetPosition(positionPacket.position, positionPacket.rotation, tickRate);
                     }
-                    break;
+                    break;  
             }
         }
 
