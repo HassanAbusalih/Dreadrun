@@ -15,7 +15,7 @@ namespace ClientLibrary
         float tickRate;
         bool isConnected;
 
-        public bool isHost { get; private set; }
+        public bool isHost;
 
         protected Socket socket;
         public NetworkComponent networkComponent;
@@ -151,7 +151,7 @@ namespace ClientLibrary
                     PlayerNetworkComponent component = FindNetworkComponent(positionPacket.gameObjectID) as PlayerNetworkComponent;
                     if (component != null)
                     {
-                        component.SetTargetPosition(positionPacket.position, positionPacket.rotation, tickRate);
+                        component.SetTargetPosition(positionPacket.position, positionPacket.rotation);
                     }
                     break;  
             }

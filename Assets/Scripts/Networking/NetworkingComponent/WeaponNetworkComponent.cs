@@ -9,16 +9,22 @@ public class WeaponNetworkComponent : NetworkComponent
     public bool assigned { get; private set; }
     private void Start()
     {
-        if (Client.Instance.isHost == false)
+        if (gameObject.transform.parent != null)
         {
-            Destroy(gameObject);
+            if (Client.Instance.isHost == false)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Guid guid = Guid.NewGuid();
+                string name = gameObject.name;
+                string clone = "(Clone)";
+                name = name.Replace(clone, "");
+
+                Client.Instance.SendPacket(new InstantiationPacket(name, transform.position, transform.rotation, guid.ToString()).Serialize());
+                Destroy(gameObject);
+            }
         }
-        else
-        {
-            Guid guid = Guid.NewGuid();
-            Client.Instance.SendPacket(new InstantiationPacket(gameObject.name, transform.position, transform.rotation, guid.ToString()).Serialize());
-            Destroy(gameObject);
-        }
-        
     }
 }

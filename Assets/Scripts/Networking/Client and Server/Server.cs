@@ -106,11 +106,6 @@ namespace Server
                     SendToAllClientsExcept(positionPacket.Serialize(), playerSocket.socket);
                     break;
 
-                case BasePacket.PacketType.WeaponID:
-                    if(playerSocket != clients[0]) { return; }
-                    WeaponIDPacket wID = new WeaponIDPacket().Deserialize(buffer, index);
-                    SendToAllClientsExcept(wID.Serialize(), playerSocket.socket);
-                    break;
                 case BasePacket.PacketType.Instantiation:
                     InstantiationPacket _instantiationPacket = new InstantiationPacket().Deserialize(buffer, index);
                     SendToAllClients(_instantiationPacket.Serialize());
