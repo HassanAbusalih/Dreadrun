@@ -15,8 +15,8 @@ public class Payload : MonoBehaviour, IDamagable
     [SerializeField] bool followPath = false;
     [SerializeField] float interactionRange = 10f;
     [SerializeField] float playerRange = 20f;
-    [SerializeField] float stopTimer = 0f;
     [SerializeField] float stopDuration = 3f;
+    float stopTimer = 0f;
     public float InteractionRange { get => interactionRange; }
     [SerializeField][Range(0.1f, 0.9f)] float enemySlowSpeed = 0.5f;
     [SerializeField][Range(0.1f, 0.9f)] float playerSlowSpeed = 0.5f;
@@ -78,7 +78,7 @@ public class Payload : MonoBehaviour, IDamagable
             }
             if (currentPathIndex < pathPointsList.Count)
             {
-                Debug.Log(currentSpeed);
+                //Debug.Log(currentSpeed);
                 feedback.ChangeColor(currentSpeed, speed);
                 Transform targetPoint = pathPointsList[currentPathIndex];
                 transform.position = Vector3.MoveTowards(transform.position, targetPoint.position, currentSpeed * Time.deltaTime);
