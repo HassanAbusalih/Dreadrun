@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public Player[] players;
-
+    [SerializeField] string mainMenu;
     [Header("Events")]
     public UnityEvent onWin;
     public UnityEvent onLose;
@@ -114,6 +114,11 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void MainScreen()
+    {
+        SceneManager.LoadScene(mainMenu);
     }
 
     public void ChangePhase()
