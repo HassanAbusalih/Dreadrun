@@ -23,6 +23,10 @@ public class PerkSelector : MonoBehaviour
     public static Action OnPerkSelection;
     public Action<Perk> UpdateEquippedPerkUi;
 
+    [SerializeField] [Range(0f, 1f)] private float commonChance = 0.5f;
+    [SerializeField] [Range(0f, 1f)] private float rareChance = 0.3f;
+    [SerializeField] [Range(0f, 1f)] private float legendaryChance = 0.1f;
+
     void Start()
     {
         if(perkUIcanvas != null)
@@ -52,7 +56,7 @@ public class PerkSelector : MonoBehaviour
     {
         perkUIcanvas.SetActive(true);
         perkDescriptionPanel.SetActive(false);
-        List<int> selectedIndexes = new List<int>();
+        List<Perk> selectedPerks = new List<Perk>();
 
         for (int perkIndex = 0; perkIndex < perkPool.Count; perkIndex++)
         {
@@ -61,18 +65,58 @@ public class PerkSelector : MonoBehaviour
                 perkPool.RemoveAt(perkIndex);
                 perkIndex--;
             }
-        }                     
+        }
+
+        List<Perk> common = new List<Perk>();
+        List<Perk> rare = new List<Perk>();
+        List<Perk> legendary = new List<Perk>();
 
         for (int perkIndex = 0; perkIndex < perkChoices.Length; perkIndex++) //generate a random index depending on the count, use the index number to select a perk in the perkpool
         {
-            int randomIndexNum;
+            float randomValue = UnityEngine.Random.value;
+            foreach (var perk in perkPool)
+            {
+                switch (perk.perkRarity)
+                {
+                    case PerkRarity.Common:
+                        common.Add(perk);
+                        break;
+                    case PerkRarity.Rare:
+                        rare.Add(perk);
+                        break;
+                    case PerkRarity.Legendary:
+                        legendary.Add(perk);
+                        break;
+                }
+            }
+
+            List<Perk> selectedRarity = new();
+            if(randomValue < legendaryChance && legendary.Count > 0)
+            {
+                selectedRarity = legendary;
+                Debug.Log("LEGENDARY HAMPER");
+            }
+            else if(randomValue < rareChance && rare.Count > 0)
+            {
+                selectedRarity = rare;
+                Debug.Log("RARE HAMPER");
+            }
+            else
+            {
+                selectedRarity = common;
+                Debug.Log("COMMON HAMPER");
+            }
+
+            Perk randomPerk;
             do
             {
-                randomIndexNum = UnityEngine.Random.Range(0, perkPool.Count);
-            } while (selectedIndexes.Contains(randomIndexNum));
+                int randomIndexNum;
+                randomIndexNum = UnityEngine.Random.Range(0, selectedRarity.Count);
+                randomPerk = selectedRarity[randomIndexNum];
+            } while (selectedPerks.Contains(randomPerk));
 
-            selectedIndexes.Add(randomIndexNum);
-            perkChoices[perkIndex].perk = perkPool[randomIndexNum];
+            selectedPerks.Add(randomPerk);
+            perkChoices[perkIndex].perk = randomPerk;
         }
 
         DisplayPerkDetails();
@@ -84,7 +128,7 @@ public class PerkSelector : MonoBehaviour
         {
             choice.perkName.text = choice.perk.name;
             choice.perkSprite.sprite = choice.perk.icon;
-            Debug.Log("Selected Perk: " + choice.perk.name);
+            //Debug.Log("Selected Perk: " + choice.perk.name);
         }
     }
 
@@ -113,6 +157,6 @@ public class PerkSelector : MonoBehaviour
     public void AddToPool(Perk newPerk)
     {
         perkPool.Add(newPerk);
-        Debug.Log("added");
+        //Debug.Log("added");
     }
 }
