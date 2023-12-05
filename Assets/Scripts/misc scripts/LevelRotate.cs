@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class LevelRotate: MonoBehaviour
+public class LevelRotate : MonoBehaviour
 {
-    // Define the possible X scales and Y rotations
     private float[] xScales = { -1f, 1f };
-    private float[] yRotations = { 90f, -90f, 180f, -180f };
+    private float[] yRotations = {45, -45, 90f, -90f, 180f, -180f };
 
     void Start()
     {
