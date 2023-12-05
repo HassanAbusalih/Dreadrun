@@ -8,7 +8,6 @@ public class ExperienceManager : MonoBehaviour
     [SerializeField] SoundSO levelUpSFX;
     [SerializeField] Image expBar;
     PerkSelector perkSelector;
-    int currentLevel;
     int currentExp;
 
     public static bool CollectExp { get; private set; } = true;
@@ -39,11 +38,9 @@ public class ExperienceManager : MonoBehaviour
     {
         perkSelector.RandomPerkSelector();
         CollectExp = false;
-        currentLevel++;
         currentExp = 0;
         expToLevelUp += expIncreaseAddon;
         UpdateExpBarUI();
-        Debug.Log("You are now level " + currentLevel);
     }
 
     void AllowExpCollection() => CollectExp = true;

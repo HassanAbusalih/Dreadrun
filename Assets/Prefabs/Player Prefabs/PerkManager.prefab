@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4423540877954294326}
   - component: {fileID: 4423540877954294325}
+  - component: {fileID: 4955138877422477206}
   m_Layer: 0
   m_Name: PerkManager
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4423540877954294324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.1329231, y: 1.6076952, z: -10.768823}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -65,19 +66,63 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe62a025937dfe849a54e0d66ee530aa, type: 2}
   - {fileID: 11400000, guid: ae2e6ea9d6c7e07428a00672c77a5f60, type: 2}
   - {fileID: 11400000, guid: eb2e7722b74d52c498eab486f2f89861, type: 2}
+  - {fileID: 11400000, guid: 96828973dd4e62d42968e08cdfd877ac, type: 2}
   - {fileID: 11400000, guid: 5cb91f6b7c9310a438938d0602f8ab51, type: 2}
+  - {fileID: 11400000, guid: 3995a845bf5041a4392494544ab05010, type: 2}
+  - {fileID: 11400000, guid: 3d8345e33be678649a61bf900d8c56de, type: 2}
+  - {fileID: 11400000, guid: 82e67fd0bb2a0ae4f8c2990e1a8d7b80, type: 2}
+  - {fileID: 11400000, guid: 6bb6318f479c1a645973a40bc6fe51c0, type: 2}
   perkUIcanvas: {fileID: 0}
   perkChoices:
-  - perkButton: {fileID: 0}
+  - perk: {fileID: 0}
+    perkButton: {fileID: 0}
     perkName: {fileID: 0}
     perkSprite: {fileID: 0}
-    perk: {fileID: 0}
-  - perkButton: {fileID: 0}
+    perkRarity: {fileID: 0}
+  - perk: {fileID: 0}
+    perkButton: {fileID: 0}
     perkName: {fileID: 0}
     perkSprite: {fileID: 0}
-    perk: {fileID: 0}
-  - perkButton: {fileID: 0}
+    perkRarity: {fileID: 0}
+  - perk: {fileID: 0}
+    perkButton: {fileID: 0}
     perkName: {fileID: 0}
     perkSprite: {fileID: 0}
-    perk: {fileID: 0}
-  debugMode: 0
+    perkRarity: {fileID: 0}
+  debugMode: 1
+  rareChance: 0.3
+  legendaryChance: 0.1
+  rareColor: {r: 0, g: 0.5593617, b: 1, a: 0}
+  legendaryColor: {r: 1, g: 0.21176471, b: 0.21176471, a: 0}
+  fadeDuration: 0.4
+--- !u!114 &4955138877422477206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4423540877954294324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406f92fa9572a8e46aa0c83cb365b192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acquiredPerks: []
+  blank: {fileID: 21300000, guid: d4846583bfeb63d4586b331aa5322cfd, type: 3}
+  AbilityIcon:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  cooldownText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  AbilityGreyout:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  AbilityVFX:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  abilityDescription: {fileID: 0}

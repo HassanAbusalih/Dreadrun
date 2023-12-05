@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EquippedPerksUI : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class EquippedPerksUI : MonoBehaviour
         perkSelector.UpdateEquippedPerkUi -= SpawnAndSetItemUI;
     }
 
-    void SpawnAndSetItemUI(Perk _perkUIToSpawn)
+    void SpawnAndSetItemUI(Perk _perkUIToSpawn, Color borderColor)
     {
         if(perkSelector == null ||perkUIPrefab == null || spawnStartPosition ==null ) return;
         if (TotalPerksUiMade.Contains(_perkUIToSpawn)) return;
@@ -44,8 +45,11 @@ public class EquippedPerksUI : MonoBehaviour
         PerkUI _newUIPerk = Instantiate(perkUIPrefab, cellSpawnPosition, Quaternion.identity);
         _newUIPerk.transform.SetParent(spawnStartPosition.transform);
         _newUIPerk.GetComponent<RectTransform>().localScale = cellSize;
-        _newUIPerk.SetPerk(_perkUIToSpawn,perkSelector);
-
+        if (borderColor != Color.white)
+        {
+            _newUIPerk.GetComponent<Image>().color = new(borderColor.r, borderColor.g, borderColor.b, 1);
+        }
+        _newUIPerk.SetPerk(_perkUIToSpawn, perkSelector);
         TotalPerksUiMade.Add(_perkUIToSpawn);
         rowIndex++;
     }
