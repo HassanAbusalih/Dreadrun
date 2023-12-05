@@ -2,19 +2,19 @@ using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DisplaySettingsMenu : MonoBehaviour
 {
-    [SerializeField] Dropdown fullscreenDropdown;
-    [SerializeField] Dropdown qualityDropdown;
+    [SerializeField] TMP_Dropdown screenMode;
+    [SerializeField] TMP_Dropdown resolution;
+    [SerializeField] TMP_Dropdown refreshRate;
     [SerializeField] GameObject Return;
+    DisplaySettingsData data;
 
     private void Start()
     {
-        /*fullscreenDropdown.onValueChanged.AddListener(delegate { OnFullscreenDropdownChange(); });
-        qualityDropdown.onValueChanged.AddListener(delegate { OnQualityDropdownChange(); });
-
-        LoadDisplaySettings();*/
+        LoadDisplaySettings();
     }
 
     public void OnBackButtonPressed()
@@ -26,27 +26,61 @@ public class DisplaySettingsMenu : MonoBehaviour
     public void ExitDisplaySettings()
     {
         Return.SetActive(false);
+        SaveDisplaySettings();
     }
 
-    private void OnFullscreenDropdownChange()
+    public void ChangeScreenMode(int value)
     {
-        switch (fullscreenDropdown.value)
+        switch (value)
         {
             case 0:
                 Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
                 break;
             case 1:
-                Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
+                Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
                 break;
             case 2:
                 Screen.fullScreenMode = FullScreenMode.Windowed;
                 break;
+            default:
+                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+                break;
         }
+        if (data.screenMode != value) { data.screenMode = value; }
     }
 
-    private void OnQualityDropdownChange()
+    public void ChangeResolution(int value)
     {
-        QualitySettings.SetQualityLevel(qualityDropdown.value);
+        switch (value)
+        {
+            case 0:
+                Screen.SetResolution(1920, 1080, Screen.fullScreenMode);
+                break;
+            case 1:
+                Screen.SetResolution(1280, 720, Screen.fullScreenMode);
+                break;
+            case 2:
+                Screen.SetResolution(2560, 1440, Screen.fullScreenMode);
+                break;
+        }
+        if (data.resolution != value) { data.resolution = value; }
+    }
+
+    public void ChangeRefreshRate(int value)
+    {
+        switch (value)
+        {
+            case 0:
+                Application.targetFrameRate = 60;
+                break;
+            case 1:
+                Application.targetFrameRate = 120;
+                break;
+            case 2:
+                Application.targetFrameRate = 140;
+                break;
+        }
+        if (data.refreshRate != value) { data.refreshRate = value; }
     }
 
     private void LoadDisplaySettings()
@@ -56,19 +90,16 @@ public class DisplaySettingsMenu : MonoBehaviour
         if (File.Exists(filePath))
         {
             string json = File.ReadAllText(filePath);
-            SettingsData data = JsonUtility.FromJson<SettingsData>(json);
+            data = JsonUtility.FromJson<DisplaySettingsData>(json);
 
-            fullscreenDropdown.value = data.fullscreenDropdownValue;
-            qualityDropdown.value = data.qualityDropdownValue;
+            ChangeScreenMode(data.screenMode);
+            ChangeResolution(data.resolution);
+            ChangeRefreshRate(data.refreshRate);
         }
     }
 
     private void SaveDisplaySettings()
     {
-        SettingsData data = new SettingsData();
-        data.fullscreenDropdownValue = fullscreenDropdown.value;
-        data.qualityDropdownValue = qualityDropdown.value;
-
         string json = JsonUtility.ToJson(data);
         string filePath = Application.persistentDataPath + "/settings.json";
         File.WriteAllText(filePath, json);
@@ -78,23 +109,12 @@ public class DisplaySettingsMenu : MonoBehaviour
     {
         SaveDisplaySettings();
     }
-
-    [System.Serializable]
-    private class SettingsData
-    {
-        public int fullscreenDropdownValue;
-        public int qualityDropdownValue;
-    }
 }
 
     [Serializable]
     public struct DisplaySettingsData
     {
-        public bool fullscreen;
-        public bool borderlessWindowed;
-        public bool windowed;
-        public bool ultraGraphics;
-        public bool highGraphics;
-        public bool mediumGraphics;
-        public bool lowGraphics;
+        public int screenMode;
+        public int resolution;
+        public int refreshRate;
     }
