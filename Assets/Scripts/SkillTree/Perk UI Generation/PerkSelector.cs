@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PerkSelector : MonoBehaviour
 {
@@ -21,11 +23,13 @@ public class PerkSelector : MonoBehaviour
     private PerkCollectorManager perkCollectorManager;
 
     public static Action OnPerkSelection;
-    public Action<Perk> UpdateEquippedPerkUi;
+    public Action<Perk, Color> UpdateEquippedPerkUi;
 
-    [SerializeField] [Range(0f, 1f)] private float commonChance = 0.5f;
     [SerializeField] [Range(0f, 1f)] private float rareChance = 0.3f;
     [SerializeField] [Range(0f, 1f)] private float legendaryChance = 0.1f;
+    [SerializeField] Color rareColor;
+    [SerializeField] Color legendaryColor;
+    [SerializeField] float fadeDuration = 5f;
 
     void Start()
     {
@@ -90,30 +94,18 @@ public class PerkSelector : MonoBehaviour
                 }
             }
 
-            List<Perk> selectedRarity = new();
-            if(randomValue < legendaryChance && legendary.Count > 0)
-            {
-                selectedRarity = legendary;
-                Debug.Log("LEGENDARY HAMPER");
-            }
-            else if(randomValue < rareChance && rare.Count > 0)
-            {
-                selectedRarity = rare;
-                Debug.Log("RARE HAMPER");
-            }
-            else
-            {
-                selectedRarity = common;
-                Debug.Log("COMMON HAMPER");
-            }
-
+            List<Perk> selectedRarity = DecidePerkRarity(selectedPerks, common, rare, legendary, randomValue);
             Perk randomPerk;
+            int numberOfTries = 0;
             do
             {
+                numberOfTries++;
                 int randomIndexNum;
                 randomIndexNum = UnityEngine.Random.Range(0, selectedRarity.Count);
                 randomPerk = selectedRarity[randomIndexNum];
-            } while (selectedPerks.Contains(randomPerk));
+                Debug.Log(numberOfTries);
+            }
+            while (selectedPerks.Contains(randomPerk) && numberOfTries < 50);
 
             selectedPerks.Add(randomPerk);
             perkChoices[perkIndex].perk = randomPerk;
@@ -122,13 +114,53 @@ public class PerkSelector : MonoBehaviour
         DisplayPerkDetails();
     }
 
+    private List<Perk> DecidePerkRarity(List<Perk> selectedPerks, List<Perk> common, List<Perk> rare, List<Perk> legendary, float randomValue)
+    {
+        List<Perk> selectedRarity = new();
+        if (randomValue < legendaryChance && legendary.Count > 0)
+        {
+            selectedRarity = legendary;
+        }
+        else if (randomValue < rareChance && rare.Count > 0)
+        {
+            selectedRarity = rare;
+        }
+        else
+        {
+            selectedRarity = common;
+        }
+        for (int i = 0; i < selectedRarity.Count; i++)
+        {
+            if (selectedPerks.Contains(selectedRarity[i]))
+            {
+                selectedRarity.RemoveAt(i);
+                i--;
+            }
+        }
+        if (selectedRarity.Count == 0)
+        {
+            selectedRarity = common;
+        }
+
+        return selectedRarity;
+    }
+
     public void DisplayPerkDetails()
     {
         foreach (var choice in perkChoices)
         {
             choice.perkName.text = choice.perk.name;
             choice.perkSprite.sprite = choice.perk.icon;
-            //Debug.Log("Selected Perk: " + choice.perk.name);
+            choice.perkRarity.color = choice.perk.perkRarity == PerkRarity.Legendary ? legendaryColor : new(1, 1, 1, 0);
+            if (choice.perk.perkRarity != PerkRarity.Common)
+            {
+                choice.perkRarity.gameObject.SetActive(true);
+                StartCoroutine(LerpTransparency(choice.perkRarity, fadeDuration));
+            }
+            else
+            {
+                choice.perkRarity.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -137,7 +169,20 @@ public class PerkSelector : MonoBehaviour
         perkUIcanvas.SetActive(false);
         perkCollectorManager.AcquirePerk(perkChoices[perkIndexSelected].perk);
         OnPerkSelection?.Invoke();
-        UpdateEquippedPerkUi?.Invoke(perkChoices[perkIndexSelected].perk);
+        Color perkColor;
+        switch (perkChoices[perkIndexSelected].perk.perkRarity)
+        {
+            case PerkRarity.Legendary:
+                perkColor = legendaryColor;
+                break;
+            case PerkRarity.Rare:
+                perkColor = rareColor;
+                break;
+            default:
+                perkColor = Color.white;
+                break;
+        }
+        UpdateEquippedPerkUi?.Invoke(perkChoices[perkIndexSelected].perk, perkColor);
     }
 
     public void ShowDescription(int index)
@@ -157,6 +202,28 @@ public class PerkSelector : MonoBehaviour
     public void AddToPool(Perk newPerk)
     {
         perkPool.Add(newPerk);
-        //Debug.Log("added");
+    }
+
+    IEnumerator LerpTransparency(Image image, float duration)
+    {
+        Animator animator = image.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.enabled = false;
+        }
+        float elapsedTime = 0;
+        float startAlpha = image.color.a;
+        image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
+        while (elapsedTime < duration)
+        {
+            image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(0, startAlpha, elapsedTime / duration));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        image.color = new Color(image.color.r, image.color.g, image.color.b, startAlpha);
+        if (animator != null)
+        {
+            animator.enabled = true;
+        }
     }
 }

@@ -20,10 +20,9 @@ public class PerkUI : MonoBehaviour
         perkText.text = amountAcquired.ToString();
         this.perkSelector = perkSelector;
         if (this.perkSelector != null) perkSelector.UpdateEquippedPerkUi += UpdatePerkUI;
-
     }
 
-    void UpdatePerkUI(Perk receivedPerk)
+    void UpdatePerkUI(Perk receivedPerk, Color borderColor)
     {
         if (perk == receivedPerk)
         amountAcquired++;
