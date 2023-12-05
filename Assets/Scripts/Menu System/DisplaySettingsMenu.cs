@@ -10,6 +10,11 @@ public class DisplaySettingsMenu : MonoBehaviour
     [SerializeField] TMP_Dropdown refreshRate;
     DisplaySettingsData data;
 
+    private void Start()
+    {
+        if (data == null) { data = new DisplaySettingsData(); }
+    }
+
     public void OnBackButtonPressed()
     {
         SaveDisplaySettings();
@@ -54,6 +59,9 @@ public class DisplaySettingsMenu : MonoBehaviour
             case 2:
                 Screen.SetResolution(2560, 1440, Screen.fullScreenMode);
                 break;
+                default:
+                Screen.SetResolution(1920, 1080, Screen.fullScreenMode);
+                break;
         }
         if (data.resolution != value) { data.resolution = value; }
     }
@@ -71,13 +79,16 @@ public class DisplaySettingsMenu : MonoBehaviour
             case 2:
                 Application.targetFrameRate = 140;
                 break;
+            default:
+                Application.targetFrameRate = 60;
+                break;
         }
         if (data.refreshRate != value) { data.refreshRate = value; }
     }
 
     private void LoadDisplaySettings()
     {
-        string filePath = Application.persistentDataPath + "/settings.json";
+        string filePath = "settings.json";
 
         if (File.Exists(filePath))
         {
@@ -85,16 +96,18 @@ public class DisplaySettingsMenu : MonoBehaviour
             data = JsonUtility.FromJson<DisplaySettingsData>(json);
 
             ChangeScreenMode(data.screenMode);
+            screenMode.value = data.screenMode;
             ChangeResolution(data.resolution);
+            resolution.value = data.resolution;
             ChangeRefreshRate(data.refreshRate);
+            refreshRate.value = data.refreshRate;
         }
     }
 
     private void SaveDisplaySettings()
     {
         string json = JsonUtility.ToJson(data);
-        string filePath = Application.persistentDataPath + "/settings.json";
-        File.WriteAllText(filePath, json);
+        File.WriteAllText("settings.json", json);
     }
 
     private void OnApplicationQuit()
@@ -116,7 +129,7 @@ public class DisplaySettingsMenu : MonoBehaviour
 [Serializable]
 public class DisplaySettingsData
 {
-    public int screenMode;
-    public int resolution;
-    public int refreshRate;
+    public int screenMode = 0;
+    public int resolution = 0;
+    public int refreshRate = 0;
 }
