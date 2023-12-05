@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class DisplaySettingsMenu : MonoBehaviour
@@ -9,13 +8,7 @@ public class DisplaySettingsMenu : MonoBehaviour
     [SerializeField] TMP_Dropdown screenMode;
     [SerializeField] TMP_Dropdown resolution;
     [SerializeField] TMP_Dropdown refreshRate;
-    [SerializeField] GameObject Return;
     DisplaySettingsData data;
-
-    private void Start()
-    {
-        LoadDisplaySettings();
-    }
 
     public void OnBackButtonPressed()
     {
@@ -25,7 +18,6 @@ public class DisplaySettingsMenu : MonoBehaviour
 
     public void ExitDisplaySettings()
     {
-        Return.SetActive(false);
         SaveDisplaySettings();
     }
 
@@ -109,12 +101,22 @@ public class DisplaySettingsMenu : MonoBehaviour
     {
         SaveDisplaySettings();
     }
+
+    private void OnEnable()
+    {
+        LoadDisplaySettings();
+    }
+
+    private void OnDisable()
+    {
+        SaveDisplaySettings();
+    }
 }
 
-    [Serializable]
-    public struct DisplaySettingsData
-    {
-        public int screenMode;
-        public int resolution;
-        public int refreshRate;
-    }
+[Serializable]
+public class DisplaySettingsData
+{
+    public int screenMode;
+    public int resolution;
+    public int refreshRate;
+}
