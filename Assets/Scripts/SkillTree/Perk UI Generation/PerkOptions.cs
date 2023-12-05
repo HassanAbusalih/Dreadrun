@@ -1,17 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-    [System.Serializable]
-    public class PerkOptions 
+[System.Serializable]
+public class PerkOptions 
 {
+    [HideInInspector] public Perk perk;
     public Button perkButton;
     public TextMeshProUGUI perkName;
-
     public Image perkSprite;
-
-    [HideInInspector]
-    public Perk perk;
+    public Image perkRarity;
 }

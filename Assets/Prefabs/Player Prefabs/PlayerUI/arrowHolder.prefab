@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6293095248352754325
 Transform:
   m_ObjectHideFlags: 0
@@ -133,6 +133,7 @@ MonoBehaviour:
   player: {fileID: 0}
   distanceToShow: 25
   offset: {x: 0, y: 0.2, z: 1.2}
+  toggleKey: 0
   loopingColor: {r: 1, g: 0.89839494, b: 0, a: 1}
   scaleCurve:
     serializedVersion: 2
@@ -170,3 +171,4 @@ MonoBehaviour:
   frequency: 10
   amplitude: 1
   distanceFromPayload: 41.509697
+  arrowState: 0
