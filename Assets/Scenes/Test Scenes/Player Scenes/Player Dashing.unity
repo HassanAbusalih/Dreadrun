@@ -123,6 +123,304 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &19353952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 19353956}
+  - component: {fileID: 19353955}
+  - component: {fileID: 19353954}
+  - component: {fileID: 19353953}
+  m_Layer: 0
+  m_Name: CameraRotationTrigger (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &19353953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19353952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f70dc6b9e006c44a7129f27d976ddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camFollow: {fileID: 329818786}
+  useTriggerAsAngleOffset: 0
+  angleOffset: 45
+  rotateDuration: 1
+  rotationCurve:
+    m_Mode: 2
+    m_CurveMultiplier: 1
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.0009460449
+        inSlope: -0.042207737
+        outSlope: -0.042207737
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08984817
+      - serializedVersion: 3
+        time: 0.57192075
+        value: 0.38579547
+        inSlope: 1.6106554
+        outSlope: 1.6106554
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.11566081
+      - serializedVersion: 3
+        time: 0.99505615
+        value: 0.9981079
+        inSlope: 0.12454384
+        outSlope: 0.12454384
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.07988818
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.0033111572
+        value: 0.003288269
+        inSlope: 0.12544759
+        outSlope: 0.12544759
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.35644975
+      - serializedVersion: 3
+        time: 0.26889068
+        value: 0.7189685
+        inSlope: 1.3433679
+        outSlope: 1.3433679
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.085782126
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0.024144605
+        outSlope: 0.024144605
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.15066719
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 0
+  previousRotationAngle: 0
+  AlignmentBetweenCamAndTrigger: 0
+--- !u!114 &19353954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19353952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c25eb919b9ce3d4d846a36ce7a65d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useColliderScale: 1
+--- !u!65 &19353955
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19353952}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &19353956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19353952}
+  m_LocalRotation: {x: -0, y: 0.9999873, z: -0, w: -0.005043245}
+  m_LocalPosition: {x: -1.2, y: 28.78, z: 15.7}
+  m_LocalScale: {x: 29.652601, y: 5.8094, z: 9.715247}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 180.578, z: 0}
+--- !u!1 &49511639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 49511643}
+  - component: {fileID: 49511640}
+  - component: {fileID: 49511644}
+  - component: {fileID: 49511645}
+  m_Layer: 0
+  m_Name: CameraRotationTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &49511640
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49511639}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &49511643
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49511639}
+  m_LocalRotation: {x: -0, y: 0.7238481, z: -0, w: 0.6899594}
+  m_LocalPosition: {x: -30.6, y: 28.78, z: 26.4}
+  m_LocalScale: {x: 30.233782, y: 5.8094, z: 9.715247}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 92.746, z: 0}
+--- !u!114 &49511644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49511639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c25eb919b9ce3d4d846a36ce7a65d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useColliderScale: 1
+--- !u!114 &49511645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49511639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f70dc6b9e006c44a7129f27d976ddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camFollow: {fileID: 329818786}
+  useTriggerAsAngleOffset: 0
+  angleOffset: 45
+  rotateDuration: 1
+  rotationCurve:
+    m_Mode: 2
+    m_CurveMultiplier: 1
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.0009460449
+        inSlope: -0.042207737
+        outSlope: -0.042207737
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08984817
+      - serializedVersion: 3
+        time: 0.6662829
+        value: 0.5353345
+        inSlope: 2.8961372
+        outSlope: 2.8961372
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.030307833
+        outWeight: 0.09706611
+      - serializedVersion: 3
+        time: 1
+        value: 0.9933891
+        inSlope: -0.4214828
+        outSlope: -0.4214828
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.7200169
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.0033111572
+        value: 0.003288269
+        inSlope: 0.12544759
+        outSlope: 0.12544759
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.35644975
+      - serializedVersion: 3
+        time: 0.24074912
+        value: 0.8039273
+        inSlope: 1.5406415
+        outSlope: 1.5406415
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.092866756
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0.024144605
+        outSlope: 0.024144605
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.15066719
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 0
+  previousRotationAngle: 0
+  AlignmentBetweenCamAndTrigger: 0
 --- !u!1 &82783566
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,6 +770,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &329818786 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2111597916701207226, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+  m_PrefabInstance: {fileID: 1229552892}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &484404690
 PrefabInstance:
   m_ObjectHideFlags: 0

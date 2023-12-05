@@ -21,6 +21,7 @@ public class PerkSelector : MonoBehaviour
     private PerkCollectorManager perkCollectorManager;
 
     public static Action OnPerkSelection;
+    public Action<Perk> UpdateEquippedPerkUi;
 
     void Start()
     {
@@ -92,6 +93,7 @@ public class PerkSelector : MonoBehaviour
         perkUIcanvas.SetActive(false);
         perkCollectorManager.AcquirePerk(perkChoices[perkIndexSelected].perk);
         OnPerkSelection?.Invoke();
+        UpdateEquippedPerkUi?.Invoke(perkChoices[perkIndexSelected].perk);
     }
 
     public void ShowDescription(int index)
