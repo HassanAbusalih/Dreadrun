@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,13 +15,15 @@ public class SuicideBomber : EnemyAIBase
     [SerializeField] GameObject explosionVFX;
     bool dashing = false;
     LayerMask mask;
-    Material material;
-    Color originalColor;
+    [SerializeField] SkinnedMeshRenderer[] meshRenderer;
+    List<Material> materials = new();
 
     private void Start()
     {
-        material = GetComponent<MeshRenderer>().material;
-        originalColor = material.color;
+        foreach (SkinnedMeshRenderer mesh in meshRenderer)
+        {
+            materials.Add(mesh.material);
+        }
         mask = LayerMask.GetMask("Enemy");
     }
 
@@ -49,7 +53,10 @@ public class SuicideBomber : EnemyAIBase
         {
             Move(target, movementSpeed * dashSpeedModifier);
             float lerp = Mathf.Clamp01((dashRange - distanceToTarget) / (dashRange - explodeRange));
-            material.color = Color.Lerp(originalColor, Color.red, lerp);
+            foreach  (Material material in materials)
+            {
+                material.color = Color.Lerp(Color.white, Color.red, lerp);
+            }
         }
         else
         {

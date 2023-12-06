@@ -90,14 +90,13 @@ public class DisplaySettingsMenu : MonoBehaviour
         {
             string json = File.ReadAllText(filePath);
             data = JsonUtility.FromJson<DisplaySettingsData>(json);
-
-            ChangeScreenMode(data.screenMode);
-            screenMode.value = data.screenMode;
-            ChangeResolution(data.resolution);
-            resolution.value = data.resolution;
-            ChangeRefreshRate(data.refreshRate);
-            refreshRate.value = data.refreshRate;
         }
+        ChangeScreenMode(data.screenMode);
+        screenMode.value = data.screenMode;
+        ChangeResolution(data.resolution);
+        resolution.value = data.resolution;
+        ChangeRefreshRate(data.refreshRate);
+        refreshRate.value = data.refreshRate;
     }
 
     private void SaveDisplaySettings()
