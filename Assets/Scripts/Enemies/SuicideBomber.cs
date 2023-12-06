@@ -60,7 +60,7 @@ public class SuicideBomber : EnemyAIBase
         {
             Explosion.Explode(transform, explosionDamage, explosionRadius, explosionForce, mask);
             Instantiate(explosionVFX, transform.position, Quaternion.identity);
-            enemySounds.PlaySound(1, AudioSourceType.Enemy);
+            enemySounds.PlaySound(1, AudioSourceType.Weapons);
             Destroy(gameObject);
         }
     }

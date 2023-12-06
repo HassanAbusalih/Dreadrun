@@ -1,12 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
+    float[] volumeLevels;
     [SerializeField] AudioSource[] audioSources;
     AudioMixerGroup mixerGroup;
     private void Awake()
@@ -21,15 +21,24 @@ public class AudioManager : MonoBehaviour
         }
 
         int enumCount = Enum.GetNames(typeof(AudioSourceType)).Length;
-        audioSources = new AudioSource[enumCount];
-        GameObject audioObject = new GameObject("AudioObject");
-        audioObject.transform.SetParent(transform, true);
+        audioSources = new AudioSource[enumCount - 1];
+        volumeLevels = new float[enumCount];
 
-        for (int i = 0; i < enumCount; i++)
+        for (int i = 0; i < audioSources.Length; i++)
         {
+            GameObject audioObject = new GameObject("AudioObject");
+            audioObject.transform.SetParent(transform, true);
             audioSources[i] = audioObject.AddComponent<AudioSource>();
-            AudioSourceType audioSourceType = (AudioSourceType)i;
+            AudioSourceType audioSourceType = (AudioSourceType)(i + 1);
             audioSources[i].name = audioSourceType.ToString();
+        }
+        if (File.Exists("audioSettings.json"))
+        {
+            string json = File.ReadAllText("audioSettings.json");
+            AudioSettingsData audioSettingsData = JsonUtility.FromJson<AudioSettingsData>(json);
+            SetVolume(audioSettingsData.masterVolume);
+            SetVolume(audioSettingsData.musicVolume, AudioSourceType.Music);
+            SetVolume(audioSettingsData.sfxVolume, AudioSourceType.Player);
         }
     }
 
@@ -51,14 +60,10 @@ public class AudioManager : MonoBehaviour
 
     public void SetVolume(float volume, AudioSourceType audioType = 0)
     {
-        if(audioType != AudioSourceType.Master)
-            audioSources[(int)audioType].volume = volume;
-        else
+        volumeLevels[(int)audioType] = volume;
+        for (int i = 1; i < audioSources.Length; i++)
         {
-            for (int i = 0; i < audioSources.Length; i++)
-            {
-                audioSources[i].volume *= volume;
-            }
+            audioSources[i].volume = volumeLevels[i] * volumeLevels[0];
         }
     }
 }
@@ -68,7 +73,6 @@ public enum AudioSourceType
     Master = 0,
     Player,
     Enemy,
-    Environment,
     Weapons,
     Music
 }

@@ -10,11 +10,6 @@ public class DisplaySettingsMenu : MonoBehaviour
     [SerializeField] TMP_Dropdown refreshRate;
     DisplaySettingsData data;
 
-    private void Start()
-    {
-        if (data == null) { data = new DisplaySettingsData(); }
-    }
-
     public void OnBackButtonPressed()
     {
         SaveDisplaySettings();
@@ -77,7 +72,7 @@ public class DisplaySettingsMenu : MonoBehaviour
                 Application.targetFrameRate = 120;
                 break;
             case 2:
-                Application.targetFrameRate = 140;
+                Application.targetFrameRate = 144;
                 break;
             default:
                 Application.targetFrameRate = 60;
@@ -88,6 +83,7 @@ public class DisplaySettingsMenu : MonoBehaviour
 
     private void LoadDisplaySettings()
     {
+        if (data == null) { data = new DisplaySettingsData(); }
         string filePath = "settings.json";
 
         if (File.Exists(filePath))
@@ -106,6 +102,12 @@ public class DisplaySettingsMenu : MonoBehaviour
 
     private void SaveDisplaySettings()
     {
+        data = new DisplaySettingsData
+        {
+            screenMode = screenMode.value,
+            resolution = resolution.value,
+            refreshRate = refreshRate.value
+        };
         string json = JsonUtility.ToJson(data);
         File.WriteAllText("settings.json", json);
     }

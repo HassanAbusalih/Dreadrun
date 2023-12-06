@@ -28,7 +28,7 @@ public class Landmine : Trap
     {
         Explosion.Explode(transform, explosionDamage, explosionRadius, explosionForce);
         Instantiate(explosionVFX, transform.position, Quaternion.identity);
-        if (explosionSFX != null) { explosionSFX.PlaySound(0, AudioSourceType.Environment); }
+        if (explosionSFX != null) { explosionSFX.PlaySound(0, AudioSourceType.Weapons); }
         Destroy(gameObject);
     }
 
