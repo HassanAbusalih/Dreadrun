@@ -6,6 +6,7 @@ public class Payload : MonoBehaviour, IDamagable
 {
     float health;
     [SerializeField] bool stopped;
+    [SerializeField] bool enteredLastCheckpoint;
     [Header("Stats")]
     [SerializeField] float maxhealth = 500f;
     [SerializeField] float speed = 5f;
@@ -16,6 +17,7 @@ public class Payload : MonoBehaviour, IDamagable
     [SerializeField] float interactionRange = 10f;
     [SerializeField] float playerRange = 20f;
     [SerializeField] float stopDuration = 3f;
+    [SerializeField] float checkpointStopDuration = 30f;
     float stopTimer = 0f;
     public float InteractionRange { get => interactionRange; }
     [SerializeField][Range(0.1f, 0.9f)] float enemySlowSpeed = 0.5f;
@@ -106,6 +108,16 @@ public class Payload : MonoBehaviour, IDamagable
                     return;
                 }
                 AddToList(pathPointsParent[currentParentIndex], pathPointsList);
+                enteredLastCheckpoint = true;
+            }
+        }
+        if (enteredLastCheckpoint)
+        {
+            stopTimer += Time.fixedDeltaTime; 
+            if (stopTimer >= stopDuration)
+            {
+                StartFollowingPath();
+                enteredLastCheckpoint = false;
             }
         }
     }
