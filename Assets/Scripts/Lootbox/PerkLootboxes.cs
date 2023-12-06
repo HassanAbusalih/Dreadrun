@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PerkLootboxes : MonoBehaviour
 {
+    [SerializeField] Animator lootBoxOpen;
     [SerializeField] UnlockedPerks unlocked;
     [SerializeField] List<Perk> unlockablePerkPool;
     bool opened;
@@ -24,6 +25,7 @@ public class PerkLootboxes : MonoBehaviour
         if (entered)
         {
             OpenLootBox();
+            lootBoxOpen.SetBool("open", true);
         }
     }
 
