@@ -1,97 +1,31 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class CharacterCustomizationMenu : MonoBehaviour
 {
-    [SerializeField] Image outfitImage;
-    [SerializeField] Image weaponImage;
-    [SerializeField] Text categoryText;
-    [SerializeField] Sprite[] outfitSprites;
-    [SerializeField] Sprite[] weaponSprites;
+    [SerializeField] GameObject[] characters;
+    [SerializeField] int currentCharacter;
 
-    private int currentCategoryIndex = 0;
-    private int currentOutfitIndex = 0;
-    private int currentWeaponIndex = 0;
 
-    private void Start()
+    public void NextCharacter()
     {
-        UpdateCategoryText();
-        UpdateOutfitImage();
-        UpdateWeaponImage();
+        characters[currentCharacter].SetActive(false);
+        currentCharacter = (currentCharacter + 1) % characters.Length;
+        characters[currentCharacter].SetActive(true);
     }
 
-    private void Update()
+    public void PreviousCharacter()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        characters[currentCharacter].SetActive(false);
+        currentCharacter--;
+
+        if(currentCharacter < 0)
         {
-            gameObject.SetActive(false);
+            currentCharacter += characters.Length;
         }
-    }
 
-    public void NextCategory()
-    {
-        currentCategoryIndex = (currentCategoryIndex + 1) % 2;
-        UpdateCategoryText();
-        UpdateOutfitImage();
-        UpdateWeaponImage();
-    }
-
-    public void PreviousCategory()
-    {
-        currentCategoryIndex = (currentCategoryIndex + 1) % 2;
-        UpdateCategoryText();
-        UpdateOutfitImage();
-        UpdateWeaponImage();
-    }
-
-    public void NextItem()
-    {
-        if (currentCategoryIndex == 0)
-        {
-            currentOutfitIndex = (currentOutfitIndex + 1) % outfitSprites.Length;
-            UpdateOutfitImage();
-        }
-        else
-        {
-            currentWeaponIndex = (currentWeaponIndex + 1) % weaponSprites.Length;
-            UpdateWeaponImage();
-        }
-    }
-
-    public void PreviousItem()
-    {
-        if (currentCategoryIndex == 0)
-        {
-            currentOutfitIndex = (currentOutfitIndex + outfitSprites.Length - 1) % outfitSprites.Length;
-            UpdateOutfitImage();
-        }
-        else
-        {
-            currentWeaponIndex = (currentWeaponIndex + weaponSprites.Length - 1) % weaponSprites.Length;
-            UpdateWeaponImage();
-        }
-    }
-
-    private void UpdateCategoryText()
-    {
-        if (currentCategoryIndex == 0)
-        {
-            categoryText.text = "Outfit";
-        }
-        else
-        {
-            categoryText.text = "Weapon";
-        }
-    }
-
-    private void UpdateOutfitImage()
-    {
-        outfitImage.sprite = outfitSprites[currentOutfitIndex];
-    }
-
-    private void UpdateWeaponImage()
-    {
-        weaponImage.sprite = weaponSprites[currentWeaponIndex];
+        characters[currentCharacter].SetActive(true);
     }
 }
