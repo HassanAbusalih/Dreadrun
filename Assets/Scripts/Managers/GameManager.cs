@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        Time.timeScale = 1;
     }
 
     private void OnDisable()
@@ -55,6 +56,8 @@ public class GameManager : MonoBehaviour
         {
             TogglePause();
         }
+
+       if(hasGameEnded) Time.timeScale = 0;
     }
 
     public void Win()

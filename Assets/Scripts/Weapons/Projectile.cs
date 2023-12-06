@@ -14,6 +14,11 @@ public class Projectile : MonoBehaviour
     List<IProjectileEffect> effects;
     [SerializeField] int layerToIgnore;
     [SerializeField] GameObject impactVFX;
+    [SerializeField][Range(0, 1)] float targetScalePercent = 0.5f;
+    Transform transformToScale;
+    Vector3 originalScale;
+    SphereCollider sphereCollider;
+    float colliderRadius;
 
     public void Initialize(float damage, float speed, float range, int layer, List<IProjectileEffect> effects)
     {
@@ -24,6 +29,8 @@ public class Projectile : MonoBehaviour
         gameObject.layer = layer;
         this.effects = new List<IProjectileEffect>(effects);
         lastPos = transform.position;
+        transformToScale = GetComponentInChildren<SpriteRenderer>().transform;
+        originalScale = transformToScale.localScale;
     }
 
     public void Initialize(float damage, float speed, float range, int layer)
@@ -33,6 +40,10 @@ public class Projectile : MonoBehaviour
         this.speed = speed;
         this.range = range;
         gameObject.layer = layer;
+        transformToScale = transform;
+        originalScale = transformToScale.localScale;
+        sphereCollider = GetComponent<SphereCollider>();
+        colliderRadius = sphereCollider.radius;
         lastPos = transform.position;
     }
 
@@ -41,7 +52,17 @@ public class Projectile : MonoBehaviour
         rb.velocity = 100 * speed * Time.deltaTime * transform.forward;
         distanceTravelled += Vector3.Distance(transform.position, lastPos);
         lastPos = transform.position;
-        if (distanceTravelled > range) { Destroy(gameObject); }
+        transformToScale.localScale = Vector3.Lerp(originalScale, originalScale * targetScalePercent, distanceTravelled / range);
+        if (sphereCollider != null)
+        {
+            float scaleFactor = originalScale.x / transform.localScale.x;
+            sphereCollider.radius = colliderRadius * scaleFactor;
+        }
+        if (distanceTravelled > range)
+        {
+            if (impactVFX != null) { Instantiate(impactVFX, transform.position, Quaternion.identity); }
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

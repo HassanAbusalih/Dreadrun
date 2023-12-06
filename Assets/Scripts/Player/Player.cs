@@ -22,6 +22,7 @@ public class Player : MonoBehaviour, IDamagable
     [Header("Player Stats & Movement Settings")]
     [SerializeField] float slowDownMultiplier;
     [SerializeField] AnimationCurve slowDownCurve;
+
     [SerializeField][Range(0, 2)] float staminaRecoverySpeed;
     public PlayerStats playerStats;
 
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] float sfxCooldown = 1f;
     float timeSinceSFX;
     float timer;
+    
     RaycastHit slopeHitt;
 
     private void OnEnable()
@@ -100,9 +102,14 @@ public class Player : MonoBehaviour, IDamagable
 
     void MovePlayer()
     {
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 normalizedDirection = new Vector3(horizontal, 0, vertical).normalized;
+        Vector3 normalizedDirection = (cameraForward * vertical + cameraRight * horizontal).normalized;
         Vector3 slopeDirection = isPlayerOnSlope(normalizedDirection).Item1;
         onSlope = isPlayerOnSlope(normalizedDirection).Item2;
         Vector3 moveVelocity = (slopeDirection + normalizedDirection) * playerStats.speed;
@@ -113,8 +120,15 @@ public class Player : MonoBehaviour, IDamagable
         rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
         rb.useGravity = !onSlope;
 
+
+       
+
         rb.velocity += moveVelocity;
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerStats.speed);
+        if(rb.velocity.magnitude > playerStats.speed)
+        {
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerStats.speed);
+        }
+       
 
         if (horizontal != 0 && vertical != 0) return;
         float slowDownLerpValue = slowDownCurve.Evaluate(Time.fixedDeltaTime * slowDownMultiplier);

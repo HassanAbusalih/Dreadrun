@@ -11,7 +11,7 @@ public class ExpOrb : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (ExperienceManager.CollectExp && other.TryGetComponent(out Player _))
+        if (ExperienceManager.CollectExp && other.TryGetComponent(out Player player))
         {
             OnExpOrbCollected?.Invoke(expAmount);
             if (expOrbPickUpSFX != null)

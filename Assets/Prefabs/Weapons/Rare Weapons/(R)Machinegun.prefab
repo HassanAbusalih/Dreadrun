@@ -126,16 +126,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
     m_ImpulseChannel: 1
-    m_ImpulseShape: 2
+    m_ImpulseShape: 0
     m_CustomImpulseShape:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: -1.7707629
+        outSlope: -1.7707629
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.39433482
+      - serializedVersion: 3
+        time: 0.17515753
+        value: 0.35047692
+        inSlope: 0.8718163
+        outSlope: 0.8718163
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.42990085
+        value: 0.4393379
+        inSlope: 1.5568064
+        outSlope: 1.5568064
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.54895836
+        value: 0.8262839
+        inSlope: 1.3759271
+        outSlope: 1.3759271
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.73570156
+        value: 0.8075635
+        inSlope: 0.5759073
+        outSlope: 0.5759073
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: -2.6512892
+        outSlope: -2.6512892
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.47064754
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    m_ImpulseDuration: 0.2
-    m_ImpulseType: 0
-    m_DissipationRate: 0.25
+    m_ImpulseDuration: 0.1
+    m_ImpulseType: 2
+    m_DissipationRate: 0.786
     m_RawSignal: {fileID: 0}
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
@@ -162,9 +216,9 @@ MonoBehaviour:
     m_ImpactRadius: 100
     m_DirectionMode: 0
     m_DissipationMode: 2
-    m_DissipationDistance: 100
-    m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0, y: -0.2, z: 0}
+    m_DissipationDistance: 200
+    m_PropagationSpeed: 10000
+  m_DefaultVelocity: {x: 0.016, y: 0.027, z: 0.016}
 --- !u!1 &769593211139889826
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,23 +1,28 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ExperienceManager : MonoBehaviour
 {
-    [SerializeField] int expThresholdIncrease, expToLevelUp;
+    [SerializeField] int expIncreaseAddon, expToLevelUp;
     [SerializeField] SoundSO levelUpSFX;
+    [SerializeField] Image expBar;
     PerkSelector perkSelector;
-    int currentLevel;
     int currentExp;
+
     public static bool CollectExp { get; private set; } = true;
 
     private void Awake()
     {
         CollectExp = true;
+        UpdateExpBarUI();
     }
     void HandleExperience(int newExperience)
     {
         currentExp += newExperience;
-        if (currentExp >= expThresholdIncrease)
+        UpdateExpBarUI();
+
+        if (currentExp >= expToLevelUp)
         {
             LevelUp();
             if (levelUpSFX != null)
@@ -27,14 +32,15 @@ public class ExperienceManager : MonoBehaviour
         }
     }
 
+    void UpdateExpBarUI()=> expBar.fillAmount = (float)currentExp / expToLevelUp;
+
     void LevelUp()
     {
         perkSelector.RandomPerkSelector();
         CollectExp = false;
-        currentLevel++;
         currentExp = 0;
-        expThresholdIncrease += expToLevelUp;
-        Debug.Log("You are now level " + currentLevel);
+        expToLevelUp += expIncreaseAddon;
+        UpdateExpBarUI();
     }
 
     void AllowExpCollection() => CollectExp = true;
