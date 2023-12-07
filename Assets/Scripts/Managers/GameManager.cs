@@ -129,4 +129,7 @@ public class GameManager : MonoBehaviour
     {
         onPhaseChange.Invoke();
     }
+
+    public void QuitGame() => Application.Quit();
+
 }

@@ -5229,7 +5229,7 @@ AudioSource:
   m_GameObject: {fileID: 1694009915}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4250227728041340319, guid: 30e2a6c9cb2b77945ace10bb80be2e41, type: 2}
   m_audioClip: {fileID: 8300000, guid: c7bac4d8f13382248bddf1bd1dc561e9, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -6157,6 +6157,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5685e23683729404fb4e6f96e6f6d7b0, type: 3}
   m_PrefabInstance: {fileID: 718356303}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1964558870 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8603818712593868393, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+  m_PrefabInstance: {fileID: 8603818712408481516}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e72796cadec2f459f6061abc216084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1984281639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36161,9 +36172,53 @@ PrefabInstance:
       value: Menus
       objectReference: {fileID: 0}
     - target: {fileID: 8603818712067290852, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712067290852, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712067290852, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1694009916}
+    - target: {fileID: 8603818712067290852, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1964558870}
+    - target: {fileID: 8603818712067290852, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712067290852, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ShowAudioScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712067290852, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: SettingsMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712067290852, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712266461985, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 10627526}
+    - target: {fileID: 8603818712266461985, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1694009916}
+    - target: {fileID: 8603818712266461985, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveToMain
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712266461985, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
     - target: {fileID: 8603818712513151428, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

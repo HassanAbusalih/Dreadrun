@@ -38,4 +38,11 @@ public class SettingsMenu : MonoBehaviour
         audioSettingsScreen.SetActive(false);
         mainMenu.SetActive(true);
     }
+    
+    public void OpenSettings()
+    {
+        settingsMenu.SetActive(true);
+        audioSettingsScreen.SetActive(true);
+        mainMenu.SetActive(false);
+    }
 }
