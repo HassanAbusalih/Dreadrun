@@ -19,7 +19,7 @@ public class Teleport : MonoBehaviour
     [SerializeField] float fadeOutTime = 1f;
     [SerializeField] float originalFogDensity = 0.01f; 
     [SerializeField] float finalFogDensity = 0.1f; 
-    [SerializeField] float fogChangeTime= 10f; 
+    //[SerializeField] float fogChangeTime= 10f; 
 
     bool triggered = false;
     GameObject effectInstance;

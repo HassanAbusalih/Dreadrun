@@ -3,19 +3,21 @@ using UnityEngine;
 public class FodderWeapon : EnemyWeapon
 {
     [SerializeField] int projectileCount = 1;
-    Animation _animation;
+    Animation anim;
 
     private void Update()
     {
         timeSinceLastShot += Time.deltaTime;
-        _animation = GetComponent<Animation>();
+        anim = GetComponent<Animation>();
     }
 
     public override void Attack()
     {
         if (timeSinceLastShot < fireRate) { return; }
-        _animation.Play("Attack");
-        _animation.Blend("Idle", 1, 0.5f);
+        anim.CrossFade("Attack", 0.2f);
+        float attackDuration = 0.7f;
+        float fadeOutTime = 0.1f;
+        Invoke(nameof(ReturnToIdle), attackDuration - fadeOutTime);
         timeSinceLastShot = 0;
         float rotationAmount = 360 / projectileCount;
         for (int i = 0; i < projectileCount; i++)
@@ -27,5 +29,10 @@ public class FodderWeapon : EnemyWeapon
             projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 9);
         }
         if (audioSource != null) audioSource.Play();
+    }
+
+    void ReturnToIdle()
+    {
+        anim.CrossFade("Idle", 0.2f);
     }
 }
