@@ -20,6 +20,7 @@ public class SpeedPotion : ItemBase
         Debug.Log("Speed increased");
         GetTimer();
         playerRef = player;
+        PlayVfx(player, duration);
     }
 
     private void GetTimer()

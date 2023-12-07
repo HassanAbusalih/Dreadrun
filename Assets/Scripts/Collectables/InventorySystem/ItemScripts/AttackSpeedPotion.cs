@@ -23,6 +23,7 @@ public class AttackSpeedPotion : ItemBase
             player.playerStats.attack += increaseWeaponDamage;
             GetTimer();
             playerRef = player;
+            PlayVfx(player, duration);
         }
     }
 
