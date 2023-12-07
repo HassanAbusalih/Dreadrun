@@ -12,12 +12,13 @@ public class ScatterEffect : MonoBehaviour, IProjectileEffect
 
     public bool ApplyOnCollision { get; } = true;
 
-    public void Setup(GameObject projectilePrefab, int projectileCount, float projectileSpeed, float projectileRange)
+    public void Setup(GameObject projectilePrefab, int projectileCount, float projectileSpeed, float projectileRange, float damagePercentage)
     {
         this.projectilePrefab = projectilePrefab;
         this.projectileCount = projectileCount;
         this.projectileSpeed = projectileSpeed;
         this.projectileRange = projectileRange;
+        this.damagePercentage = damagePercentage;
     }
 
     public void ApplyEffect(IDamagable damagable, float damage, List<IProjectileEffect> projectileEffects)

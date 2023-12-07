@@ -31,7 +31,7 @@ public class DamageFeedback : MonoBehaviour
         startScaleX = transform.localScale.x;
         if (meshRenderer == null)
         {
-            meshRenderer = GetComponentInChildren<MeshRenderer>();
+            TryGetComponent(out meshRenderer);
         }
         if (meshRenderer == null) return;
         startColor = meshRenderer.material.color;
