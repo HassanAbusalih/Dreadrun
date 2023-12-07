@@ -5,7 +5,8 @@ using UnityEngine;
 public class Payload : MonoBehaviour, IDamagable
 {
     float health;
-
+    [SerializeField] bool stopped;
+    [SerializeField] bool enteredLastCheckpoint;
     [Header("Stats")]
     [SerializeField] float maxhealth = 500f;
     [SerializeField] float speed = 5f;
@@ -14,9 +15,13 @@ public class Payload : MonoBehaviour, IDamagable
     [SerializeField] float healingInterval = 5f;
     [SerializeField] bool followPath = false;
     [SerializeField] float interactionRange = 10f;
+    [SerializeField] float playerRange = 20f;
+    [SerializeField] float stopDuration = 3f;
+    [SerializeField] float checkpointStopDuration = 30f;
+    float stopTimer = 0f;
     public float InteractionRange { get => interactionRange; }
-    [SerializeField][Range(0.1f, 0.9f)] float slowSpeed = 0.5f;
-
+    [SerializeField][Range(0.1f, 0.9f)] float enemySlowSpeed = 0.5f;
+    [SerializeField][Range(0.1f, 0.9f)] float playerSlowSpeed = 0.5f;
     [SerializeField] GameObject visualEffects;
     [Header("Path Points transforms")]
     [SerializeField] Transform grandParentTransform;
@@ -50,22 +55,43 @@ public class Payload : MonoBehaviour, IDamagable
         if (followPath)
         {
             float currentSpeed = speed;
+
             if (EnemiesInRange())
             {
-                currentSpeed *= slowSpeed;
-
-                feedback.ChangeColor(currentSpeed, speed);
+                currentSpeed *= enemySlowSpeed;
+            }
+            if (PlayerInRange())
+            {
+                currentSpeed *= playerSlowSpeed;
+                stopped = true;
+            }
+            else
+            {
+                stopped = false;
+                stopTimer = 0f;
+            }
+            if (stopped)
+            {
+                stopTimer += Time.deltaTime;
+                if (stopTimer >= stopDuration)
+                {
+                    currentSpeed = 0f;
+                }
             }
             if (currentPathIndex < pathPointsList.Count)
             {
+                //Debug.Log(currentSpeed);
+                feedback.ChangeColor(currentSpeed, speed);
                 Transform targetPoint = pathPointsList[currentPathIndex];
                 transform.position = Vector3.MoveTowards(transform.position, targetPoint.position, currentSpeed * Time.deltaTime);
                 Vector3 directionToPoint = targetPoint.transform.position - transform.position;
+
                 if (directionToPoint != Vector3.zero)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(directionToPoint);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
                 }
+
                 if (Vector3.Distance(transform.position, targetPoint.position) < 0.1f)
                 {
                     currentPathIndex++;
@@ -82,6 +108,16 @@ public class Payload : MonoBehaviour, IDamagable
                     return;
                 }
                 AddToList(pathPointsParent[currentParentIndex], pathPointsList);
+                enteredLastCheckpoint = true;
+            }
+        }
+        if (enteredLastCheckpoint)
+        {
+            stopTimer += Time.fixedDeltaTime; 
+            if (stopTimer >= stopDuration)
+            {
+                StartFollowingPath();
+                enteredLastCheckpoint = false;
             }
         }
     }
@@ -111,6 +147,18 @@ public class Payload : MonoBehaviour, IDamagable
         }
         return false;
     }
+
+    bool PlayerInRange()
+    {
+        foreach (var player in players)
+        {
+            if (Vector3.Distance(transform.position, player.transform.position) > playerRange)
+            {
+                return true;
+            }
+        }
+        return false;
+    } 
 
     public void TakeDamage(float amount)
     {
@@ -158,7 +206,7 @@ public class Payload : MonoBehaviour, IDamagable
                         }
                         player.ChangeHealth(healAmount);
                     }
-                }
+                } 
                 if (visualEffects.activeSelf == true)
                 {
                     Invoke(nameof(DisableVFX), 2f);

@@ -10,14 +10,14 @@ public class AttackSpeed : Perk
     {
         if (player.playerWeapon != null)
         {
-            player.playerWeapon.FireRate /= player.playerStats.attackSpeed;
+            player.playerWeapon.FireRate *= player.playerStats.attackSpeed;
         }
         float increaseAmount = player.playerStats.attackSpeed * (attackSpeedScaling / 100f);
         player.playerStats.attackSpeed += increaseAmount;
 
         if (player.playerWeapon != null)
         {
-            player.playerWeapon.FireRate *= player.playerStats.attackSpeed;
+            player.playerWeapon.FireRate /= player.playerStats.attackSpeed;
         }
         return null;
     }
