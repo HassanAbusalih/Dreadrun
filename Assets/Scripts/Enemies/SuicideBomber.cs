@@ -14,6 +14,8 @@ public class SuicideBomber : EnemyAIBase
     [SerializeField] float explodeRange = 2f;
     [SerializeField] GameObject explosionVFX;
     [SerializeField] SkinnedMeshRenderer[] meshRenderer;
+    Color startColor;
+    [SerializeField] Color midColor = Color.yellow;
     [SerializeField] Color targetColor = Color.red;
     bool dashing = false;
     LayerMask mask;
@@ -24,6 +26,7 @@ public class SuicideBomber : EnemyAIBase
         foreach (SkinnedMeshRenderer mesh in meshRenderer)
         {
             materials.Add(mesh.material);
+            startColor = mesh.material.GetColor("_EmissionColor");
         }
         mask = LayerMask.GetMask("Enemy");
     }
@@ -56,7 +59,8 @@ public class SuicideBomber : EnemyAIBase
             float lerp = Mathf.Clamp01((dashRange - distanceToTarget) / (dashRange - explodeRange));
             foreach  (Material material in materials)
             {
-                material.color = Color.Lerp(Color.white, targetColor, lerp);
+                Color currentColor = (1 - lerp) * (1 - lerp) * startColor + 2 * (1 - lerp) * lerp * midColor + lerp * lerp * targetColor;
+                material.SetColor("_EmissionColor", currentColor);
             }
         }
         else

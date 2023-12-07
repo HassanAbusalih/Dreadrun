@@ -15,26 +15,6 @@ public class Homing : MonoBehaviour
         this.enemyHoming = enemyHoming;
     }
 
-    private void Start()
-    {
-        if(enemyHoming)
-        {
-            Player[] players = FindObjectsOfType<Player>();
-            float closestDistance = Mathf.Infinity;
-            Player closest = null;
-            foreach(Player player in players)
-            {
-                float distance = Vector3.Distance(transform.position, player.transform.position);
-                if (distance < closestDistance && distance <= homingRange)
-                {
-                    closest = player;
-                    closestDistance = distance;
-                }
-            }
-            playerTarget = closest;
-        }
-    }
-
     void FixedUpdate()
     {
         if (!enemyHoming)
@@ -43,6 +23,10 @@ public class Homing : MonoBehaviour
         }
         else
         {
+            if (playerTarget == null)
+            {
+                playerTarget = FindObjectOfType<Player>();
+            }
             if (playerTarget != null)
             {
                 Vector3 directionToEnemy = playerTarget.transform.position - transform.position;
