@@ -3,15 +3,19 @@ using UnityEngine;
 public class FodderWeapon : EnemyWeapon
 {
     [SerializeField] int projectileCount = 1;
+    Animation _animation;
 
     private void Update()
     {
         timeSinceLastShot += Time.deltaTime;
+        _animation = GetComponent<Animation>();
     }
 
     public override void Attack()
     {
         if (timeSinceLastShot < fireRate) { return; }
+        _animation.Play("Attack");
+        _animation.Blend("Idle", 1, 0.5f);
         timeSinceLastShot = 0;
         float rotationAmount = 360 / projectileCount;
         for (int i = 0; i < projectileCount; i++)

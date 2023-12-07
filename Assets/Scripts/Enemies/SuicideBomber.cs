@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,15 +13,21 @@ public class SuicideBomber : EnemyAIBase
     [SerializeField] float dashRange = 5f;
     [SerializeField] float explodeRange = 2f;
     [SerializeField] GameObject explosionVFX;
+    [SerializeField] SkinnedMeshRenderer[] meshRenderer;
+    Color startColor;
+    [SerializeField] Color midColor = Color.yellow;
+    [SerializeField] Color targetColor = Color.red;
     bool dashing = false;
     LayerMask mask;
-    Material material;
-    Color originalColor;
+    List<Material> materials = new();
 
     private void Start()
     {
-        material = GetComponent<MeshRenderer>().material;
-        originalColor = material.color;
+        foreach (SkinnedMeshRenderer mesh in meshRenderer)
+        {
+            materials.Add(mesh.material);
+            startColor = mesh.material.GetColor("_EmissionColor");
+        }
         mask = LayerMask.GetMask("Enemy");
     }
 
@@ -49,7 +57,11 @@ public class SuicideBomber : EnemyAIBase
         {
             Move(target, movementSpeed * dashSpeedModifier);
             float lerp = Mathf.Clamp01((dashRange - distanceToTarget) / (dashRange - explodeRange));
-            material.color = Color.Lerp(originalColor, Color.red, lerp);
+            foreach  (Material material in materials)
+            {
+                Color currentColor = (1 - lerp) * (1 - lerp) * startColor + 2 * (1 - lerp) * lerp * midColor + lerp * lerp * targetColor;
+                material.SetColor("_EmissionColor", currentColor);
+            }
         }
         else
         {
@@ -60,7 +72,7 @@ public class SuicideBomber : EnemyAIBase
         {
             Explosion.Explode(transform, explosionDamage, explosionRadius, explosionForce, mask);
             Instantiate(explosionVFX, transform.position, Quaternion.identity);
-            enemySounds.PlaySound(1, AudioSourceType.Enemy);
+            enemySounds.PlaySound(1, AudioSourceType.Weapons);
             Destroy(gameObject);
         }
     }

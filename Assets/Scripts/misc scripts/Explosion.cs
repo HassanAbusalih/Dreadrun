@@ -122,8 +122,8 @@ public static class Explosion
         while (timer < 0.1f && rb != null)
         {
             timer += Time.deltaTime;
-            rb.AddForce(rbPosition - explosionOrigin * explosionForce * Time.deltaTime, ForceMode.Force);
-            rb.velocity = new(rb.velocity.x, 0, rb.velocity.z);
+            Vector3 direction = (rbPosition - explosionOrigin).normalized;
+            rb.AddForce(direction * explosionForce, ForceMode.Force);
             yield return null;
         }
     }
