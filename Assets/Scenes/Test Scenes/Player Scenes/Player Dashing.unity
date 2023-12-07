@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camFollow: {fileID: 329818786}
+  mainVirtualCam: {fileID: 0}
   useTriggerAsAngleOffset: 0
   angleOffset: 45
   rotateDuration: 1
@@ -345,6 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camFollow: {fileID: 329818786}
+  mainVirtualCam: {fileID: 1313563216}
   useTriggerAsAngleOffset: 0
   angleOffset: 90
   rotateDuration: 1
@@ -1140,10 +1142,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 982660221}
-    - target: {fileID: 5227594074343222305, guid: f3990bf153491e7469dd6749ff621748, type: 3}
-      propertyPath: field of view
-      value: 65
-      objectReference: {fileID: 0}
     - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -1194,6 +1192,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+--- !u!114 &1313563216 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8188467551553057207, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+  m_PrefabInstance: {fileID: 1229552892}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1448197781
 PrefabInstance:
   m_ObjectHideFlags: 0
