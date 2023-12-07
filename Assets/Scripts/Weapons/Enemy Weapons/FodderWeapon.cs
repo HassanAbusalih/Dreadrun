@@ -8,7 +8,7 @@ public class FodderWeapon : EnemyWeapon
     private void Update()
     {
         timeSinceLastShot += Time.deltaTime;
-        anim = GetComponent<Animation>();
+        anim = GetComponentInChildren<Animation>();
     }
 
     public override void Attack()
@@ -33,6 +33,6 @@ public class FodderWeapon : EnemyWeapon
 
     void ReturnToIdle()
     {
-        anim.CrossFade("Idle", 0.2f);
+        anim.CrossFade("Idle", 0.5f);
     }
 }
