@@ -3,6 +3,7 @@ using System.Collections;
 using System.Drawing;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 public class Teleport : MonoBehaviour
@@ -16,6 +17,10 @@ public class Teleport : MonoBehaviour
     [SerializeField] float fadeStartTime = 2f;
     [SerializeField] float fadeInTime = 0.5f;
     [SerializeField] float fadeOutTime = 1f;
+    [SerializeField] float originalFogDensity = 0.01f; 
+    [SerializeField] float finalFogDensity = 0.1f; 
+    [SerializeField] float fogChangeTime= 10f; 
+
     bool triggered = false;
     GameObject effectInstance;
     public Action OnTimerOver;
@@ -42,6 +47,7 @@ public class Teleport : MonoBehaviour
         yield return Fade(0f, fadeOutTime);
         Destroy(effectInstance);
         OnTimerOver?.Invoke();
+        RenderSettings.fogDensity = originalFogDensity;
     }
 
     IEnumerator Timer()
@@ -51,6 +57,10 @@ public class Teleport : MonoBehaviour
         {
             timer -= Time.deltaTime;
             timerText.text = "Time: " + Mathf.RoundToInt(timer);
+
+            float time = 1f - (timer / secondsToTeleport);
+            RenderSettings.fogDensity = Mathf.Lerp(originalFogDensity, finalFogDensity, time);
+
             if (timer <= timeToShowEffect && !effectInstance.activeSelf)
             {
                 effectInstance.SetActive(true);
