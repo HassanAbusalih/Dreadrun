@@ -2,11 +2,12 @@
 using System.Collections;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
+using Cinemachine;
 
 public class RotateCameraOnTrigger : MonoBehaviour
 {
     [SerializeField] Transform camFollow;
-
+    [SerializeField] CinemachineVirtualCamera mainVirtualCam;
     [Header("Camera Rotation Settings")]
     [SerializeField] bool useTriggerAsAngleOffset;
     [SerializeField] float angleOffset;
@@ -16,6 +17,10 @@ public class RotateCameraOnTrigger : MonoBehaviour
     [Header("Debug Stats")]
     [SerializeField] float previousRotationAngle;
     [SerializeField] float AlignmentBetweenCamAndTrigger;
+    float previosuXDamping;
+
+
+
 
     private void OnValidate()
     {
@@ -26,6 +31,11 @@ public class RotateCameraOnTrigger : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        previosuXDamping = mainVirtualCam.GetCinemachineComponent<CinemachineTransposer>().m_XDamping;
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (camFollow == null) return;
@@ -34,6 +44,7 @@ public class RotateCameraOnTrigger : MonoBehaviour
             Vector3 directionFromCamera = (camFollow.transform.position - transform.position).normalized;
             AlignmentBetweenCamAndTrigger = Vector3.Dot(transform.forward, directionFromCamera);
             StopAllCoroutines();
+            mainVirtualCam.GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 0;
 
             if (AlignmentBetweenCamAndTrigger > 0.015f) // you never know when these stupid edge casses happen so i just put a small value above 0
             {
@@ -43,7 +54,14 @@ public class RotateCameraOnTrigger : MonoBehaviour
                 return;
             }
             StartCoroutine(RotateCamera(previousRotationAngle));
+
         }
+    }
+
+
+    void ResetCameraDamping()
+    {
+        mainVirtualCam.GetCinemachineComponent<CinemachineTransposer>().m_XDamping = previosuXDamping;
     }
 
     IEnumerator RotateCamera(float angle)
@@ -58,5 +76,6 @@ public class RotateCameraOnTrigger : MonoBehaviour
             camFollow.transform.eulerAngles = new Vector3(camFollow.transform.eulerAngles.x, Mathf.LerpAngle(currentAngle, angle, t), camFollow.transform.eulerAngles.z);
             yield return null;
         }
+        Invoke(nameof(ResetCameraDamping),1f);
     }
 }
