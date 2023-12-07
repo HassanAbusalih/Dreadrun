@@ -62,14 +62,19 @@ public class Dashing : MonoBehaviour
 
     private void DashOnInput()
     {
-        Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+
+        Vector3 moveInput = cameraForward * Input.GetAxisRaw("Vertical") + cameraRight * Input.GetAxisRaw("Horizontal");
         if(moveInput == Vector3.zero) return;
 
         if ((Input.GetKeyDown(dodge) || Input.GetKeyDown(KeyCode.JoystickButton0))  && !isDashing)
         {
             float currentStamina = canPlayerDash?.Invoke() ?? 0f;
             if (currentStamina <= 0) return;
-            Vector3 dashDirection = (moveInput.normalized);
+            Vector3 dashDirection = (moveInput).normalized;
             StartCoroutine(StartDash(dashDirection));
         }
     }
