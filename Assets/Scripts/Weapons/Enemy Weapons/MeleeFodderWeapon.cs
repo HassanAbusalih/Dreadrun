@@ -7,8 +7,23 @@ using UnityEditor;
 public class MeleeFodderWeapon : WeaponBase
 {
     [SerializeField] float knockbackForce = 50f;
+    Player player;
     public Action hit;
     bool swinging;
+
+    private void Update()
+    {
+        if (player != null)
+        {
+            if (swinging)
+            {
+                player.TakeDamage(damageModifier * 0.7f);
+                hit.Invoke();
+                player.GetComponent<Rigidbody>().AddForce(transform.parent.forward * knockbackForce * 100);
+                swinging = false;
+            }
+        }
+    }
 
     public override void Attack()
     {
@@ -23,12 +38,22 @@ public class MeleeFodderWeapon : WeaponBase
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (swinging && collision.gameObject.TryGetComponent(out IDamagable damagable))
+        if (collision.gameObject.TryGetComponent(out Player player))
         {
-            damagable.TakeDamage(damageModifier);
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.parent.forward * knockbackForce * 100);
-            hit.Invoke();
-            swinging = false;
+            this.player = player;
+            player.TakeDamage(damageModifier * 0.3f);
+            player.GetComponent<Rigidbody>().AddForce(transform.parent.forward * knockbackForce * 100);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Player player))
+        {
+            if (this.player == player)
+            {
+                this.player = null;
+            }
         }
     }
 
@@ -37,6 +62,7 @@ public class MeleeFodderWeapon : WeaponBase
         swinging = false;
     }
 }
+
 #if UNITY_EDITOR
 [CustomEditor(typeof(MeleeFodderWeapon))]
 public class MeleeFodderWeaponEditor : Editor
