@@ -9,7 +9,6 @@ public class UIManager : MonoBehaviour
     public GameObject loseScreen;
 
     public GameObject pauseScreenCanvas;
-    public GameObject resumeButton;
 
     public void ShowWinScreen()
     {
@@ -24,12 +23,10 @@ public class UIManager : MonoBehaviour
     public void ShowPauseScreen()
     {
         pauseScreenCanvas.SetActive(true);
-        resumeButton.SetActive(true);
     }
 
     public void HidePauseScreen()
     {
         pauseScreenCanvas.SetActive(false);
-        resumeButton.SetActive(false);
     }
 }
