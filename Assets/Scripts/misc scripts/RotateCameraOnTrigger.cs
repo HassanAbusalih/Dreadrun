@@ -19,12 +19,12 @@ public class RotateCameraOnTrigger : MonoBehaviour
     [SerializeField] float AlignmentBetweenCamAndTrigger;
     float previosuXDamping;
 
-
+    [SerializeField] bool shouldDestroy;
 
 
     private void OnValidate()
     {
-        if(useTriggerAsAngleOffset)
+        if (useTriggerAsAngleOffset)
         {
             angleOffset = 0;
             return;
@@ -56,6 +56,10 @@ public class RotateCameraOnTrigger : MonoBehaviour
             StartCoroutine(RotateCamera(previousRotationAngle));
 
         }
+        if (shouldDestroy)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
 
@@ -76,6 +80,6 @@ public class RotateCameraOnTrigger : MonoBehaviour
             camFollow.transform.eulerAngles = new Vector3(camFollow.transform.eulerAngles.x, Mathf.LerpAngle(currentAngle, angle, t), camFollow.transform.eulerAngles.z);
             yield return null;
         }
-        Invoke(nameof(ResetCameraDamping),1f);
+        Invoke(nameof(ResetCameraDamping), 1f);
     }
 }
