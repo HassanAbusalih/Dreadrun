@@ -1,50 +1,26 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-
 
 public class CharacterCustomizationMenu : MonoBehaviour
 {
-    [SerializeField] GameObject[] characters;
     [SerializeField] MeshRenderer character;
     [SerializeField] Material[] characterSkins;
-    [SerializeField] int currentCharacter;
-
-    //public void NextCharacter()
-    //{
-    //    characters[currentCharacter].SetActive(false);
-    //    currentCharacter = (currentCharacter + 1) % characters.Length;
-    //    characters[currentCharacter].SetActive(true);
-    //}
-
-    //public void PreviousCharacter()
-    //{
-    //    characters[currentCharacter].SetActive(false);
-    //    currentCharacter--;
-
-    //    if(currentCharacter < 0)
-    //    {
-    //        currentCharacter += characters.Length;
-    //    }
-
-    //    characters[currentCharacter].SetActive(true);
-    //}
+    [SerializeField] int currentSkin;
 
     public void NextSkin()
     {
-        currentCharacter = (currentCharacter + 1) % characterSkins.Length;
-        character.material = characterSkins[currentCharacter];
+        currentSkin = (currentSkin + 1) % characterSkins.Length;
+        character.material = characterSkins[currentSkin];
     }
 
     public void PreviousSkin()
     {
-        currentCharacter--;
+        currentSkin--;
 
-        if (currentCharacter < 0)
+        if (currentSkin < 0)
         {
-            currentCharacter += characterSkins.Length;
+            currentSkin += characterSkins.Length;
         }
 
-        character.material = characterSkins[currentCharacter];
+        character.material = characterSkins[currentSkin];
     }
 }

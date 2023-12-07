@@ -396,6 +396,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Suicide Bomber
       objectReference: {fileID: 0}
+    - target: {fileID: 4276481114282560736, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4276481114282560740, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -440,53 +444,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-      propertyPath: midColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-      propertyPath: midColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-      propertyPath: midColor.r
-      value: 0.79607844
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-      propertyPath: targetColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-      propertyPath: targetColor.g
-      value: 0.017601715
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-      propertyPath: targetColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-      propertyPath: meshRenderer.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-      propertyPath: meshRenderer.Array.data[0]
-      value: 
-      objectReference: {fileID: 1785193492}
-    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-      propertyPath: meshRenderer.Array.data[1]
-      value: 
-      objectReference: {fileID: 1571640594}
-    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-      propertyPath: meshRenderer.Array.data[2]
-      value: 
-      objectReference: {fileID: 425159068}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
---- !u!137 &425159068 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 4996127391170794728, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-  m_PrefabInstance: {fileID: 399721028}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &426068649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -733,7 +692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5791127613756451101, guid: b0ba983eed78ddc4b824be9bbee03c98, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0ba983eed78ddc4b824be9bbee03c98, type: 3}
@@ -1099,11 +1058,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &1571640594 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3309137018545320216, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-  m_PrefabInstance: {fileID: 399721028}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1733321793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1339,11 +1293,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6410706523432037498, guid: 813f0f20feef9aa42b1d77424175083e, type: 3}
   m_PrefabInstance: {fileID: 1779897347}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &1785193492 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5687899314387270860, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-  m_PrefabInstance: {fileID: 399721028}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1786231317
 GameObject:

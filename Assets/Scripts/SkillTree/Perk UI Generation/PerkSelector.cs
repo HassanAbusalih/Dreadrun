@@ -103,7 +103,6 @@ public class PerkSelector : MonoBehaviour
                 int randomIndexNum;
                 randomIndexNum = UnityEngine.Random.Range(0, selectedRarity.Count);
                 randomPerk = selectedRarity[randomIndexNum];
-                Debug.Log(numberOfTries);
             }
             while (selectedPerks.Contains(randomPerk) && numberOfTries < 50);
 
