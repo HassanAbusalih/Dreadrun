@@ -6,6 +6,7 @@ public class GrenadeLauncher : PlayerWeapon
     [Header("Grenade Launcher Properties")]
     [SerializeField] float minRange = 5;
     [SerializeField] float minSpeed = 5;
+    [SerializeField] float minChargePercent = 0.5f;
     [SerializeField] Image chargeIndicator;
     [SerializeField] Color minColor;
     [SerializeField] Color maxColor;
@@ -19,10 +20,15 @@ public class GrenadeLauncher : PlayerWeapon
         {
             chargeTime = Mathf.Min(chargeTime + Time.deltaTime, fireRate);
         }
-        else if (Input.GetKeyUp(KeyCode.Mouse0) || Input.GetButtonUp("shoot"))
+        else if ((Input.GetKeyUp(KeyCode.Mouse0) || Input.GetButtonUp("shoot")) && (chargeTime / fireRate) > minChargePercent)
         {
             Attack();
             chargeTime = 0;
+        }
+        else
+        {
+            chargeTime -= Time.deltaTime;
+            chargeTime = Mathf.Clamp(chargeTime, 0, fireRate);
         }
         if (chargeIndicator != null) { VisualFeedback(); }
     }

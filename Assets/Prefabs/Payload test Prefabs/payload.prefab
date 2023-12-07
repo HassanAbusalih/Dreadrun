@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2220466863588858154}
   - component: {fileID: 2220466865266914170}
   - component: {fileID: 6215049478654579932}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: payload
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,6 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f06ab5cabfde3146b4e8de2e6afe21c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stopped: 0
+  enteredLastCheckpoint: 0
   maxhealth: 500
   speed: 5
   rotationSpeed: 100
@@ -101,7 +103,11 @@ MonoBehaviour:
   healingInterval: 5
   followPath: 0
   interactionRange: 10
-  slowSpeed: 0.3
+  playerRange: 20
+  stopDuration: 3
+  checkpointStopDuration: 30
+  enemySlowSpeed: 0.5
+  playerSlowSpeed: 0.5
   visualEffects: {fileID: 8071978845548354707}
   grandParentTransform: {fileID: 0}
   pathPointsParent:
@@ -197,7 +203,7 @@ GameObject:
   - component: {fileID: 2220466864515255454}
   - component: {fileID: 2220466864515255453}
   - component: {fileID: 2220466864515255452}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +300,7 @@ GameObject:
   - component: {fileID: 2220466864603508251}
   - component: {fileID: 2220466864603508253}
   - component: {fileID: 2220466864603508252}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +415,7 @@ GameObject:
   - component: {fileID: 2916521139556302740}
   - component: {fileID: 1843952503642677885}
   - component: {fileID: 8638574173909883880}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Healing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5288,7 +5294,7 @@ GameObject:
   - component: {fileID: 2660152140671157894}
   - component: {fileID: 2660152140671157892}
   - component: {fileID: 2660152140671157895}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: Health Bar Negative
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5365,7 +5371,7 @@ GameObject:
   - component: {fileID: 2660152141190481605}
   - component: {fileID: 2660152141190481604}
   - component: {fileID: 2660152141190481607}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: Payload Health UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5467,7 +5473,7 @@ GameObject:
   - component: {fileID: 2660152141317779436}
   - component: {fileID: 2660152141317779439}
   - component: {fileID: 2660152141317779438}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: Health Bar Positive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5543,7 +5549,7 @@ GameObject:
   - component: {fileID: 2660152141451418513}
   - component: {fileID: 2660152141451418543}
   - component: {fileID: 2660152141451418542}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: Health Bar border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5619,7 +5625,7 @@ GameObject:
   - component: {fileID: 8768063172426143487}
   - component: {fileID: 5956708899676725817}
   - component: {fileID: 2316863413401427210}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Sides
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10489,7 +10495,7 @@ GameObject:
   - component: {fileID: 47782704962713709}
   - component: {fileID: 590594076790833007}
   - component: {fileID: 2183676316894225296}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15368,7 +15374,7 @@ GameObject:
   - component: {fileID: 8167581413372792102}
   - component: {fileID: 5252029331193511602}
   - component: {fileID: 1405248587347643566}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Healing circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20244,7 +20250,7 @@ GameObject:
   - component: {fileID: 8244411125891667402}
   - component: {fileID: 8244411125891667401}
   - component: {fileID: 2220466865269470802}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25299,9 +25305,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2143830621049962934, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2186591749530122320, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363779753007875591, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215418286523290790, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5124107506404076138, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410414313922260611, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 5785771848661551314, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
       propertyPath: m_Name
       value: FreightWag_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5785771848661551314, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7134211232622142314, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8581914356961461276, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786833585639970616, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978064360280411055, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
