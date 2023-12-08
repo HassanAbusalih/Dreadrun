@@ -25,7 +25,7 @@ public class TurretEnemy : EnemyAIBase
         {
             float distance = Vector3.Distance(transform.position, player.position);
             if (distance < closestDistance && 
-                Physics.Raycast(transform.position, player.position - transform.position, out hit, weapon.ProjectileRange, ~layersToIgnore) && 
+                Physics.Raycast(transform.position, player.position - transform.position, out hit, weapon.ProjectileRange, ~layersToIgnore, QueryTriggerInteraction.Ignore) && 
                 hit.transform == player)
             {
                 closestPlayer = player;
