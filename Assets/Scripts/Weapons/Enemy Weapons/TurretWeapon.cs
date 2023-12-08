@@ -4,6 +4,7 @@ using UnityEngine;
 public class TurretWeapon : EnemyWeapon
 {
     [SerializeField] int projectileCount = 1;
+    [SerializeField] Transform projectileSpawnPoint;
     [SerializeField] float cooldown;
 
     private void Update()
@@ -11,19 +12,20 @@ public class TurretWeapon : EnemyWeapon
         timeSinceLastShot += Time.deltaTime;
     }
 
-    public override void Attack()
+    public void Attack(Transform target)
     {
         if (timeSinceLastShot < cooldown) { return; }
-        StartCoroutine(Shoot());
+        StartCoroutine(Shoot(target));
     }
 
-    IEnumerator Shoot()
+    IEnumerator Shoot(Transform target)
     {
         int counter = 0;
         while (counter < projectileCount)
         {
             counter++;
-            GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward, transform.rotation);
+            projectileSpawnPoint.LookAt(target);
+            GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
             projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 9);
             if (audioSource != null) audioSource.Play();
             timeSinceLastShot = 0;
@@ -35,5 +37,10 @@ public class TurretWeapon : EnemyWeapon
     {
         Gizmos.color = new Color (0,1,0,0.2f);
         Gizmos.DrawSphere(transform.position, ProjectileRange);
+    }
+
+    public override void Attack()
+    {
+        throw new System.NotImplementedException();
     }
 }

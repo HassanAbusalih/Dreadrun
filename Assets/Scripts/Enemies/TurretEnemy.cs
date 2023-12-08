@@ -3,15 +3,16 @@ using UnityEngine;
 public class TurretEnemy : EnemyAIBase
 {
     [SerializeField] LayerMask layersToIgnore;
+
     private void Update()
     {
         Transform target = GetClosestPlayer();
         if (target != null) 
         {
             Vector3 lookDirection = (target.position - transform.position).normalized;
+            (weapon as TurretWeapon)?.Attack(target);
             lookDirection.y = 0;
             transform.rotation = Quaternion.LookRotation(lookDirection);
-            weapon.Attack(); 
         }
     }
 
