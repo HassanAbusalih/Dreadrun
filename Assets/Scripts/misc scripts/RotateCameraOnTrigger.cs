@@ -51,15 +51,16 @@ public class RotateCameraOnTrigger : MonoBehaviour
                 previousRotationAngle = camFollow.transform.eulerAngles.y;
                 float targetAngleOffset = useTriggerAsAngleOffset ? transform.rotation.eulerAngles.y : angleOffset;
                 StartCoroutine(RotateCamera(targetAngleOffset));
+                if (shouldDestroy)
+                {
+                    Destroy(this.gameObject, rotateDuration + 1f);
+                }
                 return;
             }
             StartCoroutine(RotateCamera(previousRotationAngle));
 
         }
-        if (shouldDestroy)
-        {
-            Destroy(this.gameObject);
-        }
+
     }
 
 
