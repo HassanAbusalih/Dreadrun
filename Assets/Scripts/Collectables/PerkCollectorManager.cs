@@ -15,6 +15,8 @@ public class PerkCollectorManager : MonoBehaviour
     public Image[] AbilityIcon;
     public TextMeshProUGUI[] cooldownText;
     public Image[] AbilityGreyout;
+    [SerializeField] TextMeshProUGUI[] abilityKeybinds;
+    Perk[] UIPerks = new Perk[3];
 
     public Animator[] AbilityVFX;
     public GameObject abilityDescription;
@@ -40,7 +42,9 @@ public class PerkCollectorManager : MonoBehaviour
                     AbilityIcon[i].sprite = perk.icon;
                     float abilityCooldown = perk.FetchCooldown();
                     cooldownText[i].text = "";
+                    abilityKeybinds[i].text = needUI.Keybind;
                     AbilityGreyout[i].fillAmount = 0f;
+                    UIPerks[i] = perk;
                     if (AcquireablePerk(perk))
                     {
                         needUI.OnCoolDown += () => HandleCD(perk.FetchCooldown(), i);
@@ -87,5 +91,19 @@ public class PerkCollectorManager : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    public void ShowDescription(int index)
+    {
+        if (index >= 0 && index < 3 && UIPerks[index] != null)
+        {
+            abilityDescription.SetActive(true);
+            abilityDescription.GetComponentInChildren<TextMeshProUGUI>().text = UIPerks[index].description;
+        }
+    }
+
+    public void HideDescription()
+    {
+        abilityDescription.SetActive(false);
     }
 }
