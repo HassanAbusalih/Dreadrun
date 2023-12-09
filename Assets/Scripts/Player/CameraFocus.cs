@@ -9,6 +9,11 @@ public class CameraFocus : MonoBehaviour
     public Vector3 offset;
     public float rotationSpeed;
 
+    private void Start()
+    {
+        player = FindObjectOfType<Player>().transform;
+    }
+
     void FixedUpdate()
     {
         Vector3 desiredPosition = player.position + offset;

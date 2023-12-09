@@ -46,6 +46,11 @@ public class InteractiveRoom : MonoBehaviour
         isPlayerInside = other.TryGetComponent(out Player player);
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        isPlayerInside = !other.TryGetComponent(out Player player);
+    }
+
     void FaithDecider()
     {
         float randomValue = Random.value;
