@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,26 +15,26 @@ public class EquippedPerksUI : MonoBehaviour
     [SerializeField] float YOffset;
 
     List<Perk> TotalPerksUiMade = new List<Perk>();
-    PerkSelector perkSelector;
+    PerkCollectorManager perkCollector;
     int rowIndex = 0;
     int columnIndex = 0;
 
     private void OnEnable()
     {
-        perkSelector = FindObjectOfType<PerkSelector>();
-        if(perkSelector != null)
-        perkSelector.UpdateEquippedPerkUi += SpawnAndSetItemUI;
+        perkCollector = FindObjectOfType<PerkCollectorManager>();
+        if(perkCollector != null)
+        perkCollector.UpdateEquippedPerkUi += SpawnAndSetItemUI;
     }
 
     private void OnDisable()
     {
-        if(perkSelector != null)
-        perkSelector.UpdateEquippedPerkUi -= SpawnAndSetItemUI;
+        if(perkCollector != null)
+        perkCollector.UpdateEquippedPerkUi -= SpawnAndSetItemUI;
     }
 
     void SpawnAndSetItemUI(Perk _perkUIToSpawn, Color borderColor)
     {
-        if(perkSelector == null ||perkUIPrefab == null || spawnStartPosition ==null ) return;
+        if(perkCollector == null ||perkUIPrefab == null || spawnStartPosition ==null ) return;
         if (TotalPerksUiMade.Contains(_perkUIToSpawn)) return;
         if (rowIndex >= maxCellsPerRow) { rowIndex = 0; columnIndex++; }
 
@@ -49,7 +48,7 @@ public class EquippedPerksUI : MonoBehaviour
         {
             _newUIPerk.GetComponent<Image>().color = new(borderColor.r, borderColor.g, borderColor.b, 1);
         }
-        _newUIPerk.SetPerk(_perkUIToSpawn, perkSelector);
+        _newUIPerk.SetPerk(_perkUIToSpawn, perkCollector);
         TotalPerksUiMade.Add(_perkUIToSpawn);
         rowIndex++;
     }

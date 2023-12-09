@@ -23,13 +23,14 @@ public class PerkSelector : MonoBehaviour
     private PerkCollectorManager perkCollectorManager;
 
     public static Action OnPerkSelection;
-    public Action<Perk, Color> UpdateEquippedPerkUi;
 
     [SerializeField] [Range(0f, 1f)] private float rareChance = 0.3f;
     [SerializeField] [Range(0f, 1f)] private float legendaryChance = 0.1f;
     [SerializeField] Color rareColor;
     [SerializeField] Color legendaryColor;
     [SerializeField] float fadeDuration = 5f;
+    public Color LegendaryColor => legendaryColor;
+    public Color RareColor => rareColor;
 
     void Start()
     {
@@ -168,20 +169,6 @@ public class PerkSelector : MonoBehaviour
         perkUIcanvas.SetActive(false);
         perkCollectorManager.AcquirePerk(perkChoices[perkIndexSelected].perk);
         OnPerkSelection?.Invoke();
-        Color perkColor;
-        switch (perkChoices[perkIndexSelected].perk.perkRarity)
-        {
-            case PerkRarity.Legendary:
-                perkColor = legendaryColor;
-                break;
-            case PerkRarity.Rare:
-                perkColor = rareColor;
-                break;
-            default:
-                perkColor = Color.white;
-                break;
-        }
-        UpdateEquippedPerkUi?.Invoke(perkChoices[perkIndexSelected].perk, perkColor);
     }
 
     public void ShowDescription(int index)

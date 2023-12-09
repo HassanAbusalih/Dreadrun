@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class PerkCollectorManager : MonoBehaviour
 {
@@ -20,9 +21,12 @@ public class PerkCollectorManager : MonoBehaviour
 
     public Animator[] AbilityVFX;
     public GameObject abilityDescription;
+    public Action<Perk, Color> UpdateEquippedPerkUi;
+    PerkSelector perkSelector;
 
     private void Start()
     {
+        perkSelector = FindObjectOfType<PerkSelector>();
         player = FindObjectOfType<Player>();
     }
     public bool AcquireablePerk(Perk perk)
@@ -33,6 +37,22 @@ public class PerkCollectorManager : MonoBehaviour
     public void AcquirePerk(Perk perk)
     {
         INeedUI needUI = perk.ApplyPlayerBuffs(player);
+
+        Color perkColor;
+        switch (perk.perkRarity)
+        {
+            case PerkRarity.Legendary:
+                perkColor = perkSelector.LegendaryColor;
+                break;
+            case PerkRarity.Rare:
+                perkColor = perkSelector.RareColor;
+                break;
+            default:
+                perkColor = Color.white;
+                break;
+        }
+        UpdateEquippedPerkUi?.Invoke(perk, perkColor);
+
         if (needUI != null)
         {
             for (int i = 0; i < AbilityIcon.Length && i < cooldownText.Length; i++)
@@ -79,6 +99,7 @@ public class PerkCollectorManager : MonoBehaviour
     private IEnumerator StartCD(float cooldown, int index)
     {
         float timer = cooldown;
+        bool animating = false;
         while (timer >= 0)
         {
             timer -= Time.deltaTime;
@@ -87,10 +108,35 @@ public class PerkCollectorManager : MonoBehaviour
             {
                 cooldownText[index].text = roundedTimer > 0 ? roundedTimer.ToString() : "";
                 AbilityGreyout[index].fillAmount = timer / cooldown;
-                AbilityVFX[index].SetBool("AbilityRefreshed", timer < 1);
+                AbilityVFX[index].SetBool("AbilityRefreshed", timer < 0.5f);
+                if (AbilityVFX[index].GetBool("AbilityRefreshed") && !animating)
+                {
+                    animating = true;
+                    StartCoroutine(ScaleUpThenDown(0.5f, AbilityIcon[index].transform.parent));
+                }
             }
             yield return null;
         }
+    }
+
+    IEnumerator ScaleUpThenDown(float duration, Transform iconTransform)
+    {
+        Vector3 startScale = iconTransform.localScale;
+        Vector3 bigScale = iconTransform.localScale * 1.15f;
+        yield return StartCoroutine(PerkScaling(iconTransform, duration / 2, iconTransform.localScale, bigScale));
+        yield return StartCoroutine(PerkScaling(iconTransform, duration / 2, iconTransform.localScale, startScale));
+    }
+
+    IEnumerator PerkScaling(Transform iconTransform, float duration, Vector3 startScale, Vector3 endScale)
+    {
+        float elapsedTime = 0;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            iconTransform.localScale = Vector3.Lerp(startScale, endScale, elapsedTime / duration);
+            yield return null;
+        }
+        iconTransform.localScale = endScale;
     }
 
     public void ShowDescription(int index)

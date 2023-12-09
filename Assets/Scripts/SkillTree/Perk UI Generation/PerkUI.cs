@@ -1,25 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 
 public class PerkUI : MonoBehaviour
 {
     Perk perk;
-    PerkSelector perkSelector;
+    PerkCollectorManager perkCollector;
     [SerializeField] Image iconUI;
     [SerializeField] TextMeshProUGUI perkText;
     int amountAcquired = 1;
 
-    public void SetPerk(Perk receivedPerk,PerkSelector perkSelector)
+    public void SetPerk(Perk receivedPerk, PerkCollectorManager perkCollector)
     {
         perk = receivedPerk;
         iconUI.sprite = receivedPerk.icon;
         perkText.text = amountAcquired.ToString();
-        this.perkSelector = perkSelector;
-        if (this.perkSelector != null) perkSelector.UpdateEquippedPerkUi += UpdatePerkUI;
+        this.perkCollector = perkCollector;
+        if (this.perkCollector != null) perkCollector.UpdateEquippedPerkUi += UpdatePerkUI;
     }
 
     void UpdatePerkUI(Perk receivedPerk, Color borderColor)
@@ -31,6 +28,6 @@ public class PerkUI : MonoBehaviour
 
     private void OnDisable()
     {
-        if (perkSelector != null) perkSelector.UpdateEquippedPerkUi -= UpdatePerkUI;
+        if (perkCollector != null) perkCollector.UpdateEquippedPerkUi -= UpdatePerkUI;
     }
 }
