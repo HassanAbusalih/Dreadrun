@@ -6,6 +6,7 @@ using UnityEngine;
 public class PoisonEffect : MonoBehaviour, IProjectileEffect
 {
     float duration = 5;
+    float tickRate = 0.5f;
     float damagePerTick;
     IDamagable target;
     GameObject targetGameObject;
@@ -17,7 +18,7 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
     {
         target = damagable;
         targetGameObject = target.gameObject;
-        damagePerTick = (damage / duration) / 2;
+        damagePerTick = damage / (duration / tickRate);
         StartCoroutine(PoisonTarget(targetGameObject, target));
     }
 
@@ -30,6 +31,8 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
     {
         float elapsedTime = 0;
         GameObject vfx = Instantiate(poisonedVFX, targetGameObject.transform.position, targetGameObject.transform.rotation, targetGameObject.transform);
+        Vector3 parentScale = targetGameObject.transform.localScale;
+        vfx.transform.localScale = new Vector3(1 / parentScale.x, 1 / parentScale.y, 1 / parentScale.z);
         while (elapsedTime < duration)
         {
             if (targetGameObject != null)
@@ -42,7 +45,8 @@ public class PoisonEffect : MonoBehaviour, IProjectileEffect
                 Destroy(vfx);
                 yield break;
             }
-            elapsedTime += Time.deltaTime;
+            elapsedTime += tickRate; 
+            yield return new WaitForSeconds(tickRate);
             yield return null;
         }
         Destroy(vfx);

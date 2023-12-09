@@ -14,6 +14,7 @@ public class WeaponUISwitcher : MonoBehaviour
     [Header("Description Panel Settings")]
     GameObject descriptionPanel;
     TextMeshProUGUI weaponDescriptionText;
+    string currentWeaponDescription;
 
 
     private void OnEnable()
@@ -36,6 +37,7 @@ public class WeaponUISwitcher : MonoBehaviour
         weaponImageHolder = transform.GetChild(0).GetComponent<Image>();
         descriptionPanel = transform.GetChild(2).gameObject;
         weaponDescriptionText = descriptionPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        currentWeaponDescription = weaponDescriptionText.text;
         defaultColor = weaponSlot.color;
         SetWeaponSlotColor(emptyWeaponColor);
     }
@@ -51,17 +53,18 @@ public class WeaponUISwitcher : MonoBehaviour
         {
             weaponImageHolder.sprite = blankSprite;
             SetWeaponSlotColor(emptyWeaponColor);
-            weaponDescriptionText.text = "No Weapon Currently Equipped";
+            currentWeaponDescription = "No Weapon Currently Equipped";
             return;
         }
         weaponImageHolder.sprite = _weapon.weaponIcon;
-        weaponDescriptionText.text = _weapon.weaponDescription;
+        currentWeaponDescription = _weapon.weaponDescription;
         SetWeaponSlotColor(defaultColor);
     }
 
     public void ShowWeaponDescription()
     {
         descriptionPanel.SetActive(true);
+        weaponDescriptionText.text = currentWeaponDescription;
     }
 
     public void HideWeaponDescription()

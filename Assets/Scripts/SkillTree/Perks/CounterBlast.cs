@@ -11,6 +11,8 @@ public class CounterBlast : MonoBehaviour, INeedUI
     private LayerMask layersToIgnore;
     private GameObject vfx;
 
+    public string Keybind { get; private set; } = "";
+
     public event Action OnCoolDown;
 
     private void Start()

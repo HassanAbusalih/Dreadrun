@@ -33,6 +33,8 @@ public class SlowEffect : MonoBehaviour, IProjectileEffect
         {
             slowable.ApplySlow(slowModifier);
             GameObject vfx = Instantiate(slowVFX, gameObject.transform.position, gameObject.transform.rotation, gameObject.transform);
+            Vector3 parentScale = gameObject.transform.localScale;
+            vfx.transform.localScale = new Vector3(1 / parentScale.x, 1 / parentScale.y, 1 / parentScale.z);
             yield return new WaitForSeconds(slowDuration);
             if (gameObject != null)
             {

@@ -17,6 +17,8 @@ public class Berserk : MonoBehaviour, INeedUI
     [SerializeField] bool active = false;
     GameObject berserkEffect;
 
+    public string Keybind { get; private set; } = "Z";
+
     public event Action OnCoolDown;
 
     public void Initialize(Player player, float duration, float percentDamageIncrease, float percentDefenseIncrease, float percentSpeedIncrease, float percentHealthDrain, float cooldown, GameObject berserkEffect)

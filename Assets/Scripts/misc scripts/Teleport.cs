@@ -43,11 +43,11 @@ public class Teleport : MonoBehaviour
         yield return Timer();
         player.transform.position = teleportDestination.position;
         timerText.gameObject.SetActive(false);
+        StartCoroutine(FogChange(originalFogDensity, fadeOutTime + 1));
         yield return new WaitForSeconds(1f);
         yield return Fade(0f, fadeOutTime);
         Destroy(effectInstance);
         OnTimerOver?.Invoke();
-        RenderSettings.fogDensity = originalFogDensity;
     }
 
     IEnumerator Timer()
@@ -85,5 +85,19 @@ public class Teleport : MonoBehaviour
             yield return null;
         }
         blackScreen.color = new(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, target);
+    }
+
+    IEnumerator FogChange(float target, float time)
+    {
+        float timer = 0f;
+        float start = RenderSettings.fogDensity;
+        while (timer < time)
+        {
+            timer += Time.deltaTime;
+            float current = Mathf.Lerp(start, target, timer / time);
+            RenderSettings.fogDensity = current;
+            yield return null;
+        }
+        RenderSettings.fogDensity = target;
     }
 }

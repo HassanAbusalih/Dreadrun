@@ -11,6 +11,8 @@ public class ShieldManager : MonoBehaviour, INeedUI
     float regenDelay;
     private float yOffSet = 1.9f;
 
+    public string Keybind { get; private set; } = "LS";
+
     public event Action OnCoolDown;
 
     private void Update()
