@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -13,6 +14,8 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] int maxSpawnCount = 10;
     [SerializeField] Transform spawnPosition;
     [SerializeField] Vector3 spawnOffset = new(1f, 0, 1f);
+    EnemyPool enemyPool;
+    Type enemyType;
     Transform payload;
     Transform[] players;
     Coroutine spawning;
@@ -21,6 +24,8 @@ public class ObjectSpawner : MonoBehaviour
     void Start()
     {
         if (spawnPosition == null) { spawnPosition = transform; }
+        enemyType = prefabToSpawn.GetComponent<EnemyAIBase>().GetType();
+        enemyPool = EnemyPool.Instance;
         payload = FindObjectOfType<Payload>()?.transform;
         Player[] players = FindObjectsOfType<Player>();
         this.players = new Transform[players.Length];
@@ -33,6 +38,7 @@ public class ObjectSpawner : MonoBehaviour
 
     void Update()
     {
+        enemyPool = EnemyPool.Instance;
         if (payload != null && spawning == null && ActivateSpawner())
         {
             spawning = StartCoroutine(Spawning());
@@ -45,6 +51,13 @@ public class ObjectSpawner : MonoBehaviour
         {
             for (int i = 0; i < batchSize; i++)
             {
+                while (enemyPool.EnemiesBySubtype.ContainsKey(enemyType) && 
+                      (enemyPool.EnemiesBySubtype[enemyType].Count >= enemyPool.MaxEnemiesPerType || 
+                       enemyPool.Enemies.Count >= enemyPool.MaxEnemiesTotal))
+                {
+                    yield return null;
+                }
+
                 if (spawnCount >= maxSpawnCount)
                 {
                     yield break;
@@ -60,7 +73,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         Vector3 position = transform.position;
         if (spawnPosition != null) { position = spawnPosition.position; }
-        Vector3 randomOffset = new(Random.Range(-spawnOffset.x, spawnOffset.x), 0, Random.Range(-spawnOffset.z, spawnOffset.z));
+        Vector3 randomOffset = new(UnityEngine.Random.Range(-spawnOffset.x, spawnOffset.x), 0, UnityEngine.Random.Range(-spawnOffset.z, spawnOffset.z));
         GameObject newObject = Instantiate(prefabToSpawn, position + randomOffset, Quaternion.identity, transform);
         if (newObject.TryGetComponent(out EnemyAIBase enemy))
         {
