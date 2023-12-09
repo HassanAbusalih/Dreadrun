@@ -182,6 +182,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7588967935163124265, guid: 2b6bb2ecd0ee9ae409a42827612761e6, type: 3}
+      propertyPath: maxHealth
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7588967935163124265, guid: 2b6bb2ecd0ee9ae409a42827612761e6, type: 3}
+      propertyPath: movementSpeed
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b6bb2ecd0ee9ae409a42827612761e6, type: 3}
 --- !u!4 &11627358 stripped
@@ -443,12 +451,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
+      propertyPath: maxHealth
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
       propertyPath: midColor.b
       value: 0.865
       objectReference: {fileID: 0}
     - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
       propertyPath: midColor.r
       value: 0.837
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
+      propertyPath: movementSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4276481114282560743, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
       propertyPath: targetColor.b
@@ -590,6 +606,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1499788061}
     m_Modifications:
+    - target: {fileID: 4596950459272303218, guid: b0ba983eed78ddc4b824be9bbee03c98, type: 3}
+      propertyPath: maxHealth
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4596950459272303218, guid: b0ba983eed78ddc4b824be9bbee03c98, type: 3}
+      propertyPath: movementSpeed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5791127613756451095, guid: b0ba983eed78ddc4b824be9bbee03c98, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1425,6 +1449,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7136765785968525618, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+      propertyPath: maxHealth
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136765785968525618, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+      propertyPath: movementSpeed
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
 --- !u!1001 &1947571549
@@ -1434,6 +1466,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1499788061}
     m_Modifications:
+    - target: {fileID: -398430987079203796, guid: 1f07f3599065bf545b2dd9619c0aa2e8, type: 3}
+      propertyPath: maxHealth
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 5791127613756451095, guid: 1f07f3599065bf545b2dd9619c0aa2e8, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1481,6 +1517,10 @@ PrefabInstance:
     - target: {fileID: 5791127613756451101, guid: 1f07f3599065bf545b2dd9619c0aa2e8, type: 3}
       propertyPath: m_Name
       value: Turret
+      objectReference: {fileID: 0}
+    - target: {fileID: 5791127613756451101, guid: 1f07f3599065bf545b2dd9619c0aa2e8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f07f3599065bf545b2dd9619c0aa2e8, type: 3}
