@@ -50,7 +50,7 @@ public class DamageFeedback : MonoBehaviour
             for (int i = 0; i < renderers.Length; i++)
             {
                 startColors[i] = renderers[i].material.color;
-                if ((SkinnedMeshRenderer)renderers[i] != null)
+                if (renderers[i] is SkinnedMeshRenderer)
                 {
                     startZScale = transform.localScale.z;
                     startXScale = transform.localScale.x;
@@ -111,7 +111,7 @@ public class DamageFeedback : MonoBehaviour
             }
 
             if (!animateScale) return;
-            if (givingMeAIDS && (SkinnedMeshRenderer)renderers[0] == null)
+            if (givingMeAIDS && renderers[0] is not SkinnedMeshRenderer)
             {
                 for (int i = 0; i < renderers.Length; i++)
                 {
