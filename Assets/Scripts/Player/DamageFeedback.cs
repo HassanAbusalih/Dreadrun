@@ -18,23 +18,48 @@ public class DamageFeedback : MonoBehaviour
     bool isTakingDamage;
     float elapsedTime;
     Color startColor;
+    Color[] startColors;
     [SerializeField] MeshRenderer meshRenderer;
-    float startZScale;
-    float startScaleX;
 
+    [SerializeField] bool givingMeAIDS = false;
+    [SerializeField] MeshRenderer[] meshRenderers;
+    float startZScale;
+    float startXScale;
+
+    float[] startZScales;
+    float[] startXScales;
 
 
     private void OnEnable()
     {
         IDamagable.onDamageTaken += EnableTakeDamageEffects;
-        startZScale = transform.localScale.z;
-        startScaleX = transform.localScale.x;
-        if (meshRenderer == null)
+        if (meshRenderer == null && !givingMeAIDS)
         {
             TryGetComponent(out meshRenderer);
         }
-        if (meshRenderer == null) return;
-        startColor = meshRenderer.material.color;
+        else if (givingMeAIDS)
+        {
+            meshRenderers = GetComponentsInChildren<MeshRenderer>();
+            startZScales = new float[meshRenderers.Length];
+            startXScales = new float[meshRenderers.Length];
+        }
+        if (meshRenderer == null && meshRenderers.Length == 0) return;
+        if (givingMeAIDS)
+        {
+            startColors = new Color[meshRenderers.Length];
+            for (int i = 0; i < meshRenderers.Length; i++)
+            {
+                startColors[i] = meshRenderers[i].material.color;
+                startZScales[i] = meshRenderers[i].transform.localScale.z;
+                startXScales[i] = meshRenderers[i].transform.localScale.x;
+            }
+        }
+        else
+        {
+            startZScale = transform.localScale.z;
+            startXScale = transform.localScale.x;
+            startColor = meshRenderer.material.color;
+        }
     }
 
     private void OnDisable()
@@ -60,21 +85,39 @@ public class DamageFeedback : MonoBehaviour
     void ShowTakeDamageEffects()
     {
         if (!isTakingDamage) return;
-        if (meshRenderer == null) return;
+        if (meshRenderer == null && meshRenderers.Length == 0) return;
         if (duration >= elapsedTime)
         {
             elapsedTime += Time.deltaTime;
-
             float _lerpValue = damageCurve.Evaluate(elapsedTime / duration);
-            meshRenderer.material.color = Color.Lerp(takeDamageColor, startColor, _lerpValue);
+            if (givingMeAIDS)
+            {
+                for (int i = 0; i < meshRenderers.Length; i++)
+                {
+                    meshRenderers[i].material.color = Color.Lerp(takeDamageColor, startColors[i], _lerpValue);
+                }
+            }
+            else
+            {
+                meshRenderer.material.color = Color.Lerp(takeDamageColor, startColor, _lerpValue);
+            }
 
             if (!animateScale) return;
-            float _localScaleZ = transform.localScale.z;
-            float _localScaleX = transform.localScale.x;
-
-            _localScaleZ = Mathf.Lerp(takeDamageScale, startZScale, _lerpValue);
-            _localScaleX = Mathf.Lerp(takeDamageScale, startZScale, _lerpValue);
-            transform.localScale = new Vector3(_localScaleX, transform.localScale.y, _localScaleZ);
+            if (givingMeAIDS)
+            {
+                for (int i = 0; i < meshRenderers.Length; i++)
+                {
+                    float _localScaleZ = Mathf.Lerp(takeDamageScale, startZScales[i], _lerpValue);
+                    float _localScaleX = Mathf.Lerp(takeDamageScale, startXScales[i], _lerpValue);
+                    meshRenderers[i].transform.localScale = new Vector3(_localScaleX, meshRenderers[i].transform.localScale.y, _localScaleZ);
+                }
+            }
+            else
+            {
+                float _localScaleZ = Mathf.Lerp(takeDamageScale, startZScale, _lerpValue);
+                float _localScaleX = Mathf.Lerp(takeDamageScale, startXScale, _lerpValue);
+                transform.localScale = new Vector3(_localScaleX, transform.localScale.y, _localScaleZ);
+            }
         }
         else { isTakingDamage = false; }
     }
