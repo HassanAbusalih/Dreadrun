@@ -22,7 +22,7 @@ public class DamageFeedback : MonoBehaviour
     [SerializeField] MeshRenderer meshRenderer;
 
     [SerializeField] bool givingMeAIDS = false;
-    [SerializeField] MeshRenderer[] meshRenderers;
+    [SerializeField] Renderer[] renderers;
     float startZScale;
     float startXScale;
 
@@ -39,19 +39,27 @@ public class DamageFeedback : MonoBehaviour
         }
         else if (givingMeAIDS)
         {
-            meshRenderers = GetComponentsInChildren<MeshRenderer>();
-            startZScales = new float[meshRenderers.Length];
-            startXScales = new float[meshRenderers.Length];
+            renderers = GetComponentsInChildren<Renderer>();
+            startZScales = new float[renderers.Length];
+            startXScales = new float[renderers.Length];
         }
-        if (meshRenderer == null && meshRenderers.Length == 0) return;
+        if (meshRenderer == null && renderers.Length == 0) return;
         if (givingMeAIDS)
         {
-            startColors = new Color[meshRenderers.Length];
-            for (int i = 0; i < meshRenderers.Length; i++)
+            startColors = new Color[renderers.Length];
+            for (int i = 0; i < renderers.Length; i++)
             {
-                startColors[i] = meshRenderers[i].material.color;
-                startZScales[i] = meshRenderers[i].transform.localScale.z;
-                startXScales[i] = meshRenderers[i].transform.localScale.x;
+                startColors[i] = renderers[i].material.color;
+                if ((SkinnedMeshRenderer)renderers[i] != null)
+                {
+                    startZScale = transform.localScale.z;
+                    startXScale = transform.localScale.x;
+                }
+                else
+                {
+                    startZScales[i] = renderers[i].transform.localScale.z;
+                    startXScales[i] = renderers[i].transform.localScale.x;
+                }
             }
         }
         else
@@ -85,16 +93,16 @@ public class DamageFeedback : MonoBehaviour
     void ShowTakeDamageEffects()
     {
         if (!isTakingDamage) return;
-        if (meshRenderer == null && meshRenderers.Length == 0) return;
+        if (meshRenderer == null && renderers.Length == 0) return;
         if (duration >= elapsedTime)
         {
             elapsedTime += Time.deltaTime;
             float _lerpValue = damageCurve.Evaluate(elapsedTime / duration);
             if (givingMeAIDS)
             {
-                for (int i = 0; i < meshRenderers.Length; i++)
+                for (int i = 0; i < renderers.Length; i++)
                 {
-                    meshRenderers[i].material.color = Color.Lerp(takeDamageColor, startColors[i], _lerpValue);
+                    renderers[i].material.color = Color.Lerp(takeDamageColor, startColors[i], _lerpValue);
                 }
             }
             else
@@ -103,13 +111,13 @@ public class DamageFeedback : MonoBehaviour
             }
 
             if (!animateScale) return;
-            if (givingMeAIDS)
+            if (givingMeAIDS && (SkinnedMeshRenderer)renderers[0] == null)
             {
-                for (int i = 0; i < meshRenderers.Length; i++)
+                for (int i = 0; i < renderers.Length; i++)
                 {
                     float _localScaleZ = Mathf.Lerp(takeDamageScale, startZScales[i], _lerpValue);
                     float _localScaleX = Mathf.Lerp(takeDamageScale, startXScales[i], _lerpValue);
-                    meshRenderers[i].transform.localScale = new Vector3(_localScaleX, meshRenderers[i].transform.localScale.y, _localScaleZ);
+                    renderers[i].transform.localScale = new Vector3(_localScaleX, renderers[i].transform.localScale.y, _localScaleZ);
                 }
             }
             else
@@ -128,5 +136,4 @@ public class DamageFeedback : MonoBehaviour
         yield return new WaitForSecondsRealtime(pauseTimeDuration);
         Time.timeScale = 1;
     }
-
 }

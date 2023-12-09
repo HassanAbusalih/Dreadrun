@@ -182,18 +182,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6254002394925430329, guid: 2b6bb2ecd0ee9ae409a42827612761e6, type: 3}
-      propertyPath: takeDamageColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6254002394925430329, guid: 2b6bb2ecd0ee9ae409a42827612761e6, type: 3}
-      propertyPath: takeDamageColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6254002394925430329, guid: 2b6bb2ecd0ee9ae409a42827612761e6, type: 3}
-      propertyPath: takeDamageColor.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7588967935163124265, guid: 2b6bb2ecd0ee9ae409a42827612761e6, type: 3}
       propertyPath: maxHealth
       value: 5000
@@ -416,7 +404,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4276481114282560736, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4276481114282560740, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
       propertyPath: m_RootOrder
@@ -861,84 +849,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2277369173519994107, guid: 37cdb259fff85dd4b89ed22ee029b0fa, type: 3}
   m_PrefabInstance: {fileID: 949208532}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1027216644 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4276481114282560736, guid: 8d1cfa88611263b4395d91b1bb8a5a15, type: 3}
-  m_PrefabInstance: {fileID: 399721028}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1027216650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1027216644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63fa7369eda9cd341a9688c8495d7469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 0.3
-  takeDamageColor: {r: 0.49056602, g: 0, b: 0, a: 1}
-  takeDamageScale: 0.7
-  damageCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.0023422241
-      value: 0
-      inSlope: -3.3851333
-      outSlope: -3.3851333
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.21448955
-    - serializedVersion: 3
-      time: 0.25721422
-      value: 0.35429525
-      inSlope: 0.071027726
-      outSlope: 0.071027726
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.4978643
-    - serializedVersion: 3
-      time: 0.45761544
-      value: 0.04029861
-      inSlope: -0.9064895
-      outSlope: -0.9064895
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.12421032
-    - serializedVersion: 3
-      time: 0.7537107
-      value: 0.8382908
-      inSlope: 4.0030613
-      outSlope: 4.0030613
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.23005293
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -1.8451961
-      outSlope: -1.8451961
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.16917959
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  animateScale: 1
-  pauseTimeDuration: 0
-  canPauseTime: 0
-  meshRenderer: {fileID: 0}
-  givingMeAIDS: 1
-  meshRenderers:
-  - {fileID: 0}
 --- !u!1 &1122200771
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,121 +992,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4111603669367186240, guid: 2b6bb2ecd0ee9ae409a42827612761e6, type: 3}
   m_PrefabInstance: {fileID: 11523181}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1716059826
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1716059827}
-  - component: {fileID: 1716059829}
-  - component: {fileID: 1716059828}
-  m_Layer: 0
-  m_Name: Point Light
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1716059827
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716059826}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.65, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 256444711}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1716059828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716059826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 1
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
---- !u!108 &1716059829
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716059826}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 2
-  m_Shape: 0
-  m_Color: {r: 0.9622642, g: 0.59137464, b: 0.30411178, a: 1}
-  m_Intensity: 3.01
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!1001 &1733321793
 PrefabInstance:
   m_ObjectHideFlags: 0
