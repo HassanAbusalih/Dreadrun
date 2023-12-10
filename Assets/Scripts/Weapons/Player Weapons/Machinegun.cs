@@ -16,6 +16,7 @@ public class Machinegun : PlayerWeapon
             if (timeSinceLastShot >= fireRate)
             {
                 Attack();
+                Debug.Log("MachineGun attacked");
                 timeSinceLastShot = 0;
             }
             firingDuration += Time.deltaTime;
@@ -36,7 +37,11 @@ public class Machinegun : PlayerWeapon
         }
         float randomAngle = Random.Range(-currentSpread, currentSpread);
         Quaternion projectileRotation = Quaternion.Euler(projectilePrefab.transform.eulerAngles.x, transform.eulerAngles.y + randomAngle, 0);
-        GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position, projectileRotation);
+        //GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position, projectileRotation);
+        GameObject projectile = ObjectPooling.instance.GetPooledObject();
+        projectile.transform.position = BulletSpawnPoint.position;
+        projectile.transform.rotation = projectileRotation;
+        projectile.SetActive(true);
         projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 8, effects);
         if (soundSO != null) soundSO.PlaySound(2, AudioSourceType.Weapons);
         if (impulseSource != null) impulseSource.GenerateImpulse();

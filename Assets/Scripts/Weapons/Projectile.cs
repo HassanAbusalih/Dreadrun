@@ -60,13 +60,18 @@ public class Projectile : MonoBehaviour
         }
         if (distanceTravelled > range)
         {
-            if (impactVFX != null) { Instantiate(impactVFX, transform.position, Quaternion.identity); }
-            Destroy(gameObject);
+            GameObject vfx = null;
+            if (impactVFX != null) {vfx = Instantiate(impactVFX, transform.position, Quaternion.identity); }
+            Destroy(vfx, 2f);
+            gameObject.SetActive(false);
+            distanceTravelled = 0;
+            transformToScale.localScale = Vector3.one * 4;
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        GameObject vfx = null;
         if (collision.transform.TryGetComponent(out IDamagable damagable))
         {
             if (collision.gameObject.layer == layerToIgnore) { return; }
@@ -89,7 +94,10 @@ public class Projectile : MonoBehaviour
                 }
             }
         }
-        if (impactVFX != null) { Instantiate(impactVFX, transform.position, Quaternion.identity); }
-        Destroy(gameObject);
-    }
+        if (impactVFX != null) { vfx = Instantiate(impactVFX, transform.position, Quaternion.identity);
+        }
+
+        Destroy(vfx, 2f);
+        gameObject.SetActive(false);
+    }      
 }
