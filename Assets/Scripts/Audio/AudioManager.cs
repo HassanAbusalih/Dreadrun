@@ -41,6 +41,7 @@ public class AudioManager : MonoBehaviour
             SetVolume(audioSettingsData.sfxVolume, AudioSourceType.Player);
             SetVolume(audioSettingsData.sfxVolume, AudioSourceType.Weapons);
             SetVolume(audioSettingsData.sfxVolume, AudioSourceType.Enemy);
+            SetVolume(audioSettingsData.sfxVolume, AudioSourceType.EnemyShoot);
         }
     }
 
@@ -75,6 +76,7 @@ public enum AudioSourceType
     Master = 0,
     Player,
     Enemy,
+    EnemyShoot,
     Weapons,
     Music
 }

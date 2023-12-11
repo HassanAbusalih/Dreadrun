@@ -60,7 +60,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
 
         if (Time.time - timeSinceSFX > sfxCooldown && enemySounds != null)
         {
-            enemySounds.PlaySound(0, AudioSourceType.Player);
+            enemySounds.PlaySound(0, AudioSourceType.Enemy);
             timeSinceSFX = Time.time;
         }
         if (currentHealth <= 0)

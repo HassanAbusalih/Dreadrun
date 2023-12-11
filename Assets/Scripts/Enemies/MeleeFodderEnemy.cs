@@ -12,6 +12,7 @@ public class MeleeFodderEnemy : EnemyAIBase
     [SerializeField] float chargeSpeedModifier = 0.5f;
     [SerializeField] float chargeTime = 1f;
     [SerializeField] float dashTime = 0.2f;
+    [SerializeField] SoundSO dashSound;
     float lastAttackTime;
     Coroutine chargeAndAttack;
     LayerMask mask;
@@ -73,6 +74,8 @@ public class MeleeFodderEnemy : EnemyAIBase
 
         startTime = Time.time;
         (weapon as MeleeFodderWeapon).Attack(dashTime);
+        if(dashSound != null) dashSound.PlaySound(0, AudioSourceType.Enemy);
+     
         while (Time.time < startTime + dashTime)
         {
             Move(player, movementSpeed * dashSpeedModifier);

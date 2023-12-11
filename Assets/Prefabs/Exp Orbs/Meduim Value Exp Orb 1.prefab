@@ -14919,6 +14919,7 @@ GameObject:
   - component: {fileID: 8539420025713803542}
   - component: {fileID: 8539420025713803537}
   - component: {fileID: 1025211154}
+  - component: {fileID: -8766132968597214625}
   m_Layer: 10
   m_Name: Meduim Value Exp Orb 1
   m_TagString: Untagged
@@ -15026,6 +15027,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65
   expOrbPickUpSFX: {fileID: 11400000, guid: de576bda217eb344bbafab5b921121a9, type: 2}
+  denySound: {fileID: 11400000, guid: c67aa2a5232c3654fbf8d5f96ca8caf2, type: 2}
 --- !u!114 &1025211154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15040,3 +15042,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverHeight: 0.2
   hoverSpeed: 1
+--- !u!114 &-8766132968597214625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8539420025713803539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2909de55a810dc147a42d3ce3af5d20b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationCurve:
+    m_Mode: 1
+    m_CurveMultiplier: 1
+    m_CurveMin:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_CurveMax:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ConstantMin: 0
+    m_ConstantMax: 0
+  rotationSpeed: 0.5
+  Disabled: 0

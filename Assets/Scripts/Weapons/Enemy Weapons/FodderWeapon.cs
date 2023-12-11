@@ -28,7 +28,7 @@ public class FodderWeapon : EnemyWeapon
             GameObject projectile = Instantiate(projectilePrefab, transform.position + projectileLocation, projectileRotation);
             projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 9);
         }
-        if (audioSource != null) audioSource.Play();
+        if (soundSO != null) soundSO.PlaySound(0, AudioSourceType.EnemyShoot);
     }
 
     void ReturnToIdle()
