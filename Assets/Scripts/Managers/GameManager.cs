@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent onPhaseChange;
 
     private bool isGamePaused = false;
-    private bool hasGameEnded = false;
+    public bool hasGameEnded = false;
 
 
     private void OnEnable()

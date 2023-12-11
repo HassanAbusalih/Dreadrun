@@ -9,9 +9,14 @@ public class ExperienceManager : MonoBehaviour
     [SerializeField] Image expBar;
     PerkSelector perkSelector;
     int currentExp;
+    public int currentLevel;
 
     public static bool CollectExp { get; private set; } = true;
 
+    private void Start()
+    {
+        currentLevel = 0;
+    }
     private void Awake()
     {
         CollectExp = true;
@@ -41,6 +46,7 @@ public class ExperienceManager : MonoBehaviour
         currentExp = 0;
         expToLevelUp += expIncreaseAddon;
         UpdateExpBarUI();
+        currentLevel += 1;
     }
 
     void AllowExpCollection() => CollectExp = true;

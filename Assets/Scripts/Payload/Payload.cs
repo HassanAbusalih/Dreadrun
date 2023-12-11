@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Payload : MonoBehaviour, IDamagable
 {
-    float health;
+    public float health;
     [SerializeField] bool stopped;
     [SerializeField] bool enteredLastCheckpoint;
     [Header("Stats")]

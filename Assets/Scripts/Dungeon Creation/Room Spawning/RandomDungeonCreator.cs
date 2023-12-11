@@ -22,9 +22,10 @@ public class RandomDungeonCreator : MonoBehaviour
     [Header("Debug Stats")]
     [SerializeField] int smallRoomsSpawned;
     [SerializeField] int bigRoomsSpawned;
+    public int totalRoomsSpawned;
 
     [SerializeField] bool destroySpawnPointParentOnSpawn;
-
+    
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class RandomDungeonCreator : MonoBehaviour
     private void Start()
     {
         StartRandomRoomSpawningProcess();
+        totalRoomsSpawned = smallRoomsSpawned + bigRoomsSpawned;
     }
 
     void StartRandomRoomSpawningProcess()
