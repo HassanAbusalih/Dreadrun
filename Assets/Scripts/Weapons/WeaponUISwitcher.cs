@@ -19,7 +19,7 @@ public class WeaponUISwitcher : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerWeapon.weaponPickedUpOrDropped += ChangeWeaponSpriteOnPickUpOrDrop;
+        PlayerWeapon.WeaponPickedUpOrDropped += ChangeWeaponSpriteOnPickUpOrDrop;
     }
 
     private void Awake()
@@ -44,12 +44,12 @@ public class WeaponUISwitcher : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerWeapon.weaponPickedUpOrDropped -= ChangeWeaponSpriteOnPickUpOrDrop;
+        PlayerWeapon.WeaponPickedUpOrDropped -= ChangeWeaponSpriteOnPickUpOrDrop;
     }
 
     void ChangeWeaponSpriteOnPickUpOrDrop(PlayerWeapon _weapon)
     {
-        if (_weapon == null)
+        if (!_weapon.pickedUp)
         {
             weaponImageHolder.sprite = blankSprite;
             SetWeaponSlotColor(emptyWeaponColor);
