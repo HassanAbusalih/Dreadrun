@@ -4,6 +4,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using Cinemachine;
+using JetBrains.Annotations;
 
 public abstract class PlayerWeapon : WeaponBase
 {
@@ -15,12 +16,12 @@ public abstract class PlayerWeapon : WeaponBase
     [SerializeField] Vector3 weaponOffset;
     [SerializeField] Vector3 weaponRotationOffset;
     [SerializeField] GameObject weaponEquipText;
-    bool pickedUp;
+    public bool pickedUp {get; private set;}
     protected bool equipped;
 
     [field: SerializeField] public Sprite weaponIcon { get; private set; }
     [field: SerializeField] public string weaponDescription { get; private set; }
-    public static Action<PlayerWeapon> weaponPickedUpOrDropped;
+    public static Action<PlayerWeapon> WeaponPickedUpOrDropped;
     Collider[] weaponColliders;
     protected CinemachineImpulseSource impulseSource;
 
@@ -47,14 +48,17 @@ public abstract class PlayerWeapon : WeaponBase
         transform.rotation = Quaternion.Euler(_weaponRotation);
         equipped = true;
         UpdateWeaponEffects();
-        weaponPickedUpOrDropped?.Invoke(this);
-        EnableWeaponColliders(false);
-        _iD = weaponID;
         if (soundSO != null && !pickedUp)
         {
             soundSO.PlaySound(0, AudioSourceType.Weapons);
-            pickedUp = true;
+
         }
+        pickedUp = true;
+        WeaponPickedUpOrDropped?.Invoke(this);
+        EnableWeaponColliders(false);
+        _iD = weaponID;
+      
+      
         if (weaponEquipText != null) weaponEquipText.SetActive(false);
     }
 
@@ -64,12 +68,14 @@ public abstract class PlayerWeapon : WeaponBase
         effects.Clear();
         equipped = false;
         EnableWeaponColliders(true);
-        weaponPickedUpOrDropped?.Invoke(null);
         if (soundSO != null && pickedUp)
         {
             soundSO.PlaySound(1, AudioSourceType.Weapons);
-            pickedUp = false;
+
         }
+        pickedUp = false;
+        WeaponPickedUpOrDropped?.Invoke(this);
+      
         if (weaponEquipText != null) weaponEquipText.SetActive(true);
     }
 

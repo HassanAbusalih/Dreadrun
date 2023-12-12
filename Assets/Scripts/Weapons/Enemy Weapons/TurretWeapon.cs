@@ -7,6 +7,7 @@ public class TurretWeapon : EnemyWeapon
     [SerializeField] Transform projectileSpawnPoint;
     [SerializeField] float cooldown;
 
+
     private void Update()
     {
         timeSinceLastShot += Time.deltaTime;
@@ -27,7 +28,7 @@ public class TurretWeapon : EnemyWeapon
             projectileSpawnPoint.LookAt(target);
             GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
             projectile.GetComponent<Projectile>().Initialize(damageModifier, projectileSpeed, projectileRange, 9);
-            if (audioSource != null) audioSource.Play();
+            if (soundSO != null) soundSO.PlaySound(0, AudioSourceType.EnemyShoot);
             timeSinceLastShot = 0;
             yield return new WaitForSeconds(fireRate);
         }

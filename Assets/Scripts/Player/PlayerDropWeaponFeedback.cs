@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class WeaponDropFeedback : MonoBehaviour
+public class PlayerDropWeaponFeedback : MonoBehaviour
 {
     [SerializeField] TextMeshPro weaponDropText;
     [SerializeField] AnimationClip weaponDropAnimation;

@@ -8,10 +8,15 @@ public class ExpOrb : MonoBehaviour
     public int ExpAmount => expAmount;
     [SerializeField] LayerMask layerMask;
     [SerializeField] SoundSO expOrbPickUpSFX;
+    [SerializeField] SoundSO denySound;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (ExperienceManager.CollectExp && other.TryGetComponent(out Player player))
+
+        bool isPlayerThere = other.TryGetComponent(out Player player);
+
+
+        if (ExperienceManager.CollectExp && isPlayerThere)
         {
             OnExpOrbCollected?.Invoke(expAmount);
             if (expOrbPickUpSFX != null)
@@ -20,5 +25,7 @@ public class ExpOrb : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        else if(!ExperienceManager.CollectExp && isPlayerThere) denySound.PlaySound(0, AudioSourceType.Player);
+       
     }
 }

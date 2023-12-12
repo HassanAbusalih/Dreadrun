@@ -5204,7 +5204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 120
   movementSpeed: 25
-  enemySounds: {fileID: 0}
+  enemySounds: {fileID: 11400000, guid: f17c5afe9749e314ba04c9f3cdb46e3f, type: 2}
   sfxCooldown: 1
   detectionRange: 65
   attackRange: 20
@@ -5213,6 +5213,7 @@ MonoBehaviour:
   chargeSpeedModifier: 0.8
   chargeTime: 1
   dashTime: 1
+  dashSound: {fileID: 11400000, guid: 40347e04b5c96bb41ae570258ee2986a, type: 2}
 --- !u!114 &1446976966950350011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5283,6 +5284,8 @@ MonoBehaviour:
   pauseTimeDuration: 0
   canPauseTime: 0
   meshRenderer: {fileID: 9014396183608693795}
+  givingMeAIDS: 0
+  renderers: []
 --- !u!114 &8610076454974898655
 MonoBehaviour:
   m_ObjectHideFlags: 0

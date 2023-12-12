@@ -138,7 +138,7 @@ public class Player : MonoBehaviour, IDamagable
 
     (Vector3, bool) isPlayerOnSlope(Vector3 _moveDirection)
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHitt, 30f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHitt, 30f,2, QueryTriggerInteraction.Ignore))
         {
             float angle = Vector3.Angle(slopeHitt.normal, Vector3.up);
             transform.rotation = Quaternion.FromToRotation(transform.up, slopeHitt.normal) * transform.rotation;
