@@ -12,9 +12,11 @@ public class ExpOrb : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        bool canCollectExpOrb = ExperienceManager.CollectExp && other.TryGetComponent(out Player player);
 
-        if (canCollectExpOrb)
+        bool isPlayerThere = other.TryGetComponent(out Player player);
+
+
+        if (ExperienceManager.CollectExp && isPlayerThere)
         {
             OnExpOrbCollected?.Invoke(expAmount);
             if (expOrbPickUpSFX != null)
@@ -23,7 +25,7 @@ public class ExpOrb : MonoBehaviour
             }
             Destroy(gameObject);
         }
-        else if(denySound!=null) denySound.PlaySound(0, AudioSourceType.Player);
+        else if(!ExperienceManager.CollectExp && isPlayerThere) denySound.PlaySound(0, AudioSourceType.Player);
        
     }
 }

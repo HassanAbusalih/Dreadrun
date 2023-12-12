@@ -48,15 +48,16 @@ public abstract class PlayerWeapon : WeaponBase
         transform.rotation = Quaternion.Euler(_weaponRotation);
         equipped = true;
         UpdateWeaponEffects();
+        if (soundSO != null && !pickedUp)
+        {
+            soundSO.PlaySound(0, AudioSourceType.Weapons);
+
+        }
         pickedUp = true;
         WeaponPickedUpOrDropped?.Invoke(this);
         EnableWeaponColliders(false);
         _iD = weaponID;
-        if (soundSO != null && !pickedUp)
-        {
-            soundSO.PlaySound(0, AudioSourceType.Weapons);
-          
-        }
+      
       
         if (weaponEquipText != null) weaponEquipText.SetActive(false);
     }
@@ -67,13 +68,14 @@ public abstract class PlayerWeapon : WeaponBase
         effects.Clear();
         equipped = false;
         EnableWeaponColliders(true);
-        pickedUp = false;
-        WeaponPickedUpOrDropped?.Invoke(this);
         if (soundSO != null && pickedUp)
         {
             soundSO.PlaySound(1, AudioSourceType.Weapons);
-          
+
         }
+        pickedUp = false;
+        WeaponPickedUpOrDropped?.Invoke(this);
+      
         if (weaponEquipText != null) weaponEquipText.SetActive(true);
     }
 
