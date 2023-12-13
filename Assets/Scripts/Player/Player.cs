@@ -5,24 +5,29 @@ using Cinemachine;
 
 public class Player : MonoBehaviour, IDamagable
 {
+    // References
     Rigidbody rb;
     Dashing playerDash;
     CinemachineImpulseSource impulseSource;
+
     [Header("Player Input Settings")]
     [SerializeField] KeyCode pickUpWeaponKey = KeyCode.E;
     [SerializeField] KeyCode controllerPickUp;
     [SerializeField] float durationToDropWeapon = 1.5f;
 
-
     [Header("Player slope info/Settings")]
     [SerializeField] float maxSlopeAngle;
     [SerializeField] float UpSlopeGravity;
     [SerializeField] bool onSlope;
+    RaycastHit slopeHitt;
 
-    [Header("Player Stats & Movement Settings")]
-    [SerializeField] float slowDownMultiplier;
-    [SerializeField] AnimationCurve slowDownCurve;
+    [Header("Acceleration Movement Settings")]
+    [SerializeField][Range(0, 2)] float acceleration;
+    [SerializeField][Range(0, 5)] float accelerationDuration;
+    float currentAcceleration;
+    float accelerationTimer;
 
+    [Header("Player Stats & Movment Info")]
     [SerializeField][Range(0, 2)] float staminaRecoverySpeed;
     public PlayerStats playerStats;
 
@@ -30,7 +35,7 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] Image healthBar;
     [SerializeField] Image staminaBar;
 
-    [Header("EquippedWeaponInfo")]
+    [Header("Equipped Weapon Info")]
     [SerializeField] Transform weaponEquipPosition;
     [SerializeField] WeaponIDs weaponIDsSO;
 
@@ -41,17 +46,17 @@ public class Player : MonoBehaviour, IDamagable
 
     // Player Events
     public static Action<GameObject> onDamageTaken;
-    public Action<float,bool> WeaponDropFeedback;
+    public Action<float, bool> WeaponDropFeedback;
     public Action OnPlayerDeath;
     public delegate bool takeDamage();
     public takeDamage canPLayerTakeDamage;
 
+    // Sounds
     [SerializeField] SoundSO takeDamageSFX;
     [SerializeField] float sfxCooldown = 1f;
     float timeSinceSFX;
     float timer;
-    
-    RaycastHit slopeHitt;
+
 
     private void OnEnable()
     {
@@ -73,8 +78,10 @@ public class Player : MonoBehaviour, IDamagable
         timeSinceSFX = Time.time;
         rb = GetComponent<Rigidbody>();
         weaponIDsSO.InitializeWeaponIDsDictionary();
+
         playerStats.health = playerStats.maxHealth;
         playerStats.stamina = playerStats.maxStamina;
+
         InitializePlayerUI(healthBar, playerStats.maxHealth, playerStats.health);
         InitializePlayerUI(staminaBar, playerStats.maxStamina, playerStats.stamina);
         TryGetComponent(out impulseSource);
@@ -90,7 +97,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         DropCurrentWeapon();
         PickUpUnequippedWeapon();
-        
+
         playerStats.stamina = Mathf.Lerp(playerStats.stamina, playerStats.maxStamina, Time.deltaTime * staminaRecoverySpeed);
         UpdatePlayerUI(staminaBar, playerStats.stamina, playerStats.maxStamina);
     }
@@ -102,46 +109,64 @@ public class Player : MonoBehaviour, IDamagable
 
     void MovePlayer()
     {
+        float horizontalInput, verticalInput;
+        Vector3 normalizedDirection, moveVelocity;
+
+        GetMoveDirectionAndVelocity(out horizontalInput, out verticalInput, out normalizedDirection, out moveVelocity);
+        SlopePhysics(normalizedDirection);
+        bool isNoInputPressed = horizontalInput == 0 && verticalInput == 0;
+      
+        UpdateAcceleration(isNoInputPressed);
+        rb.velocity = moveVelocity * currentAcceleration;
+
+        if (isNoInputPressed)
+        rb.velocity = Vector3.zero;
+    }
+
+    private void UpdateAcceleration(bool isNoInputPressed)
+    {
+        if (accelerationTimer < accelerationDuration)
+        {
+            accelerationTimer += Time.deltaTime;
+            currentAcceleration = Mathf.Lerp(0, acceleration, accelerationTimer / accelerationDuration);
+        }
+        if (isNoInputPressed) accelerationTimer = 0;
+    }
+
+    private void GetMoveDirectionAndVelocity(out float horizontal, out float vertical, out Vector3 normalizedDirection, out Vector3 moveVelocity)
+    {
         Vector3 cameraForward = Camera.main.transform.forward;
         Vector3 cameraRight = Camera.main.transform.right;
         cameraForward.y = 0f;
         cameraRight.y = 0f;
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 normalizedDirection = (cameraForward * vertical + cameraRight * horizontal).normalized;
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+        normalizedDirection = (cameraForward * vertical + cameraRight * horizontal).normalized;
+
         Vector3 slopeDirection = isPlayerOnSlope(normalizedDirection).Item1;
         onSlope = isPlayerOnSlope(normalizedDirection).Item2;
-        Vector3 moveVelocity = (slopeDirection + normalizedDirection) * playerStats.speed;
-
-        if( normalizedDirection.magnitude!=0)
-        rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
-        if( normalizedDirection.magnitude == 0 && !onSlope && rb.velocity.y<=0)
-        rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
-        rb.useGravity = !onSlope;
-
-
-       
-
-        rb.velocity += moveVelocity;
-        if(rb.velocity.magnitude > playerStats.speed)
-        {
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, playerStats.speed);
-        }
-       
-
-        if (horizontal != 0 && vertical != 0) return;
-        float slowDownLerpValue = slowDownCurve.Evaluate(Time.fixedDeltaTime * slowDownMultiplier);
-        rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, slowDownLerpValue);
-
+        moveVelocity = (slopeDirection + normalizedDirection).normalized * playerStats.speed;
     }
+
+    private void SlopePhysics(Vector3 normalizedDirection)
+    {
+        if (normalizedDirection.magnitude != 0)
+            rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
+        if (normalizedDirection.magnitude == 0 && !onSlope && rb.velocity.y <= 0)
+            rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
+        rb.useGravity = !onSlope;
+    }
+
+
 
     (Vector3, bool) isPlayerOnSlope(Vector3 _moveDirection)
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHitt, 30f,2, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(transform.position, -transform.up, out slopeHitt, 30f, Physics.AllLayers, QueryTriggerInteraction.Ignore))
         {
             float angle = Vector3.Angle(slopeHitt.normal, Vector3.up);
-            transform.rotation = Quaternion.FromToRotation(transform.up, slopeHitt.normal) * transform.rotation;
+            Quaternion slopeRotation = Quaternion.FromToRotation(transform.up, slopeHitt.normal) * transform.rotation;
+            transform.rotation = slopeRotation;
             bool isOnSlope = angle > maxSlopeAngle && angle != 0;
             Vector3 slopeDirection = Vector3.ProjectOnPlane(_moveDirection, slopeHitt.normal);
             return (slopeDirection, isOnSlope);
@@ -154,7 +179,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (pickUpWeaponKey == KeyCode.None) pickUpWeaponKey = KeyCode.E;
         if (controllerPickUp == KeyCode.None) controllerPickUp = KeyCode.JoystickButton3;
-        
+
         if (Input.GetKeyDown(pickUpWeaponKey) || Input.GetKeyDown(controllerPickUp))
         {
             if (playerWeapon == null || isWeaponPickedUp) return;
@@ -163,9 +188,9 @@ public class Player : MonoBehaviour, IDamagable
             isWeaponPickedUp = true;
             isPickUpMode = true;
         }
-        else if(Input.GetKeyUp(pickUpWeaponKey) || Input.GetKeyUp(controllerPickUp) && isWeaponPickedUp)
+        else if (Input.GetKeyUp(pickUpWeaponKey) || Input.GetKeyUp(controllerPickUp) && isWeaponPickedUp)
         {
-           isPickUpMode = false;
+            isPickUpMode = false;
         }
     }
 
@@ -173,10 +198,10 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (Input.GetKey(pickUpWeaponKey) || Input.GetKey(controllerPickUp) && isWeaponPickedUp)
         {
-            if(!isWeaponPickedUp || isPickUpMode) return;
+            if (!isWeaponPickedUp || isPickUpMode) return;
             if (timer < durationToDropWeapon)
             { timer += Time.deltaTime; WeaponDropFeedback?.Invoke(durationToDropWeapon, true); return; }
-           
+
             ScaleOrDescaleWeapon(false);
             playerWeapon.DropWeapon();
             isWeaponPickedUp = false;
@@ -184,7 +209,7 @@ public class Player : MonoBehaviour, IDamagable
             playerWeapon = null;
             timer = 0;
         }
-        else {timer = 0; WeaponDropFeedback?.Invoke(durationToDropWeapon,false);}
+        else { timer = 0; WeaponDropFeedback?.Invoke(durationToDropWeapon, false); }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -198,7 +223,7 @@ public class Player : MonoBehaviour, IDamagable
         if (isWeaponPickedUp) return;
         if (other.TryGetComponent(out PlayerWeapon unequippedWeapon))
         {
-            if(playerWeapon == unequippedWeapon) playerWeapon = null;
+            if (playerWeapon == unequippedWeapon) playerWeapon = null;
         }
     }
 
@@ -219,7 +244,7 @@ public class Player : MonoBehaviour, IDamagable
         }
         ChangeHealth(-amount);
         IDamagable.onDamageTaken?.Invoke(gameObject);
-        if(impulseSource!=null)impulseSource.GenerateImpulse();
+        if (impulseSource != null) impulseSource.GenerateImpulse();
     }
 
     public void ChangeHealth(float amount)
