@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6293095248352754325
 Transform:
   m_ObjectHideFlags: 0
@@ -131,7 +131,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 6293095248352754325}
   player: {fileID: 0}
-  distanceToShow: 25
+  blankSprite: {fileID: 21300000, guid: d4846583bfeb63d4586b331aa5322cfd, type: 3}
+  arrowSprite: {fileID: 21300000, guid: 709e4f885ba6d564bb1f3d508c67ee01, type: 3}
+  warningSprite: {fileID: 21300000, guid: c40237cdf5a82ce4da317e52d855385f, type: 3}
+  emergencySprite: {fileID: 21300000, guid: 38688eb814c510b4a829c3322811a379, type: 3}
+  distanceToShow: 10
   offset: {x: 0, y: 0.2, z: 1.2}
   toggleKey: 0
   loopingColor: {r: 1, g: 0.89839494, b: 0, a: 1}
@@ -170,5 +174,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   frequency: 10
   amplitude: 1
+  spriteSwitchInterval: 0.5
+  displayDuration: 5
+  hideDuration: 2
   distanceFromPayload: 41.509697
-  arrowState: 0
+  arrowActivated: 0

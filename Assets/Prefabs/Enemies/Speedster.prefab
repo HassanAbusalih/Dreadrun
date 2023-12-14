@@ -219,8 +219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 55
-  movementSpeed: 23
-  enemySounds: {fileID: 0}
+  movementSpeed: 28
+  enemySounds: {fileID: 11400000, guid: f17c5afe9749e314ba04c9f3cdb46e3f, type: 2}
   sfxCooldown: 1
   shootingRange: 16.8
   retreatRange: 6.25
@@ -240,11 +240,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 2
   damageModifier: 7
-  projectileRange: 15
-  projectileSpeed: 9
+  projectileRange: 25
+  projectileSpeed: 12
   spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: c43aab9cdb8fd944ca09da012ab929a8, type: 3}
-  soundSO: {fileID: 0}
+  soundSO: {fileID: 11400000, guid: 5126b513ab1d9f743abbaf6564d8dfe6, type: 2}
   homingStrength: 250
   homingRange: 10
 --- !u!114 &6254002394925430329
@@ -318,7 +318,7 @@ MonoBehaviour:
   canPauseTime: 0
   meshRenderer: {fileID: 6188075296282583069}
   givingMeAIDS: 0
-  meshRenderers: []
+  renderers: []
 --- !u!114 &1484355774854558272
 MonoBehaviour:
   m_ObjectHideFlags: 0

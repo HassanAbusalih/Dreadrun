@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class EquippedPerksUI : MonoBehaviour
     [Header("References")]
     [SerializeField] PerkUI perkUIPrefab;
     [SerializeField] RectTransform spawnStartPosition;
+    [SerializeField] GameObject perkDescription;
+    [SerializeField] TextMeshProUGUI perkDescriptionText;
 
     [Header("perk UI Spawn Settings")]
     [SerializeField] Vector2 cellSize;
@@ -48,7 +51,7 @@ public class EquippedPerksUI : MonoBehaviour
         {
             _newUIPerk.GetComponent<Image>().color = new(borderColor.r, borderColor.g, borderColor.b, 1);
         }
-        _newUIPerk.SetPerk(_perkUIToSpawn, perkCollector);
+        _newUIPerk.SetPerk(_perkUIToSpawn, perkCollector, perkDescription, perkDescriptionText);
         TotalPerksUiMade.Add(_perkUIToSpawn);
         rowIndex++;
     }

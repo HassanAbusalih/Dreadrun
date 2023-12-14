@@ -197,52 +197,20 @@ MonoBehaviour:
   maxSlopeAngle: 0
   UpSlopeGravity: 300
   onSlope: 0
-  slowDownMultiplier: 10
-  slowDownCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.28441676
-      value: 0.20218049
-      inSlope: 1.7232218
-      outSlope: 1.7232218
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.11731201
-    - serializedVersion: 3
-      time: 1.0023499
-      value: 1
-      inSlope: -0.2002509
-      outSlope: -0.2002509
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.124531925
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  acceleration: 1
+  accelerationDuration: 0.2
   staminaRecoverySpeed: 0.09
   playerStats:
     health: 0
     maxHealth: 100
     attack: 1
-    defense: 100
+    defense: 25
     stamina: 1
     maxStamina: 80
     attackSpeed: 1
     Range: 1
     Spread: 1
-    speed: 40
+    speed: 25
   healthBar: {fileID: 6248476664982006873}
   staminaBar: {fileID: 3104004089992840484}
   weaponEquipPosition: {fileID: 8117153054145766768}
@@ -262,9 +230,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b41121c7b2d1b4eb52c093d57090ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 24.89
+  rotationSpeed: 30
   controllerEnabled: 0
   deadZone: 5
+  smoothingFactor: 15
 --- !u!114 &5531912465785331505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 7154501555868931910}
-  dashForce: 35
+  dashForce: 45
   dashDuration: 0.25
   dashCurve:
     serializedVersion: 2
@@ -314,7 +283,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   staminaCost: 15
-  dashColor: {r: 0.13264506, g: 0.2248548, b: 0.764151, a: 0.44705883}
+  dashColor: {r: 1, g: 0.7668997, b: 0, a: 1}
   dodge: 32
   dashSFX: {fileID: 11400000, guid: 650607ad15d612c44bee73228ccaf994, type: 2}
   isInvincible: 0
@@ -1246,6 +1215,14 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4423540878030522066}
+    - target: {fileID: 1230524962442996951, guid: 39f86b821ef2145468a5e423ebeadf8b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230524962442996951, guid: 39f86b821ef2145468a5e423ebeadf8b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.18
+      objectReference: {fileID: 0}
     - target: {fileID: 1230524963261898721, guid: 39f86b821ef2145468a5e423ebeadf8b, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1476,6 +1453,10 @@ PrefabInstance:
     - target: {fileID: 6293095248352754330, guid: 2adeb66c22309d74abec7e9440cd1641, type: 3}
       propertyPath: m_Name
       value: arrowHolder
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293095248352754330, guid: 2adeb66c22309d74abec7e9440cd1641, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6293095248808236306, guid: 2adeb66c22309d74abec7e9440cd1641, type: 3}
       propertyPath: player
