@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         LoadDataFromJson();
+        Time.timeScale = 1;
     }
 
     private void LoadDataFromJson()
