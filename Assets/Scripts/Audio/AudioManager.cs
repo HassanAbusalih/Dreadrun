@@ -69,7 +69,14 @@ public class AudioManager : MonoBehaviour
             audioSources[i].volume = volumeLevels[i] * volumeLevels[0];
         }
     }
+
+    public void SetMixerVolume(float volume, AudioSourceType audioType = 0)
+    {
+        volumeLevels[(int)audioType] = volume;
+        audioSources[(int)audioType].volume = volumeLevels[(int)audioType] * volumeLevels[(int)AudioSourceType.Master];
+    }
 }
+
 
 public enum AudioSourceType
 {
