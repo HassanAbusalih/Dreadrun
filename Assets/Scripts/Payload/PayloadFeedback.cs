@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +10,7 @@ public class PayloadFeedback : MonoBehaviour
     Color stopColor = Color.red;
     Color moderateColor = Color.yellow;
     Color fastColor = Color.green;
+    public PayloadState PayloadState { get; private set; }
 
     private void Start()
     {
@@ -30,14 +30,17 @@ public class PayloadFeedback : MonoBehaviour
         if (normalizedSpeed == 1)
         {
             payloadColor = fastColor;
+            PayloadState = PayloadState.Normal;
         }
         else if (normalizedSpeed > 0 && normalizedSpeed < 1)
         {
             payloadColor = moderateColor;
+            PayloadState = PayloadState.Contested;
         }
         else
         {
             payloadColor = stopColor;
+            PayloadState = PayloadState.Stopped;
         }
         //Color lerpedColor = Color.Lerp(stopColor, moderateColor, normalizedSpeed);
         //lerpedColor = Color.Lerp(lerpedColor, fastColor, normalizedSpeed);
@@ -66,4 +69,11 @@ public class PayloadFeedback : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         // gameObject.transform.rotation = rotation;
     }
+}
+
+public enum PayloadState 
+{   
+    Normal, 
+    Stopped, 
+    Contested 
 }

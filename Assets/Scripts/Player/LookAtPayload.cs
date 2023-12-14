@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class LookAtPayload : MonoBehaviour
@@ -6,6 +7,10 @@ public class LookAtPayload : MonoBehaviour
     [Header("References")]
     [SerializeField] Transform parent;
     [SerializeField] Transform player;
+    [SerializeField] Sprite blankSprite;
+    [SerializeField] Sprite arrowSprite;
+    [SerializeField] Sprite warningSprite;
+    [SerializeField] Sprite emergencySprite;
 
     [Header("Look At Settings")]
     [SerializeField] float distanceToShow;
@@ -18,27 +23,29 @@ public class LookAtPayload : MonoBehaviour
     [SerializeField] float frequency;
     [SerializeField] float amplitude;
 
+    [Header("Sprite Display Settings")]
+    [SerializeField] float spriteSwitchInterval;
+    [SerializeField] float displayDuration;
+    [SerializeField] float hideDuration;
+    float lastSwitchTime;
+    float lastDisplayTime;
 
     [Header("Debug")]
     [SerializeField] float distanceFromPayload;
+    [SerializeField] bool arrowActivated = false;
 
     Payload payload;
-    SpriteRenderer arrowSprite;
+    PayloadFeedback payloadFeedback;
+    SpriteRenderer indicator;
     Teleport teleport;
-
-    bool isShowing = false;
-    bool overriddenToShow = false;
-    bool runOnce = false;
-    [SerializeField]bool arrowState = false;
-
 
     private void OnEnable()
     {
         teleport = FindObjectOfType<Teleport>();
         if (teleport != null)
         {
-            teleport.OnTimerOver += ChangeArrowState;
-            arrowState = false;
+            teleport.OnTimerOver += ToggleArrow;
+            arrowActivated = false;
         }
     }
 
@@ -46,7 +53,7 @@ public class LookAtPayload : MonoBehaviour
     {
         if (teleport != null)
         {
-            teleport.OnTimerOver -= ChangeArrowState;
+            teleport.OnTimerOver -= ToggleArrow;
         }
     }
 
@@ -58,15 +65,13 @@ public class LookAtPayload : MonoBehaviour
     void Start()
     {
         payload = FindObjectOfType<Payload>();
-        arrowSprite = GetComponent<SpriteRenderer>();
+        indicator = GetComponent<SpriteRenderer>();
+        payloadFeedback = payload.GetComponent<PayloadFeedback>();
+        StartCoroutine(ArrowBehavior());
 
         if (payload != null)
         {
             distanceToShow += payload.InteractionRange;
-        }
-        if (arrowSprite != null)
-        {
-            arrowSprite.enabled = false;
         }
 
         if (toggleKey == KeyCode.None) toggleKey = KeyCode.Q; 
@@ -74,39 +79,22 @@ public class LookAtPayload : MonoBehaviour
 
     void Update()
     {
-        if (!arrowState) return;
-        if (payload == null || arrowSprite == null || player == null) return;
-
-        float _distanceFromPayload = Vector3.Distance(player.position, payload.transform.position);
-        distanceFromPayload = _distanceFromPayload;
-
-        isShowing = _distanceFromPayload > distanceToShow ? true : false;
-
-        if(isShowing && !runOnce) {EnablePayloadArrow(isShowing); runOnce = true;}
-        if (!overriddenToShow && !isShowing) { EnablePayloadArrow(isShowing); runOnce = false; }
-
-        if(Input.GetKeyDown(toggleKey))
+        if (Input.GetKeyDown(toggleKey))
         {
-            EnablePayloadArrow(!arrowSprite.enabled);
-            overriddenToShow = arrowSprite.enabled;  
-        }
-
-        if (isShowing || overriddenToShow)
-        {
-            DirectSpriteToPayload();
-            animateArrow();
+            if (Time.time <= lastDisplayTime + displayDuration)
+            {
+                lastDisplayTime -= displayDuration;
+            }
+            else if (Time.time <= lastDisplayTime + displayDuration + hideDuration)
+            {
+                lastDisplayTime -= displayDuration + hideDuration;
+            }
         }
     }
 
-
-    void ChangeArrowState()
+    void ToggleArrow()
     {
-        arrowState = true;
-    }
-
-    void EnablePayloadArrow(bool _enabled)
-    {
-        arrowSprite.enabled = _enabled;
+        arrowActivated = true;
     }
 
     void DirectSpriteToPayload()
@@ -116,11 +104,64 @@ public class LookAtPayload : MonoBehaviour
         parent.LookAt(payload.transform);
     }
 
-    void animateArrow()
+    void AnimateArrow()
     {
         float _scaleTime = scaleCurve.Evaluate(Mathf.Sin(frequency * Time.time) * amplitude);
         transform.localScale = Vector3.Lerp(Vector3.one * 1.5f, Vector3.one, _scaleTime);
-        arrowSprite.color = Color.Lerp(Color.white, loopingColor, _scaleTime);
+        //indicator.color = Color.Lerp(Color.white, loopingColor, _scaleTime);
+    }
+
+    IEnumerator ArrowBehavior()
+    {
+        while (true)
+        {
+            distanceFromPayload = Vector3.Distance(player.position, payload.transform.position);
+
+            if (!arrowActivated || distanceFromPayload < distanceToShow)
+            {
+                indicator.sprite = blankSprite;
+                yield return null;
+                continue;
+            }
+
+            if (Time.time <= lastDisplayTime + displayDuration)
+            {
+                DirectSpriteToPayload();
+                AnimateArrow();
+
+                if (Time.time > (lastSwitchTime + spriteSwitchInterval))
+                {
+                    lastSwitchTime = Time.time;
+                    UpdateIndicatorSprite();
+                }
+            }
+            else if (Time.time <= lastDisplayTime + displayDuration + hideDuration)
+            {
+                indicator.sprite = blankSprite;
+            }
+            else
+            {
+                lastDisplayTime = Time.time;
+            }
+
+            yield return null;
+        }
+    }
+
+    void UpdateIndicatorSprite()
+    {
+        switch (payloadFeedback.PayloadState)
+        {
+            case PayloadState.Normal:
+                indicator.sprite = arrowSprite;
+                break;
+            case PayloadState.Contested:
+                indicator.sprite = indicator.sprite == arrowSprite ? warningSprite : arrowSprite;
+                break;
+            case PayloadState.Stopped:
+                indicator.sprite = indicator.sprite == arrowSprite ? emergencySprite : arrowSprite;
+                break;
+        }
     }
 
     private void OnDrawGizmos()
