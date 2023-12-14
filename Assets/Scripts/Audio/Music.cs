@@ -12,8 +12,7 @@ public class Music : MonoBehaviour
         if (other.TryGetComponent(out Player player))
         {
             musicSFX.StopSound(AudioSourceType.Music);
-            musicPlaying = musicSFX.audioClips.Length - 1;
-            musicSFX.PlaySound(Random.Range(0, musicPlaying), AudioSourceType.Music);
+            musicSFX.PlaySound(0, AudioSourceType.Music);
             Destroy(this.gameObject);
         }
     }
