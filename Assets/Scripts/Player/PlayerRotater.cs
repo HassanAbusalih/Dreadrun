@@ -9,6 +9,7 @@ public class PlayerRotater : MonoBehaviour
     [SerializeField] bool controllerEnabled;
     [SerializeField] float deadZone = 50f;
     float mouseHorizontal;
+    [SerializeField]float smoothingFactor;
 
     void Update()
     {
@@ -49,9 +50,13 @@ public class PlayerRotater : MonoBehaviour
             // Create a ray from the camera to the mouse position
             Ray ray = Camera.main.ScreenPointToRay(mouseScreenPosition);
 
-            mouseHorizontal += Input.GetAxis("Mouse X") * Time.deltaTime;
-            Vector3 mouseDirection = new Vector3(0, mouseHorizontal * rotationSpeed, 0);
-            transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, mouseDirection.y, transform.rotation.z));
+            mouseHorizontal += Input.GetAxis("Mouse X") * rotationSpeed; // Remove Time.deltaTime here
+
+            // Smooth the rotation using Mathf.Lerp or another smoothing method if needed
+            float smoothMouseHorizontal = Mathf.Lerp(mouseHorizontal, 0f, smoothingFactor);
+
+            // Apply the rotation around the y-axis
+            transform.Rotate(Vector3.up, smoothMouseHorizontal);
 
             // Create a plane at the player's height, assuming 'up' is your ground plane normal
             Plane groundPlane = new Plane(Vector3.up, transform.position);
@@ -68,9 +73,10 @@ public class PlayerRotater : MonoBehaviour
                 // Adjust the direction to be in the horizontal plane
                 direction.y = 0;
 
-                // Assign this direction to the player's transform.forward
-                transform.forward = direction;
+                // Smoothly rotate towards the target direction
+                transform.forward = Vector3.Slerp(transform.forward, direction, smoothingFactor * Time.deltaTime);
             }
         }
     }
+
 }

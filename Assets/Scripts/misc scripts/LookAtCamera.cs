@@ -8,7 +8,7 @@ public class LookAtCamera : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        originalRotation = transform.rotation;
+        originalRotation = transform.localRotation;
     }
 
     private void Update()
@@ -16,10 +16,10 @@ public class LookAtCamera : MonoBehaviour
         if (mainCamera != null)
         {
           
-            Vector3 _lookDirection = mainCamera.transform.position - transform.position;
+            Vector3 _lookDirection = (mainCamera.transform.position - transform.position).normalized;
             _lookDirection.y = 0; // this for some reason allows the y to rotate, it makes no sense but it works
             Quaternion _lookAtRotation = Quaternion.LookRotation(-_lookDirection);     
-            transform.rotation = _lookAtRotation * originalRotation; 
+            transform.localRotation = _lookAtRotation * originalRotation; 
         }
     }
 }
