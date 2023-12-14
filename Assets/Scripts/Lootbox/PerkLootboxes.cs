@@ -25,7 +25,6 @@ public class PerkLootboxes : MonoBehaviour
         if (entered)
         {
             OpenLootBox();
-            lootBoxOpen.SetBool("open", true);
         }
     }
 
@@ -69,6 +68,7 @@ public class PerkLootboxes : MonoBehaviour
             RandomPerkSelector();
             ActivateUI();
             opened = true;
+            lootBoxOpen.SetBool("open", true);
         }
     }
 
@@ -103,8 +103,10 @@ public class PerkLootboxes : MonoBehaviour
 
     public void OnClick(int perkIndexSelected)
     {
+        GameManager.Instance.Win();
         DeactivateUI();
         unlocked.AddNewPerk(perkChoices[perkIndexSelected].perk);
+
     }
 
     void DeactivateUI()
