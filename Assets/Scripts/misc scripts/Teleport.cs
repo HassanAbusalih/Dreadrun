@@ -18,7 +18,8 @@ public class Teleport : MonoBehaviour
     [SerializeField] float fadeInTime = 0.5f;
     [SerializeField] float fadeOutTime = 1f;
     [SerializeField] float originalFogDensity = 0.01f; 
-    [SerializeField] float finalFogDensity = 0.1f; 
+    [SerializeField] float finalFogDensity = 0.1f;
+    [SerializeField] bool debugMode;
     //[SerializeField] float fogChangeTime= 10f; 
 
     bool triggered = false;
@@ -62,6 +63,7 @@ public class Teleport : MonoBehaviour
         float timer = secondsToTeleport;
         while (timer > 0)
         {
+            DebugMode(ref timer);
             timer -= Time.deltaTime;
             timerText.text = "Time: " + Mathf.RoundToInt(timer);
 
@@ -121,5 +123,14 @@ public class Teleport : MonoBehaviour
             yield return null;
         }
         RenderSettings.fogDensity = target;
+    }
+
+
+    void DebugMode( ref float timer)
+    {
+        if(debugMode && Input.GetKeyDown(KeyCode.I))
+        {
+            timer = 1f;
+        }
     }
 }

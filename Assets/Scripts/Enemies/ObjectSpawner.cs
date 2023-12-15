@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UIElements;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -13,6 +14,11 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] int maxSpawnCount = 10;
     [SerializeField] Transform spawnPosition;
     [SerializeField] Vector3 spawnOffset = new(1f, 0, 1f);
+    [SerializeField] ParticleSystem spawnEffect;
+
+    Vector3 randomOffset;
+    Vector3 position;
+
     Transform payload;
     Transform[] players;
     Coroutine spawning;
@@ -49,18 +55,27 @@ public class ObjectSpawner : MonoBehaviour
                 {
                     yield break;
                 }
-                SpawnObject();
+                position = transform.position;
+                if (spawnPosition != null) { position = spawnPosition.position; }
+                randomOffset = new(Random.Range(-spawnOffset.x, spawnOffset.x), 0, Random.Range(-spawnOffset.z, spawnOffset.z));
+                ShowParticleEffect();
+                Invoke(nameof(SpawnObject), 0.2f);
                 yield return new WaitForSeconds(0.2f);
             }
             yield return new WaitForSeconds(timeBetweenBatches);
         }
     }
 
+    void ShowParticleEffect()
+    {
+        ParticleSystem particleEffect = Instantiate(spawnEffect, transform.position + randomOffset, Quaternion.identity, transform);
+        particleEffect.Play();
+        Destroy(particleEffect.gameObject, particleEffect.main.duration +1f);
+    }
+
     void SpawnObject()
     {
-        Vector3 position = transform.position;
-        if (spawnPosition != null) { position = spawnPosition.position; }
-        Vector3 randomOffset = new(Random.Range(-spawnOffset.x, spawnOffset.x), 0, Random.Range(-spawnOffset.z, spawnOffset.z));
+      
         GameObject newObject = Instantiate(prefabToSpawn, position + randomOffset, Quaternion.identity, transform);
         if (newObject.TryGetComponent(out EnemyAIBase enemy))
         {

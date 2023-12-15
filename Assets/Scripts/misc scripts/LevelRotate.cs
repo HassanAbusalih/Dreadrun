@@ -1,7 +1,7 @@
 using UnityEngine;
 public class LevelRotate : MonoBehaviour
 {
-    private float[] xScales = { -1f, 1f };
+    private float[] xScales = { -1f, -1f };
     private float[] yRotations = {45, -45, 90f, -90f, 180f, -180f };
 
     LookAtObject[] dialogues;

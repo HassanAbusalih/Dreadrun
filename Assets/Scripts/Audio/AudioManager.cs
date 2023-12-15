@@ -24,12 +24,12 @@ public class AudioManager : MonoBehaviour
         audioSources = new AudioSource[enumCount];
         volumeLevels = new float[enumCount];
 
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 1; i < audioSources.Length; i++)
         {
             GameObject audioObject = new GameObject("AudioObject");
             audioObject.transform.SetParent(transform, true);
             audioSources[i] = audioObject.AddComponent<AudioSource>();
-            AudioSourceType audioSourceType = (AudioSourceType)(i + 1);
+            AudioSourceType audioSourceType = (AudioSourceType)(i);
             audioSources[i].name = audioSourceType.ToString();
         }
         if (File.Exists("audioSettings.json"))
@@ -47,7 +47,8 @@ public class AudioManager : MonoBehaviour
 
     public void Play(AudioClip audioClip, AudioSourceType audioType, bool isLooping = false, AudioMixerGroup mixerGroup = null)
     {
-        audioSources[(int)audioType].loop = isLooping;
+        AudioSource source = audioSources[(int)audioType];
+        source.loop = isLooping;
         if (mixerGroup != null)
         {
             audioSources[(int)audioType].outputAudioMixerGroup = mixerGroup;
