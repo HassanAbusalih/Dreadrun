@@ -25,6 +25,13 @@ public class Teleport : MonoBehaviour
     GameObject effectInstance;
     public Action OnTimerOver;
 
+    private void Start()
+    {
+        blackScreen.enabled = true;
+        blackScreen.color = new UnityEngine.Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, 1f);
+        StartCoroutine(Fade(0f, 3f));
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Player player))
@@ -85,6 +92,21 @@ public class Teleport : MonoBehaviour
             yield return null;
         }
         blackScreen.color = new(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, target);
+    }
+    IEnumerator FadeOut(float time)
+    {
+        float timer = 0f;
+        UnityEngine.Color startColor = blackScreen.color;
+
+        while (timer < time)
+        {
+            timer += Time.deltaTime;
+            float currentAlpha = Mathf.Lerp(startColor.a, 0f, timer / time);
+            blackScreen.color = new UnityEngine.Color(startColor.r, startColor.g, startColor.b, currentAlpha);
+            yield return null;
+        }
+
+        blackScreen.color = new UnityEngine.Color(startColor.r, startColor.g, startColor.b, 0f);
     }
 
     IEnumerator FogChange(float target, float time)
