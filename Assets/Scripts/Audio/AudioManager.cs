@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
         }
 
         int enumCount = Enum.GetNames(typeof(AudioSourceType)).Length;
-        audioSources = new AudioSource[enumCount - 1];
+        audioSources = new AudioSource[enumCount];
         volumeLevels = new float[enumCount];
 
         for (int i = 0; i < audioSources.Length; i++)
