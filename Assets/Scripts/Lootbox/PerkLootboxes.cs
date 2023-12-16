@@ -38,7 +38,6 @@ public class PerkLootboxes : MonoBehaviour
         }
     }
 
-
     void UpdateOptions()
     {
         while (unlockablePerkPool.Count < perkChoices.Count)
@@ -69,6 +68,7 @@ public class PerkLootboxes : MonoBehaviour
             ActivateUI();
             opened = true;
             lootBoxOpen.SetBool("open", true);
+            Time.timeScale = 0;
         }
     }
 
@@ -97,16 +97,15 @@ public class PerkLootboxes : MonoBehaviour
         {
             choice.perkName.text = choice.perk.name;
             choice.perkSprite.sprite = choice.perk.icon;
-           
         }
     }
 
     public void OnClick(int perkIndexSelected)
     {
-        GameManager.Instance.Win();
         DeactivateUI();
         unlocked.AddNewPerk(perkChoices[perkIndexSelected].perk);
-
+        Time.timeScale = 1;
+        GameManager.Instance.Win();
     }
 
     void DeactivateUI()
@@ -124,5 +123,4 @@ public class PerkLootboxes : MonoBehaviour
             obj.SetActive(true);
         }
     }
-
 }
