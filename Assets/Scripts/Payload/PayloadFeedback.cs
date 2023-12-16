@@ -5,8 +5,8 @@ public class PayloadFeedback : MonoBehaviour
 {
     [SerializeField] GameObject healthUI;
     [SerializeField] Image healthBar;
-    [SerializeField] Image distanceBar;
     [SerializeField] Renderer objectRenderer;
+    [SerializeField] TrailRenderer trailRenderer;
     Color stopColor = Color.red;
     Color moderateColor = Color.yellow;
     Color fastColor = Color.green;
@@ -42,13 +42,11 @@ public class PayloadFeedback : MonoBehaviour
             payloadColor = stopColor;
             PayloadState = PayloadState.Stopped;
         }
-        //Color lerpedColor = Color.Lerp(stopColor, moderateColor, normalizedSpeed);
-        //lerpedColor = Color.Lerp(lerpedColor, fastColor, normalizedSpeed);
 
         if (objectRenderer != null)
         {
             objectRenderer.material.color = payloadColor;
-            //objectRenderer.material.color = lerpedColor;
+            trailRenderer.material.color = payloadColor;
         }
 
     }
@@ -56,6 +54,7 @@ public class PayloadFeedback : MonoBehaviour
     public void SetColor(Color color)
     {
         objectRenderer.material.color = color;
+        trailRenderer.material.color = color;
     }
 
     public void UpdateHealth(float health, float maxHealth)
@@ -67,7 +66,6 @@ public class PayloadFeedback : MonoBehaviour
     {
         Vector3 lookPos = Camera.main.transform.position - gameObject.transform.position;
         Quaternion rotation = Quaternion.LookRotation(lookPos);
-        // gameObject.transform.rotation = rotation;
     }
 }
 
