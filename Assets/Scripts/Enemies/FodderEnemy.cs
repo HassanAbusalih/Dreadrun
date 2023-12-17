@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody), typeof(FlockingBehavior))]
 public class FodderEnemy : EnemyAIBase
@@ -17,6 +18,10 @@ public class FodderEnemy : EnemyAIBase
     [SerializeField][Range(0, 1f)] float strafePercent;
     [SerializeField][Range(0, 1f)] float flockPercent;
 
+    [Header("Exploration version")]
+    [SerializeField] bool shouldDetect;
+    [SerializeField] float detectionRange = 10;
+    LayerMask mask;
     private void Start()
     {
         if (flockingBehavior == null)
@@ -47,15 +52,42 @@ public class FodderEnemy : EnemyAIBase
         Sequencer farSeq = new(farRange, moveToTarget);
 
         topNode = new Selector(new Node[] { retreatSeq, strafeSeq, withinShootingRangeSeq, farSeq });
+        mask = ~(LayerMask.GetMask("Enemy Projectile"));
     }
 
     void Update()
     {
+        if (shouldDetect)
+        {
+            Transform closestPlayer = GetClosestPlayer();
+            if (closestPlayer == null || !LineOfSight(closestPlayer))
+            {
+                rb.velocity = new(0f, rb.velocity.y, 0f);
+                return;
+            }
+
+            float distanceToPlayer = Vector3.Distance(transform.position, closestPlayer.position);
+            if (distanceToPlayer <= detectionRange && distanceToPlayer > shootingRange)
+            {
+                Move(closestPlayer, movementSpeed);
+            }
+        }
         topNode.Execute();
         if (Time.time - strafeStartTime >= strafeLength)
         {
             ResetStrafe();
         }
+    }
+
+    bool LineOfSight(Transform target)
+    {
+        RaycastHit hit;
+        Vector3 directionToTarget = target.position - transform.position;
+        if (Physics.Raycast(transform.position, directionToTarget, out hit, detectionRange, mask))
+        {
+            return hit.transform == target;
+        }
+        return false;
     }
 
     public override void SpecializedMovement(Transform target)
@@ -96,6 +128,8 @@ public class FodderEnemy : EnemyAIBase
         Handles.DrawSolidDisc(transform.position, Vector3.up, strafeRange);
         Handles.color = new Color(1, 0, 0, 0.05f);
         Handles.DrawSolidDisc(transform.position, Vector3.up, shootingRange);
+        Handles.color = new Color(1, 3, 1, 0.1f);
+        Handles.DrawSolidDisc(transform.position, Vector3.up, detectionRange);
     }
 #endif
 }
