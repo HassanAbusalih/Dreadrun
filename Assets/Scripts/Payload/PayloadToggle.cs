@@ -31,7 +31,11 @@ public class PayloadToggle : MonoBehaviour
     }
     private void OnDisable()
     {
-        musicStart.SetActive(true);
+        if(musicStart != null)
+        {
+            musicStart.SetActive(true);
+        }
+        
     }
     private void OnDrawGizmos()
     {

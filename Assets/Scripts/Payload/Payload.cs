@@ -7,6 +7,7 @@ public class Payload : MonoBehaviour, IDamagable
     float health;
     [SerializeField] bool stopped;
     [SerializeField] bool enteredLastCheckpoint;
+
     [Header("Stats")]
     [SerializeField] float maxhealth = 500f;
     [SerializeField] float speed = 5f;
@@ -16,7 +17,11 @@ public class Payload : MonoBehaviour, IDamagable
     [SerializeField] bool followPath = false;
     [SerializeField] float interactionRange = 10f;
     [SerializeField] float playerRange = 20f;
-    [SerializeField] float stopDuration = 3f;
+    
+    [Header("Timers")]
+    [SerializeField] float outOfRangeDuration = 3f;// for the player
+    [SerializeField] float checkPointStopDuration = 3f;
+
     [SerializeField] GameObject lootbox;
     float stopTimer = 0f;
     public float InteractionRange { get => interactionRange; }
@@ -73,7 +78,7 @@ public class Payload : MonoBehaviour, IDamagable
             if (stopped)
             {
                 stopTimer += Time.deltaTime;
-                if (stopTimer >= stopDuration)
+                if (stopTimer >= outOfRangeDuration)
                 {
                     currentSpeed = 0f;
                 }
@@ -116,7 +121,7 @@ public class Payload : MonoBehaviour, IDamagable
         if (enteredLastCheckpoint)
         {
             stopTimer += Time.fixedDeltaTime; 
-            if (stopTimer >= stopDuration)
+            if (stopTimer >= checkPointStopDuration)
             {
                 StartFollowingPath();
                 enteredLastCheckpoint = false;
@@ -175,8 +180,8 @@ public class Payload : MonoBehaviour, IDamagable
 
     public void StartFollowingPath()
     {
-        followPath = true;
         feedback.SetColor(Color.green);
+        followPath = true;
     }
 
     public void StopFollowingPath()

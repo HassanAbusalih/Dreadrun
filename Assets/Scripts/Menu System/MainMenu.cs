@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject tutorial;
     [SerializeField] string GameScene;
     [SerializeField] string tutorialScene;
     [SerializeField] bool hasCompletedTutorial = false;
@@ -28,6 +29,7 @@ public class MainMenu : MonoBehaviour
             string json = File.ReadAllText(filePath);
             InteractData data = JsonUtility.FromJson<InteractData>(json);
             hasCompletedTutorial = data.tutorialstate;
+            tutorial.SetActive(true);
         }
         else
         {
@@ -40,12 +42,18 @@ public class MainMenu : MonoBehaviour
         if (hasCompletedTutorial == true)
         {
             SceneManager.LoadScene(GameScene);
+            
         }
         else
         {
             SceneManager.LoadScene(tutorialScene);
         }
         
+    }
+
+    public void PlayTutorial()
+    {
+        SceneManager.LoadScene(tutorialScene);
     }
 
     public void OpenSettingsMenu()
