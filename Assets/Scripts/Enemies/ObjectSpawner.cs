@@ -17,7 +17,7 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] ParticleSystem spawnEffect;
 
     Vector3 randomOffset;
-    Vector3 position;
+    Vector3 currentSpawnPosition;
 
     Transform payload;
     Transform[] players;
@@ -47,19 +47,18 @@ public class ObjectSpawner : MonoBehaviour
 
     IEnumerator Spawning()
     {
+        currentSpawnPosition = transform.position;
+        if (spawnPosition != null) { currentSpawnPosition = spawnPosition.position; }
+        randomOffset = new(Random.Range(-spawnOffset.x, spawnOffset.x), 0, Random.Range(-spawnOffset.z, spawnOffset.z));
+        ShowParticleEffect();
+
+        yield return new WaitForSeconds(1.5f);
         while (spawnCount < maxSpawnCount)
         {
             for (int i = 0; i < batchSize; i++)
             {
-                if (spawnCount >= maxSpawnCount)
-                {
-                    yield break;
-                }
-                position = transform.position;
-                if (spawnPosition != null) { position = spawnPosition.position; }
-                randomOffset = new(Random.Range(-spawnOffset.x, spawnOffset.x), 0, Random.Range(-spawnOffset.z, spawnOffset.z));
-                ShowParticleEffect();
-                Invoke(nameof(SpawnObject), 0.2f);
+                if (spawnCount >= maxSpawnCount) yield break;
+                SpawnObject();
                 yield return new WaitForSeconds(0.2f);
             }
             yield return new WaitForSeconds(timeBetweenBatches);
@@ -68,7 +67,7 @@ public class ObjectSpawner : MonoBehaviour
 
     void ShowParticleEffect()
     {
-        ParticleSystem particleEffect = Instantiate(spawnEffect, transform.position + randomOffset, Quaternion.identity, transform);
+        ParticleSystem particleEffect = Instantiate(spawnEffect, currentSpawnPosition + randomOffset,spawnEffect.transform.rotation, transform);
         particleEffect.Play();
         Destroy(particleEffect.gameObject, particleEffect.main.duration +1f);
     }
@@ -76,14 +75,10 @@ public class ObjectSpawner : MonoBehaviour
     void SpawnObject()
     {
       
-        GameObject newObject = Instantiate(prefabToSpawn, position + randomOffset, Quaternion.identity, transform);
+        GameObject newObject = Instantiate(prefabToSpawn, currentSpawnPosition + randomOffset, Quaternion.identity, transform);
         if (newObject.TryGetComponent(out EnemyAIBase enemy))
         {
             enemy.Initialize(payload, players);
-        }
-        else
-        {
-            Debug.Log("lalallalalala");
         }
         spawnCount++;
     }
