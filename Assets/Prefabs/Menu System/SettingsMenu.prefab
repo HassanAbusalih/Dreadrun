@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2134560236358615132}
+  - component: {fileID: 5465537211257690007}
+  - component: {fileID: 6790665969034712195}
   m_Layer: 5
   m_Name: SettingsMenu
   m_TagString: Untagged
@@ -40,6 +42,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -135.0885}
   m_SizeDelta: {x: 1920, y: 842.03296}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5465537211257690007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941343251327522975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d77d84ec953b12f4e9e831a06ed78a42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenMode: {fileID: 6908124057300866547}
+  resolution: {fileID: 6908124056576086043}
+  refreshRate: {fileID: 6908124058084689162}
+--- !u!114 &6790665969034712195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941343251327522975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e02e40f977cc6dd40909d58c5311e5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterVolumeSlider: {fileID: 6908124058518214810}
+  musicVolumeSlider: {fileID: 6908124057310111211}
+  sfxVolumeSlider: {fileID: 6908124058337716899}
 --- !u!1 &6908124056437138347
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,7 +100,7 @@ RectTransform:
   m_GameObject: {fileID: 6908124056437138347}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 141.84843, y: 141.84843, z: 141.84843}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6908124058536300486}
@@ -819,7 +851,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5465537211257690007}
         m_TargetAssemblyTypeName: DisplaySettingsMenu, Assembly-CSharp
         m_MethodName: ChangeResolution
         m_Mode: 0
@@ -1088,7 +1120,7 @@ RectTransform:
   m_GameObject: {fileID: 6908124056664993908}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.007049778, y: 0.0070497785, z: 0.007049778}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6908124056437138344}
@@ -1096,7 +1128,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -815, y: -416}
+  m_AnchoredPosition: {x: -5.7455444, y: -2.9327393}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6908124056664993867
@@ -3796,7 +3828,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5465537211257690007}
         m_TargetAssemblyTypeName: DisplaySettingsMenu, Assembly-CSharp
         m_MethodName: ChangeScreenMode
         m_Mode: 0
@@ -3837,7 +3869,7 @@ RectTransform:
   m_GameObject: {fileID: 6908124057301507534}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.007049778, y: 0.0070497785, z: 0.007049778}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6908124056437138344}
@@ -3845,7 +3877,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 450, y: 400}
+  m_AnchoredPosition: {x: 3.1723633, y: 2.8199463}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6908124057301507533
@@ -4090,7 +4122,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6790665969034712195}
         m_TargetAssemblyTypeName: AudioSettingsMenu, Assembly-CSharp
         m_MethodName: OnMusicVolumeChanged
         m_Mode: 0
@@ -7836,7 +7868,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5465537211257690007}
         m_TargetAssemblyTypeName: DisplaySettingsMenu, Assembly-CSharp
         m_MethodName: ChangeRefreshRate
         m_Mode: 0
@@ -7914,7 +7946,7 @@ RectTransform:
   m_GameObject: {fileID: 6908124058085165615}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.007049778, y: 0.0070497785, z: 0.007049778}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6908124056437138344}
@@ -7922,7 +7954,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 400}
+  m_AnchoredPosition: {x: 0, y: 2.8199463}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6908124058085165602
@@ -8782,7 +8814,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6790665969034712195}
         m_TargetAssemblyTypeName: AudioSettingsMenu, Assembly-CSharp
         m_MethodName: OnSFXVolumeChanged
         m_Mode: 0
@@ -9436,7 +9468,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6790665969034712195}
         m_TargetAssemblyTypeName: AudioSettingsMenu, Assembly-CSharp
         m_MethodName: OnMasterVolumeChanged
         m_Mode: 0
@@ -9476,7 +9508,7 @@ RectTransform:
   m_GameObject: {fileID: 6908124058536300481}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.007049778, y: 0.0070497785, z: 0.007049778}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6908124056437138344}
@@ -9484,7 +9516,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -450, y: 400}
+  m_AnchoredPosition: {x: -3.1723328, y: 2.8199463}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6908124058536300484

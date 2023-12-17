@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-    float[] volumeLevels;
+    [SerializeField] float[] volumeLevels;
     [SerializeField] AudioSource[] audioSources;
     AudioMixerGroup mixerGroup;
     private void Awake()
@@ -22,8 +22,11 @@ public class AudioManager : MonoBehaviour
 
         int enumCount = Enum.GetNames(typeof(AudioSourceType)).Length;
         audioSources = new AudioSource[enumCount];
-        volumeLevels = new float[enumCount];
-
+        volumeLevels = new float[3];
+        for (int i = 0; i < volumeLevels.Length; i++)
+        {
+            volumeLevels[i] = 1f;
+        }
         for (int i = 1; i < audioSources.Length; i++)
         {
             GameObject audioObject = new GameObject("AudioObject");
@@ -39,9 +42,6 @@ public class AudioManager : MonoBehaviour
             SetVolume(audioSettingsData.masterVolume);
             SetVolume(audioSettingsData.musicVolume, AudioSourceType.Music);
             SetVolume(audioSettingsData.sfxVolume, AudioSourceType.Player);
-            SetVolume(audioSettingsData.sfxVolume, AudioSourceType.Weapons);
-            SetVolume(audioSettingsData.sfxVolume, AudioSourceType.Enemy);
-            SetVolume(audioSettingsData.sfxVolume, AudioSourceType.EnemyShoot);
         }
     }
 
@@ -64,10 +64,12 @@ public class AudioManager : MonoBehaviour
 
     public void SetVolume(float volume, AudioSourceType audioType = 0)
     {
-        volumeLevels[(int)audioType] = volume;
+        int index = Mathf.Clamp((int)audioType, 0, volumeLevels.Length - 1);
+        volumeLevels[index] = volume;
         for (int i = 1; i < audioSources.Length; i++)
         {
-            audioSources[i].volume = volumeLevels[i] * volumeLevels[0];
+            int volumeIndex = Mathf.Clamp(i, 1, volumeLevels.Length - 1);
+            audioSources[i].volume = volumeLevels[volumeIndex] * volumeLevels[0];
         }
     }
 
@@ -82,9 +84,9 @@ public class AudioManager : MonoBehaviour
 public enum AudioSourceType
 {
     Master = 0,
+    Music = 1,
     Player,
     Enemy,
     EnemyShoot,
-    Weapons,
-    Music
+    Weapons
 }
