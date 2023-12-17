@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using Cinemachine.Utility;
 
 public class Player : MonoBehaviour, IDamagable
 {
@@ -57,6 +58,9 @@ public class Player : MonoBehaviour, IDamagable
     float timeSinceSFX;
     float timer;
 
+    Transform levelTransform;
+    bool useCustomDirection;
+
 
     private void OnEnable()
     {
@@ -64,6 +68,8 @@ public class Player : MonoBehaviour, IDamagable
         if (playerDash == null) return;
         playerDash.onDashing += ChangeStamina;
         playerDash.canPlayerDash += GetPlayerStamina;
+        LevelRotate.GiveLevelDirectionToPlayer += UpdateMovementInputDirection;
+
     }
 
     private void OnDisable()
@@ -71,6 +77,7 @@ public class Player : MonoBehaviour, IDamagable
         if (playerDash == null) return;
         playerDash.onDashing -= ChangeStamina;
         playerDash.canPlayerDash -= GetPlayerStamina;
+        LevelRotate.GiveLevelDirectionToPlayer -= UpdateMovementInputDirection;
     }
 
     private void Start()
@@ -115,12 +122,9 @@ public class Player : MonoBehaviour, IDamagable
         GetMoveDirectionAndVelocity(out horizontalInput, out verticalInput, out normalizedDirection, out moveVelocity);
         SlopePhysics(normalizedDirection);
         bool isNoInputPressed = horizontalInput == 0 && verticalInput == 0;
-      
-        UpdateAcceleration(isNoInputPressed);
-        rb.velocity = moveVelocity * currentAcceleration;
 
-        if (isNoInputPressed)
-        rb.velocity = Vector3.zero;
+        UpdateAcceleration(isNoInputPressed);
+        rb.velocity = new Vector3(moveVelocity.x * currentAcceleration, rb.velocity.y, moveVelocity.z * currentAcceleration);
     }
 
     private void UpdateAcceleration(bool isNoInputPressed)
@@ -133,6 +137,9 @@ public class Player : MonoBehaviour, IDamagable
         if (isNoInputPressed) accelerationTimer = 0;
     }
 
+
+
+
     private void GetMoveDirectionAndVelocity(out float horizontal, out float vertical, out Vector3 normalizedDirection, out Vector3 moveVelocity)
     {
         Vector3 cameraForward = Camera.main.transform.forward;
@@ -142,11 +149,20 @@ public class Player : MonoBehaviour, IDamagable
 
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
-        normalizedDirection = (cameraForward * vertical + cameraRight * horizontal).normalized;
+
+        if (!useCustomDirection)
+            normalizedDirection = (cameraForward * vertical + cameraRight * horizontal).normalized;
+        else normalizedDirection = (levelTransform.forward * vertical + levelTransform.right * horizontal).normalized;
 
         Vector3 slopeDirection = isPlayerOnSlope(normalizedDirection).Item1;
         onSlope = isPlayerOnSlope(normalizedDirection).Item2;
         moveVelocity = (slopeDirection + normalizedDirection).normalized * playerStats.speed;
+    }
+
+    void UpdateMovementInputDirection(Transform customTransform, bool customDirectionEnabled)
+    {
+        useCustomDirection = customDirectionEnabled;
+        levelTransform = customTransform;
     }
 
     private void SlopePhysics(Vector3 normalizedDirection)
@@ -155,10 +171,11 @@ public class Player : MonoBehaviour, IDamagable
             rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
         if (normalizedDirection.magnitude == 0 && !onSlope && rb.velocity.y <= 0)
             rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
+        if (onSlope)
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+
         rb.useGravity = !onSlope;
     }
-
-
 
     (Vector3, bool) isPlayerOnSlope(Vector3 _moveDirection)
     {

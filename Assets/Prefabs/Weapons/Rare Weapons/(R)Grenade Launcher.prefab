@@ -302,7 +302,6 @@ GameObject:
   - component: {fileID: 151547017286772885}
   - component: {fileID: 6032196830007960773}
   - component: {fileID: 4804877102592844740}
-  - component: {fileID: 2268786443330534553}
   m_Layer: 0
   m_Name: boundary Glow (2)
   m_TagString: Untagged
@@ -375,20 +374,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2268786443330534553
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2449066606392917778}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2520231992842989884
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,7 +931,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6245222058616033803}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.72280353, y: 2.1145437, z: 12.517271}
