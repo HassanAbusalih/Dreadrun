@@ -180,8 +180,8 @@ public class Payload : MonoBehaviour, IDamagable
 
     public void StartFollowingPath()
     {
-        followPath = true;
         feedback.SetColor(Color.green);
+        followPath = true;
     }
 
     public void StopFollowingPath()

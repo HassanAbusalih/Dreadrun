@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent onPause;
     public UnityEvent onResume;
     public UnityEvent onPhaseChange;
-    int winConditions = 0;
+    public int winConditions = 0;
     private bool isGamePaused = false;
     private bool hasGameEnded = false;
 
