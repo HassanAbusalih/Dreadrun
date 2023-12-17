@@ -57,6 +57,7 @@ public class ObjectSpawner : MonoBehaviour
         {
             for (int i = 0; i < batchSize; i++)
             {
+                randomOffset = new(Random.Range(-spawnOffset.x, spawnOffset.x), 0, Random.Range(-spawnOffset.z, spawnOffset.z));
                 if (spawnCount >= maxSpawnCount) yield break;
                 SpawnObject();
                 yield return new WaitForSeconds(0.2f);
