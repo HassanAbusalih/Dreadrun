@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent onResume;
     public UnityEvent onPhaseChange;
     public int winConditions = 0;
+    int Conditions = 0;
     private bool isGamePaused = false;
     private bool hasGameEnded = false;
 
@@ -62,8 +63,8 @@ public class GameManager : MonoBehaviour
 
     public void Win()
     {
-        winConditions++;
-        if (!hasGameEnded && winConditions== 2 )
+        Conditions++;
+        if (!hasGameEnded && winConditions == Conditions )
         {
             onWin.Invoke();
             EndGame();
