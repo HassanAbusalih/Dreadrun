@@ -6,7 +6,7 @@ using UnityEngine;
 public class WeaponPickAndDropFeedback : MonoBehaviour
 {
     [SerializeField] Renderer weaponRenderer;
-    [SerializeField] Light rarityLight;
+    [SerializeField] GameObject circleBoundary;
      RotationAnimator rotationAnimator => GetComponentInChildren<RotationAnimator>();
 
     private void OnEnable() => PlayerWeapon.WeaponPickedUpOrDropped += DropAndPickUpFeedback;
@@ -17,7 +17,6 @@ public class WeaponPickAndDropFeedback : MonoBehaviour
 
     private void Start()
     {
-        rarityLight = GetComponentInChildren<Light>();
     }
 
 
@@ -28,8 +27,8 @@ public class WeaponPickAndDropFeedback : MonoBehaviour
 
         if (weapon != GetComponent<PlayerWeapon>()) return;
 
-        if (rarityLight != null)
-            rarityLight.enabled = !weapon.pickedUp;
+        if(circleBoundary != null)
+            circleBoundary.SetActive(!weapon.pickedUp);
         if(rotationAnimator != null)
             rotationAnimator.Disabled = weapon.pickedUp;
     }
