@@ -1845,6 +1845,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5685e23683729404fb4e6f96e6f6d7b0, type: 3}
   m_PrefabInstance: {fileID: 1314486279}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &457654962 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8603818712231564295, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+  m_PrefabInstance: {fileID: 8603818712408481516}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &472298526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7536,6 +7541,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: a0bb78e66b8411f44833ca1be2d59530, type: 2}
   currentSkin: 0
   purchaseOption: {fileID: 1837772709}
+  startGameButton: {fileID: 457654962}
 --- !u!224 &1755093227 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8603818713070421509, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
@@ -7557,6 +7563,8 @@ MonoBehaviour:
   amount: 50
   purchaseComplete: {fileID: 1753095750}
   purchased: {fileID: 1837772709}
+  startGame: {fileID: 457654962}
+  ifItemPurchased: 0
 --- !u!1001 &1760853753
 PrefabInstance:
   m_ObjectHideFlags: 0

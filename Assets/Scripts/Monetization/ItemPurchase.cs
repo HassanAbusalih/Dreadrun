@@ -9,6 +9,7 @@ public class ItemPurchase : MonoBehaviour
     [SerializeField] int amount;
     [SerializeField] GameObject purchaseComplete;
     [SerializeField] GameObject purchased;
+    [SerializeField] GameObject startGame;
     // Start is called before the first frame update
     private void Start()
     {
@@ -22,6 +23,7 @@ public class ItemPurchase : MonoBehaviour
         coins.text = "" + amount;
         purchaseComplete.SetActive(true);
         purchased.SetActive(false);
+        startGame.SetActive(true);
     }
 
 }
