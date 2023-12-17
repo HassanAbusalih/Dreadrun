@@ -15,7 +15,6 @@ public class FadeTextOnTrigger : MonoBehaviour
     private float elapsedTime;
     private float targetAlpha;
 
-
     void Start()
     {
         InitializeTextColor();
@@ -72,7 +71,6 @@ public class FadeTextOnTrigger : MonoBehaviour
         }
     }
 
-
     void StartFadeOut()
     {
         for (int i = 0; i < text.Length; i++)
@@ -102,7 +100,6 @@ public class FadeTextOnTrigger : MonoBehaviour
         fadeIn = true;
     }
 
-
     private void InitializeTextColor()
     {
         for (int i = 0; i < text.Length; i++)
@@ -110,9 +107,27 @@ public class FadeTextOnTrigger : MonoBehaviour
             text[i].color = new Color(text[i].color.r, text[i].color.g, text[i].color.b, 0);
             initialColors[i] = text[i].color;
         }
-
     }
 
+    private void OnEnable()
+    {
+        LevelRotate.GiveLevelDirectionToPlayer += DetermineFaceDirection;
+    }
+
+    private void OnDisable()
+    {
+        LevelRotate.GiveLevelDirectionToPlayer -= DetermineFaceDirection;
+    }
+
+    void DetermineFaceDirection(Transform levelTransform, bool customDirectionEnabled)
+    {
+        LevelRotate levelRotate = GetComponentInParent<LevelRotate>();
+        if (levelRotate != null && levelTransform.localScale.x < 0f)
+        {
+            foreach (TextMeshPro textMesh in text)
+            {
+                textMesh.transform.eulerAngles = -textMesh.transform.eulerAngles;
+            }
+        }
+    }
 }
-
-

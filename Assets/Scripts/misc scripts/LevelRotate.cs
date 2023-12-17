@@ -1,10 +1,10 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
 public class LevelRotate : MonoBehaviour
 {
-    private float[] xScales = { -1f, -1f };
+    private float[] xScales = { 1f, -1f };
     private float[] yRotations = {45, -45, 90f, -90f, 180f, -180f };
 
     public static Action<Transform, bool> GiveLevelDirectionToPlayer;
@@ -23,6 +23,10 @@ public class LevelRotate : MonoBehaviour
 
         if(changeMovementDirection)
         GiveLevelDirectionToPlayer?.Invoke(levelTransform,true);
+        else
+        {
+            GiveLevelDirectionToPlayer?.Invoke(levelTransform,false);
+        }
 
         // inverting dialogues rotations if scale is -1
         if(selectedXScale== -1)
