@@ -49,18 +49,17 @@ public class ObjectSpawner : MonoBehaviour
     {
         currentSpawnPosition = transform.position;
         if (spawnPosition != null) { currentSpawnPosition = spawnPosition.position; }
-        randomOffset = new(Random.Range(-spawnOffset.x, spawnOffset.x), 0, Random.Range(-spawnOffset.z, spawnOffset.z));
-        ShowParticleEffect();
-
-        yield return new WaitForSeconds(1.5f);
+      
+       
         while (spawnCount < maxSpawnCount)
         {
             for (int i = 0; i < batchSize; i++)
             {
                 randomOffset = new(Random.Range(-spawnOffset.x, spawnOffset.x), 0, Random.Range(-spawnOffset.z, spawnOffset.z));
                 if (spawnCount >= maxSpawnCount) yield break;
+                if(spawnEffect != null) ShowParticleEffect();
+                yield return new WaitForSeconds(1f);
                 SpawnObject();
-                yield return new WaitForSeconds(0.2f);
             }
             yield return new WaitForSeconds(timeBetweenBatches);
         }
