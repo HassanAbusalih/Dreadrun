@@ -69,6 +69,7 @@ public class Player : MonoBehaviour, IDamagable
         playerDash.onDashing += ChangeStamina;
         playerDash.canPlayerDash += GetPlayerStamina;
         LevelRotate.GiveLevelDirectionToPlayer += UpdateMovementInputDirection;
+        Teleport.ChangePlayerDirectionToDefault += UpdateMovementInputDirection;
 
     }
 
@@ -78,6 +79,7 @@ public class Player : MonoBehaviour, IDamagable
         playerDash.onDashing -= ChangeStamina;
         playerDash.canPlayerDash -= GetPlayerStamina;
         LevelRotate.GiveLevelDirectionToPlayer -= UpdateMovementInputDirection;
+        Teleport.ChangePlayerDirectionToDefault -= UpdateMovementInputDirection;
     }
 
     private void Start()
@@ -171,7 +173,7 @@ public class Player : MonoBehaviour, IDamagable
             rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
         if (normalizedDirection.magnitude == 0 && !onSlope && rb.velocity.y <= 0)
             rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
-        if (onSlope)
+        if (onSlope && rb.velocity.y > 0)
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
         rb.useGravity = !onSlope;
@@ -183,7 +185,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             float angle = Vector3.Angle(slopeHitt.normal, Vector3.up);
             Quaternion slopeRotation = Quaternion.FromToRotation(transform.up, slopeHitt.normal) * transform.rotation;
-            transform.rotation = slopeRotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, slopeRotation, Time.deltaTime * 15f);
             bool isOnSlope = angle > maxSlopeAngle && angle != 0;
             Vector3 slopeDirection = Vector3.ProjectOnPlane(_moveDirection, slopeHitt.normal);
             return (slopeDirection, isOnSlope);
