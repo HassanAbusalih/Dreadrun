@@ -26,6 +26,8 @@ public class Teleport : MonoBehaviour
     GameObject effectInstance;
     public Action OnTimerOver;
 
+    public static Action<Transform, bool> ChangePlayerDirectionToDefault;
+
     private void Start()
     {
         blackScreen.enabled = true;
@@ -56,6 +58,7 @@ public class Teleport : MonoBehaviour
         yield return Fade(0f, fadeOutTime);
         Destroy(effectInstance);
         OnTimerOver?.Invoke();
+        ChangePlayerDirectionToDefault?.Invoke(teleportDestination, false);
     }
 
     IEnumerator Timer()

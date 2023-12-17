@@ -34,12 +34,16 @@ public class Dashing : MonoBehaviour
     public delegate float canDash();
     public canDash canPlayerDash;
 
+    Transform levelTransform;
+    bool useCustomDirection;
+
 
     private void OnEnable()
     {
         player = GetComponent<Player>();
         if (player == null) return;
         player.canPLayerTakeDamage += GetPlayerInvincibility;
+        LevelRotate.GiveLevelDirectionToPlayer += UpdateMovementInputDirection;
     }
 
     private void Start()
@@ -58,6 +62,7 @@ public class Dashing : MonoBehaviour
     {
         if (player == null) return;
         player.canPLayerTakeDamage -= GetPlayerInvincibility;
+        LevelRotate.GiveLevelDirectionToPlayer -= UpdateMovementInputDirection;
     }
 
     private void DashOnInput()
@@ -67,16 +72,27 @@ public class Dashing : MonoBehaviour
         cameraForward.y = 0f;
         cameraRight.y = 0f;
 
-        Vector3 moveInput = cameraForward * Input.GetAxisRaw("Vertical") + cameraRight * Input.GetAxisRaw("Horizontal");
-        if(moveInput == Vector3.zero) return;
+        Vector3 moveInput = Vector3.zero;
 
-        if ((Input.GetKeyDown(dodge) || Input.GetKeyDown(KeyCode.JoystickButton0))  && !isDashing)
+        if (!useCustomDirection)
+        moveInput = cameraForward * Input.GetAxisRaw("Vertical") + cameraRight * Input.GetAxisRaw("Horizontal");
+        else moveInput = levelTransform.forward * Input.GetAxisRaw("Vertical") + levelTransform.right * Input.GetAxisRaw("Horizontal");
+
+        if (moveInput == Vector3.zero) return;
+
+        if ((Input.GetKeyDown(dodge) || Input.GetKeyDown(KeyCode.JoystickButton0)) && !isDashing)
         {
             float currentStamina = canPlayerDash?.Invoke() ?? 0f;
             if (currentStamina <= 0) return;
             Vector3 dashDirection = (moveInput).normalized;
             StartCoroutine(StartDash(dashDirection));
         }
+    }
+
+    void UpdateMovementInputDirection(Transform customTransform, bool customDirectionEnabled)
+    {
+        useCustomDirection = customDirectionEnabled;
+        levelTransform = customTransform;
     }
 
     IEnumerator StartDash(Vector3 dashDirection)
@@ -90,6 +106,9 @@ public class Dashing : MonoBehaviour
             float dashProgress = elapsedTime / dashDuration;
             Vector3 _dashForce = Vector3.Lerp(Vector3.zero, dashDirection * dashForce, dashCurve.Evaluate(dashProgress));
             rb.AddForce(_dashForce, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * 1.2f, ForceMode.Impulse);
+
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -107,7 +126,7 @@ public class Dashing : MonoBehaviour
     {
         isInvincible = _enabled;
         if (meshRenderer != null)
-        meshRenderer.material.color = _enabled ? dashColor : defaultColor;
+            meshRenderer.material.color = _enabled ? dashColor : defaultColor;
     }
 
     void SwitchCameras(bool _enabled)
