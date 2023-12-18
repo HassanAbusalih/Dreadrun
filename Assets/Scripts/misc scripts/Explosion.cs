@@ -123,6 +123,7 @@ public static class Explosion
         {
             timer += Time.deltaTime;
             Vector3 direction = (rbPosition - explosionOrigin).normalized;
+            direction.y = 0;
             rb.AddForce(direction * explosionForce, ForceMode.Force);
             yield return null;
         }
