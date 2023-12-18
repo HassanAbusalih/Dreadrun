@@ -6,16 +6,26 @@ public class CameraFocus : MonoBehaviour
 {
     public Transform player;
     public float smoothSpeed = 0.125f;
-    public Vector3 offset;
     public float rotationSpeed;
+    [SerializeField] float backwardOffset = 5f;
+    [SerializeField] float upwardOffset = 2f;
+    [SerializeField] float xRotation = 0f;
+    Vector3 playerForwardDirection;
+    Vector3 offset;
 
     private void Start()
     {
         player = FindObjectOfType<Player>().transform;
+        playerForwardDirection = player.transform.forward;
+        Quaternion lookDirection = Quaternion.LookRotation(player.transform.forward, Vector3.up);
+        transform.rotation = lookDirection;
+        transform.rotation = Quaternion.Euler(xRotation, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
 
     void FixedUpdate()
     {
+        Vector3 backOffset = playerForwardDirection * backwardOffset;
+        offset = new Vector3(-backOffset.x, -backOffset.y + upwardOffset, -backOffset.z);
         Vector3 desiredPosition = player.position + offset;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
         transform.position = smoothedPosition;
