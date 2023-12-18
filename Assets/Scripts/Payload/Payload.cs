@@ -110,8 +110,11 @@ public class Payload : MonoBehaviour, IDamagable
                 if (currentParentIndex > pathPointsParent.Count - 1)
                 {
                     followPath = false;
-                    lootbox.SetActive(true);
                     GameManager.Instance.Win();
+                    if(lootbox != null)
+                    {
+                        lootbox.SetActive(true);
+                    }                  
                     return;
                 }
                 AddToList(pathPointsParent[currentParentIndex], pathPointsList);
