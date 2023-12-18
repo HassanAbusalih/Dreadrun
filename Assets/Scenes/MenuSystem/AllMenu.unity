@@ -1128,6 +1128,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 574436931}
+        m_TargetAssemblyTypeName: GetSkinValue, Assembly-CSharp
+        m_MethodName: KeepSkinValue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1643944101}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: PlayTutorial
@@ -2626,6 +2638,24 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 6634c4dd5e56e0e4ca4ef000ede9d4be, type: 3}
   m_PrefabInstance: {fileID: 574436927}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &574436930 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 6634c4dd5e56e0e4ca4ef000ede9d4be, type: 3}
+  m_PrefabInstance: {fileID: 574436927}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &574436931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574436930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aebc55dacc5b4c4e983806e7610057c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerModel: {fileID: 574436929}
 --- !u!1 &575014512
 GameObject:
   m_ObjectHideFlags: 0
@@ -39301,6 +39331,30 @@ PrefabInstance:
     - target: {fileID: 8603818712067290852, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712231564291, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 574436931}
+    - target: {fileID: 8603818712231564291, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1643944101}
+    - target: {fileID: 8603818712231564291, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: KeepSkinValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712231564291, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712231564291, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GetSkinValue, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603818712231564291, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8603818712266461985, guid: 9a3761c1f932a2a498e25ecf000aaf98, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
