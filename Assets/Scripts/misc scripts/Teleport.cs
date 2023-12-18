@@ -55,6 +55,7 @@ public class Teleport : MonoBehaviour
         timerText.gameObject.SetActive(false);
         StartCoroutine(FogChange(originalFogDensity, fadeOutTime + 1));
         yield return new WaitForSeconds(1f);
+        FindObjectOfType<CameraFocus>().UpdateRotation(teleportDestination);
         yield return Fade(0f, fadeOutTime);
         Destroy(effectInstance);
         OnTimerOver?.Invoke();
