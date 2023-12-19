@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PerkCollectorManager : MonoBehaviour
 {
     [SerializeField]
-    List<Perk> acquiredPerks = new List<Perk>();
+    public List<Perk> acquiredPerks = new List<Perk>();
     private Player player;
 
     public Sprite blank;
