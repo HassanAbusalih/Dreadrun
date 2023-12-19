@@ -69,7 +69,7 @@ public class Teleport : MonoBehaviour
         {
             DebugMode(ref timer);
             timer -= Time.deltaTime;
-            timerText.text = "Time: " + Mathf.RoundToInt(timer);
+            timerText.text = "Explore time: " + Mathf.RoundToInt(timer);
 
             float time = 1f - (timer / secondsToTeleport);
             RenderSettings.fogDensity = Mathf.Lerp(originalFogDensity, finalFogDensity, time);
