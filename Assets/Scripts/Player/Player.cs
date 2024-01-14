@@ -185,7 +185,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             float angle = Vector3.Angle(slopeHitt.normal, Vector3.up);
             Quaternion slopeRotation = Quaternion.FromToRotation(transform.up, slopeHitt.normal) * transform.rotation;
-            transform.rotation = Quaternion.Slerp(transform.rotation, slopeRotation, Time.deltaTime * 15f);
+            if(angle<60) transform.rotation = slopeRotation;
             bool isOnSlope = angle > maxSlopeAngle && angle != 0;
             Vector3 slopeDirection = Vector3.ProjectOnPlane(_moveDirection, slopeHitt.normal);
             return (slopeDirection, isOnSlope);
