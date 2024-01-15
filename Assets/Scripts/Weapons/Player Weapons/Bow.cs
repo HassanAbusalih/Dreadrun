@@ -51,7 +51,7 @@ public class Bow : PlayerWeapon
         for (int i = 0; i < projectilesToSpawn; i++)
         {
             float rotation = projectilesToSpawn > 1 ? startAngle + i * rotationAmount : 0;
-            Quaternion projectileRotation = Quaternion.Euler(0, transform.eulerAngles.y + rotation, 0);
+            Quaternion projectileRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + rotation, 0);
             Vector3 projectileLocation = Quaternion.Euler(0, rotation, 0) * transform.forward;
             GameObject projectile = Instantiate(projectilePrefab, BulletSpawnPoint.position + projectileLocation, projectileRotation);
             projectile.AddComponent<Homing>().Initialize(homingStrength, homingRange);

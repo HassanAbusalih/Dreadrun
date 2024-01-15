@@ -120,6 +120,7 @@ public class Dashing : MonoBehaviour
         rb.freezeRotation = _enabled;
         EnableInvincibility(_enabled);
         SwitchCameras(_enabled);
+        rb.constraints = RigidbodyConstraints.FreezeRotationX;
     }
 
     void EnableInvincibility(bool _enabled)
