@@ -35,8 +35,8 @@ public class CameraMousePanning : MonoBehaviour
         float currentXPan = Mathf.Lerp(-xMaxPan, xMaxPan, xPercentageValue);
         float currentZPan = Mathf.Lerp(-zMaxPan, zMaxPan, zPercentageValue);
 
-        interpolatedXPan = Mathf.Lerp(interpolatedXPan, currentXPan, Time.deltaTime * panSpeed);
-        interpolatedZPan = Mathf.Lerp(interpolatedZPan, currentZPan, Time.deltaTime * panSpeed);
+        interpolatedXPan = Mathf.Lerp(interpolatedXPan, Mathf.Abs(currentXPan) > xPanThreshold ? currentXPan : 0, Time.deltaTime * panSpeed);
+interpolatedZPan = Mathf.Lerp(interpolatedZPan, Mathf.Abs(currentZPan) > zPanThreshold ? currentZPan : 0, Time.deltaTime * panSpeed);
 
         
 
