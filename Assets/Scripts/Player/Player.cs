@@ -135,8 +135,11 @@ public class Player : MonoBehaviour, IDamagable
         {
             accelerationTimer += Time.deltaTime;
             currentAcceleration = Mathf.Lerp(0, acceleration, accelerationTimer / accelerationDuration);
+            rb.constraints = RigidbodyConstraints.None;
+            rb.constraints = RigidbodyConstraints.FreezeRotationX;
+
         }
-        if (isNoInputPressed) accelerationTimer = 0;
+        if (isNoInputPressed) { accelerationTimer = 0; currentAcceleration = 0; rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX; }
     }
 
 
@@ -174,7 +177,10 @@ public class Player : MonoBehaviour, IDamagable
         if (normalizedDirection.magnitude == 0 && !onSlope && rb.velocity.y <= 0)
             rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
         if (onSlope && rb.velocity.y > 0)
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0.1f, rb.velocity.z);
+            rb.constraints = RigidbodyConstraints.None;
+        }
 
         rb.useGravity = !onSlope;
     }
@@ -185,7 +191,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             float angle = Vector3.Angle(slopeHitt.normal, Vector3.up);
             Quaternion slopeRotation = Quaternion.FromToRotation(transform.up, slopeHitt.normal) * transform.rotation;
-            if(angle<60 && angle>maxSlopeAngle) transform.rotation = slopeRotation;
+            transform.rotation = slopeRotation;
             bool isOnSlope = angle > maxSlopeAngle && angle != 0;
             Vector3 slopeDirection = Vector3.ProjectOnPlane(_moveDirection, slopeHitt.normal);
             return (slopeDirection, isOnSlope);
