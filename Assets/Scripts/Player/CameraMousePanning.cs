@@ -10,7 +10,8 @@ public class CameraMousePanning : MonoBehaviour
     [SerializeField] float zMaxPan;
     float interpolatedXPan;
     float interpolatedZPan;
-
+   [SerializeField] float xPanThreshold;
+   [SerializeField] float zPanThreshold;
     [Header("Debug Info")]
     [SerializeField]Vector3 mousePosition;
     [SerializeField] float xPan;
