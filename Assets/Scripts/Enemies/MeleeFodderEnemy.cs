@@ -16,11 +16,18 @@ public class MeleeFodderEnemy : EnemyAIBase
     float lastAttackTime;
     Coroutine chargeAndAttack;
     LayerMask mask;
+    GameObject trail;
 
     private void Start()
     {
         lastAttackTime -= attackCooldown;
         mask = ~(LayerMask.GetMask("Enemy Projectile"));
+        TrailRenderer trailRenderer = GetComponentInChildren<TrailRenderer>();
+        if (trailRenderer != null) 
+        { 
+            trail = trailRenderer.gameObject; 
+            trail.SetActive(false);
+        }
     }
 
     private void Update()
@@ -106,12 +113,14 @@ public class MeleeFodderEnemy : EnemyAIBase
         if(dashSound != null) dashSound.PlaySound(0, AudioSourceType.Enemy);
 
         Vector3 forward = transform.forward;
+        if (trail != null) { trail.SetActive(true); }
         while (Time.time < startTime + dashTime)
         {
             Charge(forward, movementSpeed * dashSpeedModifier);
             yield return null;
         }
 
+        if (trail != null) { trail.SetActive(false); }
         lastAttackTime = Time.time;
         chargeAndAttack = null;
         rb.velocity = new(0f, rb.velocity.y, 0f);
@@ -123,6 +132,7 @@ public class MeleeFodderEnemy : EnemyAIBase
         {
             StopCoroutine(chargeAndAttack);
             chargeAndAttack = null;
+            if (trail != null) { trail.SetActive(false); }
             rb.velocity = Vector3.zero;
         }
         lastAttackTime = Time.time;
