@@ -54,6 +54,35 @@ public class MeleeFodderEnemy : EnemyAIBase
         return false;
     }
 
+    public void Charge(Vector3 forward, float movementSpeed)
+    {
+        RaycastHit hit;
+        if (!Physics.Raycast(transform.position, transform.forward, out hit, 1f, mask))
+        {
+            Vector3 forwardMovement = forward * movementSpeed;
+
+            if (Physics.Raycast(transform.position, Vector3.down, out hit))
+            {
+                float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+                if (slopeAngle <= 45)
+                {
+                    forwardMovement = Vector3.ProjectOnPlane(forwardMovement, hit.normal);
+                }
+                else
+                {
+                    // If the slope is too steep, reduce movement or stop
+                    forwardMovement = Vector3.zero;
+                }
+            }
+        
+            rb.velocity = new Vector3(forwardMovement.x, rb.velocity.y, forwardMovement.z);
+        }
+        else
+        {
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        }
+    }
+
     public override void Move(Transform target, float movementSpeed)
     {
         Vector3 moveDirection = (target.position - transform.position).normalized;
@@ -75,16 +104,17 @@ public class MeleeFodderEnemy : EnemyAIBase
         startTime = Time.time;
         (weapon as MeleeFodderWeapon).Attack(dashTime);
         if(dashSound != null) dashSound.PlaySound(0, AudioSourceType.Enemy);
-     
+
+        Vector3 forward = transform.forward;
         while (Time.time < startTime + dashTime)
         {
-            Move(player, movementSpeed * dashSpeedModifier);
+            Charge(forward, movementSpeed * dashSpeedModifier);
             yield return null;
         }
 
         lastAttackTime = Time.time;
         chargeAndAttack = null;
-        rb.velocity = Vector3.zero;
+        rb.velocity = new(0f, rb.velocity.y, 0f);
     }
 
     void StopAttack()
