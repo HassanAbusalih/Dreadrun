@@ -177,7 +177,10 @@ public class Player : MonoBehaviour, IDamagable
         if (normalizedDirection.magnitude == 0 && !onSlope && rb.velocity.y <= 0)
             rb.AddForce(Vector3.down * UpSlopeGravity, ForceMode.Acceleration);
         if (onSlope && rb.velocity.y > 0)
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0.1f, rb.velocity.z);
+            rb.constraints = RigidbodyConstraints.None;
+        }
 
         rb.useGravity = !onSlope;
     }
