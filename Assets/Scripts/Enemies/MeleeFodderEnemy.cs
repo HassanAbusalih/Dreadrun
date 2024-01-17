@@ -13,6 +13,7 @@ public class MeleeFodderEnemy : EnemyAIBase
     [SerializeField] float chargeTime = 1f;
     [SerializeField] float dashTime = 0.2f;
     [SerializeField] SoundSO dashSound;
+    ParticleSystem chargeParticles;
     float lastAttackTime;
     Coroutine chargeAndAttack;
     LayerMask mask;
@@ -23,6 +24,8 @@ public class MeleeFodderEnemy : EnemyAIBase
         lastAttackTime -= attackCooldown;
         mask = ~(LayerMask.GetMask("Enemy Projectile"));
         TrailRenderer trailRenderer = GetComponentInChildren<TrailRenderer>();
+        chargeParticles = GetComponent<ParticleSystem>();
+        chargeParticles.Stop();
         if (trailRenderer != null) 
         { 
             trail = trailRenderer.gameObject; 
@@ -95,13 +98,14 @@ public class MeleeFodderEnemy : EnemyAIBase
         Vector3 moveDirection = (target.position - transform.position).normalized;
         moveDirection = moveDirection.normalized * movementSpeed;
         moveDirection.y = 0;
-        transform.rotation = Quaternion.LookRotation(moveDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), Time.deltaTime * 10f);
         rb.velocity = new(moveDirection.x, rb.velocity.y, moveDirection.z);
     }
 
     IEnumerator ChargeAndAttack(Transform player)
     {
         float startTime = Time.time;
+        chargeParticles.Play();
         while (Time.time < startTime + chargeTime)
         {
             Move(player, movementSpeed * chargeSpeedModifier);
@@ -120,10 +124,16 @@ public class MeleeFodderEnemy : EnemyAIBase
             yield return null;
         }
 
-        if (trail != null) { trail.SetActive(false); }
+        if (trail != null) { Invoke(nameof(DisableTrail), 0.5f); }
         lastAttackTime = Time.time;
         chargeAndAttack = null;
         rb.velocity = new(0f, rb.velocity.y, 0f);
+        chargeParticles.Stop();
+    }
+
+    private void DisableTrail()
+    {
+        trail.SetActive(false);
     }
 
     void StopAttack()
