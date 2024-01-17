@@ -112,7 +112,11 @@ public class GameManager : MonoBehaviour
 
     private void ResumeGame()
     {
-        if (!inPerkSelection) { Time.timeScale = 1; }
+        if (!inPerkSelection) 
+        { 
+            Time.timeScale = 1; 
+            inPerkSelection = false;
+        }
         onResume.Invoke();
     }
 
