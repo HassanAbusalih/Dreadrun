@@ -20,7 +20,7 @@ public class Dashing : MonoBehaviour
     [SerializeField] KeyCode dodge = KeyCode.Space;
 
     [SerializeField] SoundSO dashSFX;
-    AudioSource audioSource;
+    [SerializeField] GameObject speedLines;
 
     [Header("Debug Info")]
     [SerializeField] bool isInvincible = false;
@@ -41,6 +41,14 @@ public class Dashing : MonoBehaviour
     private void OnEnable()
     {
         player = GetComponent<Player>();
+        if (speedLines != null)
+        {
+            speedLines.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Speed Lines not attached to Dashing script.");
+        }
         if (player == null) return;
         player.canPLayerTakeDamage += GetPlayerInvincibility;
         LevelRotate.GiveLevelDirectionToPlayer += UpdateMovementInputDirection;
@@ -97,6 +105,10 @@ public class Dashing : MonoBehaviour
 
     IEnumerator StartDash(Vector3 dashDirection)
     {
+        if (speedLines != null)
+        {
+            speedLines.SetActive(true);
+        }
         DashMode(true);
         float elapsedTime = 0f;
         onDashing?.Invoke(-staminaCost);
@@ -113,6 +125,10 @@ public class Dashing : MonoBehaviour
             yield return null;
         }
         DashMode(false);
+        if (speedLines != null)
+        {
+            speedLines.SetActive(false);
+        }
     }
     private void DashMode(bool _enabled)
     {
