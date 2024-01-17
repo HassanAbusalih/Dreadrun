@@ -18,7 +18,7 @@ public class CameraMousePanning : MonoBehaviour
     [SerializeField] float zPan;
 
 
-    void Update()
+    void FixedUpdate()
     {
         PanCameraWithMouse();
     }
@@ -35,16 +35,14 @@ public class CameraMousePanning : MonoBehaviour
         float currentXPan = Mathf.Lerp(-xMaxPan, xMaxPan, xPercentageValue);
         float currentZPan = Mathf.Lerp(-zMaxPan, zMaxPan, zPercentageValue);
 
-        interpolatedXPan = Mathf.Lerp(interpolatedXPan, Mathf.Abs(currentXPan) > xPanThreshold ? currentXPan : 0, Time.deltaTime * panSpeed);
-interpolatedZPan = Mathf.Lerp(interpolatedZPan, Mathf.Abs(currentZPan) > zPanThreshold ? currentZPan : 0, Time.deltaTime * panSpeed);
-
-        
+        interpolatedXPan = Mathf.Lerp(interpolatedXPan, Mathf.Abs(currentXPan) > xPanThreshold ? currentXPan : 0, Time.fixedDeltaTime * panSpeed);
+        interpolatedZPan = Mathf.Lerp(interpolatedZPan, Mathf.Abs(currentZPan) > zPanThreshold ? currentZPan : 0, Time.fixedDeltaTime * panSpeed);
 
         xPan = currentXPan;
         zPan = currentZPan;
 
         Vector3 newPosition = new Vector3(interpolatedXPan,0,interpolatedZPan);
 
-        transform.localPosition = newPosition;
+        mainCameraTransform.localPosition = newPosition;
     }
 }
