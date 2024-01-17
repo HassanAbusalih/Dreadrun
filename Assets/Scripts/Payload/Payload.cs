@@ -24,7 +24,8 @@ public class Payload : MonoBehaviour, IDamagable
 
     [SerializeField] GameObject lootbox;
     float stopTimer = 0f;
-    public float InteractionRange { get => interactionRange; }
+    public float InteractionRange { get => interactionRange;}
+    public float PlayerRange { get => playerRange; set => playerRange = value; }
     [SerializeField][Range(0.1f, 0.9f)] float enemySlowSpeed = 0.5f;
     [SerializeField][Range(0.1f, 0.9f)] float playerSlowSpeed = 0.5f;
     [SerializeField] GameObject visualEffects;
