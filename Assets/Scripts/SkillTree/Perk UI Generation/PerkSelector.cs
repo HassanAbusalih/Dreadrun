@@ -60,6 +60,7 @@ public class PerkSelector : MonoBehaviour
     public void RandomPerkSelector()
     {
         perkUIcanvas.SetActive(true);
+        Time.timeScale = 0f;
         perkDescriptionPanel.SetActive(false);
         List<Perk> selectedPerks = new List<Perk>();
 
@@ -169,6 +170,7 @@ public class PerkSelector : MonoBehaviour
         perkUIcanvas.SetActive(false);
         perkCollectorManager.AcquirePerk(perkChoices[perkIndexSelected].perk);
         OnPerkSelection?.Invoke();
+        Time.timeScale = 1.0f;
     }
 
     public void ShowDescription(int index)
@@ -203,7 +205,7 @@ public class PerkSelector : MonoBehaviour
         while (elapsedTime < duration)
         {
             image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(0, startAlpha, elapsedTime / duration));
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
         image.color = new Color(image.color.r, image.color.g, image.color.b, startAlpha);
