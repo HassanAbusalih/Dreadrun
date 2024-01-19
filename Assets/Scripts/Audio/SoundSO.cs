@@ -5,11 +5,16 @@ using UnityEngine.Audio;
 public class SoundSO : ScriptableObject
 {
     [SerializeField] AudioMixerGroup mixerGroup;
+    public AudioSource referenceAudioSource;
     public AudioClip[] audioClips;
 
     public void PlaySound(int index, AudioSourceType audioType, bool isLooping = false)
     {
-        AudioManager.instance.Play(GetSound(index), audioType, isLooping, mixerGroup);
+        referenceAudioSource = AudioManager.instance.Play(GetSound(index), audioType, isLooping, mixerGroup);
+    }
+    public void PlayTrackkk(int index, AudioSourceType audioType, bool isLooping = false)
+    {
+        referenceAudioSource = AudioManager.instance.PlayTrack(GetSound(index), audioType, isLooping, mixerGroup);
     }
     public void StopSound(AudioSourceType audioType)
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,14 +18,15 @@ public class Payload : MonoBehaviour, IDamagable
     [SerializeField] bool followPath = false;
     [SerializeField] float interactionRange = 10f;
     [SerializeField] float playerRange = 20f;
-    
+
     [Header("Timers")]
     [SerializeField] float outOfRangeDuration = 3f;// for the player
     [SerializeField] float checkPointStopDuration = 3f;
+    public static Action<float> reachedLastCheckpoint;
 
     [SerializeField] GameObject lootbox;
     float stopTimer = 0f;
-    public float InteractionRange { get => interactionRange;}
+    public float InteractionRange { get => interactionRange; }
     public float PlayerRange { get => playerRange; set => playerRange = value; }
     [SerializeField][Range(0.1f, 0.9f)] float enemySlowSpeed = 0.5f;
     [SerializeField][Range(0.1f, 0.9f)] float playerSlowSpeed = 0.5f;
@@ -112,21 +114,23 @@ public class Payload : MonoBehaviour, IDamagable
                 {
                     followPath = false;
                     GameManager.Instance.Win();
-                    if(lootbox != null)
+                    if (lootbox != null)
                     {
                         lootbox.SetActive(true);
-                    }                  
+                    }
                     return;
                 }
                 AddToList(pathPointsParent[currentParentIndex], pathPointsList);
                 enteredLastCheckpoint = true;
+                reachedLastCheckpoint?.Invoke(checkPointStopDuration);
             }
         }
         if (enteredLastCheckpoint)
         {
-            stopTimer += Time.fixedDeltaTime; 
+            stopTimer += Time.fixedDeltaTime;
             if (stopTimer >= checkPointStopDuration)
             {
+
                 StartFollowingPath();
                 enteredLastCheckpoint = false;
             }
@@ -169,7 +173,7 @@ public class Payload : MonoBehaviour, IDamagable
             }
         }
         return false;
-    } 
+    }
 
     public void TakeDamage(float amount)
     {
@@ -217,7 +221,7 @@ public class Payload : MonoBehaviour, IDamagable
                         }
                         player.ChangeHealth(healAmount);
                     }
-                } 
+                }
                 if (visualEffects.activeSelf == true)
                 {
                     Invoke(nameof(DisableVFX), 2f);
