@@ -27,7 +27,7 @@ public class CameraFocus : MonoBehaviour
         Vector3 backOffset = forwardDirection * backwardOffset;
         offset = new Vector3(-backOffset.x, -backOffset.y + upwardOffset, -backOffset.z);
         Vector3 desiredPosition = player.position + offset;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.fixedDeltaTime);
         transform.position = smoothedPosition;
     }
 
@@ -54,7 +54,7 @@ public class CameraFocus : MonoBehaviour
             Vector3 direction = (point - transform.position).normalized;
             direction.y = 0;
             Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
         }
     }
 }
