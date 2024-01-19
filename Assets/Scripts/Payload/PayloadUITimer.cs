@@ -26,7 +26,7 @@ public class PayloadUITimer : MonoBehaviour
         {
             liveTimer -= Time.fixedDeltaTime;
             int timer = (int)liveTimer;
-            payloadTimerText.text = "Survive: " + timer.ToString();
+            payloadTimerText.text = timer.ToString();
         }
         if (liveTimer <= 0)
         { 
