@@ -154,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85f70dc6b9e006c44a7129f27d976ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camFollow: {fileID: 329818786}
-  mainVirtualCam: {fileID: 0}
+  camFollow: {fileID: 0}
   useTriggerAsAngleOffset: 0
+  useCamStartAngleAsExit: 1
   angleOffset: 45
   rotateDuration: 1
   rotationCurve:
@@ -232,6 +232,7 @@ MonoBehaviour:
     m_ConstantMax: 0
   previousRotationAngle: 0
   AlignmentBetweenCamAndTrigger: 0
+  startAngle: 0
   shouldDestroy: 0
 --- !u!114 &19353954
 MonoBehaviour:
@@ -346,9 +347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85f70dc6b9e006c44a7129f27d976ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camFollow: {fileID: 329818786}
-  mainVirtualCam: {fileID: 1313563216}
+  camFollow: {fileID: 0}
   useTriggerAsAngleOffset: 0
+  useCamStartAngleAsExit: 1
   angleOffset: 90
   rotateDuration: 1
   rotationCurve:
@@ -424,6 +425,7 @@ MonoBehaviour:
     m_ConstantMax: 0
   previousRotationAngle: 0
   AlignmentBetweenCamAndTrigger: 0
+  startAngle: 0
   shouldDestroy: 0
 --- !u!1 &82783566
 GameObject:
@@ -774,11 +776,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &329818786 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2111597916701207226, guid: f3990bf153491e7469dd6749ff621748, type: 3}
-  m_PrefabInstance: {fileID: 1229552892}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &484404690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1100,10 +1097,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2111597916701207227, guid: f3990bf153491e7469dd6749ff621748, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 982660221}
     - target: {fileID: 6641255334150209832, guid: f3990bf153491e7469dd6749ff621748, type: 3}
       propertyPath: m_RootOrder
       value: 22
@@ -1152,8 +1145,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera Prefab
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2231307942286706954, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+    - target: {fileID: 9002143072183743814, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 982660221}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3990bf153491e7469dd6749ff621748, type: 3}
 --- !u!114 &1313563216 stripped
 MonoBehaviour:
@@ -1779,24 +1775,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e162c6d91905a8e49a7f35b06bacec76, type: 3}
---- !u!1 &1978576133 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3438871385543359872, guid: f3990bf153491e7469dd6749ff621748, type: 3}
-  m_PrefabInstance: {fileID: 1229552892}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1978576138
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1978576133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4c41ac9245b87c4192012080077d830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Damping: 0
 --- !u!1 &2011091960
 GameObject:
   m_ObjectHideFlags: 0

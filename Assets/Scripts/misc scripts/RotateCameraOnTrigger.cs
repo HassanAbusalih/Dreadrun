@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
-using Cinemachine;
+
 
 public class RotateCameraOnTrigger : MonoBehaviour
 {
@@ -16,12 +16,14 @@ public class RotateCameraOnTrigger : MonoBehaviour
     [SerializeField] MinMaxCurve rotationCurve;
 
     [Header("Debug Stats")]
-    [SerializeField] float? previousRotationAngle = null;
+    [SerializeField] float previousRotationAngle = 0;
     [SerializeField] float AlignmentBetweenCamAndTrigger;
     [SerializeField] float startAngle;
-    float previosuXDamping;
 
     [SerializeField] bool shouldDestroy;
+    bool alreadyEntered;
+
+   
 
 
     private void Start()
@@ -31,9 +33,8 @@ public class RotateCameraOnTrigger : MonoBehaviour
             camFollow = FindObjectOfType<CameraFocus>().transform;
         }
 
-        Invoke("GetStartAngle", 1.5f);
-     
 
+        Invoke("GetStartAngle", 1.5f);
     }
 
     void GetStartAngle()
@@ -59,9 +60,10 @@ public class RotateCameraOnTrigger : MonoBehaviour
             AlignmentBetweenCamAndTrigger = Vector3.Dot(transform.forward, directionFromCamera);
             StopAllCoroutines();
            
-            if (AlignmentBetweenCamAndTrigger > 0.1f && previousRotationAngle==null ) // you never know when these stupid edge casses happen so i just put a small value above 0
+           if (AlignmentBetweenCamAndTrigger > 0.1f && !alreadyEntered ) // you never know when these stupid edge casses happen so i just put a small value above 0
             {
                 previousRotationAngle = camFollow.transform.eulerAngles.y;
+                alreadyEntered = true;
                 float targetAngleOffset = useTriggerAsAngleOffset ? transform.rotation.eulerAngles.y : angleOffset;
                 StartCoroutine(RotateCamera(targetAngleOffset));
                 if (shouldDestroy)
@@ -70,26 +72,22 @@ public class RotateCameraOnTrigger : MonoBehaviour
                 }
                 return;
             }
-            float resetAngle = useCamStartAngleAsExit ? startAngle : (float)previousRotationAngle;
+            float resetAngle = useCamStartAngleAsExit ? startAngle : previousRotationAngle;
             StartCoroutine(RotateCamera(resetAngle));
-            previousRotationAngle = null;
-
+            alreadyEntered = false;
         }
 
     }
 
-
-  
-
     IEnumerator RotateCamera(float? angle)
     {
         float timer = 0;
-        float randomValue = rotationCurve.mode == ParticleSystemCurveMode.TwoConstants ? Random.value : 0;
+        float randomValue = rotationCurve.mode == ParticleSystemCurveMode.TwoCurves ? Random.value : 0;
         float currentAngle = camFollow.transform.eulerAngles.y;
       
         while (timer < rotateDuration)
         {
-            timer += Time.deltaTime;
+            timer += Time.fixedDeltaTime;
             float t = rotationCurve.Evaluate(timer / rotateDuration, randomValue);
             camFollow.transform.eulerAngles = new Vector3(camFollow.transform.eulerAngles.x, Mathf.LerpAngle(currentAngle, (float)angle, t), camFollow.transform.eulerAngles.z);
             yield return null;
