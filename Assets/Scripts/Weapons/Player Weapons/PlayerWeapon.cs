@@ -16,7 +16,8 @@ public abstract class PlayerWeapon : WeaponBase
     [SerializeField] Vector3 weaponOffset;
     [SerializeField] Vector3 weaponRotationOffset;
     [SerializeField] GameObject weaponEquipText;
-    public bool pickedUp {get; private set;}
+    [SerializeField] protected GameObject muzzleFlash;
+    public bool pickedUp { get; private set; }
     protected bool equipped;
 
     [field: SerializeField] public Sprite weaponIcon { get; private set; }
@@ -57,8 +58,8 @@ public abstract class PlayerWeapon : WeaponBase
         WeaponPickedUpOrDropped?.Invoke(this);
         EnableWeaponColliders(false);
         _iD = weaponID;
-      
-      
+
+
         if (weaponEquipText != null) weaponEquipText.SetActive(false);
     }
 
@@ -68,6 +69,7 @@ public abstract class PlayerWeapon : WeaponBase
         effects.Clear();
         equipped = false;
         EnableWeaponColliders(true);
+        DeactivateMuzzleFlash();
         if (soundSO != null && pickedUp)
         {
             soundSO.PlaySound(1, AudioSourceType.Weapons);
@@ -75,7 +77,7 @@ public abstract class PlayerWeapon : WeaponBase
         }
         pickedUp = false;
         WeaponPickedUpOrDropped?.Invoke(this);
-      
+
         if (weaponEquipText != null) weaponEquipText.SetActive(true);
     }
 
@@ -87,10 +89,38 @@ public abstract class PlayerWeapon : WeaponBase
 
     void EnableWeaponColliders(bool enabled)
     {
-        if(weaponColliders == null) return;
-        for (int i = 0; i<= weaponColliders.Length-1; i++)
-               {
+        if (weaponColliders == null) return;
+        for (int i = 0; i <= weaponColliders.Length - 1; i++)
+        {
             weaponColliders[i].enabled = enabled;
         }
+    }
+
+    protected void ActivateMuzzleFlash(bool playAsWell)
+    {
+        if (muzzleFlash != null)
+        {
+            muzzleFlash.SetActive(true);
+            if (playAsWell) muzzleFlash.GetComponentInChildren<ParticleSystem>().Play();
+        }
+    }
+
+    protected void SpawnMuzzleFlash()
+    {
+        if (muzzleFlash == null) return;
+        ParticleSystem _muzzleFlash = Instantiate(muzzleFlash, muzzleFlash.transform.position, muzzleFlash.transform.rotation).GetComponentInChildren<ParticleSystem>();
+        _muzzleFlash.Play();
+        _muzzleFlash.transform.SetParent(transform);
+        Destroy(_muzzleFlash.gameObject, _muzzleFlash.main.duration + 0.2f);
+    }
+
+    protected void AfterDeactivateMuzzleFlash(float delay)
+    {
+        Invoke(nameof(DeactivateMuzzleFlash), delay);
+    }
+
+    protected void DeactivateMuzzleFlash()
+    {
+        if (muzzleFlash != null) muzzleFlash.SetActive(false);
     }
 }
