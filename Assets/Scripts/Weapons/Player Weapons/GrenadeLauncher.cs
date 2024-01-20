@@ -23,6 +23,7 @@ public class GrenadeLauncher : PlayerWeapon
         else if ((Input.GetKeyUp(KeyCode.Mouse0) || Input.GetButtonUp("shoot")) && (chargeTime / fireRate) > minChargePercent)
         {
             Attack();
+            SpawnMuzzleFlash();
             chargeTime = 0;
         }
         else
