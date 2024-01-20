@@ -33,7 +33,7 @@ public class Dashing : MonoBehaviour
     public Action<float> onDashing;
     public delegate float canDash();
     public canDash canPlayerDash;
-
+   
     Transform levelTransform;
     bool useCustomDirection;
 
@@ -120,7 +120,7 @@ public class Dashing : MonoBehaviour
             rb.AddForce(_dashForce, ForceMode.Impulse);
             rb.AddForce(Vector3.up * 1.2f, ForceMode.Impulse);
 
-
+            if (Time.timeScale <= 0) { DashMode(false); break; }
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -130,7 +130,7 @@ public class Dashing : MonoBehaviour
             speedLines.SetActive(false);
         }
     }
-    private void DashMode(bool _enabled)
+    public  void DashMode(bool _enabled)
     {
         isDashing = _enabled;
         rb.freezeRotation = _enabled;
