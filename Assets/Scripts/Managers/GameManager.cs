@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     int Conditions = 0;
     private bool isGamePaused = false;
     private bool hasGameEnded = false;
-
+    bool inPerkSelection = false;
 
     private void OnEnable()
     {
@@ -99,13 +99,24 @@ public class GameManager : MonoBehaviour
 
     private void PauseGame()
     {
-        Time.timeScale = 0;
+        if (Time.timeScale > 0)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            inPerkSelection = true;
+        }
         onPause.Invoke();
     }
 
     private void ResumeGame()
     {
-        Time.timeScale = 1;
+        if (!inPerkSelection) 
+        { 
+            Time.timeScale = 1; 
+            inPerkSelection = false;
+        }
         onResume.Invoke();
     }
 
@@ -133,5 +144,4 @@ public class GameManager : MonoBehaviour
     }
 
     public void QuitGame() => Application.Quit();
-
 }

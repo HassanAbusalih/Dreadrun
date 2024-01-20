@@ -12,14 +12,13 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] bool isPaused;
     [SerializeField] string mainMenu;
     [SerializeField] string playAgain;
-    // Start is called before the first frame update
+
     void Start()
     {
         pauseMenu.SetActive(false);
         settingsMenuPause.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -34,7 +33,6 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-
 
     public void PauseGame()
     {
