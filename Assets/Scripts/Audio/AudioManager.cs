@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void Play(AudioClip audioClip, AudioSourceType audioType, bool isLooping = false, AudioMixerGroup mixerGroup = null)
+    public AudioSource Play(AudioClip audioClip, AudioSourceType audioType, bool isLooping = false, AudioMixerGroup mixerGroup = null)
     {
         AudioSource source = audioSources[(int)audioType];
         source.loop = isLooping;
@@ -54,7 +54,19 @@ public class AudioManager : MonoBehaviour
             audioSources[(int)audioType].outputAudioMixerGroup = mixerGroup;
         }
         audioSources[(int)audioType].PlayOneShot(audioClip);
-
+        return source;
+    }
+    public AudioSource PlayTrack(AudioClip audioClip, AudioSourceType audioType, bool isLooping = false, AudioMixerGroup mixerGroup = null)
+    {
+        AudioSource source = audioSources[(int)audioType];
+        source.loop = isLooping;
+        if (mixerGroup != null)
+        {
+            audioSources[(int)audioType].outputAudioMixerGroup = mixerGroup;
+        }
+        audioSources[(int)audioType].clip = audioClip;
+        audioSources[(int)audioType].Play();
+        return source;
     }
 
     public void Stop(AudioSourceType audioType)
