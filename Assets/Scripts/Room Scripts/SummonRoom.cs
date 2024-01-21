@@ -5,7 +5,7 @@ using UnityEngine;
 public class SummonRoom : MonoBehaviour
 {
     private Player player;
-    public GameObject weapon;
+    public GameObject[] weapons;
     public GameObject summonVFX;
     public GameObject damagedVFX;
     private bool hasTriggered = false;
@@ -22,7 +22,8 @@ public class SummonRoom : MonoBehaviour
             player.TakeDamage(healthSacrifice);
             summonVFX.SetActive(true);
             damagedVFX.SetActive(true);
-            weapon.SetActive(true);
+            GameObject weaponToSpawn = weapons[Random.Range(0, weapons.Length)];
+            GameObject weapon = Instantiate(weaponToSpawn, summonVFX.transform.position + Vector3.up, Quaternion.identity);
 
             hasTriggered = true; 
         }

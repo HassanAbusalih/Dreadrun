@@ -7,12 +7,14 @@ public class LookAtObject : MonoBehaviour
     [SerializeField] Transform objectToLookAt;
     public bool invertLookAt;
     Vector3 startRotation;
+    [SerializeField]bool LookAtCamFollow;
 
     private void Start()
     {
         if(invertLookAt)
         startRotation = -transform.rotation.eulerAngles;
         else startRotation = transform.rotation.eulerAngles;
+        if(LookAtCamFollow) objectToLookAt = FindObjectOfType<CameraFocus>().transform;
     }
 
     private void Update()
