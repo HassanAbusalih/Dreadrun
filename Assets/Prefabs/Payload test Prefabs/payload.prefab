@@ -212,8 +212,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.170886, y: 2.9781685, z: 9.886608}
-  m_Center: {x: 0.042505264, y: -0.27742577, z: -1.4959507}
+  m_Size: {x: 4.170886, y: 12.726858, z: 9.886608}
+  m_Center: {x: 0.042505264, y: 0.38768673, z: -1.4959507}
 --- !u!114 &2220466865266914170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +230,7 @@ MonoBehaviour:
   enteredLastCheckpoint: 0
   maxhealth: 500
   speed: 8
-  rotationSpeed: 3
+  rotationSpeed: 2.5
   healAmount: 5
   healingInterval: 5
   followPath: 0
@@ -268,7 +268,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.25
-  takeDamageColor: {r: 1, g: 0, b: 0, a: 0.6117647}
+  takeDamageColor: {r: 1, g: 0, b: 0, a: 1}
+  targetIntensity: 0
   takeDamageScale: 0.8
   damageCurve:
     serializedVersion: 2
@@ -25402,12 +25403,20 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1089798718365628548, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 128.12001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089798718365628548, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 138.90001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089798718365628548, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1089798718365628548, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.5894
       objectReference: {fileID: 0}
     - target: {fileID: 1089798718365628548, guid: 17f4b27edb4c76644833bffef1798988, type: 3}
       propertyPath: m_LocalPosition.z

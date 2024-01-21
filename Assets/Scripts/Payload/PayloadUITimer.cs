@@ -10,10 +10,12 @@ public class PayloadUITimer : MonoBehaviour
     bool timerActivated;
     float payloadDuration;
     float liveTimer;
+    Color startColor;
     private void OnEnable()
     {
         payloadTimerText.gameObject.SetActive(false);
         Payload.reachedLastCheckpoint += ActivateTimer;
+        startColor = payloadTimerText.color;
     }
     private void OnDisable()
     {
@@ -27,6 +29,8 @@ public class PayloadUITimer : MonoBehaviour
             liveTimer -= Time.fixedDeltaTime;
             int timer = (int)liveTimer;
             payloadTimerText.text = timer.ToString();
+            payloadTimerText.color = liveTimer < 10 && timer%2==0 ? Color.red : startColor;
+
         }
         if (liveTimer <= 0)
         { 

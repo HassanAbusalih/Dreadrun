@@ -22,17 +22,33 @@ public class Teleport : MonoBehaviour
     [SerializeField] bool debugMode;
     //[SerializeField] float fogChangeTime= 10f; 
 
+    Color startColor;
+
     bool triggered = false;
     GameObject effectInstance;
     public Action OnTimerOver;
 
     public static Action<Transform, bool> ChangePlayerDirectionToDefault;
 
+    private void OnEnable()
+    {
+        PerkSelector.onPerkModeActivated += DeactivateTimer;
+        PerkSelector.OnPerkSelection += ActivateTimer;
+
+    }
+
+    private void OnDisable()
+    {
+        PerkSelector.onPerkModeActivated -= DeactivateTimer;
+        PerkSelector.OnPerkSelection -= ActivateTimer;
+    }
+
     private void Start()
     {
         blackScreen.enabled = true;
         blackScreen.color = new UnityEngine.Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, 1f);
         StartCoroutine(Fade(0f, 3f));
+        startColor = timerText.color;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -67,14 +83,12 @@ public class Teleport : MonoBehaviour
         float timer = secondsToTeleport;
         while (timer > 0)
         {
+            timerText.color = timer < 11 && (int)timer % 2 == 0 ? Color.red : startColor;
             DebugMode(ref timer);
             timer -= Time.deltaTime;
             timerText.text = Mathf.RoundToInt(timer).ToString();
 
-            if(timer<11)
-            {
-                timerText.color = Color.red;
-            }
+            
 
             float time = 1f - (timer / secondsToTeleport);
             RenderSettings.fogDensity = Mathf.Lerp(originalFogDensity, finalFogDensity, time);
@@ -141,5 +155,15 @@ public class Teleport : MonoBehaviour
         {
             timer = 1f;
         }
+    }
+
+    void ActivateTimer()
+    {
+        timerText.gameObject.SetActive(true);
+    }
+
+    void DeactivateTimer()
+    {
+        timerText.gameObject.SetActive(false);
     }
 }

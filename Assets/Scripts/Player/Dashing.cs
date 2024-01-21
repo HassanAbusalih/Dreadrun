@@ -36,6 +36,7 @@ public class Dashing : MonoBehaviour
    
     Transform levelTransform;
     bool useCustomDirection;
+    float currentIntensity;
 
 
     private void OnEnable()
@@ -144,6 +145,8 @@ public class Dashing : MonoBehaviour
         isInvincible = _enabled;
         if (meshRenderer != null)
             meshRenderer.material.color = _enabled ? dashColor : defaultColor;
+            meshRenderer.material.SetColor("_EmissionColor", _enabled ? dashColor/4 : Color.black);
+
     }
 
     void SwitchCameras(bool _enabled)

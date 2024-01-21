@@ -6,6 +6,7 @@ public class DamageFeedback : MonoBehaviour
     [Header("Color Animation Settings")]
     [SerializeField] float duration;
     [SerializeField] Color takeDamageColor;
+    [SerializeField] float targetIntensity;
     [Header("scale Animation  Settings")]
     [SerializeField] float takeDamageScale;
     [SerializeField] AnimationCurve damageCurve;
@@ -29,6 +30,7 @@ public class DamageFeedback : MonoBehaviour
     float[] startZScales;
     float[] startXScales;
 
+    float currentIntensity;
 
     private void OnEnable()
     {
@@ -103,11 +105,15 @@ public class DamageFeedback : MonoBehaviour
                 for (int i = 0; i < renderers.Length; i++)
                 {
                     renderers[i].material.color = Color.Lerp(takeDamageColor, startColors[i], _lerpValue);
+                    currentIntensity = Mathf.Lerp(targetIntensity, 0, _lerpValue);
+                    renderers[i].material.SetColor("_EmissionColor", Color.Lerp(takeDamageColor, startColors[i], _lerpValue));
                 }
             }
             else
             {
                 meshRenderer.material.color = Color.Lerp(takeDamageColor, startColor, _lerpValue);
+                currentIntensity = Mathf.Lerp(targetIntensity, 0, _lerpValue);
+                meshRenderer.material.SetColor("_EmissionColor", Color.Lerp(takeDamageColor/3f,Color.black, _lerpValue));
             }
 
             if (!animateScale) return;

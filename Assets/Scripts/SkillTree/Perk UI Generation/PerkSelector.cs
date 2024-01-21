@@ -23,6 +23,7 @@ public class PerkSelector : MonoBehaviour
     private PerkCollectorManager perkCollectorManager;
 
     public static Action OnPerkSelection;
+    public static Action onPerkModeActivated;
 
     [SerializeField] [Range(0f, 1f)] private float rareChance = 0.3f;
     [SerializeField] [Range(0f, 1f)] private float legendaryChance = 0.1f;
@@ -60,6 +61,7 @@ public class PerkSelector : MonoBehaviour
     public void RandomPerkSelector()
     {
         perkUIcanvas.SetActive(true);
+        onPerkModeActivated?.Invoke();
         Time.timeScale = 0f;
         perkDescriptionPanel.SetActive(false);
         List<Perk> selectedPerks = new List<Perk>();
