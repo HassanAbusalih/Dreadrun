@@ -97,7 +97,7 @@ public class Payload : MonoBehaviour, IDamagable
                 if (directionToPoint != Vector3.zero)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(directionToPoint);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
                 }
 
                 if (Vector3.Distance(transform.position, targetPoint.position) < 0.1f)
