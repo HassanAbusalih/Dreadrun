@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Drawing;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -69,7 +69,12 @@ public class Teleport : MonoBehaviour
         {
             DebugMode(ref timer);
             timer -= Time.deltaTime;
-            timerText.text = "Time: " + Mathf.RoundToInt(timer);
+            timerText.text = Mathf.RoundToInt(timer).ToString();
+
+            if(timer<11)
+            {
+                timerText.color = Color.red;
+            }
 
             float time = 1f - (timer / secondsToTeleport);
             RenderSettings.fogDensity = Mathf.Lerp(originalFogDensity, finalFogDensity, time);
