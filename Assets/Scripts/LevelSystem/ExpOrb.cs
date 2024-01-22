@@ -9,6 +9,7 @@ public class ExpOrb : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     [SerializeField] SoundSO expOrbPickUpSFX;
     [SerializeField] SoundSO denySound;
+    [SerializeField] GameObject vfx;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,6 +23,12 @@ public class ExpOrb : MonoBehaviour
             if (expOrbPickUpSFX != null)
             {
                 expOrbPickUpSFX.PlaySound(0, AudioSourceType.Player);
+                if(vfx != null)
+                {
+                    GameObject vfxObj = Instantiate(vfx, transform.position, Quaternion.identity);
+                    Destroy(vfxObj, 1.25f);
+                }
+               
             }
             Destroy(gameObject);
         }
