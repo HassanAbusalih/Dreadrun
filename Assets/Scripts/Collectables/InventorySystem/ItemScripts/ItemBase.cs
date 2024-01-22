@@ -7,8 +7,12 @@ public class ItemBase : Collectable
     public bool throwable;
     public bool hasBuffedItem = false;
     public int itemID;
+    public ItemRarityTypes itemRarity;
     public SoundSO itemSound;
     [SerializeField] ParticleSystem ParticleSystem;
+
+   
+   
 
     public virtual void UseOnSelf(Player player)
     {

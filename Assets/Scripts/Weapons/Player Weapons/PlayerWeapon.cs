@@ -17,6 +17,7 @@ public abstract class PlayerWeapon : WeaponBase
     [SerializeField] Vector3 weaponRotationOffset;
     [SerializeField] GameObject weaponEquipText;
     [SerializeField] protected GameObject muzzleFlash;
+    public  ItemRarityTypes rarityType;
     public bool pickedUp { get; private set; }
     protected bool equipped;
 

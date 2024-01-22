@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,12 @@ public class WeaponUISwitcher : MonoBehaviour
     TextMeshProUGUI weaponDescriptionText;
     string currentWeaponDescription;
 
+    [SerializeField] Color commonColor;
+    [SerializeField] Color rareColor;
+    [SerializeField] Color legendaryColor;
+
+    [SerializeField] Dictionary<ItemRarityTypes, Color> itemRarityToColor = new Dictionary<ItemRarityTypes, Color>();
+
 
     private void OnEnable()
     {
@@ -28,7 +35,6 @@ public class WeaponUISwitcher : MonoBehaviour
         descriptionPanel.SetActive(false);
         weaponImageHolder.sprite = blankSprite;
         SetWeaponSlotColor(emptyWeaponColor);
-
     }
 
     void InitializeReferences()
@@ -40,6 +46,11 @@ public class WeaponUISwitcher : MonoBehaviour
         currentWeaponDescription = weaponDescriptionText.text;
         defaultColor = weaponSlot.color;
         SetWeaponSlotColor(emptyWeaponColor);
+
+        itemRarityToColor.Add(ItemRarityTypes.empty,emptyWeaponColor);
+        itemRarityToColor.Add(ItemRarityTypes.Common, commonColor);
+        itemRarityToColor.Add(ItemRarityTypes.Rare, rareColor);
+        itemRarityToColor.Add(ItemRarityTypes.Legendary, legendaryColor);
     }
 
     private void OnDisable()
@@ -58,7 +69,7 @@ public class WeaponUISwitcher : MonoBehaviour
         }
         weaponImageHolder.sprite = _weapon.weaponIcon;
         currentWeaponDescription = _weapon.weaponDescription;
-        SetWeaponSlotColor(defaultColor);
+        SetWeaponSlotColor(itemRarityToColor[_weapon.rarityType]);
     }
 
     public void ShowWeaponDescription()

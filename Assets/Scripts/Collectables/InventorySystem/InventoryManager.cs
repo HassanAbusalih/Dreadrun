@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
+
 public class InventoryManager : MonoBehaviour
 {
     public Player player;
@@ -14,6 +16,15 @@ public class InventoryManager : MonoBehaviour
     AudioSource audioSource;
     private int slotCounter = 0;
 
+    [SerializeField] Color emptyColor;
+    [SerializeField] Color commonColor;
+    [SerializeField] Color rareColor;
+    [SerializeField] Color legendaryColor;
+
+    [SerializeField] Dictionary<ItemRarityTypes, Color> itemRarityToColor = new Dictionary<ItemRarityTypes, Color>();
+
+
+
     void Start()
     {
         if (descriptionPanel != null)
@@ -23,6 +34,11 @@ public class InventoryManager : MonoBehaviour
         player = GetComponent<Player>();
         inventory = new Inventory();
         inventory.inventoryList = new ItemBase[inventory.inventorySlots];
+
+        itemRarityToColor.Add(ItemRarityTypes.empty, emptyColor);
+        itemRarityToColor.Add(ItemRarityTypes.Common, commonColor);
+        itemRarityToColor.Add(ItemRarityTypes.Rare, rareColor);
+        itemRarityToColor.Add(ItemRarityTypes.Legendary, legendaryColor);
     }
     private void Update()
     {
@@ -47,6 +63,7 @@ public class InventoryManager : MonoBehaviour
         if (collectable != null && slotCounter < inventory.inventorySlots)
         {
             ItemBase item = collectable.Collect() as ItemBase;
+            
             if (item != null)
             {
                 AddItem(item);
@@ -82,6 +99,7 @@ public class InventoryManager : MonoBehaviour
             {
                 inventory.inventoryList[slot] = item;
                 InventorySprites[slot].sprite = item.icon;
+                InventorySprites[slot].transform.parent.GetComponent<Image>().color = itemRarityToColor[item.itemRarity];
                 break;
             }
         }
@@ -111,6 +129,7 @@ public class InventoryManager : MonoBehaviour
         if (slot >= 0 && slot < InventorySprites.Length)
         {
             InventorySprites[slot].sprite = emptySprite;
+            InventorySprites[slot].transform.parent.GetComponent<Image>().color = emptyColor;
         }
     }
 

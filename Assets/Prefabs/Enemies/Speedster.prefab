@@ -244,7 +244,7 @@ MonoBehaviour:
   projectileSpeed: 12
   spreadAngle: 30
   projectilePrefab: {fileID: 1332995557446588027, guid: c43aab9cdb8fd944ca09da012ab929a8, type: 3}
-  soundSO: {fileID: 11400000, guid: 5126b513ab1d9f743abbaf6564d8dfe6, type: 2}
+  soundSO: {fileID: 0}
   homingStrength: 250
   homingRange: 10
 --- !u!114 &6254002394925430329
@@ -261,6 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.3
   takeDamageColor: {r: 1, g: 0, b: 0, a: 1}
+  targetIntensity: 0
   takeDamageScale: 0.7
   damageCurve:
     serializedVersion: 2
