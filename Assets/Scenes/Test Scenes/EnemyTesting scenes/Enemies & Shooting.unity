@@ -360,7 +360,7 @@ PrefabInstance:
     - target: {fileID: 5531912465785331505, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: speedLines
       value: 
-      objectReference: {fileID: 2088641061}
+      objectReference: {fileID: 0}
     - target: {fileID: 7143710627891633086, guid: de30d2c9e4262b745bf0bf8ac7a4a69e, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1100,6 +1100,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1461887755}
+    - target: {fileID: 2263072902117122954, guid: f3990bf153491e7469dd6749ff621748, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.643383
+      objectReference: {fileID: 0}
     - target: {fileID: 5227594074343222305, guid: f3990bf153491e7469dd6749ff621748, type: 3}
       propertyPath: field of view
       value: 65
@@ -1170,15 +1174,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8188467551553057206, guid: f3990bf153491e7469dd6749ff621748, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.004852295
+      value: -439.88947
       objectReference: {fileID: 0}
     - target: {fileID: 8188467551553057206, guid: f3990bf153491e7469dd6749ff621748, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 23.80428
+      value: 5.643383
       objectReference: {fileID: 0}
     - target: {fileID: 8188467551553057206, guid: f3990bf153491e7469dd6749ff621748, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.932251
+      value: 783.365
       objectReference: {fileID: 0}
     - target: {fileID: 8188467551553057206, guid: f3990bf153491e7469dd6749ff621748, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1447,6 +1451,38 @@ PrefabInstance:
       propertyPath: chargeSpeedModifier
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8610076454974898655, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+      propertyPath: m_DefaultVelocity.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610076454974898655, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+      propertyPath: m_DefaultVelocity.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610076454974898655, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+      propertyPath: m_DefaultVelocity.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610076454974898655, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+      propertyPath: m_ImpulseDefinition.m_ImpulseType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610076454974898655, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+      propertyPath: m_ImpulseDefinition.m_DissipationRate
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610076454974898655, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+      propertyPath: m_ImpulseDefinition.m_ImpulseDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610076454974898655, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+      propertyPath: m_ImpulseDefinition.m_PropagationSpeed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610076454974898655, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
+      propertyPath: m_ImpulseDefinition.m_DissipationDistance
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b961c2381f93a045bf717323cd3e520, type: 3}
 --- !u!1001 &1947571549
@@ -1514,8 +1550,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f07f3599065bf545b2dd9619c0aa2e8, type: 3}
---- !u!1 &2088641061 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8818378400435082993, guid: f3990bf153491e7469dd6749ff621748, type: 3}
-  m_PrefabInstance: {fileID: 1733321793}
-  m_PrefabAsset: {fileID: 0}

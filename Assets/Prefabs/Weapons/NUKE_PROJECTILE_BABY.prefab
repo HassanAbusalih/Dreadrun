@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
     m_ImpulseChannel: 1
-    m_ImpulseShape: 3
+    m_ImpulseShape: 1
     m_CustomImpulseShape:
       serializedVersion: 2
       m_Curve: []
@@ -108,8 +108,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_ImpulseDuration: 0.125
-    m_ImpulseType: 2
-    m_DissipationRate: 0.35
+    m_ImpulseType: 1
+    m_DissipationRate: 0.52
     m_RawSignal: {fileID: 0}
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
@@ -136,9 +136,9 @@ MonoBehaviour:
     m_ImpactRadius: 100
     m_DirectionMode: 0
     m_DissipationMode: 2
-    m_DissipationDistance: 40
+    m_DissipationDistance: 90
     m_PropagationSpeed: 250
-  m_DefaultVelocity: {x: 1, y: 0.1, z: 0.1}
+  m_DefaultVelocity: {x: 1, y: 3, z: 1}
 --- !u!1 &3406039195946960270
 GameObject:
   m_ObjectHideFlags: 0

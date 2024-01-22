@@ -30,6 +30,8 @@ public class PerkSelector : MonoBehaviour
     [SerializeField] Color rareColor;
     [SerializeField] Color legendaryColor;
     [SerializeField] float fadeDuration = 5f;
+
+    [SerializeField] GameObject[] arrowHolders;
     public Color LegendaryColor => legendaryColor;
     public Color RareColor => rareColor;
 
@@ -81,6 +83,8 @@ public class PerkSelector : MonoBehaviour
 
         for (int perkIndex = 0; perkIndex < perkChoices.Length; perkIndex++) //generate a random index depending on the count, use the index number to select a perk in the perkpool
         {
+            arrowHolders[perkIndex].SetActive(false);
+
             float randomValue = UnityEngine.Random.value;
             foreach (var perk in perkPool)
             {
