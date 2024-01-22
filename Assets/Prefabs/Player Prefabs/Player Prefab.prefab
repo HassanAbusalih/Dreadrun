@@ -1338,7 +1338,7 @@ MonoBehaviour:
   staminaRecoverySpeed: 0.09
   playerStats:
     health: 0
-    maxHealth: 10000000
+    maxHealth: 100
     attack: 1
     defense: 25
     stamina: 1
@@ -1502,6 +1502,10 @@ MonoBehaviour:
   descriptionText: {fileID: 5125310381177171269}
   emptySprite: {fileID: 21300000, guid: d4846583bfeb63d4586b331aa5322cfd, type: 3}
   pickUpItemSFX: {fileID: 11400000, guid: 99bfc8ccacd0fcf429304d3b0f7c14c3, type: 2}
+  emptyColor: {r: 1, g: 1, b: 1, a: 1}
+  commonColor: {r: 0.80660534, g: 0, b: 1, a: 1}
+  rareColor: {r: 0, g: 0.46242142, b: 1, a: 1}
+  legendaryColor: {r: 0.8301887, g: 0.13709249, b: 0, a: 1}
 --- !u!114 &8118733806418575334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3368,6 +3372,50 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 205
       objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: rareColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: rareColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: rareColor.g
+      value: 0.4627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: commonColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: commonColor.b
+      value: 0.5283019
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: commonColor.g
+      value: 0.5283019
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: commonColor.r
+      value: 0.5283019
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: legendaryColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: legendaryColor.g
+      value: 0.13725491
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: legendaryColor.r
+      value: 0.83137256
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944443582846545093, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
+      propertyPath: emptyWeaponColor.a
+      value: 0.39215687
+      objectReference: {fileID: 0}
     - target: {fileID: 4944443582846545098, guid: 380618342b8dce945ac8bf0e7b839b03, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.2898518
@@ -3860,6 +3908,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -299
       objectReference: {fileID: 0}
+    - target: {fileID: 3860854388217481945, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
+      propertyPath: m_Color.b
+      value: 0.014613525
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860854388217481945, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860854388217481945, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
+      propertyPath: m_Color.r
+      value: 0.745283
+      objectReference: {fileID: 0}
     - target: {fileID: 4455471756640376398, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.85785246
@@ -3875,6 +3935,18 @@ PrefabInstance:
     - target: {fileID: 4455471756640376398, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -442
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201707810760811428, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7830189
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201707810760811428, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
+      propertyPath: m_Color.g
+      value: 0.4068364
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201707810760811428, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73738f434d232c54f8ad8885f02127bf, type: 3}
