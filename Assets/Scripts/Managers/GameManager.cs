@@ -14,8 +14,6 @@ public class GameManager : MonoBehaviour
     public UnityEvent onPause;
     public UnityEvent onResume;
     public UnityEvent onPhaseChange;
-    public int winConditions = 0;
-    int Conditions = 0;
     private bool isGamePaused = false;
     private bool hasGameEnded = false;
     bool inPerkSelection = false;
@@ -63,12 +61,8 @@ public class GameManager : MonoBehaviour
 
     public void Win()
     {
-        Conditions++;
-        if (!hasGameEnded && winConditions == Conditions )
-        {
-            onWin.Invoke();
-            EndGame();
-        }
+        onWin.Invoke();
+        EndGame();
     }
 
     public void Lose()
