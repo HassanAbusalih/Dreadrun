@@ -3,6 +3,7 @@ using System.Collections;
 using System.Diagnostics.Contracts;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Rendering;
 
 public class Dashing : MonoBehaviour
 {
@@ -26,9 +27,12 @@ public class Dashing : MonoBehaviour
     [SerializeField] bool isInvincible = false;
     [SerializeField] bool isDashing;
 
-    [Header("Cinamachine Cameras")]
-    [SerializeField] CinemachineVirtualCamera playerCamera;
-    [SerializeField] CinemachineVirtualCamera dashCamera;
+    [Header("DashFeedback")]
+    [SerializeField] Volume dashVolume;
+    [SerializeField] float TargetFov;
+    float startFov;
+    [SerializeField] AnimationCurve dashFeedbackCurve;
+    Camera mainCam;
 
     public Action<float> onDashing;
     public delegate float canDash();
@@ -37,6 +41,7 @@ public class Dashing : MonoBehaviour
     Transform levelTransform;
     bool useCustomDirection;
     float currentIntensity;
+
 
 
     private void OnEnable()
@@ -58,6 +63,8 @@ public class Dashing : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        mainCam = Camera.main;
+        startFov = mainCam.fieldOfView;
         if (meshRenderer != null)
             defaultColor = meshRenderer.material.color;
     }
@@ -120,6 +127,7 @@ public class Dashing : MonoBehaviour
             Vector3 _dashForce = Vector3.Lerp(Vector3.zero, dashDirection * dashForce, dashCurve.Evaluate(dashProgress));
             rb.AddForce(_dashForce, ForceMode.Impulse);
             rb.AddForce(Vector3.up * 1.2f, ForceMode.Impulse);
+            DashFOVAndPostProcessingFeedback(dashProgress);
 
             if (Time.timeScale <= 0) { DashMode(false); break; }
             elapsedTime += Time.deltaTime;
@@ -131,12 +139,20 @@ public class Dashing : MonoBehaviour
             speedLines.SetActive(false);
         }
     }
+
+    private void DashFOVAndPostProcessingFeedback(float dashProgress)
+    {
+        if(dashVolume != null)
+        dashVolume.weight = dashFeedbackCurve.Evaluate(dashProgress);
+        if (mainCam != null)
+        mainCam.fieldOfView = Mathf.Lerp(startFov, TargetFov, dashFeedbackCurve.Evaluate(dashProgress));
+    }
+
     public  void DashMode(bool _enabled)
     {
         isDashing = _enabled;
         rb.freezeRotation = _enabled;
         EnableInvincibility(_enabled);
-        SwitchCameras(_enabled);
         rb.constraints = RigidbodyConstraints.FreezeRotationX;
     }
 
@@ -144,20 +160,11 @@ public class Dashing : MonoBehaviour
     {
         isInvincible = _enabled;
         if (meshRenderer != null)
-            meshRenderer.material.color = _enabled ? dashColor : defaultColor;
             meshRenderer.material.SetColor("_EmissionColor", _enabled ? dashColor/4 : Color.black);
 
     }
 
-    void SwitchCameras(bool _enabled)
-    {
-        if (playerCamera == null || dashCamera == null) return;
-        int playerCamePriority = _enabled ? 0 : 1;
-        int dashCamPriority = _enabled ? 1 : 0;
-        playerCamera.Priority = playerCamePriority;
-        dashCamera.Priority = dashCamPriority;
-    }
-
+   
     bool GetPlayerInvincibility()
     {
         return isInvincible;
