@@ -12,7 +12,6 @@ public class Music : MonoBehaviour
         {
             musicSFX.StopSound(AudioSourceType.Music);
             musicSFX.PlayTrackkk(musicPlaying, AudioSourceType.Music, true);
-            Debug.Log(musicSFX.referenceAudioSource.loop);
             Destroy(this.gameObject);
         }
     }

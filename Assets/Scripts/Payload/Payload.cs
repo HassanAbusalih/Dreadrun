@@ -40,6 +40,12 @@ public class Payload : MonoBehaviour, IDamagable
     Player[] players;
     PayloadFeedback feedback;
 
+    [Header("PayloadSounds")]
+    [SerializeField] SoundSO payloadSfxMoving;
+    [SerializeField] SoundSO payloadSfxStopping;
+
+    bool playPayloadSoundOnce;
+
     private void OnValidate()
     {
         AddToList(grandParentTransform, pathPointsParent);
@@ -81,6 +87,11 @@ public class Payload : MonoBehaviour, IDamagable
             if (stopped)
             {
                 stopTimer += Time.deltaTime;
+                if (playPayloadSoundOnce)
+                {
+                    payloadSfxMoving.StopSound(AudioSourceType.Player);
+                    playPayloadSoundOnce = false;
+                }
                 if (stopTimer >= outOfRangeDuration)
                 {
                     currentSpeed = 0f;
@@ -103,6 +114,12 @@ public class Payload : MonoBehaviour, IDamagable
                 if (Vector3.Distance(transform.position, targetPoint.position) < 0.1f)
                 {
                     currentPathIndex++;
+                }
+                if (!playPayloadSoundOnce)
+                {
+                    payloadSfxMoving.PlayTrackkk(0, AudioSourceType.Player, true);
+                    Debug.Log(payloadSfxMoving.referenceAudioSource.loop);
+                    playPayloadSoundOnce = true;
                 }
             }
             else
@@ -195,7 +212,13 @@ public class Payload : MonoBehaviour, IDamagable
     public void StopFollowingPath()
     {
         feedback.SetColor(Color.red);
+
         followPath = false;
+
+        payloadSfxMoving.StopSound(AudioSourceType.Player);
+        payloadSfxStopping.PlaySound(0, AudioSourceType.Player, false);
+        Debug.Log("stopping sound");
+
     }
 
     private void OnDrawGizmos()
