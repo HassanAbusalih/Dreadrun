@@ -98,6 +98,7 @@ public enum AudioSourceType
     Master = 0,
     Music = 1,
     Player,
+    PayloadAmbiance,
     Enemy,
     EnemyShoot,
     Weapons
