@@ -12,6 +12,9 @@ public class PayloadFeedback : MonoBehaviour
     Color fastColor = Color.green;
     public PayloadState PayloadState { get; private set; }
 
+
+ 
+
     private void Start()
     {
         objectRenderer.material.color = stopColor;
@@ -31,6 +34,8 @@ public class PayloadFeedback : MonoBehaviour
         {
             payloadColor = fastColor;
             PayloadState = PayloadState.Normal;
+       
+
         }
         else if (normalizedSpeed > 0 && normalizedSpeed < 1)
         {
@@ -41,12 +46,13 @@ public class PayloadFeedback : MonoBehaviour
         {
             payloadColor = stopColor;
             PayloadState = PayloadState.Stopped;
+          
         }
 
         if (objectRenderer != null)
         {
             objectRenderer.material.color = payloadColor;
-            trailRenderer.material.SetColor("_EmissionColor", payloadColor *4f);
+            trailRenderer.material.SetColor("_EmissionColor", payloadColor * 4f);
             trailRenderer.material.color = payloadColor;
         }
 
@@ -71,9 +77,9 @@ public class PayloadFeedback : MonoBehaviour
     }
 }
 
-public enum PayloadState 
-{   
-    Normal, 
-    Stopped, 
-    Contested 
+public enum PayloadState
+{
+    Normal,
+    Stopped,
+    Contested
 }
