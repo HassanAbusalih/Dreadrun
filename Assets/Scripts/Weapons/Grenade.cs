@@ -7,6 +7,7 @@ public class Grenade : MonoBehaviour
     [SerializeField] float height = 1;
     [SerializeField] float explosionRadius = 5;
     [SerializeField] float explosionForce = 700;
+    [SerializeField] GameObject impactVfx;
     Vector3 target;
     Vector3 start;
     Vector3 offset;
@@ -64,13 +65,18 @@ public class Grenade : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Explode();
+        GameObject impactVFX = Instantiate(impactVfx, collision.GetContact(0).point, Quaternion.identity);
+        impactVFX.transform.forward = -collision.GetContact(0).normal;
+        impactVFX.transform.parent = collision.transform;
+        Destroy(impactVFX, 1.1f);
     }
 
     void Explode()
     {
         Explosion.Explode(transform, damage, explosionRadius, explosionForce, layersToIgnore, effects);
         Instantiate(explosionVFX, transform.position, transform.rotation);
-        if(TryGetComponent(out CinemachineImpulseSource shake))
+     
+        if (TryGetComponent(out CinemachineImpulseSource shake))
         {
             shake.GenerateImpulse();
         }

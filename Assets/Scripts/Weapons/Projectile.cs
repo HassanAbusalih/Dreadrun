@@ -15,6 +15,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] int layerToIgnore;
     [SerializeField] GameObject impactVFX;
     [SerializeField][Range(0, 1)] float targetScalePercent = 0.5f;
+    [SerializeField] GameObject impactVfx;
     Transform transformToScale;
     Vector3 originalScale;
     SphereCollider sphereCollider;
@@ -67,10 +68,17 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
+        GameObject impactVFXClone = Instantiate(impactVfx, collision.GetContact(0).point, Quaternion.identity);
+        impactVFXClone.transform.forward = -collision.GetContact(0).normal;
+        impactVFXClone.transform.parent = collision.transform;
+        Destroy(impactVFXClone, 1.1f);
+
         if (collision.transform.TryGetComponent(out IDamagable damagable))
         {
             if (collision.gameObject.layer == layerToIgnore) { return; }
             damagable.TakeDamage(damage);
+           
             if (effects != null && !damagable.gameObject.TryGetComponent(out PayloadStats payload))
             {
                 foreach (IProjectileEffect effect in effects)
