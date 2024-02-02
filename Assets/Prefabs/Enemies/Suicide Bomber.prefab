@@ -575,6 +575,7 @@ MonoBehaviour:
   movementSpeed: 10
   enemySounds: {fileID: 11400000, guid: fd76f6dadc71ccf4b968c9b6e164f392, type: 2}
   sfxCooldown: 1
+  deathVfx: {fileID: 8255215019295333937, guid: 139c09de669d89546999f577551dd885, type: 3}
   explosionDamage: 10
   explosionRadius: 15
   explosionForce: 1000
@@ -655,6 +656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.3
   takeDamageColor: {r: 0.49056602, g: 0, b: 0, a: 1}
+  targetIntensity: 0
   takeDamageScale: 0.7
   damageCurve:
     serializedVersion: 2

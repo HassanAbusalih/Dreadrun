@@ -7,6 +7,7 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
     [SerializeField] protected float movementSpeed = 3f;
     [SerializeField] protected SoundSO enemySounds;
     [SerializeField] float sfxCooldown = 1f;
+    [SerializeField] GameObject deathVfx;
     float timeSinceSFX;
     protected WeaponBase weapon;
     protected Transform payload;
@@ -67,6 +68,11 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
         {
             if(impulseSource!=null)impulseSource.GenerateImpulse();
             Destroy(gameObject);
+            if (deathVfx != null)
+            {
+               GameObject vfx  =Instantiate(deathVfx, transform.position, Quaternion.identity);
+               Destroy(vfx, 6f);
+            }
         }
     }
 
