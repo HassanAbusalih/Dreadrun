@@ -73,6 +73,12 @@ public class Payload : MonoBehaviour, IDamagable
             if (EnemiesInRange())
             {
                 currentSpeed *= enemySlowSpeed;
+                if (payloadSfxMoving != null && !playPayloadSoundOnce)
+                {
+                    payloadSfxMoving.PlayTrackkk(0, AudioSourceType.PayloadSounds, true);
+                    Debug.Log(payloadSfxMoving.referenceAudioSource.loop);
+                    playPayloadSoundOnce = true;
+                }
             }
             if (PlayerInRange())
             {
@@ -83,18 +89,26 @@ public class Payload : MonoBehaviour, IDamagable
             {
                 stopped = false;
                 stopTimer = 0f;
+                if (payloadSfxMoving != null && !playPayloadSoundOnce)
+                {
+                    payloadSfxMoving.PlayTrackkk(0, AudioSourceType.PayloadSounds, true);
+                    Debug.Log(payloadSfxMoving.referenceAudioSource.loop);
+                    playPayloadSoundOnce = true;
+                }              
             }
             if (stopped)
             {
                 stopTimer += Time.deltaTime;
-                if (playPayloadSoundOnce)
-                {
-                    payloadSfxMoving.StopSound(AudioSourceType.Player);
-                    playPayloadSoundOnce = false;
-                }
+                
                 if (stopTimer >= outOfRangeDuration)
                 {
                     currentSpeed = 0f;
+                    if (playPayloadSoundOnce && payloadSfxMoving != null)
+                    {
+                        payloadSfxMoving.StopSound(AudioSourceType.PayloadSounds);
+                        payloadSfxStopping.PlaySound(0, AudioSourceType.PayloadSounds);
+                        playPayloadSoundOnce = false;
+                    }
                 }
             }
             if (currentPathIndex < pathPointsList.Count)
@@ -115,12 +129,7 @@ public class Payload : MonoBehaviour, IDamagable
                 {
                     currentPathIndex++;
                 }
-                if (!playPayloadSoundOnce)
-                {
-                    payloadSfxMoving.PlayTrackkk(0, AudioSourceType.Player, true);
-                    Debug.Log(payloadSfxMoving.referenceAudioSource.loop);
-                    playPayloadSoundOnce = true;
-                }
+             
             }
             else
             {
@@ -214,9 +223,9 @@ public class Payload : MonoBehaviour, IDamagable
         feedback.SetColor(Color.red);
 
         followPath = false;
-
-        payloadSfxMoving.StopSound(AudioSourceType.Player);
-        payloadSfxStopping.PlaySound(0, AudioSourceType.Player, false);
+        if (payloadSfxMoving == null) return;
+        payloadSfxMoving.StopSound(AudioSourceType.PayloadSounds);
+        payloadSfxStopping.PlaySound(0, AudioSourceType.PayloadSounds, false);
         Debug.Log("stopping sound");
 
     }

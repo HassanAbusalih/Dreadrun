@@ -17,7 +17,7 @@ public class SoundSO : ScriptableObject
         referenceAudioSource = AudioManager.instance.PlayTrack(GetSound(index), audioType, isLooping, mixerGroup);
     }
     public void StopSound(AudioSourceType audioType)
-    {
+    { 
         AudioManager.instance.Stop(audioType);
     }
     public AudioClip GetSound(int index)

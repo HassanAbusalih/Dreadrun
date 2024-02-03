@@ -101,5 +101,6 @@ public enum AudioSourceType
     PayloadAmbiance,
     Enemy,
     EnemyShoot,
-    Weapons
+    Weapons,
+    PayloadSounds
 }
