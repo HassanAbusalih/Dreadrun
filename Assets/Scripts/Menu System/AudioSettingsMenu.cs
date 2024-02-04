@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class AudioSettingsMenu : MonoBehaviour
@@ -10,6 +11,9 @@ public class AudioSettingsMenu : MonoBehaviour
     [SerializeField] Slider sfxVolumeSlider;
     private AudioSettingsData audioSettingsData;
     private AudioManager audioManager;
+    [SerializeField] AudioMixerGroup masterMixer;
+    [SerializeField] AudioMixerGroup musicMixer;
+    [SerializeField] AudioMixerGroup sfxMixer;
 
     private void Start()
     {
@@ -18,24 +22,34 @@ public class AudioSettingsMenu : MonoBehaviour
 
     public void OnMasterVolumeChanged(float volume)
     {
-        audioManager.SetVolume(volume);
         audioSettingsData.masterVolume = volume;
+        audioManager.SetVolume(volume);
+        float mixerVolume = Mathf.Log10(audioSettingsData.masterVolume) * 20;
+        masterMixer.audioMixer.SetFloat("Master",mixerVolume);
     }
 
     public void OnMusicVolumeChanged(float volume)
     {
-        audioManager.SetVolume(volume, AudioSourceType.Music);
         audioSettingsData.musicVolume = volume;
+        audioManager.SetVolume(volume,AudioSourceType.Player);
+        float mixerVolume = Mathf.Log10(audioSettingsData.musicVolume) * 20;
+        musicMixer.audioMixer.SetFloat("Music",mixerVolume);
     }
 
     public void OnSFXVolumeChanged(float volume)
     {
-        audioManager.SetVolume(volume, AudioSourceType.Player);
         audioSettingsData.sfxVolume = volume;
+        audioManager.SetVolume(volume,AudioSourceType.Player);
+        float mixerVolume = Mathf.Log10(audioSettingsData.sfxVolume) * 20;
+        sfxMixer.audioMixer.SetFloat("SFX",mixerVolume);
     }
 
     void SaveAudioSettings()
     {
+        if(File.Exists("audioSettings.json"))
+        {
+            File.Delete("audioSettings.json");
+        }
         string json = JsonUtility.ToJson(audioSettingsData);
         File.WriteAllText("audioSettings.json", json);
     }
@@ -86,7 +100,7 @@ public class AudioSettingsMenu : MonoBehaviour
 [Serializable]
 public class AudioSettingsData
 {
-    public float masterVolume = 1;
-    public float musicVolume = 1;
-    public float sfxVolume = 1;
+    public float masterVolume;
+    public float musicVolume;
+    public float sfxVolume;
 }

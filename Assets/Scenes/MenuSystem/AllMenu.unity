@@ -9843,7 +9843,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 811472215}
   m_HandleRect: {fileID: 1020269212}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
@@ -20254,7 +20254,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 130277160}
   m_HandleRect: {fileID: 1286023084}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
@@ -22184,7 +22184,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 1174424274}
   m_HandleRect: {fileID: 1379372746}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
@@ -22482,6 +22482,9 @@ MonoBehaviour:
   masterVolumeSlider: {fileID: 1895400368}
   musicVolumeSlider: {fileID: 956038849}
   sfxVolumeSlider: {fileID: 2101080457}
+  masterMixer: {fileID: 24300002, guid: 30e2a6c9cb2b77945ace10bb80be2e41, type: 2}
+  musicMixer: {fileID: 466159402164118721, guid: 30e2a6c9cb2b77945ace10bb80be2e41, type: 2}
+  sfxMixer: {fileID: 3376654844607973123, guid: 30e2a6c9cb2b77945ace10bb80be2e41, type: 2}
 --- !u!1 &151920881101851197
 GameObject:
   m_ObjectHideFlags: 0
@@ -51439,6 +51442,9 @@ MonoBehaviour:
   masterVolumeSlider: {fileID: 1895400368}
   musicVolumeSlider: {fileID: 956038849}
   sfxVolumeSlider: {fileID: 2101080457}
+  masterMixer: {fileID: 24300002, guid: 30e2a6c9cb2b77945ace10bb80be2e41, type: 2}
+  musicMixer: {fileID: 466159402164118721, guid: 30e2a6c9cb2b77945ace10bb80be2e41, type: 2}
+  sfxMixer: {fileID: 3376654844607973123, guid: 30e2a6c9cb2b77945ace10bb80be2e41, type: 2}
 --- !u!199 &5574110145643768806
 ParticleSystemRenderer:
   serializedVersion: 6
