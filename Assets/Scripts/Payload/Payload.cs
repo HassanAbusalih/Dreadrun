@@ -66,16 +66,19 @@ public class Payload : MonoBehaviour, IDamagable
 
     void FixedUpdate()
     {
+
+
         if (followPath)
         {
             float currentSpeed = speed;
+            payloadSfxMoving.FadeInVolume(1); 
 
             if (EnemiesInRange())
             {
                 currentSpeed *= enemySlowSpeed;
                 if (payloadSfxMoving != null && !playPayloadSoundOnce)
                 {
-                    payloadSfxMoving.PlayTrackkk(0, AudioSourceType.PayloadSounds, true);
+                    payloadSfxMoving.PlayTrackkk(0, AudioSourceType.PayloadSounds, true,true);
                     Debug.Log(payloadSfxMoving.referenceAudioSource.loop);
                     playPayloadSoundOnce = true;
                 }
@@ -91,7 +94,7 @@ public class Payload : MonoBehaviour, IDamagable
                 stopTimer = 0f;
                 if (payloadSfxMoving != null && !playPayloadSoundOnce)
                 {
-                    payloadSfxMoving.PlayTrackkk(0, AudioSourceType.PayloadSounds, true);
+                    payloadSfxMoving.PlayTrackkk(0, AudioSourceType.PayloadSounds, true,true);
                     Debug.Log(payloadSfxMoving.referenceAudioSource.loop);
                     playPayloadSoundOnce = true;
                 }              
@@ -106,7 +109,7 @@ public class Payload : MonoBehaviour, IDamagable
                     if (playPayloadSoundOnce && payloadSfxMoving != null)
                     {
                         payloadSfxMoving.StopSound(AudioSourceType.PayloadSounds);
-                        payloadSfxStopping.PlaySound(0, AudioSourceType.PayloadSounds);
+                        payloadSfxStopping.PlaySound(0, AudioSourceType.PayloadSounds,true);
                         playPayloadSoundOnce = false;
                     }
                 }

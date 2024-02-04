@@ -20,7 +20,7 @@ public class Teleport : MonoBehaviour
     [SerializeField] float originalFogDensity = 0.01f; 
     [SerializeField] float finalFogDensity = 0.1f;
     [SerializeField] bool debugMode;
-    //[SerializeField] float fogChangeTime= 10f; 
+    [SerializeField] SoundSO payloadAmbience;
 
     Color startColor;
 
@@ -61,21 +61,30 @@ public class Teleport : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        payloadAmbience.FadeInVolume();
+    }
+
     IEnumerator TeleportPlayer(Player player)
     {
         timerText.gameObject.SetActive(true);
         effectInstance = Instantiate(teleportEffect, player.transform.position, Quaternion.identity, player.transform);
         effectInstance.SetActive(false);
         yield return Timer();
+
         player.transform.position = teleportDestination.position;
         timerText.gameObject.SetActive(false);
         StartCoroutine(FogChange(originalFogDensity, fadeOutTime + 1));
+        payloadAmbience.PlayTrackkk(0, AudioSourceType.PayloadAmbiance, true,true);
+
         yield return new WaitForSeconds(1f);
         FindObjectOfType<CameraFocus>().UpdateRotation(teleportDestination);
         yield return Fade(0f, fadeOutTime);
         Destroy(effectInstance);
         OnTimerOver?.Invoke();
         ChangePlayerDirectionToDefault?.Invoke(teleportDestination, false);
+       
     }
 
     IEnumerator Timer()
