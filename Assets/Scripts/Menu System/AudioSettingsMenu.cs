@@ -100,7 +100,7 @@ public class AudioSettingsMenu : MonoBehaviour
 [Serializable]
 public class AudioSettingsData
 {
-    public float masterVolume;
-    public float musicVolume;
-    public float sfxVolume;
+    public float masterVolume =1;
+    public float musicVolume =1;
+    public float sfxVolume = 1;
 }
