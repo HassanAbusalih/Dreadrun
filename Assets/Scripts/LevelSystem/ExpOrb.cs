@@ -12,6 +12,7 @@ public class ExpOrb : MonoBehaviour
     [SerializeField] SoundSO denySound;
     [SerializeField] GameObject vfx;
     [SerializeField] GameObject expTextObject;
+    [SerializeField] Color expTextColor;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,10 +23,12 @@ public class ExpOrb : MonoBehaviour
         if (ExperienceManager.CollectExp && isPlayerThere)
         {
             OnExpOrbCollected?.Invoke(expAmount);
+
             Quaternion camRotation = FindObjectOfType<CameraFocus>().transform.localRotation;
             Quaternion expTextRotation = Quaternion.Euler(expTextObject.transform.eulerAngles.x, camRotation.eulerAngles.y, camRotation.eulerAngles.z);
             GameObject expText = Instantiate(expTextObject, transform.position + (Vector3.up*5),expTextRotation);
             expText.GetComponent<TextMeshPro>().text = $"+{expAmount}XP";
+            expText.GetComponent<TextMeshPro>().color = expTextColor;
 
             if (expOrbPickUpSFX != null)
             {
