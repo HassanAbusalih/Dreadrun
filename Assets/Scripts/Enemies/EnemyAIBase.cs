@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Audio;
 
 public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
 {
@@ -18,6 +19,8 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
     protected FlockingBehavior flockingBehavior;
     float currentHealth;
     CinemachineImpulseSource impulseSource;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioMixerGroup mixerGroup;
 
 
     public bool slowed { get; set; }
@@ -66,12 +69,19 @@ public abstract class EnemyAIBase : MonoBehaviour, IDamagable, ISlowable
         }
         if (currentHealth <= 0)
         {
-            if(impulseSource!=null)impulseSource.GenerateImpulse();
+            if (impulseSource != null) impulseSource.GenerateImpulse();
             Destroy(gameObject);
             if (deathVfx != null)
             {
-               GameObject vfx  =Instantiate(deathVfx, transform.position, Quaternion.identity);
-               Destroy(vfx, 6f);
+                GameObject vfx = Instantiate(deathVfx, transform.position, Quaternion.identity);
+                if (deathSound == null) return;
+                AudioSource source = Instantiate(new GameObject(), transform.position, Quaternion.identity).AddComponent<AudioSource>();
+                source.clip = deathSound;
+                source.outputAudioMixerGroup = mixerGroup;
+                source.volume = Random.Range(0.15f, 0.35f);
+                source.pitch = Random.Range(0.8f, 1f);
+                source.Play();
+                Destroy(vfx, 6f);
             }
         }
     }
