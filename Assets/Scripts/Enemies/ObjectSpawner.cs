@@ -69,7 +69,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         ParticleSystem particleEffect = Instantiate(spawnEffect, currentSpawnPosition + randomOffset,spawnEffect.transform.rotation, transform);
         particleEffect.Play();
-        Destroy(particleEffect.gameObject, particleEffect.main.duration +1f);
+        Destroy(particleEffect.gameObject, particleEffect.main.duration +3f);
     }
 
     void SpawnObject()

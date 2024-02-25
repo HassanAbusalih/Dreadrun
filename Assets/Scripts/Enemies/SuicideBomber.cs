@@ -20,6 +20,7 @@ public class SuicideBomber : EnemyAIBase
     bool dashing = false;
     LayerMask mask;
     List<Material> materials = new();
+    [SerializeField] bool targetPlayer;
 
     private void Start()
     {
@@ -33,7 +34,7 @@ public class SuicideBomber : EnemyAIBase
 
     private void Update()
     {
-        if (payload == null)
+        if (targetPlayer)
         {
             target = GetClosestPlayer();
         }
@@ -41,6 +42,7 @@ public class SuicideBomber : EnemyAIBase
         {
             target = payload;
         }
+
         if (target == null)
         {
             rb.velocity = new(0f, rb.velocity.y, 0f);
