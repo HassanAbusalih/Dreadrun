@@ -7,9 +7,9 @@ public class PayloadFeedback : MonoBehaviour
     [SerializeField] Image healthBar;
     [SerializeField] Renderer objectRenderer;
     [SerializeField] TrailRenderer trailRenderer;
-    Color stopColor = Color.red;
-    Color moderateColor = Color.yellow;
-    Color fastColor = Color.green;
+    [SerializeField] Color stopColor;
+    [SerializeField] Color moderateColor;
+    [SerializeField] Color fastColor;
     public PayloadState PayloadState { get; private set; }
 
 
