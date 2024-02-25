@@ -6,6 +6,7 @@ public class Music : MonoBehaviour
 {
     [SerializeField] SoundSO musicSFX;
     [SerializeField] int musicPlaying;
+    bool isMusicPlaying = false;
 
 
     private void Update()
@@ -14,10 +15,11 @@ public class Music : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Player player))
+        if (other.TryGetComponent(out Player player)&& !isMusicPlaying)
         {
             musicSFX.StopSound(AudioSourceType.Music);
             musicSFX.PlayTrackkk(musicPlaying, AudioSourceType.Music, true,true);
+            isMusicPlaying = true;
             Destroy(gameObject,4f);
         }
     }
