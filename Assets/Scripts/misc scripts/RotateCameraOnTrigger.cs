@@ -56,7 +56,7 @@ public class RotateCameraOnTrigger : MonoBehaviour
             AlignmentBetweenCamAndTrigger = Vector3.Dot(directionFromCamera,transform.forward);
             StopAllCoroutines();
 
-            if (AlignmentBetweenCamAndTrigger > 0.1f && !alreadyEntered) // you never know when these stupid edge casses happen so i just put a small value above 0
+            if (AlignmentBetweenCamAndTrigger > 0f && !alreadyEntered) // you never know when these stupid edge casses happen so i just put a small value above 0
             {
                 previousRotationAngle = camFollow.transform.eulerAngles.y;
                 alreadyEntered = true;

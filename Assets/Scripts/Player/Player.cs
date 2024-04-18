@@ -257,7 +257,8 @@ public class Player : MonoBehaviour, IDamagable
         amount = (100 / (100 + playerStats.defense)) * amount;
         if (TryGetComponent(out CounterBlast counterBlast))
         {
-            counterBlast.Explode(amount * 0.5f);
+            counterBlast.Explode(amount * 2f);
+            return;
         }
         bool _allowToTakeDamage = canPLayerTakeDamage?.Invoke() ?? true;
         if (_allowToTakeDamage) return;
