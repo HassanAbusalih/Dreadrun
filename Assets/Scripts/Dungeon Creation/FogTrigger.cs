@@ -18,6 +18,8 @@ public class FogTrigger : MonoBehaviour
     [Header("DONT CHANGE")]
     [SerializeField] float fadeOutDuration;
     [SerializeField] float sizeLerpSpeed;
+
+    [SerializeField] bool triggerOnStart;
    
 
 
@@ -34,6 +36,7 @@ public class FogTrigger : MonoBehaviour
         delayToDestroy = fadeOutDuration + 4f;
         fog.time = 0.01f;
         fog.Play();
+        startFading = triggerOnStart ? true : false;
     }
 
     private void OnValidate()
