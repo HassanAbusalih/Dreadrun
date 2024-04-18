@@ -125,7 +125,7 @@ public class Dashing : MonoBehaviour
         {
             float dashProgress = elapsedTime / dashDuration;
             Vector3 _dashForce = Vector3.Lerp(Vector3.zero, dashDirection * dashForce, dashCurve.Evaluate(dashProgress));
-            rb.AddForce(_dashForce, ForceMode.Impulse);
+            rb.AddForce(_dashForce * Time.deltaTime, ForceMode.Impulse);
             rb.AddForce(Vector3.up * 1.2f, ForceMode.Impulse);
             DashFOVAndPostProcessingFeedback(dashProgress);
 

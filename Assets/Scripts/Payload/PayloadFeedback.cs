@@ -52,7 +52,7 @@ public class PayloadFeedback : MonoBehaviour
         if (objectRenderer != null)
         {
             objectRenderer.material.color = payloadColor;
-            trailRenderer.material.SetColor("_EmissionColor", payloadColor * 4f);
+            trailRenderer.material.SetColor("_EmissionColor", payloadColor * 2f);
             trailRenderer.material.color = payloadColor;
         }
 
@@ -61,7 +61,7 @@ public class PayloadFeedback : MonoBehaviour
     public void SetColor(Color color)
     {
         objectRenderer.material.color = color;
-        trailRenderer.material.SetColor("_EmissionColor", color * 4f);
+        trailRenderer.material.SetColor("_EmissionColor", color * 2f);
         trailRenderer.material.color = color;
     }
 

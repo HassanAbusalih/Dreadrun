@@ -14,6 +14,6 @@ public class RotationAnimator : MonoBehaviour
     {
         if(Disabled) return;
         float time = rotationCurve.Evaluate(Time.deltaTime);
-        transform.Rotate(Vector3.up * time * rotationSpeed);
+        transform.localRotation *= Quaternion.Euler(0, rotationSpeed * time,0);
     }
 }

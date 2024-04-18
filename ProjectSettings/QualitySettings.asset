@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 5
+  m_CurrentQuality: 1
   m_QualitySettings:
   - serializedVersion: 2
     name: Very Low
@@ -67,7 +67,7 @@ QualitySettings:
     realtimeGICPUUsage: 25
     lodBias: 0.4
     maximumLODLevel: 0
-    streamingMipmapsActive: 0
+    streamingMipmapsActive: 1
     streamingMipmapsAddAllCameras: 1
     streamingMipmapsMemoryBudget: 512
     streamingMipmapsRenderersPerFrame: 512
@@ -209,7 +209,7 @@ QualitySettings:
     antiAliasing: 0
     softParticles: 1
     softVegetation: 1
-    realtimeReflectionProbes: 1
+    realtimeReflectionProbes: 0
     billboardsFaceCameraPosition: 1
     vSyncCount: 1
     realtimeGICPUUsage: 100
@@ -226,8 +226,8 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: 3e148a0c53d5fc048a79251d8bfb9ff7, type: 2}
+    customRenderPipeline: {fileID: 11400000, guid: 569f3802cdfdf104e85d32b3aee2bb45, type: 2}
     excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
     Server: 0
-    Standalone: 0
+    Standalone: 1
