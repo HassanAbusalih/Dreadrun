@@ -59,12 +59,14 @@ public class InteractiveRoom : MonoBehaviour
         {
             ToggleObjects(enemiesArray, true);
             ToggleObjects(rewardsArray, false);
+            failVFX.SetActive(true);
             Destroy(this.gameObject);
         }
         else
         {
             ToggleObjects(enemiesArray, false);
             ToggleObjects(rewardsArray, true);
+            succeedVFX.SetActive(true);
             Destroy(this.gameObject);
         }
     }

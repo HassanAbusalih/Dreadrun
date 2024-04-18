@@ -68,7 +68,7 @@ public class RotateCameraOnTrigger : MonoBehaviour
                 }
                 return;
             }
-            else if (AlignmentBetweenCamAndTrigger < 0.3f && alreadyEntered)
+            else
             {
                 float resetAngle = useCamStartAngleAsExit ? startAngle : previousRotationAngle;
                 StartCoroutine(RotateCamera(resetAngle));
