@@ -163,7 +163,7 @@ RectTransform:
   m_GameObject: {fileID: 4470538975165418748}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.38821086, y: 0.38821086, z: 0.38821086}
+  m_LocalScale: {x: 0.38821086, y: 0.3882109, z: 0.3882109}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4470538975852000772}
@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 4470538975852000774}
   - component: {fileID: 4470538975852000775}
   - component: {fileID: 1735714946074325517}
+  - component: {fileID: -3539320951783608398}
   m_Layer: 5
   m_Name: PerkItemUI
   m_TagString: Untagged
@@ -318,3 +319,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconUI: {fileID: 4470538975165418750}
   perkText: {fileID: 4470538975122612600}
+  animationClip: {fileID: 7400000, guid: 667316982dfe87e4d98767728ec7e8ec, type: 2}
+--- !u!95 &-3539320951783608398
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4470538975852000773}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c6fe9eadb79b404b819cc81250f1eb7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

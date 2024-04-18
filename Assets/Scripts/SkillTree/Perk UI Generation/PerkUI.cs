@@ -12,6 +12,7 @@ public class PerkUI : MonoBehaviour
     GameObject perkDescription;
     TextMeshProUGUI perkDescriptionText;
     int amountAcquired = 1;
+    [SerializeField] AnimationClip animationClip;
 
     private void Update()
     {
@@ -46,8 +47,11 @@ public class PerkUI : MonoBehaviour
     void UpdatePerkUI(Perk receivedPerk, Color borderColor)
     {
         if (perk == receivedPerk)
-        amountAcquired++;
-        perkText.text = amountAcquired.ToString();
+        {
+            amountAcquired++;
+            perkText.text = amountAcquired.ToString();
+            GetComponent<Animator>().Play(animationClip.name, 0, -1);
+        }
     }
 
     private void OnDisable()
